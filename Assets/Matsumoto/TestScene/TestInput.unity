@@ -677,6 +677,7 @@ MonoBehaviour:
   moveSpeed: 10
   playerIndex: 0
   inputType: 2
+  rotSpeed: 20
 --- !u!1 &1782340887
 GameObject:
   m_ObjectHideFlags: 0
