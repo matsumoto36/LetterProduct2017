@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using GamepadInput;
 
+/// <summary>
+/// PS4コントローラ
+/// </summary>
 public static class InputPS4 {
 
 	public static Vector2 GetAxis(GamePad.Axis axis, GamePad.Index controlIndex, bool raw = false) {

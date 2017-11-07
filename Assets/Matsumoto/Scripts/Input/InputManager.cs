@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using GamepadInput;
 
+/// <summary>
+/// 入力のタイプ
+/// </summary>
 public enum ControlType {
 	GamePadXBOX,
 	GamePadPS4,
@@ -11,7 +14,7 @@ public enum ControlType {
 }
 
 /// <summary>
-/// 入力デバイスの違いを吸収する
+/// 入力デバイスの違いを吸収するマネージャークラス
 /// </summary>
 public static class InputManager {
 
@@ -56,6 +59,7 @@ public static class InputManager {
 			case ControlType.GamePadPS4:
 				return InputPS4.GetButtonDown(button, index);
 			case ControlType.Keyboard:
+				//キーボードはindex関係なしに返す
 				return InputKeyboard.GetKeyDown(button);
 			case ControlType.OtherGamePad:
 				return GamePad.GetButtonDown(button, index);
@@ -72,6 +76,7 @@ public static class InputManager {
 			case ControlType.GamePadPS4:
 				return InputPS4.GetButton(button, index);
 			case ControlType.Keyboard:
+				//キーボードはindex関係なしに返す
 				return InputKeyboard.GetKey(button);
 			case ControlType.OtherGamePad:
 				return GamePad.GetButton(button, index);
@@ -88,6 +93,7 @@ public static class InputManager {
 			case ControlType.GamePadPS4:
 				return InputPS4.GetButtonUp(button, index);
 			case ControlType.Keyboard:
+				//キーボードはindex関係なしに返す
 				return InputKeyboard.GetKeyUp(button);
 			case ControlType.OtherGamePad:
 				return GamePad.GetButtonUp(button, index);

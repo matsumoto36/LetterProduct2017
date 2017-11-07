@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using GamepadInput;
 
+/// <summary>
+/// XBOXコントローラ
+/// </summary>
 public static class InputXBOX {
 
 	public static Vector2 GetAxis(GamePad.Axis axis, GamePad.Index controlIndex, bool raw = false) {

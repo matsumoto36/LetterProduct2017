@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using GamepadInput;
 
+/// <summary>
+/// コントローラ入力に対応したキーボード
+/// </summary>
 public static class InputKeyboard {
 
 	public static Vector2 GetAxis(GamePad.Axis axis, bool isRaw) {
@@ -27,94 +30,31 @@ public static class InputKeyboard {
 
 	public static bool GetKeyDown(GamePad.Button button) {
 
-		switch(button) {
-			case GamePad.Button.A:
-				break;
-			case GamePad.Button.B:
-				break;
-			case GamePad.Button.Y:
-				break;
-			case GamePad.Button.X:
-				break;
-			case GamePad.Button.RightShoulder:
-				break;
-			case GamePad.Button.LeftShoulder:
-				break;
-			case GamePad.Button.RightStick:
-				break;
-			case GamePad.Button.LeftStick:
-				break;
-			case GamePad.Button.Back:
-				break;
-			case GamePad.Button.Start:
-				break;
-			default:
-				break;
-		}
+		var name = GetButtonName(button);
+		if(name != "NONE") return Input.GetButtonDown(name);
 
 		return false;
 	}
 
 	public static bool GetKey(GamePad.Button button) {
 
-		switch(button) {
-			case GamePad.Button.A:
-				break;
-			case GamePad.Button.B:
-				break;
-			case GamePad.Button.Y:
-				break;
-			case GamePad.Button.X:
-				break;
-			case GamePad.Button.RightShoulder:
-				break;
-			case GamePad.Button.LeftShoulder:
-				break;
-			case GamePad.Button.RightStick:
-				break;
-			case GamePad.Button.LeftStick:
-				break;
-			case GamePad.Button.Back:
-				break;
-			case GamePad.Button.Start:
-				break;
-			default:
-				break;
-		}
+		var name = GetButtonName(button);
+		if(name != "NONE") return Input.GetButton(name);
 
 		return false;
 	}
 
 	public static float GetKey(GamePad.Trigger trigger) {
-		return Input.GetButton(GetTriggerName(trigger)) ? 1 : 0;
+		var name = GetTriggerName(trigger);
+		if(name != "NONE") return Input.GetButton(name) ? 1 : 0;
+
+		return 0;
 	}
 
 	public static bool GetKeyUp(GamePad.Button button) {
 
-		switch(button) {
-			case GamePad.Button.A:
-				break;
-			case GamePad.Button.B:
-				break;
-			case GamePad.Button.Y:
-				break;
-			case GamePad.Button.X:
-				break;
-			case GamePad.Button.RightShoulder:
-				break;
-			case GamePad.Button.LeftShoulder:
-				break;
-			case GamePad.Button.RightStick:
-				break;
-			case GamePad.Button.LeftStick:
-				break;
-			case GamePad.Button.Back:
-				break;
-			case GamePad.Button.Start:
-				break;
-			default:
-				break;
-		}
+		var name = GetButtonName(button);
+		if(name != "NONE") return Input.GetButton(name);
 
 		return false;
 	}
@@ -139,9 +79,37 @@ public static class InputKeyboard {
 
 		switch(trigger) {
 			case GamePad.Trigger.LeftTrigger:
-				return "FireLeft";
+				return "NONE";
 			case GamePad.Trigger.RightTrigger:
+				return "NONE";
+			default:
+				return "ERR";
+		}
+	}
+
+	static string GetButtonName(GamePad.Button button) {
+
+		switch(button) {
+			case GamePad.Button.A:
+				return "NONE";
+			case GamePad.Button.B:
+				return "NONE";
+			case GamePad.Button.Y:
+				return "NONE";
+			case GamePad.Button.X:
+				return "NONE";
+			case GamePad.Button.RightShoulder:
 				return "FireRight";
+			case GamePad.Button.LeftShoulder:
+				return "FireLeft";
+			case GamePad.Button.RightStick:
+				return "NONE";
+			case GamePad.Button.LeftStick:
+				return "NONE";
+			case GamePad.Button.Back:
+				return "NONE";
+			case GamePad.Button.Start:
+				return "NONE";
 			default:
 				return "ERR";
 		}
