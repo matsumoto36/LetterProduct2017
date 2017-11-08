@@ -9,7 +9,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public abstract class Unit : MonoBehaviour {
 
-	const string HAND_ANCHOR = "[HandAnchor]";
+	const string HAND_ANCHOR_L = "[HandAnchorL]";
+	const string HAND_ANCHOR_R = "[HandAnchorR]";
 
 	public float moveSpeed { get; set; }
 	public float rotSpeed { get; set; }
@@ -17,7 +18,8 @@ public abstract class Unit : MonoBehaviour {
 
 	protected Transform body;
 	protected Vector3 moveVec;
-	protected Transform handAnchor;
+	protected Transform handAnchorL;
+	protected Transform handAnchorR;
 	protected Rigidbody unitRig;
 
 	// Use this for initialization
@@ -26,7 +28,8 @@ public abstract class Unit : MonoBehaviour {
 		equipWeapon = new Weapon[2];
 
 		body = transform.GetChild(0);
-		handAnchor = body.Find(HAND_ANCHOR);
+		handAnchorL = body.Find(HAND_ANCHOR_L);
+		handAnchorR = body.Find(HAND_ANCHOR_R);
 		unitRig = GetComponent<Rigidbody>();
 	}
 
@@ -48,12 +51,13 @@ public abstract class Unit : MonoBehaviour {
 		}
 
 		//位置合わせ
-		weapon.transform.parent = handAnchor;
+		weapon.transform.parent = slot == 0 ? handAnchorL : handAnchorR;
 		weapon.transform.localPosition = new Vector3();
 		weapon.transform.localRotation = Quaternion.identity;
 
 		//所持する
 		equipWeapon[slot] = weapon;
+		equipWeapon[slot].owner = this;
 	}
 
 	/// <summary>

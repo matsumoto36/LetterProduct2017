@@ -15,29 +15,49 @@ public class Player : Unit {
 		moveSpeed = 5;
 		rotSpeed = 10;
 
-		//武器のロード処理は後で移行する
+		//***武器のロード処理は後で移行する***
 		//生成
 		var w = Instantiate(Resources.Load<WeaponGun>("Weapon/TestWeapon"));
 		//データ設定
-		w.SetData(10, 0.1f, Resources.Load<Bullet>("Weapon/Bullet/TestBullet"), 10.0f);
+		w.SetData(10, 0.1f, Resources.Load<BulletNormal>("Weapon/Bullet/TestBullet"), 10.0f);
 		//装備
 		EquipWeapon(w, 0);
+
+		//生成
+		var w2 = Instantiate(Resources.Load<WeaponLaser>("Weapon/TestWeaponLaser"));
+		//データ設定
+		w2.SetData(10, 1f, Resources.Load<BulletLaser>("Weapon/Bullet/TestBulletLaser"), 10.0f);
+		//装備
+		EquipWeapon(w2, 1);
 
 	}
 
 	// Update is called once per frame
 	void FixedUpdate() {
 
+		//移動処理
 		Move();
 
-		//攻撃(左)
-		if(InputManager.GetButton(inputType, GamePad.Button.LeftShoulder, playerIndex)) {
-			if(equipWeapon[0]) equipWeapon[0].Attack();
+		//武器の攻撃(左)
+		if(equipWeapon[0]) {
+			if(InputManager.GetButtonDown(inputType, GamePad.Button.LeftShoulder, playerIndex))
+				equipWeapon[0].AttackStart();
+			if(InputManager.GetButton(inputType, GamePad.Button.LeftShoulder, playerIndex))
+				equipWeapon[0].Attack();
+			if(InputManager.GetButtonUp(inputType, GamePad.Button.LeftShoulder, playerIndex))
+				equipWeapon[0].AttackEnd();
 		}
-		//攻撃(右)
-		else if(InputManager.GetButton(inputType, GamePad.Button.RightShoulder, playerIndex)) {
-			if(equipWeapon[1]) equipWeapon[1].Attack();
+
+		//武器の攻撃(右)
+		if(equipWeapon[1]) {
+			if(InputManager.GetButtonDown(inputType, GamePad.Button.RightShoulder, playerIndex))
+				equipWeapon[1].AttackStart();
+			if(InputManager.GetButton(inputType, GamePad.Button.RightShoulder, playerIndex))
+				equipWeapon[1].Attack();
+			if(InputManager.GetButtonUp(inputType, GamePad.Button.RightShoulder, playerIndex))
+				equipWeapon[1].AttackEnd();
 		}
+
 	}
 
 	public override void Move() {

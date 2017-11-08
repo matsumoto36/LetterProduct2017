@@ -11,11 +11,18 @@ public class BulletNormal : Bullet {
 
 	void Start() {
 
-
 		Destroy(gameObject, LIFETIME);
 	}
 
 	void Update() {
 		transform.position += transform.forward * speed * Time.deltaTime;
+	}
+
+	void OnTriggerEnter(Collider other) {
+
+		if(other.tag == "Player") return;
+		if(other.tag == "Bullet") return;
+
+			Destroy(gameObject);
 	}
 }

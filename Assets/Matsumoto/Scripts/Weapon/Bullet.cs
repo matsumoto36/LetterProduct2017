@@ -8,8 +8,8 @@ using UnityEngine;
 public abstract class Bullet : MonoBehaviour {
 
 	protected WeaponGun owner;
-	public int power { get; set; }
 	public float speed { get; set; }
+	public int power { get; set; }
 
 	// Use this for initialization
 	void Start() {

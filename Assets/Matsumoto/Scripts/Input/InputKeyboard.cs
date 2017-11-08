@@ -54,7 +54,7 @@ public static class InputKeyboard {
 	public static bool GetKeyUp(GamePad.Button button) {
 
 		var name = GetButtonName(button);
-		if(name != "NONE") return Input.GetButton(name);
+		if(name != "NONE") return Input.GetButtonUp(name);
 
 		return false;
 	}

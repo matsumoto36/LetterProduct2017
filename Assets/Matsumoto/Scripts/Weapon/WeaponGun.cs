@@ -7,17 +7,28 @@ using UnityEngine;
 /// </summary>
 public class WeaponGun : WeaponRanged {
 
-	protected float bulletSpeed;
+	float bulletSpeed;
 
-	public void SetData(int power, float interval, Bullet bullet, float bulletSpeed) {
+	/// <summary>
+	/// 必要なデータをセットする
+	/// </summary>
+	/// <param name="power"></param>
+	/// <param name="interval"></param>
+	/// <param name="bullet"></param>
+	/// <param name="bulletSpeed"></param>
+	public void SetData(int power, float interval, BulletNormal bullet, float bulletSpeed) {
 		this.power = power;
 		this.interval = interval;
 		this.bullet = bullet;
 		this.bulletSpeed = bulletSpeed;
 	}
 
+	/// <summary>
+	/// 攻撃するときに呼ばれる
+	/// </summary>
 	public override void Attack() {
 
+		//親クラスで攻撃ができるかの判断を行っている
 		if(!canFire) return;
 
 		//弾を発射
