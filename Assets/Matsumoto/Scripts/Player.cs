@@ -16,19 +16,58 @@ public class Player : Unit {
 		rotSpeed = 10;
 
 		//***武器のロード処理は後で移行する***
-		//生成
-		var w = Instantiate(Resources.Load<WeaponGun>("Weapon/TestWeapon"));
-		//データ設定
-		w.SetData(10, 0.1f, Resources.Load<BulletNormal>("Weapon/Bullet/TestBullet"), 10.0f);
-		//装備
-		EquipWeapon(w, 0);
 
-		//生成
-		var w2 = Instantiate(Resources.Load<WeaponLaser>("Weapon/TestWeaponLaser"));
-		//データ設定
-		w2.SetData(10, 1f, Resources.Load<BulletLaser>("Weapon/Bullet/TestBulletLaser"), 10.0f);
+		//武器の生成
+		var weapon = Instantiate(Resources.Load<GameObject>("Model/Weapon/TestWeaponGrenade")).AddComponent<WeaponGun>();
+
+		//弾データの作成
+		var bullet = Resources.Load<BulletGrenade>("System/Weapon/Bullet/BulletGrenade");
+		var model = Resources.Load<GameObject>("Model/Weapon/Bullet/TestBulletGrenade");
+		var bData = new BulletData(bullet, weapon, model);
+		bData.SetBulletDataGrenade(10, 10, 10, 10);
+
+		//武器のデータ設定
+		weapon.SetData(0.1f, bData);
 		//装備
-		EquipWeapon(w2, 1);
+		EquipWeapon(weapon, 0);
+
+
+		//武器の生成
+		var weapon2 = Instantiate(Resources.Load<GameObject>("Model/Weapon/TestWeaponLaser")).AddComponent<WeaponLaser>();
+
+		//弾データの作成
+		var bullet2 = Resources.Load<Bullet>("System/Weapon/Bullet/BulletLaserHeal");
+		var model2 = Resources.Load<GameObject>("Model/Weapon/Bullet/TestBulletLaser");
+		var bData2 = new BulletData(bullet2, weapon2, model2);
+		bData2.SetBulletDataLaser(10, 20);
+
+		//武器のデータ設定
+		weapon2.SetData(1f, bData2);
+		//装備
+		EquipWeapon(weapon2, 1);
+
+		Debug.Log("PlayerInit");
+	}
+
+	void Update() {
+
+		//武器の攻撃キーを定義
+		var attackBtn = new GamePad.Button[2] {
+			GamePad.Button.LeftShoulder,
+			GamePad.Button.RightShoulder
+		};
+
+		//攻撃
+		for(int i = 0;i < 2;i++) {
+			if(equipWeapon[i]) {
+				if(InputManager.GetButtonDown(inputType, attackBtn[i], playerIndex))
+					equipWeapon[i].AttackStart();
+				if(InputManager.GetButton(inputType, attackBtn[i], playerIndex))
+					equipWeapon[i].Attack();
+				if(InputManager.GetButtonUp(inputType, attackBtn[i], playerIndex))
+					equipWeapon[i].AttackEnd();
+			}
+		}
 
 	}
 
@@ -37,27 +76,6 @@ public class Player : Unit {
 
 		//移動処理
 		Move();
-
-		//武器の攻撃(左)
-		if(equipWeapon[0]) {
-			if(InputManager.GetButtonDown(inputType, GamePad.Button.LeftShoulder, playerIndex))
-				equipWeapon[0].AttackStart();
-			if(InputManager.GetButton(inputType, GamePad.Button.LeftShoulder, playerIndex))
-				equipWeapon[0].Attack();
-			if(InputManager.GetButtonUp(inputType, GamePad.Button.LeftShoulder, playerIndex))
-				equipWeapon[0].AttackEnd();
-		}
-
-		//武器の攻撃(右)
-		if(equipWeapon[1]) {
-			if(InputManager.GetButtonDown(inputType, GamePad.Button.RightShoulder, playerIndex))
-				equipWeapon[1].AttackStart();
-			if(InputManager.GetButton(inputType, GamePad.Button.RightShoulder, playerIndex))
-				equipWeapon[1].Attack();
-			if(InputManager.GetButtonUp(inputType, GamePad.Button.RightShoulder, playerIndex))
-				equipWeapon[1].AttackEnd();
-		}
-
 	}
 
 	public override void Move() {

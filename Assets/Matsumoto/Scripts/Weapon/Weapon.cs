@@ -8,6 +8,7 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour {
 
 	public Unit owner { get; set; }
+
 	public bool canFire { get; private set; }
 
 	protected Transform body;
@@ -24,6 +25,7 @@ public abstract class Weapon : MonoBehaviour {
 	/// </summary>
 	public virtual void Init() {
 		StartCoroutine(WaitInterval());
+		Debug.Log("Init");
 	}
 
 	/// <summary>

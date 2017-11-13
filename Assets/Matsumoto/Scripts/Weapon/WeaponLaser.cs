@@ -11,26 +11,8 @@ enum LaserState {
 public class WeaponLaser : WeaponRanged {
 
 	BulletLaser laser;
-
-	float maxLength;
 	float chargeTime;
-
 	LaserState state = LaserState.Idle;
-
-	/// <summary>
-	/// 必要なデータをセットする
-	/// </summary>
-	/// <param name="power"></param>
-	/// <param name="interval">=チャージ時間</param>
-	/// <param name="bullet"></param>
-	/// <param name="maxLength"></param>
-	public void SetData(int power, float interval, BulletLaser bullet, float maxLength) {
-		this.power = power;
-		this.interval = interval;
-		this.bullet = bullet;
-		this.maxLength = maxLength;
-	}
-
 
 	public override void AttackStart() {
 		Debug.Log("Charge");
@@ -48,7 +30,8 @@ public class WeaponLaser : WeaponRanged {
 
 				if((chargeTime += Time.deltaTime) > interval) {
 					//照射準備
-					laser = Instantiate(bullet).GetComponent<BulletLaser>();
+					Debug.Log("Shot");
+					laser = (BulletLaser)Bullet.CreateBullet(bData, shotAnchor);
 					laser.transform.parent = shotAnchor;
 					laser.transform.localPosition = new Vector3();
 					laser.transform.localRotation = Quaternion.identity;
@@ -58,17 +41,19 @@ public class WeaponLaser : WeaponRanged {
 				}
 				break;
 			case LaserState.Shot:
-				//照射
-				float length = maxLength;
+
+				//当たった場所もしくは最大の長さにする
+				var length = laser.bData.maxLength;
+				var mask = ~(LayerMask.GetMask("PlayerLayer") + LayerMask.GetMask("BulletLayer"));
+
 				RaycastHit hit;
 
-				if(Physics.Raycast(shotAnchor.position, shotAnchor.forward, out hit, maxLength,
-					~(LayerMask.GetMask("PlayerLayer") + LayerMask.GetMask("BulletLayer")))){
+				if(Physics.Raycast(shotAnchor.position, shotAnchor.forward, out hit, length, mask)){
 
-					Debug.Log(hit.collider.gameObject.name);
 					length = hit.distance;
 				}
 
+				//照射距離の設定
 				laser.length = length;
 
 				break;

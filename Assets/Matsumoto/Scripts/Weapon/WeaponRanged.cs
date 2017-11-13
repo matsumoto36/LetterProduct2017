@@ -10,15 +10,18 @@ public abstract class WeaponRanged : Weapon {
 
 	const string SHOT_ANCHOR_NAME = "[ShotAnchor]";
 
-	//!!DEBUG!!
-	public BulletNormal _bullet;
+	protected BulletData bData;
 
-	protected Bullet bullet;
 	protected Transform shotAnchor;
 
 	public override void Init() {
 		base.Init();
 
 		shotAnchor = transform.Find(SHOT_ANCHOR_NAME);
+	}
+
+	public virtual void SetData(float interval, BulletData bData) {
+		this.interval = interval;
+		this.bData = bData;
 	}
 }

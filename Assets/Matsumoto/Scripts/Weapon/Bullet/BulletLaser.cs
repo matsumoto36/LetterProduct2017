@@ -1,7 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// レーザー光線
+/// </summary>
 public class BulletLaser : Bullet {
 
 	public float length {
@@ -14,13 +18,7 @@ public class BulletLaser : Bullet {
 	}
 	float _length;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+	public override void OnTriggerEnter(Collider other) {
+
 	}
 }

@@ -7,22 +7,6 @@ using UnityEngine;
 /// </summary>
 public class WeaponGun : WeaponRanged {
 
-	float bulletSpeed;
-
-	/// <summary>
-	/// 必要なデータをセットする
-	/// </summary>
-	/// <param name="power"></param>
-	/// <param name="interval"></param>
-	/// <param name="bullet"></param>
-	/// <param name="bulletSpeed"></param>
-	public void SetData(int power, float interval, BulletNormal bullet, float bulletSpeed) {
-		this.power = power;
-		this.interval = interval;
-		this.bullet = bullet;
-		this.bulletSpeed = bulletSpeed;
-	}
-
 	/// <summary>
 	/// 攻撃するときに呼ばれる
 	/// </summary>
@@ -32,9 +16,7 @@ public class WeaponGun : WeaponRanged {
 		if(!canFire) return;
 
 		//弾を発射
-		var b = Instantiate(bullet, shotAnchor.position, shotAnchor.rotation);
-		b.power = power;
-		b.speed = bulletSpeed;
+		Bullet.CreateBullet(bData, shotAnchor);
 
 		//intervalの設定(最後に呼ぶこと)
 		base.Attack();

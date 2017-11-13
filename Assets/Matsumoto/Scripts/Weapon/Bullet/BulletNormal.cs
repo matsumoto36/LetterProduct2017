@@ -9,16 +9,16 @@ public class BulletNormal : Bullet {
 
 	const float LIFETIME = 5.0f;
 
-	void Start() {
+	public virtual void Start() {
 
 		Destroy(gameObject, LIFETIME);
 	}
 
-	void Update() {
-		transform.position += transform.forward * speed * Time.deltaTime;
+	public virtual void Update() {
+		transform.position += transform.forward * bData.speed * Time.deltaTime;
 	}
 
-	void OnTriggerEnter(Collider other) {
+	public override void OnTriggerEnter(Collider other) {
 
 		if(other.tag == "Player") return;
 		if(other.tag == "Bullet") return;
