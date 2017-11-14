@@ -21,8 +21,8 @@ public class Player : Unit {
 		var weapon = Instantiate(Resources.Load<GameObject>("Model/Weapon/TestWeaponGrenade")).AddComponent<WeaponGun>();
 
 		//弾データの作成
-		var bullet = Resources.Load<BulletGrenade>("System/Weapon/Bullet/BulletGrenade");
-		var model = Resources.Load<GameObject>("Model/Weapon/Bullet/TestBulletGrenade");
+		var bullet = Resources.Load<Bullet>("System/Weapon/Bullet/BulletNormal");
+		var model = Resources.Load<GameObject>("Model/Weapon/Bullet/TestBulletNormal");
 		var bData = new BulletData(bullet, weapon, model);
 		bData.SetBulletDataGrenade(10, 10, 10, 10);
 

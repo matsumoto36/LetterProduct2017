@@ -8,6 +8,7 @@ using UnityEngine;
 public class BulletGrenade : BulletNormal {
 
 	public PhysicMaterial pMaterial;
+	public float expTime = 2f;
 
 	const float SPEED_MAG = 100f;
 	const float DEC = 0.9f;
@@ -16,8 +17,11 @@ public class BulletGrenade : BulletNormal {
 	Rigidbody rig;
 	bool isWallCol = false;
 
-	public override void Start() {
-		base.Start();
+	public override void Init() {
+		base.Init();
+
+		//消滅までの時間を上書き
+		Destroy(gameObject, expTime);
 
 		//当たり判定を追加
 		Invoke("AddCollision", NON_COL_TIME);
@@ -28,6 +32,9 @@ public class BulletGrenade : BulletNormal {
 		rig.AddForce(transform.forward * SPEED_MAG * bData.speed);
 	}
 
+	/// <summary>
+	/// 当たり判定(実体)を追加
+	/// </summary>
 	void AddCollision() {
 		var col = body.gameObject.AddComponent<SphereCollider>();
 		var sc = body.transform.localScale;
@@ -46,10 +53,10 @@ public class BulletGrenade : BulletNormal {
 		}
 	}
 
-	public override void OnTriggerEnter(Collider other) {
+	public override void OnHitEnter(Collider other) {
 
-		if(other.tag == "Player") return;
-		if(other.tag == "Bullet") return;
+		//if(other.tag == "Player") return;
+		//if(other.tag == "Bullet") return;
 
 		isWallCol = true;
 		if(other.tag != "Enemy") return;

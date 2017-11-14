@@ -8,7 +8,18 @@ using UnityEngine;
 /// </summary>
 public class BulletLaserHeal : BulletLaser {
 
-	public override void OnTriggerEnter(Collider other) {
+	public override void Init() {
+		base.Init();
 
+		//回復なので判定を書き換える
+		SetHitMask("EnemyLayer", "BulletLayer");
+	}
+
+	public override void OnHitting(Collider other) {
+		if(other.tag == "Player") {
+
+			Debug.Log("Heal : " + other.name);
+
+		}
 	}
 }

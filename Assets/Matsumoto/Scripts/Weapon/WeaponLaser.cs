@@ -44,13 +44,14 @@ public class WeaponLaser : WeaponRanged {
 
 				//当たった場所もしくは最大の長さにする
 				var length = laser.bData.maxLength;
-				var mask = ~(LayerMask.GetMask("PlayerLayer") + LayerMask.GetMask("BulletLayer"));
 
-				RaycastHit hit;
+				RaycastHit[] hitAll = Physics.RaycastAll(shotAnchor.position, shotAnchor.forward, length, laser.hitMask);
 
-				if(Physics.Raycast(shotAnchor.position, shotAnchor.forward, out hit, length, mask)){
-
-					length = hit.distance;
+				foreach(var hit in hitAll) {
+					//自分のデータは除外
+					if(ReferenceEquals(hit.collider.gameObject, bData.owner.owner.gameObject)) continue;
+					//当たったものの中で一番近い奴
+					if(hit.distance < length) length = hit.distance;
 				}
 
 				//照射距離の設定
