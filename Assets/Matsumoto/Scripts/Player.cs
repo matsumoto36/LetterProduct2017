@@ -118,6 +118,11 @@ public class Player : Unit {
 		}
 	}
 
+	public override void Death() {
+		base.Death();
+		Debug.Log("Player" + playerIndex + " is Dead");
+	}
+
 	public override void Move() {
 
 
@@ -168,11 +173,6 @@ public class Player : Unit {
 			body.rotation =
 				Quaternion.RotateTowards(body.rotation, Quaternion.LookRotation(plDir), rotSpeed);
 		}
-
-	}
-
-
-	void OnDrawGizmo() {
 
 	}
 }

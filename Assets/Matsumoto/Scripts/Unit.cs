@@ -22,13 +22,12 @@ public abstract class Unit : MonoBehaviour {
 	[SerializeField]
 	private float _rotSpeed;
 
-	public Weapon[] equipWeapon { get; private set; }
-
 	public int maxHP { get { return _maxHP; } private set { _maxHP = value; } }
 	public int nowHP { get { return _nowHP; } private set { _nowHP = value; } }
 	public float moveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
 	public float rotSpeed { get { return _rotSpeed; } set { _rotSpeed = value; } }
 
+	public Weapon[] equipWeapon { get; private set; }
 	public bool isLockRotation { get; private set; }
 	public bool isAttack { get; protected set; }
 	public bool isDead { get; private set; }
@@ -67,14 +66,11 @@ public abstract class Unit : MonoBehaviour {
 	/// </summary>
 	public abstract void Move();
 
-
-
 	/// <summary>
-	/// ダメージを与える
+	/// 死亡時に呼ばれる
 	/// </summary>
-	/// <param name="damage"></param>
-	public virtual void ApplyDamage(int damage) {
-
+	public virtual void Death() {
+		nowHP = 0;
 	}
 
 	/// <summary>
@@ -139,6 +135,30 @@ public abstract class Unit : MonoBehaviour {
 		}
 
 		equipWeapon[slot] = null;
+	}
+
+	/// <summary>
+	/// 攻撃する
+	/// </summary>
+	/// <param name="from">攻撃するキャラクター</param>
+	/// <param name="to">攻撃を受けるキャラクター</param>
+	/// <param name="damage"></param>
+	/// <returns>成功したかどうか</returns>
+	public static bool Attack(Unit from, Unit to, int damage) {
+		if(!from || !to) return false;
+		Debug.Log("Attack " + from.name + " -> " + to.name);
+		to.ApplyDamage(damage);
+		return true;
+	}
+
+	/// <summary>
+	/// ダメージを与える
+	/// </summary>
+	/// <param name="from">攻撃するキャラクター</param>
+	/// <param name="damage"></param>
+	protected virtual void ApplyDamage(int damage) {
+		nowHP -= damage;
+		if(nowHP <= 0) Death();
 	}
 
 	/// <summary>
