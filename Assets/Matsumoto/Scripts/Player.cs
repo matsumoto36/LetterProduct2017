@@ -5,6 +5,8 @@ using GamepadInput;
 
 public class Player : Unit {
 
+	const string WEAPON_SWITCH_ANIM = "SwitchWeapon";
+
 	public GamePad.Index playerIndex;
 	public ControlType inputType;
 	
@@ -57,24 +59,20 @@ public class Player : Unit {
 
 	void Update() {
 
-		//武器の攻撃キーを定義
-		var attackBtn = new GamePad.Button[2] {
-			GamePad.Button.LeftShoulder,
-			GamePad.Button.RightShoulder
-		};
+		if(!equipWeapon[0]) return;
+		if(!canAttack) return;
 
 		//攻撃
-		for(int i = 0;i < 2;i++) {
-			if(equipWeapon[i]) {
-				if(InputManager.GetButtonDown(inputType, attackBtn[i], playerIndex))
-					equipWeapon[i].AttackStart();
-				if(InputManager.GetButton(inputType, attackBtn[i], playerIndex))
-					equipWeapon[i].Attack();
-				if(InputManager.GetButtonUp(inputType, attackBtn[i], playerIndex))
-					equipWeapon[i].AttackEnd();
-			}
-		}
+		Attack();
 
+		//武器交換
+		if(!equipWeapon[1]) return;
+		if(InputManager.GetButtonDown(inputType, GamePad.Button.RightShoulder, playerIndex)) {
+
+			//攻撃キャンセル
+			if(isAttack) equipWeapon[0].AttackEnd();
+			SwitchWeapon(WEAPON_SWITCH_ANIM, 1, () => { });
+		}
 	}
 
 	// Update is called once per frame
@@ -82,6 +80,34 @@ public class Player : Unit {
 
 		//移動処理
 		Move();
+
+
+	}
+
+	void Attack() {
+
+		//攻撃開始
+		if(InputManager.GetButtonDown(inputType, GamePad.Button.LeftShoulder, playerIndex)) {
+			equipWeapon[0].AttackStart();
+			isAttack = true;
+		}
+		//攻撃ループ
+		if(InputManager.GetButton(inputType, GamePad.Button.LeftShoulder, playerIndex)) {
+
+			//攻撃キャンセル復帰用
+			if(!isAttack) {
+				equipWeapon[0].AttackStart();
+				isAttack = true;
+			}
+			else {
+				equipWeapon[0].Attack();
+			}
+		}
+		//攻撃終了
+		if(InputManager.GetButtonUp(inputType, GamePad.Button.LeftShoulder, playerIndex)) {
+			equipWeapon[0].AttackEnd();
+			isAttack = false;
+		}
 	}
 
 	public override void Move() {
@@ -129,13 +155,8 @@ public class Player : Unit {
 			plDir = (mousePos - plPos).normalized;
 		}
 
-		if(isPlayAnim) {
-			Debug.Log("Anim"); return;
-		}
-
 		//実際の回転
-		if(!isPlayAnim && plDir.magnitude != 0) {
-			Debug.Log("ROT");
+		if(!isLockRotation && plDir.magnitude != 0) {
 			body.rotation =
 				Quaternion.RotateTowards(body.rotation, Quaternion.LookRotation(plDir), rotSpeed);
 		}

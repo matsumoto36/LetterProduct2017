@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public abstract class WeaponRanged : Weapon {
 
-	const string SHOT_ANCHOR_NAME = "[ShotAnchor]";
+	const string SHOT_ANCHOR = "[ShotAnchor]";
 
 	protected BulletData bData;
 
@@ -17,7 +17,7 @@ public abstract class WeaponRanged : Weapon {
 	public override void Init() {
 		base.Init();
 
-		shotAnchor = transform.Find(SHOT_ANCHOR_NAME);
+		shotAnchor = transform.Find(SHOT_ANCHOR);
 	}
 
 	/// <summary>

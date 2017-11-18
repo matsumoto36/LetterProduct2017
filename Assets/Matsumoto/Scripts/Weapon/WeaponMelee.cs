@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 近接武器
+/// </summary>
 [RequireComponent(typeof(Collider), typeof(Rigidbody))]
 public class WeaponMelee : Weapon {
 
@@ -22,7 +25,7 @@ public class WeaponMelee : Weapon {
 		if(!canAction) return;
 
 		//アニメーションを再生
-		unitOwner.PlayAnimation("Melee" + motionNum);
+		unitOwner.PlayMeleeAnimation("Melee" + motionNum, () => { });
 
 		//intervalの設定(最後に呼ぶこと)
 		base.Attack();
