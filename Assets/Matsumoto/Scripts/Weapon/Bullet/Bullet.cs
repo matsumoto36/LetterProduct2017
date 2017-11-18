@@ -37,10 +37,28 @@ public abstract class Bullet : MonoBehaviour {
 		hitMask = ~maskName.Sum((item) => LayerMask.GetMask(item));
 	}
 
+	/// <summary>
+	/// 弾が当たった瞬間
+	/// </summary>
+	/// <param name="other"></param>
 	public virtual void OnHitEnter(Collider other) { }
+	/// <summary>
+	/// 弾が当たっているとき
+	/// </summary>
+	/// <param name="other"></param>
 	public virtual void OnHitting(Collider other) { }
+	/// <summary>
+	/// 弾が当たった後の瞬間
+	/// </summary>
+	/// <param name="other"></param>
 	public virtual void OnHitExit(Collider other) { }
 
+	/// <summary>
+	/// 弾を生成する
+	/// </summary>
+	/// <param name="bData"></param>
+	/// <param name="transform"></param>
+	/// <returns></returns>
 	public static Bullet CreateBullet(BulletData bData, Transform transform) {
 
 		//親の生成

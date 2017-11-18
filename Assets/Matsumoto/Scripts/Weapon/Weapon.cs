@@ -7,9 +7,9 @@ using UnityEngine;
 /// </summary>
 public abstract class Weapon : MonoBehaviour {
 
-	public Unit owner { get; set; }
+	public Unit unitOwner { get; set; }
 
-	public bool canFire { get; private set; }
+	public bool canAction { get; private set; }
 
 	protected Transform body;
 
@@ -40,7 +40,7 @@ public abstract class Weapon : MonoBehaviour {
 	/// </summary>
 	public virtual void Attack() {
 
-		canFire = false;
+		canAction = false;
 		StartCoroutine(WaitInterval());
 	}
 
@@ -57,6 +57,6 @@ public abstract class Weapon : MonoBehaviour {
 	/// <returns></returns>
 	IEnumerator WaitInterval() {
 		yield return new WaitForSeconds(interval);
-		canFire = true;
+		canAction = true;
 	}
 }

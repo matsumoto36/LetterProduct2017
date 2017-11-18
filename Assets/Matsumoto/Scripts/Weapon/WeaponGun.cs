@@ -13,7 +13,7 @@ public class WeaponGun : WeaponRanged {
 	public override void Attack() {
 
 		//親クラスで攻撃ができるかの判断を行っている
-		if(!canFire) return;
+		if(!canAction) return;
 
 		//弾を発射
 		Bullet.CreateBullet(bData, shotAnchor);

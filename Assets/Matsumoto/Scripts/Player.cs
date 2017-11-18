@@ -7,7 +7,7 @@ public class Player : Unit {
 
 	public GamePad.Index playerIndex;
 	public ControlType inputType;
-
+	
 	// Use this for initialization
 	public override void Awake() {
 		base.Awake();
@@ -17,27 +17,33 @@ public class Player : Unit {
 
 		//***武器のロード処理は後で移行する***
 
+		////武器の生成
+		//var weapon = Instantiate(Resources.Load<GameObject>("Model/Weapon/TestWeaponGrenade")).AddComponent<WeaponGun>();
+
+		////弾データの作成
+		//var bullet = Resources.Load<Bullet>("System/Weapon/Bullet/BulletNormal");
+		//var model = Resources.Load<GameObject>("Model/Weapon/Bullet/TestBulletNormal");
+		//var bData = new BulletData(bullet, weapon, model);
+		//bData.SetBulletDataGrenade(10, 10, 10, 10);
+
+		////武器のデータ設定
+		//weapon.SetData(0.1f, bData);
+		////装備
+		//EquipWeapon(weapon, 0);
+
 		//武器の生成
-		var weapon = Instantiate(Resources.Load<GameObject>("Model/Weapon/TestWeaponGrenade")).AddComponent<WeaponGun>();
-
-		//弾データの作成
-		var bullet = Resources.Load<Bullet>("System/Weapon/Bullet/BulletNormal");
-		var model = Resources.Load<GameObject>("Model/Weapon/Bullet/TestBulletNormal");
-		var bData = new BulletData(bullet, weapon, model);
-		bData.SetBulletDataGrenade(10, 10, 10, 10);
-
+		var weapon = Instantiate(Resources.Load<GameObject>("Model/Weapon/TestWeaponSword")).AddComponent<WeaponMelee>();
 		//武器のデータ設定
-		weapon.SetData(0.1f, bData);
+		weapon.SetData(1f, 1) ;
 		//装備
 		EquipWeapon(weapon, 0);
-
 
 		//武器の生成
 		var weapon2 = Instantiate(Resources.Load<GameObject>("Model/Weapon/TestWeaponLaser")).AddComponent<WeaponLaser>();
 
 		//弾データの作成
-		var bullet2 = Resources.Load<Bullet>("System/Weapon/Bullet/BulletLaserHeal");
-		var model2 = Resources.Load<GameObject>("Model/Weapon/Bullet/TestBulletLaser");
+		var bullet2 = Resources.Load<Bullet>("System/Weapon/Bullet/BulletLaser");
+		var model2 = Resources.Load<GameObject>("Model/Weapon/Bullet/TestBulletLaser2");
 		var bData2 = new BulletData(bullet2, weapon2, model2);
 		bData2.SetBulletDataLaser(10, 20);
 
@@ -79,6 +85,7 @@ public class Player : Unit {
 	}
 
 	public override void Move() {
+
 
 		//移動先
 		var axis = InputManager.GetAxis(inputType, GamePad.Axis.LeftStick, playerIndex, true);
@@ -122,13 +129,19 @@ public class Player : Unit {
 			plDir = (mousePos - plPos).normalized;
 		}
 
+		if(isPlayAnim) {
+			Debug.Log("Anim"); return;
+		}
+
 		//実際の回転
-		if(plDir.magnitude != 0) {
+		if(!isPlayAnim && plDir.magnitude != 0) {
+			Debug.Log("ROT");
 			body.rotation =
 				Quaternion.RotateTowards(body.rotation, Quaternion.LookRotation(plDir), rotSpeed);
 		}
 
 	}
+
 
 	void OnDrawGizmo() {
 

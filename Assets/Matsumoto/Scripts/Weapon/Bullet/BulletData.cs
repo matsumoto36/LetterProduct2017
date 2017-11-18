@@ -9,7 +9,7 @@ using UnityEngine;
 public class BulletData {
 
 	public Bullet bullet { get; private set; }
-	public Weapon owner { get; private set; }
+	public Weapon bulletOwner { get; private set; }
 	public GameObject model { get; private set; }
 	public int power { get; private set; }
 	public float speed { get; private set; }
@@ -17,9 +17,9 @@ public class BulletData {
 	public int expPow { get; private set; }
 	public float maxLength { get; private set; }
 
-	public BulletData(Bullet bullet, Weapon owner, GameObject model) {
+	public BulletData(Bullet bullet, Weapon bulletOwner, GameObject model) {
 		this.bullet = bullet;
-		this.owner = owner;
+		this.bulletOwner = bulletOwner;
 		this.model = model;
 	}
 

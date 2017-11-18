@@ -12,7 +12,7 @@ public class BulletCollision : MonoBehaviour {
 	bool CheckHit(GameObject obj) {
 
 		//自分の場合はヒットしない
-		if(ReferenceEquals(obj, parent.bData.owner.owner.gameObject)) return false;
+		if(obj == parent.bData.bulletOwner.unitOwner.gameObject) return false;
 
 		//番号で渡されるため、マスクできるようにビット列にする
 		int layer = obj.layer == 0 ? 0 : (int)Mathf.Pow(2, obj.layer);

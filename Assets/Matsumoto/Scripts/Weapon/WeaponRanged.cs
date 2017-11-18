@@ -20,6 +20,11 @@ public abstract class WeaponRanged : Weapon {
 		shotAnchor = transform.Find(SHOT_ANCHOR_NAME);
 	}
 
+	/// <summary>
+	/// 必要なデータをセットする
+	/// </summary>
+	/// <param name="interval"></param>
+	/// <param name="bData"></param>
 	public virtual void SetData(float interval, BulletData bData) {
 		this.interval = interval;
 		this.bData = bData;

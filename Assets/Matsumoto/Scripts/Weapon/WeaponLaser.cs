@@ -49,7 +49,7 @@ public class WeaponLaser : WeaponRanged {
 
 				foreach(var hit in hitAll) {
 					//自分のデータは除外
-					if(ReferenceEquals(hit.collider.gameObject, bData.owner.owner.gameObject)) continue;
+					if(ReferenceEquals(hit.collider.gameObject, bData.bulletOwner.unitOwner.gameObject)) continue;
 					//当たったものの中で一番近い奴
 					if(hit.distance < length) length = hit.distance;
 				}

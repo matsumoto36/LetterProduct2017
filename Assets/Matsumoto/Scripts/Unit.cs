@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -15,6 +16,7 @@ public abstract class Unit : MonoBehaviour {
 	public float moveSpeed { get; set; }
 	public float rotSpeed { get; set; }
 	public Weapon[] equipWeapon { get; private set; }
+	public bool isPlayAnim { get; private set; }
 
 	protected Transform body;
 	protected Vector3 moveVec;
@@ -22,14 +24,26 @@ public abstract class Unit : MonoBehaviour {
 	protected Transform handAnchorR;
 	protected Rigidbody unitRig;
 
+	Animator anim;
+
 	// Use this for initialization
 	public virtual void Awake() {
+
 
 		equipWeapon = new Weapon[2];
 
 		body = transform.GetChild(0);
-		handAnchorL = body.Find(HAND_ANCHOR_L);
-		handAnchorR = body.Find(HAND_ANCHOR_R);
+
+		anim = GetComponent<Animator>();
+
+		foreach(Transform child in body.transform) {
+
+			handAnchorL = child.Find(HAND_ANCHOR_L);
+			handAnchorR = child.Find(HAND_ANCHOR_R);
+
+			if(handAnchorL && handAnchorR) break;
+		}
+
 		unitRig = GetComponent<Rigidbody>();
 	}
 
@@ -57,7 +71,20 @@ public abstract class Unit : MonoBehaviour {
 
 		//所持する
 		equipWeapon[slot] = weapon;
-		equipWeapon[slot].owner = this;
+		equipWeapon[slot].unitOwner = this;
+	}
+
+	public void PlayAnimation(string triggerName) {
+		StartCoroutine(PlayAnimWait(triggerName));
+	}
+
+	IEnumerator PlayAnimWait(string triggerName) {
+		anim.SetTrigger(triggerName);
+		anim.Update(0);
+		isPlayAnim = true;
+
+		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+		isPlayAnim = false;
 	}
 
 	/// <summary>
@@ -72,4 +99,29 @@ public abstract class Unit : MonoBehaviour {
 
 		equipWeapon[slot] = null;
 	}
+
+	/// <summary>
+	/// 近接攻撃の判定が始まったとき
+	/// </summary>
+	void OnMeleeAttackStart() {
+
+		if(!equipWeapon[0]) return;
+
+		var weaponMelee = equipWeapon[0].GetComponent<WeaponMelee>();
+		if(!weaponMelee) return;
+		weaponMelee.SetCollider(true);
+	}
+
+	/// <summary>
+	/// 近接攻撃の判定が終わったとき
+	/// </summary>
+	void OnMeleeAttackEnd() {
+
+		if(!equipWeapon[0]) return;
+
+		var weaponMelee = equipWeapon[0].GetComponent<WeaponMelee>();
+		if(!weaponMelee) return;
+		weaponMelee.SetCollider(false);
+	}
+
 }
