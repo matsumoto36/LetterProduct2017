@@ -59,20 +59,14 @@ public class Player : Unit {
 
 	void Update() {
 
+		//攻撃
 		if(!equipWeapon[0]) return;
 		if(!canAttack) return;
-
-		//攻撃
 		Attack();
 
 		//武器交換
 		if(!equipWeapon[1]) return;
-		if(InputManager.GetButtonDown(inputType, GamePad.Button.RightShoulder, playerIndex)) {
-
-			//攻撃キャンセル
-			if(isAttack) equipWeapon[0].AttackEnd();
-			SwitchWeapon(WEAPON_SWITCH_ANIM, 1, () => { });
-		}
+		CheckSwitchWeapon();
 	}
 
 	// Update is called once per frame
@@ -80,10 +74,11 @@ public class Player : Unit {
 
 		//移動処理
 		Move();
-
-
 	}
 
+	/// <summary>
+	/// 攻撃するかどうかも含め、各攻撃状態時の処理
+	/// </summary>
 	void Attack() {
 
 		//攻撃開始
@@ -107,6 +102,19 @@ public class Player : Unit {
 		if(InputManager.GetButtonUp(inputType, GamePad.Button.LeftShoulder, playerIndex)) {
 			equipWeapon[0].AttackEnd();
 			isAttack = false;
+		}
+	}
+
+	/// <summary>
+	/// 武器を交換するかどうか判断、交換する。
+	/// </summary>
+	void CheckSwitchWeapon() {
+
+		if(InputManager.GetButtonDown(inputType, GamePad.Button.RightShoulder, playerIndex)) {
+
+			//攻撃キャンセル
+			if(isAttack) equipWeapon[0].AttackEnd();
+			SwitchWeapon(WEAPON_SWITCH_ANIM, 1, () => { });
 		}
 	}
 

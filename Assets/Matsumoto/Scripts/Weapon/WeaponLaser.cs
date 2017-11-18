@@ -8,11 +8,15 @@ enum LaserState {
 	Shot
 }
 
+/// <summary>
+/// レーザー銃
+/// </summary>
 public class WeaponLaser : WeaponRanged {
 
 	BulletLaser laser;
-	float chargeTime;
 	LaserState state = LaserState.Idle;
+
+	float chargeTime;
 
 	public override void AttackStart() {
 		Debug.Log("Charge");

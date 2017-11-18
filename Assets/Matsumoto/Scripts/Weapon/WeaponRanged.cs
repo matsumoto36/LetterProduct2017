@@ -11,7 +11,6 @@ public abstract class WeaponRanged : Weapon {
 	const string SHOT_ANCHOR = "[ShotAnchor]";
 
 	protected BulletData bData;
-
 	protected Transform shotAnchor;
 
 	public override void Init() {

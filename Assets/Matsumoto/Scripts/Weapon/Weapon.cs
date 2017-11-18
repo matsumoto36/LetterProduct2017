@@ -7,14 +7,16 @@ using UnityEngine;
 /// </summary>
 public abstract class Weapon : MonoBehaviour {
 
+	[SerializeField]
+	protected int power;
+	[SerializeField]
+	protected float interval;
+
 	public Unit unitOwner { get; set; }
 
 	public bool canAction { get; private set; }
 
 	protected Transform body;
-
-	protected int power;
-	protected float interval;
 
 	void Start() {
 		Init();

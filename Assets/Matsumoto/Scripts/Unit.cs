@@ -13,13 +13,25 @@ public abstract class Unit : MonoBehaviour {
 	const int CAN_EQUIPPED_WEAPON_COUNT = 2;
 	const string HAND_ANCHOR = "[HandAnchor]";
 
+	[SerializeField]
+	private int _maxHP;
+	[SerializeField]
+	private int _nowHP;
+	[SerializeField]
+	private float _moveSpeed;
+	[SerializeField]
+	private float _rotSpeed;
+
 	public Weapon[] equipWeapon { get; private set; }
 
-	public float moveSpeed { get; set; }
-	public float rotSpeed { get; set; }
+	public int maxHP { get { return _maxHP; } private set { _maxHP = value; } }
+	public int nowHP { get { return _nowHP; } private set { _nowHP = value; } }
+	public float moveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
+	public float rotSpeed { get { return _rotSpeed; } set { _rotSpeed = value; } }
 
 	public bool isLockRotation { get; private set; }
 	public bool isAttack { get; protected set; }
+	public bool isDead { get; private set; }
 
 	public bool canAttack { get; private set; }
 
@@ -46,12 +58,24 @@ public abstract class Unit : MonoBehaviour {
 			handAnchor = child.Find(HAND_ANCHOR);
 			if(handAnchor) break;
 		}
+
+		nowHP = maxHP;
 	}
 
 	/// <summary>
 	/// 指定の向き・回転で移動 
 	/// </summary>
 	public abstract void Move();
+
+
+
+	/// <summary>
+	/// ダメージを与える
+	/// </summary>
+	/// <param name="damage"></param>
+	public virtual void ApplyDamage(int damage) {
+
+	}
 
 	/// <summary>
 	/// 武器を装備する
@@ -96,63 +120,12 @@ public abstract class Unit : MonoBehaviour {
 
 	}
 
-	IEnumerator SwitchWeaponWait(string animTriggerName, int weaponNum, Action onComplete) {
-
-		//攻撃キャンセル
-		isAttack = false;
-
-		anim.SetTrigger(animTriggerName);
-		anim.Update(0);
-		switchingWeaponNum = weaponNum;
-
-		//交換中は攻撃できません
-		canAttack = false;
-		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-		canAttack = true;
-
-		//内部的に交換
-		var w = equipWeapon[0];
-		equipWeapon[0] = equipWeapon[weaponNum];
-		equipWeapon[weaponNum] = w;
-
-		//完了後に実行
-		onComplete();
-	}
-
-	/// <summary>
-	/// 武器が入れ替わる瞬間
-	/// </summary>
-	void OnSwitchWeaponModel() {
-
-		//0番同士の交換はありえないので実行しない
-		if(switchingWeaponNum == 0) return;
-
-		//モデルの表示・非表示を切り替えるのみ
-		equipWeapon[0].gameObject.SetActive(false);
-		equipWeapon[switchingWeaponNum].gameObject.SetActive(true);
-	}
-
 	/// <summary>
 	/// 近接攻撃用のアニメーションを再生
 	/// </summary>
 	/// <param name="triggerName"></param>
 	public void PlayMeleeAnimation(string triggerName, Action onComplete) {
 		StartCoroutine(PlayMeleeAnimWait(triggerName, onComplete));
-	}
-
-	IEnumerator PlayMeleeAnimWait(string triggerName, Action onComplete) {
-
-		anim.SetTrigger(triggerName);
-		anim.Update(0);
-
-		isLockRotation = true;
-		//現状各アニメーション(Idleから)の遷移時間を0にしているので動いている。
-		//0でない場合は遷移前の長さが出てくるはず
-		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-		isLockRotation = false;
-
-		//完了時に実行
-		onComplete();
 	}
 
 	/// <summary>
@@ -166,6 +139,19 @@ public abstract class Unit : MonoBehaviour {
 		}
 
 		equipWeapon[slot] = null;
+	}
+
+	/// <summary>
+	/// 武器が入れ替わる瞬間
+	/// </summary>
+	void OnSwitchWeaponModel() {
+
+		//0番同士の交換はありえないので実行しない
+		if(switchingWeaponNum == 0) return;
+
+		//モデルの表示・非表示を切り替えるのみ
+		equipWeapon[0].gameObject.SetActive(false);
+		equipWeapon[switchingWeaponNum].gameObject.SetActive(true);
 	}
 
 	/// <summary>
@@ -192,4 +178,41 @@ public abstract class Unit : MonoBehaviour {
 		weaponMelee.SetCollider(false);
 	}
 
+	IEnumerator PlayMeleeAnimWait(string triggerName, Action onComplete) {
+
+		anim.SetTrigger(triggerName);
+		anim.Update(0);
+
+		isLockRotation = true;
+		//現状各アニメーション(Idleから)の遷移時間を0にしているので動いている。
+		//0でない場合は遷移前の長さが出てくるはず
+		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+		isLockRotation = false;
+
+		//完了時に実行
+		onComplete();
+	}
+
+	IEnumerator SwitchWeaponWait(string animTriggerName, int weaponNum, Action onComplete) {
+
+		//攻撃キャンセル
+		isAttack = false;
+
+		anim.SetTrigger(animTriggerName);
+		anim.Update(0);
+		switchingWeaponNum = weaponNum;
+
+		//交換中は攻撃できません
+		canAttack = false;
+		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+		canAttack = true;
+
+		//内部的に交換
+		var w = equipWeapon[0];
+		equipWeapon[0] = equipWeapon[weaponNum];
+		equipWeapon[weaponNum] = w;
+
+		//完了後に実行
+		onComplete();
+	}
 }
