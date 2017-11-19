@@ -16,6 +16,8 @@ public abstract class Unit : MonoBehaviour {
 	const string WEAPON_STATUS_MOD_KEY = "WEAPON_MOD";
 
 	[SerializeField]
+	int baseHP;
+	[SerializeField]
 	int _maxHP;
 	[SerializeField]
 	int _nowHP;
@@ -23,10 +25,13 @@ public abstract class Unit : MonoBehaviour {
 	float _moveSpeed;
 	[SerializeField]
 	float _rotSpeed;
-	[SerializeField]
-	StatusModifier _statusMod = new StatusModifier(1);
+	[SerializeField, Tooltip("パッシブ効果の合計値")]
+	StatusModifier _statusMod = new StatusModifier();
+	[SerializeField, Button("CalcSumStatusModfier", "パッシブ効果を更新")]
+	int dummy;
 
-	public int maxHP { get { return (int)(_maxHP * statusMod.mulHP); } private set { _maxHP = value; } }
+
+	public int maxHP { get { return _maxHP; } private set { _maxHP = value; } }
 	public int nowHP { get { return _nowHP; } protected set { _nowHP = value; } }
 	public float moveSpeed { get { return _moveSpeed * statusMod.mulMoveSpeed; } set { _moveSpeed = value; } }
 	public float rotSpeed { get { return _rotSpeed * statusMod.mulMoveSpeed; } set { _rotSpeed = value; } }
@@ -65,7 +70,7 @@ public abstract class Unit : MonoBehaviour {
 			if(handAnchor) break;
 		}
 
-		nowHP = maxHP;
+		nowHP = maxHP = baseHP;
 	}
 
 	/// <summary>
@@ -112,11 +117,13 @@ public abstract class Unit : MonoBehaviour {
 
 		var tempHP = maxHP;
 
-		statusMod = new StatusModifier(1) + statusModStack
+		statusMod = new StatusModifier() + statusModStack
 			.Select((item) => item.Value)
+			.Where((item) => item != null)
 			.Aggregate((item1, item2) => item1 + item2);
 
 		//HP上昇値の影響は受けるが、maxHPを超えず、nowHPを減らさないようにする
+		maxHP = (int)(baseHP * statusMod.mulHP);
 		nowHP = Mathf.Min(maxHP, Mathf.Max(nowHP, nowHP + maxHP - tempHP));
 	}
 
@@ -274,7 +281,6 @@ public abstract class Unit : MonoBehaviour {
 		isLockRotation = true;
 		//現状各アニメーション(Idleから)の遷移時間を0にしているので動いている。
 		//0でない場合は遷移前の長さが出てくるはず
-		Debug.Log(anim.GetCurrentAnimatorStateInfo(0).length);
 		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
 		isLockRotation = false;
 		anim.speed = 1;

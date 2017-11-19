@@ -57,7 +57,7 @@ public class WeaponMelee : Weapon {
 		//味方を除外する
 		if(other.tag == "Player") return;
 
-		Debug.Log(other.name);
+		Debug.Log("Hit:" + other.name);
 
 	}
 }

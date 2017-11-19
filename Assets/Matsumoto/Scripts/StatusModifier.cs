@@ -7,22 +7,18 @@ using UnityEngine;
 /// キャラクターのステータスに変更を加えるクラス
 /// </summary>
 [Serializable]
-public struct StatusModifier {
+public class StatusModifier{
 
 	public float mulHP;
 	public float mulMoveSpeed;
 	public float mulPow;
 	public float mulAttackSpeed;
 
-	/// <summary>
-	/// 全てのパラメータをparで初期化
-	/// </summary>
-	/// <param name="par"></param>
-	public StatusModifier(float par) {
-		mulHP = par;
-		mulMoveSpeed = par;
-		mulPow = par;
-		mulAttackSpeed = par;
+	public StatusModifier() {
+		mulHP = 1;
+		mulMoveSpeed = 1;
+		mulPow = 1;
+		mulAttackSpeed = 1;
 	}
 
 	public StatusModifier(float mulHP, float mulMoveSpeed, float mulPow, float mulAttackSpeed) {
@@ -38,5 +34,9 @@ public struct StatusModifier {
 			par1.mulMoveSpeed + par2.mulMoveSpeed - 1,
 			par1.mulPow + par2.mulPow - 1,
 			par1.mulAttackSpeed + par2.mulAttackSpeed - 1);
+	}
+
+	public new string ToString() {
+		return string.Format("HP:{0:p} MoveSpeed:{1:p} Power:{2:p} ATKSpeed{3:p}", mulHP, mulMoveSpeed, mulPow, mulAttackSpeed);
 	}
 }

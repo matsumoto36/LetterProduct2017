@@ -19,7 +19,7 @@ public class WeaponLaser : WeaponRanged {
 	float chargeTime;
 
 	public override void AttackStart() {
-		Debug.Log("Charge");
+		Debug.Log("ChargeStart");
 
 		//チャージ開始
 		state = LaserState.Charging;

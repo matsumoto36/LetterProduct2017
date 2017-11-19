@@ -1283,7 +1283,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad25d594d05fedd4fbaf802931e57b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHP: 100
+  baseHP: 100
+  _maxHP: 0
   _nowHP: 0
   _moveSpeed: 0
   _rotSpeed: 0
@@ -1292,6 +1293,7 @@ MonoBehaviour:
     mulMoveSpeed: 1
     mulPow: 1
     mulAttackSpeed: 1
+  dummy: 0
   playerIndex: 0
   inputType: 2
 --- !u!95 &1617143147
