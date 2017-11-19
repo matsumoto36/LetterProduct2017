@@ -148,6 +148,7 @@ public abstract class Unit : MonoBehaviour {
 	/// </summary>
 	public virtual void Death() {
 		nowHP = 0;
+		isDead = true;
 	}
 
 	/// <summary>
