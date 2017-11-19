@@ -14,15 +14,16 @@ public abstract class Weapon : MonoBehaviour {
 	[SerializeField]
 	StatusModifier _weaponMod = new StatusModifier();
 
-	public int power { get { return (int)(_power * unitOwner.statusMod.mulPow); } protected set { _power = value; } }
-	public float interval { get { return _interval / unitOwner.statusMod.mulAttackSpeed; } protected set { _interval = value; } }
+	public int power { get { return _power;} private set { _power = value; } }
+	public float interval { get { return _interval; } private set { _interval = value; } }
 	public StatusModifier weaponMod { get { return _weaponMod; } set { _weaponMod = value; } }
 
 	public Unit unitOwner { get; set; }
-
 	public bool canAction { get; private set; }
 
 	protected Transform body;
+	protected int basePower;
+	protected float baseInterval;
 
 	void Start() {
 		Init();
@@ -32,8 +33,15 @@ public abstract class Weapon : MonoBehaviour {
 	/// 初期設定
 	/// </summary>
 	public virtual void Init() {
+
 		StartCoroutine(WaitInterval());
-		Debug.Log("Init");
+		Debug.Log("WeaponBaseInit");
+	}
+
+	public virtual void UpdateStatus() {
+		Debug.Log("UpdateStatus");
+		power = (int)(basePower * unitOwner.statusMod.mulPow);
+		interval = baseInterval / unitOwner.statusMod.mulAttackSpeed;
 	}
 
 	/// <summary>

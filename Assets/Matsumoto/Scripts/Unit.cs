@@ -16,8 +16,6 @@ public abstract class Unit : MonoBehaviour {
 	const string WEAPON_STATUS_MOD_KEY = "WEAPON_MOD";
 
 	[SerializeField]
-	int baseHP;
-	[SerializeField]
 	int _maxHP;
 	[SerializeField]
 	int _nowHP;
@@ -27,14 +25,13 @@ public abstract class Unit : MonoBehaviour {
 	float _rotSpeed;
 	[SerializeField, Tooltip("パッシブ効果の合計値")]
 	StatusModifier _statusMod = new StatusModifier();
-	[SerializeField, Button("CalcSumStatusModfier", "パッシブ効果を更新")]
+	[SerializeField, Button("CalcStatus", "パッシブ効果を更新")]
 	int dummy;
-
 
 	public int maxHP { get { return _maxHP; } private set { _maxHP = value; } }
 	public int nowHP { get { return _nowHP; } protected set { _nowHP = value; } }
-	public float moveSpeed { get { return _moveSpeed * statusMod.mulMoveSpeed; } set { _moveSpeed = value; } }
-	public float rotSpeed { get { return _rotSpeed * statusMod.mulMoveSpeed; } set { _rotSpeed = value; } }
+	public float moveSpeed { get { return _moveSpeed; } private set { _moveSpeed = value; } }
+	public float rotSpeed { get { return _rotSpeed; } private set { _rotSpeed = value; } }
 	public StatusModifier statusMod { get { return _statusMod; } private set { _statusMod = value; } }
 
 	public Weapon[] equipWeapon { get; private set; }
@@ -48,6 +45,10 @@ public abstract class Unit : MonoBehaviour {
 	protected Vector3 moveVec;
 	protected Transform handAnchor;
 	protected Rigidbody unitRig;
+
+	int baseHP;
+	float baseMoveSpeed;
+	float baseRotSpeed;
 
 	Animator anim;
 	int switchingWeaponNum = 0;
@@ -70,7 +71,10 @@ public abstract class Unit : MonoBehaviour {
 			if(handAnchor) break;
 		}
 
-		nowHP = maxHP = baseHP;
+		//初期値の保存
+		baseHP = maxHP;
+		baseMoveSpeed = moveSpeed;
+		baseRotSpeed = rotSpeed;
 	}
 
 	/// <summary>
@@ -88,7 +92,7 @@ public abstract class Unit : MonoBehaviour {
 
 		statusModStack.Add(key, mod);
 		//再計算
-		CalcSumStatusModfier();
+		CalcStatus();
 		return true;
 	}
 
@@ -106,14 +110,14 @@ public abstract class Unit : MonoBehaviour {
 
 		statusModStack.Remove(key);
 		//再計算
-		CalcSumStatusModfier();
+		CalcStatus();
 		return true;
 	}
 
 	/// <summary>
-	/// パッシブ効果の合計を計算する
+	/// ステータスを計算して適用する
 	/// </summary>
-	public void CalcSumStatusModfier() {
+	public void CalcStatus() {
 
 		var tempHP = maxHP;
 
@@ -122,9 +126,16 @@ public abstract class Unit : MonoBehaviour {
 			.Where((item) => item != null)
 			.Aggregate((item1, item2) => item1 + item2);
 
+		//ステータスの更新
 		//HP上昇値の影響は受けるが、maxHPを超えず、nowHPを減らさないようにする
 		maxHP = (int)(baseHP * statusMod.mulHP);
 		nowHP = Mathf.Min(maxHP, Mathf.Max(nowHP, nowHP + maxHP - tempHP));
+		moveSpeed = baseMoveSpeed * statusMod.mulMoveSpeed;
+		rotSpeed = baseRotSpeed * statusMod.mulMoveSpeed;
+
+		foreach(var weapon in equipWeapon) {
+			if(weapon) weapon.UpdateStatus();
+		}
 	}
 
 	/// <summary>

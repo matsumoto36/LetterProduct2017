@@ -1283,11 +1283,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad25d594d05fedd4fbaf802931e57b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseHP: 100
-  _maxHP: 0
+  _maxHP: 100
   _nowHP: 0
-  _moveSpeed: 0
-  _rotSpeed: 0
+  _moveSpeed: 5
+  _rotSpeed: 10
   _statusMod:
     mulHP: 1
     mulMoveSpeed: 1

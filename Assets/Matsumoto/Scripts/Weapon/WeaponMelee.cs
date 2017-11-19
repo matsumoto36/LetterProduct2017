@@ -38,8 +38,9 @@ public class WeaponMelee : Weapon {
 	/// <param name="interval"></param>
 	/// <param name="motionNum"></param>
 	/// <param name="motionSpeed"></param>
-	public void SetData(float interval, int motionNum, float motionSpeed) {
-		this.interval = interval;
+	public void SetData(float interval, int power, int motionNum, float motionSpeed) {
+		baseInterval = interval;
+		basePower = power;
 		this.motionNum = motionNum;
 		this.motionSpeed = motionSpeed;
 	}

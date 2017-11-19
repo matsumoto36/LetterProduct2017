@@ -11,7 +11,6 @@ public class BulletData {
 	public Bullet bullet { get; private set; }
 	public Weapon bulletOwner { get; private set; }
 	public GameObject model { get; private set; }
-	public int power { get; private set; }
 	public float speed { get; private set; }
 	public float expRadius { get; private set; }
 	public int expPow { get; private set; }
@@ -24,17 +23,14 @@ public class BulletData {
 	}
 
 	public void SetBulletDataNormal(int power, float speed) {
-		this.power = power;
 		this.speed = speed;
 	}
 
 	public void SetBulletDataLaser(int power, int maxLength) {
-		this.power = power;
 		this.maxLength = maxLength;
 	}
 
 	public void SetBulletDataGrenade(int power, float speed, int expPow, float expRadius) {
-		this.power = power;
 		this.speed = speed;
 		this.expPow = expPow;
 		this.expRadius = expRadius;

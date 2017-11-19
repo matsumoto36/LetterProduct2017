@@ -24,8 +24,10 @@ public abstract class WeaponRanged : Weapon {
 	/// </summary>
 	/// <param name="interval"></param>
 	/// <param name="bData"></param>
-	public virtual void SetData(float interval, BulletData bData) {
-		this.interval = interval;
+	public virtual void SetData(float interval, int power, BulletData bData) {
+		baseInterval = interval;
+		basePower = power;
 		this.bData = bData;
+
 	}
 }
