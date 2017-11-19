@@ -9,6 +9,7 @@ using UnityEngine;
 public class WeaponMelee : Weapon {
 
 	int motionNum;
+	float motionSpeed;
 	Collider meleeCol;
 
 	public override void Init() {
@@ -25,7 +26,7 @@ public class WeaponMelee : Weapon {
 		if(!canAction) return;
 
 		//アニメーションを再生
-		unitOwner.PlayMeleeAnimation("Melee" + motionNum, () => { });
+		unitOwner.PlayMeleeAnimation("Melee" + motionNum, motionSpeed, () => { });
 
 		//intervalの設定(最後に呼ぶこと)
 		base.Attack();
@@ -36,9 +37,11 @@ public class WeaponMelee : Weapon {
 	/// </summary>
 	/// <param name="interval"></param>
 	/// <param name="motionNum"></param>
-	public void SetData(float interval, int motionNum) {
+	/// <param name="motionSpeed"></param>
+	public void SetData(float interval, int motionNum, float motionSpeed) {
 		this.interval = interval;
 		this.motionNum = motionNum;
+		this.motionSpeed = motionSpeed;
 	}
 
 	/// <summary>

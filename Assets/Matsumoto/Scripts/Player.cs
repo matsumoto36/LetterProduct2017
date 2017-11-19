@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using GamepadInput;
 
@@ -36,7 +37,8 @@ public class Player : Unit {
 		//武器の生成
 		var weapon = Instantiate(Resources.Load<GameObject>("Model/Weapon/TestWeaponSword")).AddComponent<WeaponMelee>();
 		//武器のデータ設定
-		weapon.SetData(1f, 1) ;
+		weapon.SetData(1f, 1, 1f);
+		weapon.weaponMod = new StatusModifier(1, 1.5f, 1.2f, 1);
 		//装備
 		EquipWeapon(weapon, 0);
 
@@ -51,8 +53,12 @@ public class Player : Unit {
 
 		//武器のデータ設定
 		weapon2.SetData(1f, bData2);
+		weapon2.weaponMod = new StatusModifier(1.5f, 0.8f, 1, 1);
 		//装備
 		EquipWeapon(weapon2, 1);
+
+		//パッシブ効果の適用
+		CalcSumStatusModfier();
 
 		Debug.Log("PlayerInit");
 	}

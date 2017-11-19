@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -12,20 +13,24 @@ public abstract class Unit : MonoBehaviour {
 
 	const int CAN_EQUIPPED_WEAPON_COUNT = 2;
 	const string HAND_ANCHOR = "[HandAnchor]";
+	const string WEAPON_STATUS_MOD_KEY = "WEAPON_MOD";
 
 	[SerializeField]
-	private int _maxHP;
+	int _maxHP;
 	[SerializeField]
-	private int _nowHP;
+	int _nowHP;
 	[SerializeField]
-	private float _moveSpeed;
+	float _moveSpeed;
 	[SerializeField]
-	private float _rotSpeed;
+	float _rotSpeed;
+	[SerializeField]
+	StatusModifier _statusMod = new StatusModifier(1);
 
-	public int maxHP { get { return _maxHP; } private set { _maxHP = value; } }
-	public int nowHP { get { return _nowHP; } private set { _nowHP = value; } }
-	public float moveSpeed { get { return _moveSpeed; } set { _moveSpeed = value; } }
-	public float rotSpeed { get { return _rotSpeed; } set { _rotSpeed = value; } }
+	public int maxHP { get { return (int)(_maxHP * statusMod.mulHP); } private set { _maxHP = value; } }
+	public int nowHP { get { return _nowHP; } protected set { _nowHP = value; } }
+	public float moveSpeed { get { return _moveSpeed * statusMod.mulMoveSpeed; } set { _moveSpeed = value; } }
+	public float rotSpeed { get { return _rotSpeed * statusMod.mulMoveSpeed; } set { _rotSpeed = value; } }
+	public StatusModifier statusMod { get { return _statusMod; } private set { _statusMod = value; } }
 
 	public Weapon[] equipWeapon { get; private set; }
 	public bool isLockRotation { get; private set; }
@@ -41,11 +46,13 @@ public abstract class Unit : MonoBehaviour {
 
 	Animator anim;
 	int switchingWeaponNum = 0;
+	Dictionary<string, StatusModifier> statusModStack;
 
 	// Use this for initialization
 	public virtual void Awake() {
 
 		equipWeapon = new Weapon[CAN_EQUIPPED_WEAPON_COUNT];
+		statusModStack = new Dictionary<string, StatusModifier>();
 		canAttack = true;
 
 		anim = GetComponent<Animator>();
@@ -59,6 +66,58 @@ public abstract class Unit : MonoBehaviour {
 		}
 
 		nowHP = maxHP;
+	}
+
+	/// <summary>
+	/// パッシブ効果を適用
+	/// </summary>
+	/// <param name="mod"></param>
+	/// <param name="key"></param>
+	/// <returns>適用できたか</returns>
+	public bool ApplyModifier(StatusModifier mod, string key) {
+
+		if(statusModStack
+			.Where((item) => item.Key == key)
+			.Count() > 0)
+			return false;
+
+		statusModStack.Add(key, mod);
+		//再計算
+		CalcSumStatusModfier();
+		return true;
+	}
+
+	/// <summary>
+	/// パッシブ効果を取り外す
+	/// </summary>
+	/// <param name="key"></param>
+	/// <returns>取り外せたか</returns>
+	public bool RemoveModifier(string key) {
+
+		if(statusModStack
+			.Where((item) => item.Key == key)
+			.Count() == 0)
+			return false;
+
+		statusModStack.Remove(key);
+		//再計算
+		CalcSumStatusModfier();
+		return true;
+	}
+
+	/// <summary>
+	/// パッシブ効果の合計を計算する
+	/// </summary>
+	public void CalcSumStatusModfier() {
+
+		var tempHP = maxHP;
+
+		statusMod = new StatusModifier(1) + statusModStack
+			.Select((item) => item.Value)
+			.Aggregate((item1, item2) => item1 + item2);
+
+		//HP上昇値の影響は受けるが、maxHPを超えず、nowHPを減らさないようにする
+		nowHP = Mathf.Min(maxHP, Mathf.Max(nowHP, nowHP + maxHP - tempHP));
 	}
 
 	/// <summary>
@@ -94,8 +153,27 @@ public abstract class Unit : MonoBehaviour {
 		equipWeapon[slot] = weapon;
 		equipWeapon[slot].unitOwner = this;
 
+		//パッシブ効果を登録
+		ApplyModifier(equipWeapon[slot].weaponMod, WEAPON_STATUS_MOD_KEY + slot);
+
 		//0番以外の武器は無効化
 		if(slot != 0) equipWeapon[slot].gameObject.SetActive(false);
+	}
+
+	/// <summary>
+	/// 武器を外す
+	/// </summary>
+	/// <param name="slot"></param>
+	public void RemoveWeapon(int slot) {
+
+		if(equipWeapon[slot]) {
+			Destroy(equipWeapon[slot].gameObject);
+		}
+		
+		//パッシブ効果を削除
+		RemoveModifier(WEAPON_STATUS_MOD_KEY + slot);
+
+		equipWeapon[slot] = null;
 	}
 
 	/// <summary>
@@ -120,21 +198,10 @@ public abstract class Unit : MonoBehaviour {
 	/// 近接攻撃用のアニメーションを再生
 	/// </summary>
 	/// <param name="triggerName"></param>
-	public void PlayMeleeAnimation(string triggerName, Action onComplete) {
-		StartCoroutine(PlayMeleeAnimWait(triggerName, onComplete));
-	}
-
-	/// <summary>
-	/// 武器を外す
-	/// </summary>
-	/// <param name="slot"></param>
-	public void RemoveWeapon(int slot) {
-
-		if(equipWeapon[slot]) {
-			Destroy(equipWeapon[slot].gameObject);
-		}
-
-		equipWeapon[slot] = null;
+	/// <param name="speed"></param>
+	/// <param name="onComplete">完了時に実行</param>
+	public void PlayMeleeAnimation(string triggerName, float speed, Action onComplete) {
+		StartCoroutine(PlayMeleeAnimWait(triggerName, speed, onComplete));
 	}
 
 	/// <summary>
@@ -198,16 +265,19 @@ public abstract class Unit : MonoBehaviour {
 		weaponMelee.SetCollider(false);
 	}
 
-	IEnumerator PlayMeleeAnimWait(string triggerName, Action onComplete) {
+	IEnumerator PlayMeleeAnimWait(string triggerName, float speed, Action onComplete) {
 
 		anim.SetTrigger(triggerName);
+		anim.speed = speed;
 		anim.Update(0);
 
 		isLockRotation = true;
 		//現状各アニメーション(Idleから)の遷移時間を0にしているので動いている。
 		//0でない場合は遷移前の長さが出てくるはず
+		Debug.Log(anim.GetCurrentAnimatorStateInfo(0).length);
 		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
 		isLockRotation = false;
+		anim.speed = 1;
 
 		//完了時に実行
 		onComplete();

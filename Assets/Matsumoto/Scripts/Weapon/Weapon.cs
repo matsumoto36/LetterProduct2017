@@ -8,10 +8,14 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour {
 
 	[SerializeField]
-	protected int power;
+	int _power;
 	[SerializeField]
-	protected float interval;
+	float _interval;
 
+	public int power { get { return (int)(_power * unitOwner.statusMod.mulPow); } protected set { _power = value; } }
+	public float interval { get { return _interval / unitOwner.statusMod.mulAttackSpeed; } protected set { _interval = value; } }
+
+	public StatusModifier weaponMod { get; set; }
 	public Unit unitOwner { get; set; }
 
 	public bool canAction { get; private set; }
@@ -26,6 +30,7 @@ public abstract class Weapon : MonoBehaviour {
 	/// 初期設定
 	/// </summary>
 	public virtual void Init() {
+		weaponMod = new StatusModifier(1);
 		StartCoroutine(WaitInterval());
 		Debug.Log("Init");
 	}
@@ -58,7 +63,7 @@ public abstract class Weapon : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	IEnumerator WaitInterval() {
-		yield return new WaitForSeconds(interval);
+		yield return new WaitForSeconds(interval / unitOwner.statusMod.mulAttackSpeed);
 		canAction = true;
 	}
 }
