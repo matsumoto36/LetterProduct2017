@@ -6,7 +6,7 @@ using GamepadInput;
 
 public class Player : Unit {
 
-	const string WEAPON_SWITCH_ANIM = "SwitchWeapon";
+	const string WEAPON_SWITCH_ANIM = "TestPlayerAnimationSwitch";
 
 	public GamePad.Index playerIndex;
 	public ControlType inputType;
@@ -34,8 +34,8 @@ public class Player : Unit {
 		//武器の生成
 		var weapon = Instantiate(Resources.Load<GameObject>("Model/Weapon/TestWeaponSword")).AddComponent<WeaponMelee>();
 		//武器のデータ設定
-		weapon.SetData(1f, 10, 1, 1f);
-		weapon.weaponMod = new StatusModifier(1, 1.5f, 1.2f, 1);
+		weapon.SetData(1f, 10, "TestPlayerAnimation", 1f);
+		weapon.weaponMod = new StatusModifier(1, 1.5f, 1.2f, 3);
 		//装備
 		EquipWeapon(weapon, 0);
 
@@ -65,6 +65,8 @@ public class Player : Unit {
 		//攻撃
 		if(!equipWeapon[0]) return;
 		if(!canAttack) return;
+		if(isPlayMeleeAnim) return;
+
 		Attack();
 
 		//武器交換
@@ -172,7 +174,7 @@ public class Player : Unit {
 		}
 
 		//実際の回転
-		if(!isLockRotation && plDir.magnitude != 0) {
+		if(!isPlayMeleeAnim && plDir.magnitude != 0) {
 			body.rotation =
 				Quaternion.RotateTowards(body.rotation, Quaternion.LookRotation(plDir), rotSpeed);
 		}

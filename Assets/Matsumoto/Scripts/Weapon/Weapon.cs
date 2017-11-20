@@ -72,7 +72,8 @@ public abstract class Weapon : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	IEnumerator WaitInterval() {
-		yield return new WaitForSeconds(interval / unitOwner.statusMod.mulAttackSpeed);
+		yield return new WaitForSeconds(interval);
+		Debug.Log(interval);
 		canAction = true;
 	}
 }

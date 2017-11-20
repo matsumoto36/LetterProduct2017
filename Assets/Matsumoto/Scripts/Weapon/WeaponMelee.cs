@@ -8,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider), typeof(Rigidbody))]
 public class WeaponMelee : Weapon {
 
-	int motionNum;
+	string motionName;
 	float motionSpeed;
 	Collider meleeCol;
 
@@ -26,7 +26,7 @@ public class WeaponMelee : Weapon {
 		if(!canAction) return;
 
 		//アニメーションを再生
-		unitOwner.PlayMeleeAnimation("Melee" + motionNum, motionSpeed, () => { });
+		unitOwner.PlayMeleeAnimation(motionName, motionSpeed * unitOwner.statusMod.mulAttackSpeed, () => { });
 
 		//intervalの設定(最後に呼ぶこと)
 		base.Attack();
@@ -38,10 +38,10 @@ public class WeaponMelee : Weapon {
 	/// <param name="interval"></param>
 	/// <param name="motionNum"></param>
 	/// <param name="motionSpeed"></param>
-	public void SetData(float interval, int power, int motionNum, float motionSpeed) {
+	public void SetData(float interval, int power, string motionName, float motionSpeed) {
 		baseInterval = interval;
 		basePower = power;
-		this.motionNum = motionNum;
+		this.motionName = motionName;
 		this.motionSpeed = motionSpeed;
 	}
 

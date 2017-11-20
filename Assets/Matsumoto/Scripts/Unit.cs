@@ -35,7 +35,7 @@ public abstract class Unit : MonoBehaviour {
 	public StatusModifier statusMod { get { return _statusMod; } private set { _statusMod = value; } }
 
 	public Weapon[] equipWeapon { get; private set; }
-	public bool isLockRotation { get; private set; }
+	public bool isPlayMeleeAnim { get; private set; }
 	public bool isAttack { get; protected set; }
 	public bool isDead { get; private set; }
 
@@ -206,10 +206,10 @@ public abstract class Unit : MonoBehaviour {
 		if(weaponNum == 0) return;
 		if(!equipWeapon[0]) return;
 		if(!equipWeapon[weaponNum]) return;
-		if(isLockRotation) return;
+		if(isPlayMeleeAnim) return;
 
 		//一定時間待つ
-		StartCoroutine(SwitchWeaponWait(animTriggerName, weaponNum, onComplete));
+		StartCoroutine(SwitchWeaponAnim(animTriggerName, weaponNum, onComplete));
 
 	}
 
@@ -284,35 +284,34 @@ public abstract class Unit : MonoBehaviour {
 		weaponMelee.SetCollider(false);
 	}
 
-	IEnumerator PlayMeleeAnimWait(string triggerName, float speed, Action onComplete) {
+	IEnumerator PlayMeleeAnimWait(string clipName, float speed, Action onComplete) {
 
-		anim.SetTrigger(triggerName);
-		anim.speed = speed;
-		anim.Update(0);
+		Debug.Log("MeleeAnim");
+		isPlayMeleeAnim = true;
+		yield return StartCoroutine(PlayAnimation(0, clipName, speed));
+		yield return new WaitForSeconds(0.2f);
+		isPlayMeleeAnim = false;
 
-		isLockRotation = true;
-		//現状各アニメーション(Idleから)の遷移時間を0にしているので動いている。
-		//0でない場合は遷移前の長さが出てくるはず
-		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-		isLockRotation = false;
-		anim.speed = 1;
+		//Idleに戻す
+		StartCoroutine(PlayAnimation(0, "Idle", 1));
+
+		Debug.Log("MeleeAnimEND");
 
 		//完了時に実行
 		onComplete();
 	}
 
-	IEnumerator SwitchWeaponWait(string animTriggerName, int weaponNum, Action onComplete) {
+	IEnumerator SwitchWeaponAnim(string clipName, int weaponNum, Action onComplete) {
+
+		Debug.Log("SwitchAnim");
 
 		//攻撃キャンセル
 		isAttack = false;
-
-		anim.SetTrigger(animTriggerName);
-		anim.Update(0);
 		switchingWeaponNum = weaponNum;
 
 		//交換中は攻撃できません
 		canAttack = false;
-		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+		yield return StartCoroutine(PlayAnimation(0, clipName, 1));
 		canAttack = true;
 
 		//内部的に交換
@@ -320,7 +319,34 @@ public abstract class Unit : MonoBehaviour {
 		equipWeapon[0] = equipWeapon[weaponNum];
 		equipWeapon[weaponNum] = w;
 
+		//Idleに戻す
+		StartCoroutine(PlayAnimation(0, "Idle", 1));
+
 		//完了後に実行
 		onComplete();
+	}
+
+	IEnumerator PlayAnimation(int layer, string clipName, float speed) {
+
+		var clip = anim.runtimeAnimatorController
+			.animationClips
+			.Where((item) => item.name == clipName)
+			.ToArray()[0];
+
+		if(!clip) yield break;
+
+		anim.CrossFade(clipName, 0, layer, 0);
+		anim.Update(0);
+
+		float t = 0;
+		float duration = clip.length / speed;
+		while(true) {
+
+			anim.speed = speed;
+
+			if((t += Time.deltaTime) >= duration) break;
+			yield return null;
+		}
+		anim.speed = 1;
 	}
 }
