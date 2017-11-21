@@ -62,6 +62,8 @@ public class Player : Unit {
 
 	void Update() {
 
+		if(Input.GetKeyDown(KeyCode.E)) GainEXP(1);
+
 		//攻撃
 		if(!equipWeapon[0]) return;
 		if(!canAttack) return;
@@ -84,7 +86,7 @@ public class Player : Unit {
 	/// <summary>
 	/// 攻撃するかどうかも含め、各攻撃状態時の処理
 	/// </summary>
-	void Attack() {
+	public override void Attack() {
 
 		//攻撃開始
 		if(InputManager.GetButtonDown(inputType, GamePad.Button.LeftShoulder, playerIndex)) {

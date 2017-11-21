@@ -13,8 +13,15 @@ public abstract class Unit : MonoBehaviour {
 
 	const int CAN_EQUIPPED_WEAPON_COUNT = 2;
 	const string HAND_ANCHOR = "[HandAnchor]";
-	const string WEAPON_STATUS_MOD_KEY = "WEAPON_MOD";
+	const string WEAPON_STATUS_MOD = "WEAPON_MOD";
+	const string LEVELUP_STATUS_MOD = "LEVEL_UP";
 
+	[SerializeField]
+	int _level = 1;
+	[SerializeField]
+	int nextLevelEXP = 10;
+	[SerializeField]
+	int dropEXP;
 	[SerializeField]
 	int _maxHP;
 	[SerializeField]
@@ -28,6 +35,7 @@ public abstract class Unit : MonoBehaviour {
 	[SerializeField, Button("CalcStatus", "パッシブ効果を更新")]
 	int dummy;
 
+	public int level { get { return _level; } private set { _level = value; } }
 	public int maxHP { get { return _maxHP; } private set { _maxHP = value; } }
 	public int nowHP { get { return _nowHP; } protected set { _nowHP = value; } }
 	public float moveSpeed { get { return _moveSpeed; } private set { _moveSpeed = value; } }
@@ -35,6 +43,7 @@ public abstract class Unit : MonoBehaviour {
 	public StatusModifier statusMod { get { return _statusMod; } private set { _statusMod = value; } }
 
 	public Weapon[] equipWeapon { get; private set; }
+	public int experience { get; private set; }
 	public bool isPlayMeleeAnim { get; private set; }
 	public bool isAttack { get; protected set; }
 	public bool isDead { get; private set; }
@@ -46,12 +55,15 @@ public abstract class Unit : MonoBehaviour {
 	protected Transform handAnchor;
 	protected Rigidbody unitRig;
 
+	//計算用
+	int baseNextLevel;
 	int baseHP;
 	float baseMoveSpeed;
 	float baseRotSpeed;
 
 	Animator anim;
 	int switchingWeaponNum = 0;
+	StatusModifier levelUpStatus = new StatusModifier();
 	Dictionary<string, StatusModifier> statusModStack;
 
 	// Use this for initialization
@@ -64,6 +76,7 @@ public abstract class Unit : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		unitRig = GetComponent<Rigidbody>();
 
+		//アンカーを取得
 		body = transform.GetChild(0);
 		foreach(Transform child in body.transform) {
 
@@ -72,9 +85,13 @@ public abstract class Unit : MonoBehaviour {
 		}
 
 		//初期値の保存
+		baseNextLevel = nextLevelEXP;
 		baseHP = maxHP;
 		baseMoveSpeed = moveSpeed;
 		baseRotSpeed = rotSpeed;
+
+		//レベルアップ用ステータスをパッシブ効果として実装
+		ApplyModifier(levelUpStatus, LEVELUP_STATUS_MOD);
 	}
 
 	/// <summary>
@@ -133,15 +150,47 @@ public abstract class Unit : MonoBehaviour {
 		moveSpeed = baseMoveSpeed * statusMod.mulMoveSpeed;
 		rotSpeed = baseRotSpeed * statusMod.mulMoveSpeed;
 
+		//武器ステータスの更新
 		foreach(var weapon in equipWeapon) {
 			if(weapon) weapon.UpdateStatus();
 		}
 	}
 
 	/// <summary>
-	/// 指定の向き・回転で移動 
+	/// 経験値を得る
+	/// </summary>
+	/// <param name="exp"></param>
+	public void GainEXP(int exp) {
+
+		bool isLevelUp = false;
+		//レベルアップする分だけ実行
+		while(exp >= nextLevelEXP) {
+			isLevelUp = true;
+
+			//レベルアップ
+			exp -= nextLevelEXP;
+			level++;
+		}
+
+		if(isLevelUp) {
+			//ステータスの強化
+			GameBalance.ApplyNextLevelStatus(levelUpStatus, level);
+			CalcStatus();
+			//次のレベルに必要な経験値をセット
+			nextLevelEXP = GameBalance.CalcNextLevelExp(baseNextLevel, level);
+		}
+		nextLevelEXP -= exp;
+	}
+
+	/// <summary>
+	/// 移動 
 	/// </summary>
 	public abstract void Move();
+
+	/// <summary>
+	/// 攻撃
+	/// </summary>
+	public abstract void Attack();
 
 	/// <summary>
 	/// 死亡時に呼ばれる
@@ -173,7 +222,7 @@ public abstract class Unit : MonoBehaviour {
 		equipWeapon[slot].unitOwner = this;
 
 		//パッシブ効果を登録
-		ApplyModifier(equipWeapon[slot].weaponMod, WEAPON_STATUS_MOD_KEY + slot);
+		ApplyModifier(equipWeapon[slot].weaponMod, WEAPON_STATUS_MOD + slot);
 
 		//0番以外の武器は無効化
 		if(slot != 0) equipWeapon[slot].gameObject.SetActive(false);
@@ -190,7 +239,7 @@ public abstract class Unit : MonoBehaviour {
 		}
 		
 		//パッシブ効果を削除
-		RemoveModifier(WEAPON_STATUS_MOD_KEY + slot);
+		RemoveModifier(WEAPON_STATUS_MOD + slot);
 
 		equipWeapon[slot] = null;
 	}
@@ -233,7 +282,24 @@ public abstract class Unit : MonoBehaviour {
 	public static bool Attack(Unit from, Unit to, int damage) {
 		if(!from || !to) return false;
 		Debug.Log("Attack " + from.name + " -> " + to.name);
+		//ダメージを与える
 		to.ApplyDamage(damage);
+		return true;
+	}
+	/// <summary>
+	/// 回復する
+	/// </summary>
+	/// <returns></returns>
+	public static bool Heal(Unit from, Unit to, int heal) {
+		if(!from || !to) return false;
+		Debug.Log("Heal " + from.name + " -> " + to.name);
+
+		int healPoint = Mathf.Min(heal, to.maxHP - to.nowHP);
+		//回復した分だけ経験値を得る
+		from.GainEXP(healPoint);
+		//回復する
+		to.ApplyDamage(-healPoint);
+
 		return true;
 	}
 
