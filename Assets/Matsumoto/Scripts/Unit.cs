@@ -146,7 +146,9 @@ public abstract class Unit : MonoBehaviour {
 		//ステータスの更新
 		//HP上昇値の影響は受けるが、maxHPを超えず、nowHPを減らさないようにする
 		maxHP = (int)(baseHP * statusMod.mulHP);
+		Debug.Log(Mathf.Max(nowHP, nowHP + maxHP - tempHP));
 		nowHP = Mathf.Min(maxHP, Mathf.Max(nowHP, nowHP + maxHP - tempHP));
+
 		moveSpeed = baseMoveSpeed * statusMod.mulMoveSpeed;
 		rotSpeed = baseRotSpeed * statusMod.mulMoveSpeed;
 
@@ -162,7 +164,7 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="exp"></param>
 	public void GainEXP(int exp) {
 
-		bool isLevelUp = false;
+		var isLevelUp = false;
 		//レベルアップする分だけ実行
 		while(exp >= nextLevelEXP) {
 			isLevelUp = true;
@@ -170,12 +172,16 @@ public abstract class Unit : MonoBehaviour {
 			//レベルアップ
 			exp -= nextLevelEXP;
 			level++;
+
+			Debug.Log("Level UP! : " + level);
 		}
 
 		if(isLevelUp) {
 			//ステータスの強化
 			GameBalance.ApplyNextLevelStatus(levelUpStatus, level);
+			var tempHP = maxHP;
 			CalcStatus();
+
 			//次のレベルに必要な経験値をセット
 			nextLevelEXP = GameBalance.CalcNextLevelExp(baseNextLevel, level);
 		}

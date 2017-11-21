@@ -56,6 +56,7 @@ public class Player : Unit {
 
 		//パッシブ効果の適用
 		CalcStatus();
+		nowHP = maxHP;
 
 		Debug.Log("PlayerInit");
 	}
@@ -63,6 +64,8 @@ public class Player : Unit {
 	void Update() {
 
 		if(Input.GetKeyDown(KeyCode.E)) GainEXP(1);
+		if(Input.GetKeyDown(KeyCode.R)) GainEXP(10);
+		if(Input.GetKeyDown(KeyCode.T)) GainEXP(100);
 
 		//攻撃
 		if(!equipWeapon[0]) return;

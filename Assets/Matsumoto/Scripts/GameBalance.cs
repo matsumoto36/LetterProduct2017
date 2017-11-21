@@ -25,7 +25,7 @@ public static class GameBalance {
 	/// <param name="mod"></param>
 	public static void ApplyNextLevelStatus(StatusModifier mod, int level) {
 		if(level == 0) return;
-		mod.mulHP = Mathf.Pow(1.25f, level);
-		mod.mulPow = Mathf.Pow(1.5f, level);
+		mod.mulHP = Mathf.Pow(1.25f, level-1);
+		mod.mulPow = Mathf.Pow(1.5f, level-1);
 	}
 }
