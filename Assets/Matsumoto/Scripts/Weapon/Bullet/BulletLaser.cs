@@ -41,8 +41,7 @@ public class BulletLaser : Bullet {
 		}
 
 		lastAttackUnit = target;
-		buffPoint += bData.bulletOwner.power * (Time.time - oldTime);
-		Debug.Log("buffDamage:" + buffPoint);
+		buffPoint += bData.bulletOwner.power * Time.deltaTime;
 		//与える量を合計して1以上になったら実際に攻撃
 		if(buffPoint >= 1) {
 			var point = (int)buffPoint;
