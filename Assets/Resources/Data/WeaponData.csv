@@ -1,2 +1,3 @@
 Sword,Model/Weapon/TestWeaponSword,WeaponMelee,1,10,1,1,1,1,TestPlayerAnimation,1
 LazerGun,Model/Weapon/TestWeaponLaser,WeaponLaser,1,10,1,1,1,1,1,
+HealGun,Model/Weapon/TestWeaponLaser,WeaponLaser,1,1,1,1,1,1,2,

@@ -45,9 +45,13 @@ public class Enemy : Unit {
 	/// <returns></returns>
 	IEnumerator Attacking(float duration) {
 
+		//攻撃中なら中止
+		if(isAttack) yield break;
+
 		isAttack = true;
 		equipWeapon[0].AttackStart();
 
+		//設定した時間の間、攻撃し続ける
 		do {
 			equipWeapon[0].Attack();
 			yield return null;

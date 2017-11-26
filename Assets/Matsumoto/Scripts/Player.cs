@@ -17,7 +17,7 @@ public class Player : Unit {
 
 		//装備
 		EquipWeapon(WeaponDataContainer.CreateWeapon(0), 0);
-		EquipWeapon(WeaponDataContainer.CreateWeapon(1), 1);
+		EquipWeapon(WeaponDataContainer.CreateWeapon(2), 1);
 
 		//パッシブ効果の適用
 		CalcStatus();

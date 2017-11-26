@@ -60,6 +60,7 @@ public abstract class Unit : MonoBehaviour {
 	int baseHP;
 	float baseMoveSpeed;
 	float baseRotSpeed;
+	float buffEXP = 0;
 
 	List<DamageLog> attackedUnitList;
 	Animator anim;
@@ -171,10 +172,13 @@ public abstract class Unit : MonoBehaviour {
 	/// 経験値を得る
 	/// </summary>
 	/// <param name="exp"></param>
-	public void GainEXP(int exp) {
+	public void GainEXP(float exp) {
 
-		var isLevelUp = false;
+		//バッファに貯めた経験値を取り出す
+		exp += buffEXP;
+
 		//レベルアップする分だけ実行
+		var isLevelUp = false;
 		while(exp >= nextLevelEXP) {
 
 			isLevelUp = true;
@@ -194,7 +198,10 @@ public abstract class Unit : MonoBehaviour {
 			GameBalance.ApplyNextLevelStatus(levelUpStatus, level);
 			CalcStatus();
 		}
-		nextLevelEXP -= exp;
+
+		//保存
+		buffEXP = exp - (int)exp;
+		nextLevelEXP -= (int)exp;
 	}
 
 	/// <summary>
@@ -345,7 +352,7 @@ public abstract class Unit : MonoBehaviour {
 
 		int healPoint = Mathf.Min(heal, to.maxHP - to.nowHP);
 		//回復した分だけ経験値を得る
-		from.GainEXP(healPoint);
+		from.GainEXP(GameBalance.CalcHealExp(healPoint));
 		//回復する
 		to.ApplyDamage(-healPoint);
 

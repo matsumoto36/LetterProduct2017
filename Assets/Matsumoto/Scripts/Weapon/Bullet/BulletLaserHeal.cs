@@ -15,7 +15,11 @@ public class BulletLaserHeal : BulletLaser {
 		bData.bulletOwner.SetHitMask("EnemyLayer", "BulletLayer");
 	}
 
+
+
 	public override void OnHitting(Collider other) {
-		Heal(other.GetComponent<Unit>());
+		Irradiation(other.GetComponent<Unit>(), (unit, heal) => {
+			Unit.Heal(bData.bulletOwner.unitOwner, unit, heal);
+		});
 	}
 }

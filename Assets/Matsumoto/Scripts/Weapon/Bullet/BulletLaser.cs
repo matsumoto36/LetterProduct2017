@@ -9,7 +9,7 @@ using UnityEngine;
 public class BulletLaser : Bullet {
 
 	Unit lastAttackUnit;
-	float buffDamage = 0;
+	float buffPoint = 0;
 	float oldTime = 0;
 
 	public override void Init() {
@@ -26,26 +26,40 @@ public class BulletLaser : Bullet {
 	}
 	float _length;
 
-	protected override void Attack(Unit target) {
+	/// <summary>
+	/// 継続的にヒットするとき
+	/// </summary>
+	/// <param name="target"></param>
+	/// <param name="onApply">ダメージ等を与えるとき</param>
+	protected void Irradiation(Unit target, Action<Unit, int> onApply) {
 
 		if(!target) return;
 
 		if(lastAttackUnit != target) {
-			buffDamage = 0;
+			buffPoint = 0;
 			oldTime = Time.time;
 		}
 
 		lastAttackUnit = target;
-		buffDamage += bData.bulletOwner.power * (Time.time - oldTime);
-		Debug.Log("buffDamage:" + buffDamage);
-		//ダメージ量を合計して1以上になったら実際に攻撃
-		if(buffDamage >= 1) {
-			var damage = (int)buffDamage;
-			buffDamage -= damage;
-			Unit.Attack(bData.bulletOwner.unitOwner, target, damage);
+		buffPoint += bData.bulletOwner.power * (Time.time - oldTime);
+		Debug.Log("buffDamage:" + buffPoint);
+		//与える量を合計して1以上になったら実際に攻撃
+		if(buffPoint >= 1) {
+			var point = (int)buffPoint;
+			buffPoint -= point;
+
+			//適用
+			onApply(target, point);
 		}
 
 		oldTime = Time.time;
+	}
+
+	protected override void Attack(Unit target) {
+		//照射系ダメージ
+		Irradiation(target, (unit, damage) => {
+			Unit.Attack(bData.bulletOwner.unitOwner, target, damage);
+		});
 	}
 
 	public override void OnHitting(Collider other) {

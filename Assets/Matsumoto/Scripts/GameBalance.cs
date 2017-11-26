@@ -28,4 +28,13 @@ public static class GameBalance {
 		mod.mulHP = Mathf.Pow(1.05f, level-1);
 		mod.mulPow = Mathf.Pow(1.10f, level-1);
 	}
+
+	/// <summary>
+	/// 回復量から経験値量を計算する
+	/// </summary>
+	/// <param name="healPoint"></param>
+	/// <returns></returns>
+	public static float CalcHealExp(int healPoint) {
+		return healPoint / 4.0f;
+	}
 }
