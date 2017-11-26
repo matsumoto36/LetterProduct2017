@@ -15,50 +15,19 @@ public class Player : Unit {
 	public override void Awake() {
 		base.Awake();
 
-		//***武器のロード処理は後で移行する***
+		//***武器のロード処理は移行しました***
 
-		////武器の生成
-		//var weapon = Instantiate(Resources.Load<GameObject>("Model/Weapon/TestWeaponGrenade")).AddComponent<WeaponGun>();
+		WeaponDataContainer.Load();
 
-		////弾データの作成
-		//var bullet = Resources.Load<Bullet>("System/Weapon/Bullet/BulletNormal");
-		//var model = Resources.Load<GameObject>("Model/Weapon/Bullet/TestBulletNormal");
-		//var bData = new BulletData(bullet, weapon, model);
-		//bData.SetBulletDataGrenade(10, 10, 10, 10);
-
-		////武器のデータ設定
-		//weapon.SetData(0.1f, bData);
-		////装備
-		//EquipWeapon(weapon, 0);
-
-		//武器の生成
-		var weapon = Instantiate(Resources.Load<GameObject>("Model/Weapon/TestWeaponSword")).AddComponent<WeaponMelee>();
-		//武器のデータ設定
-		weapon.SetData(1f, 10, "TestPlayerAnimation", 1f);
-		weapon.weaponMod = new StatusModifier(1, 1.5f, 1.2f, 3);
 		//装備
-		EquipWeapon(weapon, 0);
-
-		//武器の生成
-		var weapon2 = Instantiate(Resources.Load<GameObject>("Model/Weapon/TestWeaponLaser")).AddComponent<WeaponLaser>();
-
-		//弾データの作成
-		var bullet2 = Resources.Load<Bullet>("System/Weapon/Bullet/BulletLaser");
-		var model2 = Resources.Load<GameObject>("Model/Weapon/Bullet/TestBulletLaser2");
-		var bData2 = new BulletData(bullet2, weapon2, model2);
-		bData2.SetBulletDataLaser(10, 20);
-
-		//武器のデータ設定
-		weapon2.SetData(1f, 5, bData2);
-		weapon2.weaponMod = new StatusModifier(1.5f, 0.8f, 1, 1);
-		//装備
-		EquipWeapon(weapon2, 1);
+		EquipWeapon(WeaponDataContainer.CreateWeapon(0), 0);
+		EquipWeapon(WeaponDataContainer.CreateWeapon(1), 1);
 
 		//パッシブ効果の適用
 		CalcStatus();
 		nowHP = maxHP;
 
-		Debug.Log("PlayerInit");
+		Debug.Log("PlayerInitEnd");
 	}
 
 	void Update() {

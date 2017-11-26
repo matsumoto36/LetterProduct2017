@@ -61,15 +61,18 @@ public abstract class Unit : MonoBehaviour {
 	float baseMoveSpeed;
 	float baseRotSpeed;
 
+	List<DamageLog> attackedUnitList;
 	Animator anim;
 	int switchingWeaponNum = 0;
-	StatusModifier levelUpStatus = new StatusModifier();
+	StatusModifier levelUpStatus;
 	Dictionary<string, StatusModifier> statusModStack;
 
 	// Use this for initialization
 	public virtual void Awake() {
 
 		equipWeapon = new Weapon[CAN_EQUIPPED_WEAPON_COUNT];
+		levelUpStatus = new StatusModifier();
+		attackedUnitList = new List<DamageLog>();
 		statusModStack = new Dictionary<string, StatusModifier>();
 		canAttack = true;
 
@@ -146,7 +149,6 @@ public abstract class Unit : MonoBehaviour {
 		//ステータスの更新
 		//HP上昇値の影響は受けるが、maxHPを超えず、nowHPを減らさないようにする
 		maxHP = (int)(baseHP * statusMod.mulHP);
-		Debug.Log(Mathf.Max(nowHP, nowHP + maxHP - tempHP));
 		nowHP = Mathf.Min(maxHP, Mathf.Max(nowHP, nowHP + maxHP - tempHP));
 
 		moveSpeed = baseMoveSpeed * statusMod.mulMoveSpeed;
@@ -179,7 +181,6 @@ public abstract class Unit : MonoBehaviour {
 		if(isLevelUp) {
 			//ステータスの強化
 			GameBalance.ApplyNextLevelStatus(levelUpStatus, level);
-			var tempHP = maxHP;
 			CalcStatus();
 
 			//次のレベルに必要な経験値をセット
@@ -204,6 +205,18 @@ public abstract class Unit : MonoBehaviour {
 	public virtual void Death() {
 		nowHP = 0;
 		isDead = true;
+
+		//経験値分配
+		var damageSum = attackedUnitList
+			.Select((item) => item.damage)
+			.Sum();
+
+		attackedUnitList
+			.Where((item) => item.attackUnit)
+			.Select((item) => {
+				item.attackUnit.GainEXP(item.damage / damageSum);
+				return true;
+			});
 	}
 
 	/// <summary>
@@ -243,7 +256,7 @@ public abstract class Unit : MonoBehaviour {
 		if(equipWeapon[slot]) {
 			Destroy(equipWeapon[slot].gameObject);
 		}
-		
+
 		//パッシブ効果を削除
 		RemoveModifier(WEAPON_STATUS_MOD + slot);
 
@@ -290,6 +303,21 @@ public abstract class Unit : MonoBehaviour {
 		Debug.Log("Attack " + from.name + " -> " + to.name);
 		//ダメージを与える
 		to.ApplyDamage(damage);
+
+		//経験値分配用
+		bool findFromUnit = to.attackedUnitList
+			.Where((item) => item.attackUnit == from)
+			.Count() > 0;
+
+		if(findFromUnit) {
+			to.attackedUnitList
+			.Where((item) => item.attackUnit == from)
+			.Select((item) => item.damage += damage);
+		}
+		else {
+			to.attackedUnitList.Add(new DamageLog(from, damage));
+		}
+
 		return true;
 	}
 	/// <summary>
@@ -367,15 +395,11 @@ public abstract class Unit : MonoBehaviour {
 		//Idleに戻す
 		StartCoroutine(PlayAnimation(0, "Idle", 1));
 
-		Debug.Log("MeleeAnimEND");
-
 		//完了時に実行
 		onComplete();
 	}
 
 	IEnumerator SwitchWeaponAnim(string clipName, int weaponNum, Action onComplete) {
-
-		Debug.Log("SwitchAnim");
 
 		//攻撃キャンセル
 		isAttack = false;

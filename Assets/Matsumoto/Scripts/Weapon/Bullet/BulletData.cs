@@ -6,8 +6,9 @@ using UnityEngine;
 /// <summary>
 /// 弾の情報全部入りクラス
 /// </summary>
-public class BulletData {
+public class BulletData{
 
+	public string name { get; private set; }
 	public Bullet bullet { get; private set; }
 	public Weapon bulletOwner { get; private set; }
 	public GameObject model { get; private set; }
@@ -16,23 +17,17 @@ public class BulletData {
 	public int expPow { get; private set; }
 	public float maxLength { get; private set; }
 
-	public BulletData(Bullet bullet, Weapon bulletOwner, GameObject model) {
+	public BulletData(string name, Bullet bullet, GameObject model, float speed, int expPow, float expRadius, float maxLength) {
+		this.name = name;
 		this.bullet = bullet;
-		this.bulletOwner = bulletOwner;
 		this.model = model;
-	}
-
-	public void SetBulletDataNormal(int power, float speed) {
-		this.speed = speed;
-	}
-
-	public void SetBulletDataLaser(int power, int maxLength) {
-		this.maxLength = maxLength;
-	}
-
-	public void SetBulletDataGrenade(int power, float speed, int expPow, float expRadius) {
 		this.speed = speed;
 		this.expPow = expPow;
 		this.expRadius = expRadius;
+		this.maxLength = maxLength;
+	}
+
+	public void SetOwner(Weapon bulletOwner) {
+		this.bulletOwner = bulletOwner;
 	}
 }

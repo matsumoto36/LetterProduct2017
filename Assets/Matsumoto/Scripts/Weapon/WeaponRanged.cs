@@ -27,6 +27,7 @@ public abstract class WeaponRanged : Weapon {
 	public virtual void SetData(float interval, int power, BulletData bData) {
 		baseInterval = interval;
 		basePower = power;
+		bData.SetOwner(this);
 		this.bData = bData;
 
 	}

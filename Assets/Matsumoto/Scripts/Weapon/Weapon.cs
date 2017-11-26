@@ -35,11 +35,11 @@ public abstract class Weapon : MonoBehaviour {
 	public virtual void Init() {
 
 		StartCoroutine(WaitInterval());
-		Debug.Log("WeaponBaseInit");
+		Debug.Log("WeaponBaseInitEnd");
 	}
 
 	public virtual void UpdateStatus() {
-		Debug.Log("UpdateStatus");
+		Debug.Log(string.Format("UpdateStatus : {0}", name));
 		power = (int)(basePower * unitOwner.statusMod.mulPow);
 		interval = baseInterval / unitOwner.statusMod.mulAttackSpeed;
 	}
@@ -73,7 +73,6 @@ public abstract class Weapon : MonoBehaviour {
 	/// <returns></returns>
 	IEnumerator WaitInterval() {
 		yield return new WaitForSeconds(interval);
-		Debug.Log(interval);
 		canAction = true;
 	}
 }

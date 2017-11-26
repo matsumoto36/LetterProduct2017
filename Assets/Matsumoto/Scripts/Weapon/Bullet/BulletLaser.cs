@@ -18,7 +18,7 @@ public class BulletLaser : Bullet {
 	}
 	float _length;
 
-	public override void OnHitEnter(Collider other) {
-
+	public override void OnHitting(Collider other) {
+		Debug.Log("Hit:" + other.name);
 	}
 }

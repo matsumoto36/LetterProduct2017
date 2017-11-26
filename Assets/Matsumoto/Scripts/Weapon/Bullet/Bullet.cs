@@ -34,7 +34,14 @@ public abstract class Bullet : MonoBehaviour {
 	/// </summary>
 	/// <param name="mask"></param>
 	public void SetHitMask(params string[] maskName) {
-		hitMask = ~maskName.Sum((item) => LayerMask.GetMask(item));
+		//hitMask = ~maskName.Sum((item) => LayerMask.GetMask(item));
+
+		hitMask = 0;
+		foreach(var n in maskName) {
+			hitMask += LayerMask.GetMask(n);
+		}
+
+		hitMask = ~hitMask;
 	}
 
 	/// <summary>
