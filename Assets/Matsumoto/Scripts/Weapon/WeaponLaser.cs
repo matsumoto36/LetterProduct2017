@@ -47,7 +47,7 @@ public class WeaponLaser : WeaponRanged {
 				//当たった場所もしくは最大の長さにする
 				var length = laser.bData.maxLength;
 
-				RaycastHit[] hitAll = Physics.RaycastAll(shotAnchor.position, shotAnchor.forward, length, laser.hitMask);
+				RaycastHit[] hitAll = Physics.RaycastAll(shotAnchor.position, shotAnchor.forward, length, hitMask);
 
 				foreach(var hit in hitAll) {
 					//自分のデータは除外

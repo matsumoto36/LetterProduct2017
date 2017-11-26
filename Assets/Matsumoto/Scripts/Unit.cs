@@ -95,6 +95,10 @@ public abstract class Unit : MonoBehaviour {
 
 		//レベルアップ用ステータスをパッシブ効果として実装
 		ApplyModifier(levelUpStatus, LEVELUP_STATUS_MOD);
+
+		//ステータスの計算
+		CalcStatus();
+		nowHP = maxHP;
 	}
 
 	/// <summary>
@@ -169,6 +173,7 @@ public abstract class Unit : MonoBehaviour {
 		var isLevelUp = false;
 		//レベルアップする分だけ実行
 		while(exp >= nextLevelEXP) {
+
 			isLevelUp = true;
 
 			//レベルアップ
@@ -176,15 +181,15 @@ public abstract class Unit : MonoBehaviour {
 			level++;
 
 			Debug.Log("Level UP! : " + level);
+
+			//次のレベルに必要な経験値をセット
+			nextLevelEXP = GameBalance.CalcNextLevelExp(baseNextLevel, level);
 		}
 
 		if(isLevelUp) {
 			//ステータスの強化
 			GameBalance.ApplyNextLevelStatus(levelUpStatus, level);
 			CalcStatus();
-
-			//次のレベルに必要な経験値をセット
-			nextLevelEXP = GameBalance.CalcNextLevelExp(baseNextLevel, level);
 		}
 		nextLevelEXP -= exp;
 	}
@@ -203,6 +208,9 @@ public abstract class Unit : MonoBehaviour {
 	/// 死亡時に呼ばれる
 	/// </summary>
 	public virtual void Death() {
+
+		Debug.Log("Death");
+
 		nowHP = 0;
 		isDead = true;
 
@@ -211,12 +219,11 @@ public abstract class Unit : MonoBehaviour {
 			.Select((item) => item.damage)
 			.Sum();
 
-		attackedUnitList
-			.Where((item) => item.attackUnit)
-			.Select((item) => {
-				item.attackUnit.GainEXP(item.damage / damageSum);
-				return true;
-			});
+		foreach(var item in attackedUnitList) {
+			if(!item.attackUnit) continue;
+			item.attackUnit.GainEXP((item.damage / damageSum) * dropEXP);
+			Debug.Log((item.damage / damageSum) * dropEXP);
+		}
 	}
 
 	/// <summary>
@@ -299,10 +306,11 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="damage"></param>
 	/// <returns>成功したかどうか</returns>
 	public static bool Attack(Unit from, Unit to, int damage) {
+
 		if(!from || !to) return false;
+		if(from.isDead || to.isDead) return false;
+
 		Debug.Log("Attack " + from.name + " -> " + to.name);
-		//ダメージを与える
-		to.ApplyDamage(damage);
 
 		//経験値分配用
 		bool findFromUnit = to.attackedUnitList
@@ -315,8 +323,12 @@ public abstract class Unit : MonoBehaviour {
 			.Select((item) => item.damage += damage);
 		}
 		else {
+			Debug.Log("New Unit");
 			to.attackedUnitList.Add(new DamageLog(from, damage));
 		}
+
+		//ダメージを与える
+		to.ApplyDamage(damage);
 
 		return true;
 	}

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// 武器全体の親クラス
@@ -20,6 +21,7 @@ public abstract class Weapon : MonoBehaviour {
 
 	public Unit unitOwner { get; set; }
 	public bool canAction { get; private set; }
+	public int hitMask { get; private set; }
 
 	protected Transform body;
 	protected int basePower;
@@ -38,10 +40,24 @@ public abstract class Weapon : MonoBehaviour {
 		Debug.Log("WeaponBaseInitEnd");
 	}
 
+	/// <summary>
+	/// ステータスを更新する
+	/// </summary>
 	public virtual void UpdateStatus() {
 		Debug.Log(string.Format("UpdateStatus : {0}", name));
 		power = (int)(basePower * unitOwner.statusMod.mulPow);
 		interval = baseInterval / unitOwner.statusMod.mulAttackSpeed;
+	}
+
+	/// <summary>
+	/// 当たらないマスクをセットする
+	/// </summary>
+	/// <param name="maskName"></param>
+	public void SetHitMask(params string[] maskName) {
+
+		hitMask = ~maskName
+			.Select((item) => LayerMask.GetMask(item))
+			.Sum();
 	}
 
 	/// <summary>
@@ -64,6 +80,23 @@ public abstract class Weapon : MonoBehaviour {
 	/// 攻撃が終了した瞬間
 	/// </summary>
 	public virtual void AttackEnd() {
+
+	}
+
+	/// <summary>
+	/// そのGameObjectに攻撃がヒットしたか
+	/// </summary>
+	/// <param name="obj"></param>
+	/// <returns></returns>
+	public bool CheckHit(GameObject obj) {
+
+		//自分の場合はヒットしない
+		if(obj == unitOwner.gameObject) return false;
+
+		//番号で渡されるため、マスクできるようにビット列にする
+		int layer = obj.layer == 0 ? 0 : (int)Mathf.Pow(2, obj.layer);
+		//レイヤーマスクを考慮してヒットしたかどうか
+		return hitMask == 0 || (layer & hitMask) != 0;
 
 	}
 

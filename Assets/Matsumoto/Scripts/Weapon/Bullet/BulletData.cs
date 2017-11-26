@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 弾の情報全部入りクラス
 /// </summary>
-public class BulletData{
+public class BulletData {
 
 	public string name { get; private set; }
 	public Bullet bullet { get; private set; }

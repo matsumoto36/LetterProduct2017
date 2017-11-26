@@ -7,8 +7,6 @@ public class Enemy : Unit {
 
 	public override void Awake() {
 		base.Awake();
-
-		//装備の処理は後で移行する
 	}
 
 	public override void Attack() {

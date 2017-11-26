@@ -20,6 +20,7 @@ public class BulletNormal : Bullet {
 	}
 
 	public override void OnHitEnter(Collider other) {
+		Attack(other.GetComponent<Unit>());
 		Destroy(gameObject);
 	}
 }

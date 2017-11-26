@@ -55,10 +55,12 @@ public class WeaponMelee : Weapon {
 
 	void OnTriggerEnter(Collider other) {
 
-		//味方を除外する
-		if(other.tag == "Player") return;
+		Unit unit;
 
-		Debug.Log("Hit:" + other.name);
-
+		if(unit = other.GetComponent<Unit>()) {
+			//攻撃
+			if(CheckHit(other.gameObject))
+				Unit.Attack(unitOwner, unit, power);
+		}
 	}
 }

@@ -16,7 +16,6 @@ public class Player : Unit {
 		base.Awake();
 
 		//***武器のロード処理は移行しました***
-
 		WeaponDataContainer.Load();
 
 		//装備
@@ -25,7 +24,6 @@ public class Player : Unit {
 
 		//パッシブ効果の適用
 		CalcStatus();
-		nowHP = maxHP;
 
 		Debug.Log("PlayerInitEnd");
 	}

@@ -12,14 +12,10 @@ public class BulletLaserHeal : BulletLaser {
 		base.Init();
 
 		//回復なので判定を書き換える
-		SetHitMask("EnemyLayer", "BulletLayer");
+		bData.bulletOwner.SetHitMask("EnemyLayer", "BulletLayer");
 	}
 
 	public override void OnHitting(Collider other) {
-		if(other.tag == "Player") {
-
-			Debug.Log("Heal : " + other.name);
-
-		}
+		Heal(other.GetComponent<Unit>());
 	}
 }

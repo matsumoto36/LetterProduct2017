@@ -9,26 +9,14 @@ public class BulletCollision : MonoBehaviour {
 
 	public Bullet parent { get; set; }
 
-	bool CheckHit(GameObject obj) {
-
-		//自分の場合はヒットしない
-		if(obj == parent.bData.bulletOwner.unitOwner.gameObject) return false;
-
-		//番号で渡されるため、マスクできるようにビット列にする
-		int layer = obj.layer == 0 ? 0 : (int)Mathf.Pow(2, obj.layer);
-		//レイヤーマスクを考慮してヒットしたかどうか
-		return layer == 0 || (layer & parent.hitMask) != 0;
-
-	}
-
 	void OnTriggerEnter(Collider other) {
 		//ヒットしない定義のものだったらスキップ
-		if(CheckHit(other.gameObject)) parent.OnHitEnter(other);
+		if(parent.bData.bulletOwner.CheckHit(other.gameObject)) parent.OnHitEnter(other);
 	}
 	void OnTriggerStay(Collider other) {
-		if(CheckHit(other.gameObject)) parent.OnHitting(other);
+		if(parent.bData.bulletOwner.CheckHit(other.gameObject)) parent.OnHitting(other);
 	}
 	void OnTriggerExit(Collider other) {
-		if(CheckHit(other.gameObject)) parent.OnHitExit(other);
+		if(parent.bData.bulletOwner.CheckHit(other.gameObject)) parent.OnHitExit(other);
 	}
 }

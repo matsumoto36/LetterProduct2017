@@ -8,6 +8,12 @@ using UnityEngine;
 /// </summary>
 public class BulletLaser : Bullet {
 
+	float buffDamage = 0;
+
+	public override void Init() {
+		base.Init();
+	}
+
 	public float length {
 		get { return _length; }
 		set {
@@ -18,7 +24,17 @@ public class BulletLaser : Bullet {
 	}
 	float _length;
 
+	protected override void Attack(Unit target) {
+		if((buffDamage += bData.bulletOwner.power * Time.deltaTime) >= 1) {
+			if(!target) return;
+			//ダメージ量を合計して1を超えた時に実際に攻撃
+			var damage = (int)buffDamage;
+			buffDamage -= damage;
+			Unit.Attack(bData.bulletOwner.unitOwner, target, damage);
+		}
+	}
+
 	public override void OnHitting(Collider other) {
-		Debug.Log("Hit:" + other.name);
+		Attack(other.GetComponent<Unit>());
 	}
 }

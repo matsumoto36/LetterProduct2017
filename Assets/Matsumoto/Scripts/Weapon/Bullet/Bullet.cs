@@ -11,7 +11,6 @@ public abstract class Bullet : MonoBehaviour {
 	const string BODY_ANCHOR = "Body";
 
 	public BulletData bData { get; private set; }
-	public int hitMask { get; private set; }
 
 	protected Transform body;
 
@@ -25,23 +24,24 @@ public abstract class Bullet : MonoBehaviour {
 	public virtual void Init() {
 
 		//デフォルトで突き抜けるレイヤー
-		SetHitMask("PlayerLayer", "BulletLayer");
+		bData.bulletOwner.SetHitMask("PlayerLayer", "BulletLayer");
 	}
 
 	/// <summary>
-	/// 当たらないマスクをセットする
-	/// *武器にマスクを知らせるために必要*
+	/// 攻撃する
 	/// </summary>
-	/// <param name="mask"></param>
-	public void SetHitMask(params string[] maskName) {
-		//hitMask = ~maskName.Sum((item) => LayerMask.GetMask(item));
+	/// <param name="target"></param>
+	protected virtual void Attack(Unit target) {
+		if(!target) return;
+		Unit.Attack(bData.bulletOwner.unitOwner, target, bData.bulletOwner.power);
+	}
 
-		hitMask = 0;
-		foreach(var n in maskName) {
-			hitMask += LayerMask.GetMask(n);
-		}
-
-		hitMask = ~hitMask;
+	/// <summary>
+	/// 回復する
+	/// </summary>
+	/// <param name="target"></param>
+	protected virtual void Heal(Unit target) {
+		Unit.Heal(bData.bulletOwner.unitOwner, target, bData.bulletOwner.power);
 	}
 
 	/// <summary>

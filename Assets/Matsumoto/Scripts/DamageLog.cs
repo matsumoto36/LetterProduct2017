@@ -13,4 +13,8 @@ public struct DamageLog {
 		this.attackUnit = attackUnit;
 		this.damage = damage;
 	}
+
+	public new string ToString() {
+		return string.Format("{0} : {1}", attackUnit.name, damage);
+	}
 }

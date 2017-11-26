@@ -61,6 +61,9 @@ public class BulletGrenade : BulletNormal {
 		isWallCol = true;
 		if(other.tag != "Enemy") return;
 
+		//攻撃
+		Unit.Attack(bData.bulletOwner.unitOwner, other.GetComponent<Unit>(), bData.bulletOwner.power);
+
 		//爆発の処理
 		Destroy(gameObject);
 	}

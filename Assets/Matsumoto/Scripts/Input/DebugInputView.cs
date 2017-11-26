@@ -33,7 +33,6 @@ public class DebugInputView : MonoBehaviour {
 		CheckButton(inputControllerType, GamePad.Button.Start, inputControllerNum);
 		CheckButton(inputControllerType, GamePad.Button.X, inputControllerNum);
 		CheckButton(inputControllerType, GamePad.Button.Y, inputControllerNum);
-
 	}
 
 	#region CheckInput
