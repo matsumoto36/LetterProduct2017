@@ -15,9 +15,6 @@ public class Player : Unit {
 	public override void Awake() {
 		base.Awake();
 
-		//***武器のロード処理は移行しました***
-		WeaponDataContainer.Load();
-
 		//装備
 		EquipWeapon(WeaponDataContainer.CreateWeapon(0), 0);
 		EquipWeapon(WeaponDataContainer.CreateWeapon(1), 1);

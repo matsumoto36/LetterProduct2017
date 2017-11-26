@@ -8,7 +8,7 @@ using UnityEngine;
 /// マップに存在するキャラクターの親クラス
 /// (タレット等の構造物も含む)
 /// </summary>
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public abstract class Unit : MonoBehaviour {
 
 	const int CAN_EQUIPPED_WEAPON_COUNT = 2;
@@ -99,6 +99,9 @@ public abstract class Unit : MonoBehaviour {
 		//ステータスの計算
 		CalcStatus();
 		nowHP = maxHP;
+
+		//***武器のロード処理は移行しました***
+		WeaponDataContainer.Load();
 	}
 
 	/// <summary>
