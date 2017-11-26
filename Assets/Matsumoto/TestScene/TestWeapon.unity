@@ -1013,7 +1013,7 @@ MonoBehaviour:
   _level: 1
   nextLevelEXP: 10
   dropEXP: 1000
-  _maxHP: 10
+  _maxHP: 100
   _nowHP: 0
   _moveSpeed: 0
   _rotSpeed: 0

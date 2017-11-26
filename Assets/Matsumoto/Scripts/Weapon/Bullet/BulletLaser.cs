@@ -8,7 +8,9 @@ using UnityEngine;
 /// </summary>
 public class BulletLaser : Bullet {
 
+	Unit lastAttackUnit;
 	float buffDamage = 0;
+	float oldTime = 0;
 
 	public override void Init() {
 		base.Init();
@@ -25,13 +27,25 @@ public class BulletLaser : Bullet {
 	float _length;
 
 	protected override void Attack(Unit target) {
-		if((buffDamage += bData.bulletOwner.power * Time.deltaTime) >= 1) {
-			if(!target) return;
-			//ダメージ量を合計して1を超えた時に実際に攻撃
+
+		if(!target) return;
+
+		if(lastAttackUnit != target) {
+			buffDamage = 0;
+			oldTime = Time.time;
+		}
+
+		lastAttackUnit = target;
+		buffDamage += bData.bulletOwner.power * (Time.time - oldTime);
+		Debug.Log("buffDamage:" + buffDamage);
+		//ダメージ量を合計して1以上になったら実際に攻撃
+		if(buffDamage >= 1) {
 			var damage = (int)buffDamage;
 			buffDamage -= damage;
 			Unit.Attack(bData.bulletOwner.unitOwner, target, damage);
 		}
+
+		oldTime = Time.time;
 	}
 
 	public override void OnHitting(Collider other) {
