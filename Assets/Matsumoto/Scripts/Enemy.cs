@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class Enemy : Unit {
 
-	public float attackDuration { get; set; }
+	public float defaultAttackDuration { get; set; }
 
 	public override void Awake() {
 		base.Awake();
+
+		defaultAttackDuration = 1;
 
 		//適当に装備
 		EquipWeapon(WeaponDataContainer.CreateWeapon(1), 0);
@@ -25,18 +27,47 @@ public class Enemy : Unit {
 	public void AttackCancel() {
 		if(isAttack) {
 
-			StopCoroutine(Attacking(attackDuration));
+			StopCoroutine(Attacking(defaultAttackDuration));
 			equipWeapon[0].AttackEnd();
 			isAttack = false;
 		}
 	}
 
+	/// <summary>
+	/// 武器をノーモーションですぐ交換する
+	/// </summary>
+	/// <param name="weaponNum"></param>
+	public void SwitchWeapon(int weaponNum) {
+
+		if(weaponNum == 0) return;
+		if(!equipWeapon[0]) return;
+		if(!equipWeapon[weaponNum]) return;
+		if(isPlayMeleeAnim) return;
+
+		//即時に交換
+		var w = equipWeapon[0];
+		equipWeapon[0] = equipWeapon[weaponNum];
+		equipWeapon[weaponNum] = w;
+	}
+
+	/// <summary>
+	/// 指定された時間攻撃する
+	/// </summary>
+	/// <param name="duration"></param>
+	public void Attack(float duration) {
+		StartCoroutine(Attacking(duration));
+	}
+
+	/// <summary>
+	/// defaultAttackDurationで設定されている時間の間攻撃する
+	/// 初期値は1秒。
+	/// </summary>
 	public override void Attack() {
-		StartCoroutine(Attacking(attackDuration));
+		StartCoroutine(Attacking(defaultAttackDuration));
 	}
 
 	public override void Move() {
-		
+		//* 移動処理はAIで実装？ *//
 	}
 
 	/// <summary>
