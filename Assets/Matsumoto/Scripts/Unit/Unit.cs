@@ -4,6 +4,13 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+public enum UnitGroup {
+	Player,
+	Enemy,
+	Other,
+}
+
+
 /// <summary>
 /// マップに存在するキャラクターの親クラス
 /// (タレット等の構造物も含む)
@@ -67,9 +74,11 @@ public abstract class Unit : MonoBehaviour {
 	int switchingWeaponNum = 0;
 	StatusModifier levelUpStatus;
 	Dictionary<string, StatusModifier> statusModStack;
-
-	// Use this for initialization
-	public virtual void Awake() {
+	
+	/// <summary>
+	/// newなど最初に行っておきたい初期化処理
+	/// </summary>
+	public virtual void InitFirst() {
 
 		equipWeapon = new Weapon[CAN_EQUIPPED_WEAPON_COUNT];
 		levelUpStatus = new StatusModifier();
@@ -87,12 +96,27 @@ public abstract class Unit : MonoBehaviour {
 			handAnchor = child.Find(HAND_ANCHOR);
 			if(handAnchor) break;
 		}
+	}
 
-		//初期値の保存
-		baseNextLevel = nextLevelEXP;
-		baseHP = maxHP;
-		baseMoveSpeed = moveSpeed;
-		baseRotSpeed = rotSpeed;
+	/// <summary>
+	/// 初期化用にデータをセットする
+	/// </summary>
+	/// <param name="baseNextLevel"></param>
+	/// <param name="baseHP"></param>
+	/// <param name="baseMoveSpeed"></param>
+	/// <param name="baseRotSpeed"></param>
+	public virtual void SetInitData(int baseNextLevel, int baseHP, float baseMoveSpeed, float baseRotSpeed) {
+
+		this.baseNextLevel = nextLevelEXP = baseNextLevel;
+		this.baseHP = maxHP = baseHP;
+		this.baseMoveSpeed = moveSpeed = baseMoveSpeed;
+		this.baseRotSpeed = rotSpeed = baseRotSpeed;
+	}
+
+	/// <summary>
+	/// データ適用などInitFirstの後に行ってもよい初期化
+	/// </summary>
+	public virtual void InitFinal() {
 
 		//レベルアップ用ステータスをパッシブ効果として実装
 		ApplyModifier(levelUpStatus, LEVELUP_STATUS_MOD);
@@ -100,9 +124,6 @@ public abstract class Unit : MonoBehaviour {
 		//ステータスの計算
 		CalcStatus();
 		nowHP = maxHP;
-
-		//***武器のロード処理は移行しました***
-		WeaponDataContainer.Load();
 	}
 
 	/// <summary>
@@ -286,7 +307,7 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="animTriggerName"></param>
 	/// <param name="weaponNum"></param>
 	/// <param name="onComplete">完了時に実行</param>
-	public void SwitchWeapon(string animTriggerName, int weaponNum, Action onComplete) {
+	public void SwitchWeapon(string clipName, int weaponNum, Action onComplete) {
 
 		if(weaponNum == 0) return;
 		if(!equipWeapon[0]) return;
@@ -294,7 +315,7 @@ public abstract class Unit : MonoBehaviour {
 		if(isPlayMeleeAnim) return;
 
 		//一定時間待つ
-		StartCoroutine(SwitchWeaponAnim(animTriggerName, weaponNum, onComplete));
+		StartCoroutine(SwitchWeaponAnim(clipName, weaponNum, onComplete));
 
 	}
 
@@ -304,8 +325,8 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="triggerName"></param>
 	/// <param name="speed"></param>
 	/// <param name="onComplete">完了時に実行</param>
-	public void PlayMeleeAnimation(string triggerName, float speed, Action onComplete) {
-		StartCoroutine(PlayMeleeAnimWait(triggerName, speed, onComplete));
+	public void PlayMeleeAnimation(string clipName, float speed, Action onComplete) {
+		StartCoroutine(PlayMeleeAnimWait(clipName, speed, onComplete));
 	}
 
 	/// <summary>

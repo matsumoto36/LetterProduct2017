@@ -9,16 +9,18 @@ using System.Linq;
 /// </summary>
 public class WeaponData {
 
+	const string WEAPON_MODEL_PATH = "Model/Weapon/";
+
 	Type type;
-	public string modelPath { get; private set; }
+	public string modelName { get; private set; }
 	public object setDataMethod { get; private set; }
 	public StatusModifier mod { get; private set; }
 
 	string name;
 
-	public WeaponData(string name, string modelPath, StatusModifier mod) {
+	public WeaponData(string name, string modelName, StatusModifier mod) {
 		this.name = name;
-		this.modelPath = modelPath;
+		this.modelName = modelName;
 		this.mod = mod;
 	}
 
@@ -41,8 +43,11 @@ public class WeaponData {
 	public Weapon CreateWeapon() {
 
 		//武器の生成
-		var weapon = (Weapon)(UnityEngine.Object.Instantiate(Resources.Load<GameObject>(modelPath)).AddComponent(type));
+		var weapon = (Weapon)(UnityEngine.Object.Instantiate(Resources.Load<GameObject>(WEAPON_MODEL_PATH + modelName))
+			.AddComponent(type));
+
 		weapon.name = name;
+		
 		//武器のデータ設定
 		((Action<Weapon>)setDataMethod)(weapon);
 		weapon.weaponMod = mod;

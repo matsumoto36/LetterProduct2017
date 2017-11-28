@@ -11,7 +11,7 @@ public sealed class WeaponDataContainer : SingletonMonoBehaviour<WeaponDataConta
 	const string WEAPON_DATA_PATH = "Data/WeaponData";
 
 	List<WeaponData> weaponDataList;
-
+	
 	//外部からのnew禁止
 	private WeaponDataContainer() { }
 
@@ -27,7 +27,7 @@ public sealed class WeaponDataContainer : SingletonMonoBehaviour<WeaponDataConta
 		instance.weaponDataList = CSVLoader.LoadData(WEAPON_DATA_PATH)
 			.Select(item => new {
 				name = item[0],
-				modelPath = item[1],
+				modelName = item[1],
 				weaponType = item[2],
 				interval = float.Parse(item[3]),
 				power = int.Parse(item[4]),
@@ -37,18 +37,19 @@ public sealed class WeaponDataContainer : SingletonMonoBehaviour<WeaponDataConta
 			})
 			.Select((item) => {
 
-				var weaponData = new WeaponData(item.name, item.modelPath, item.mod);
+				var weaponData = new WeaponData(item.name, item.modelName, item.mod);
 
 				switch(item.weaponType) {
 					case "WeaponGun":
 						return weaponData.SetWeaponSetData<WeaponGun>(
 							(weapon) => {
-								((WeaponGun)weapon).SetData(item.interval, item.power, BulletDataContainter.instance[int.Parse(item.exData1)]);
+								((WeaponGun)weapon).SetData(item.interval, item.power, new BulletData(BulletDataContainter.data[int.Parse(item.exData1)]));
 							});
 					case "WeaponLaser":
 						return weaponData.SetWeaponSetData<WeaponLaser>(
 							(weapon) => {
-								((WeaponLaser)weapon).SetData(item.interval, item.power, BulletDataContainter.instance[int.Parse(item.exData1)]);
+								//弾のデータを生成
+								((WeaponLaser)weapon).SetData(item.interval, item.power, new BulletData(BulletDataContainter.data[int.Parse(item.exData1)]));
 							});
 					case "WeaponMelee":
 						return weaponData.SetWeaponSetData<WeaponMelee>(

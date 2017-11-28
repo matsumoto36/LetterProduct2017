@@ -15,6 +15,7 @@ public class WeaponMelee : Weapon {
 	public override void Init() {
 		base.Init();
 
+		weaponType = WeaponType.Melee;
 		meleeCol = GetComponent<Collider>();
 		//あらかじめ当たり判定を無効にしておく
 		meleeCol.enabled = false;

@@ -7,18 +7,10 @@ public class Enemy : Unit {
 
 	public float defaultAttackDuration { get; set; }
 
-	public override void Awake() {
-		base.Awake();
+	public override void InitFinal() {
+		base.InitFinal();
 
 		defaultAttackDuration = 1;
-
-		//適当に装備
-		EquipWeapon(WeaponDataContainer.CreateWeapon(1), 0);
-
-		//パッシブ効果の適用
-		CalcStatus();
-
-		Debug.Log("EnemyInitEnd");
 	}
 
 	/// <summary>
@@ -50,6 +42,10 @@ public class Enemy : Unit {
 		equipWeapon[weaponNum] = w;
 	}
 
+	public override void Move() {
+		//* 移動処理はAIで実装？ *//
+	}
+
 	/// <summary>
 	/// 指定された時間攻撃する
 	/// </summary>
@@ -66,8 +62,11 @@ public class Enemy : Unit {
 		StartCoroutine(Attacking(defaultAttackDuration));
 	}
 
-	public override void Move() {
-		//* 移動処理はAIで実装？ *//
+	public override void Death() {
+		base.Death();
+
+		//敵の死亡時は現時点では削除
+		Destroy(gameObject);
 	}
 
 	/// <summary>

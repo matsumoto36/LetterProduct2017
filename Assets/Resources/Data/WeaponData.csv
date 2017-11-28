@@ -1,3 +1,4 @@
-Sword,Model/Weapon/TestWeaponSword,WeaponMelee,1,10,1,1,1,1,TestPlayerAnimation,1
-LazerGun,Model/Weapon/TestWeaponLaser,WeaponLaser,1,10,1,1,1,1,1,
-HealGun,Model/Weapon/TestWeaponLaser,WeaponLaser,1,1,1,1,1,1,2,
+Sword,TestWeaponSword,WeaponMelee,1,10,1,1,1,1,TestPlayerAnimation,1
+LazerGun,TestWeaponLaser,WeaponLaser,1,10,1,1,1,1,1,
+HealGun,TestWeaponLaser,WeaponLaser,1,1,1,1,1,1,2,
+Assult,TestWeapon,WeaponGun,0.5,5,1,1,1,1,3,

@@ -10,20 +10,6 @@ public class Player : Unit {
 
 	public GamePad.Index playerIndex;
 	public ControlType inputType;
-	
-	// Use this for initialization
-	public override void Awake() {
-		base.Awake();
-
-		//装備
-		EquipWeapon(WeaponDataContainer.CreateWeapon(0), 0);
-		EquipWeapon(WeaponDataContainer.CreateWeapon(2), 1);
-
-		//パッシブ効果の適用
-		CalcStatus();
-
-		Debug.Log("PlayerInitEnd");
-	}
 
 	void Update() {
 

@@ -1,3 +1,4 @@
-BulletLaser,System/Weapon/Bullet/BulletLaser,Model/Weapon/Bullet/TestBulletLaser,0,0,0,10
-BulletLaserLarge,System/Weapon/Bullet/BulletLaser,Model/Weapon/Bullet/TestBulletLaser2,0,0,0,20
-BulletLaserHeal,System/Weapon/Bullet/BulletLaserHeal,Model/Weapon/Bullet/TestBulletLaser,0,0,0,20
+BulletLaser,BulletLaser,TestBulletLaser,0,0,0,10
+BulletLaserLarge,BulletLaser,TestBulletLaser2,0,0,0,20
+BulletLaserHeal,BulletLaserHeal,TestBulletLaser,0,0,0,10
+BulletNormal,BulletNormal,TestBulletNormal,10,0,0,0,

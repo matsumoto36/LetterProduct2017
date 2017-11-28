@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+public enum WeaponType {
+	Ranged,
+	Melee,
+	Other,
+}
+
 /// <summary>
 /// 武器全体の親クラス
 /// </summary>
@@ -20,6 +26,7 @@ public abstract class Weapon : MonoBehaviour {
 	public StatusModifier weaponMod { get { return _weaponMod; } set { _weaponMod = value; } }
 
 	public Unit unitOwner { get; set; }
+	public WeaponType weaponType { get; protected set; }
 	public bool canAction { get; private set; }
 	public int hitMask { get; private set; }
 
@@ -36,6 +43,7 @@ public abstract class Weapon : MonoBehaviour {
 	/// </summary>
 	public virtual void Init() {
 
+		weaponType = WeaponType.Other;
 		StartCoroutine(WaitInterval());
 		Debug.Log("WeaponBaseInitEnd");
 	}
