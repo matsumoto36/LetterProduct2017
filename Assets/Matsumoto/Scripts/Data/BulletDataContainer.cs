@@ -9,13 +9,13 @@ using System.Linq;
 /// </summary>
 public class BulletDataContainter : SingletonMonoBehaviour<BulletDataContainter> {
 
-	const string BULLET_DATA_PATH = "Data/BulletData";
+	const string BULLET_CSV_PATH = "Data/BulletData";
 
-	public BulletData this[int index] {
-		get {
-			if(index < 0 || index >= instance.bulletDataList.Count) return null;
-			return instance.bulletDataList[index];
-		}
+	const string BULLET_DATA_PATH = "System/Weapon/Bullet/";
+	const string BULLET_MODEL_PATH = "Model/Weapon/Bullet/";
+
+	public static List<BulletData> data {
+		get { return instance.bulletDataList; }
 	}
 
 	List<BulletData> bulletDataList;
@@ -26,11 +26,11 @@ public class BulletDataContainter : SingletonMonoBehaviour<BulletDataContainter>
 	public static void Load() {
 
 		//CSVから読み込む
-		instance.bulletDataList = CSVLoader.LoadData(BULLET_DATA_PATH)
+		instance.bulletDataList = CSVLoader.LoadData(BULLET_CSV_PATH)
 			.Select((item) => new {
 				name = item[0],
-				bullet = Resources.Load<Bullet>(item[1]),
-				model = Resources.Load<GameObject>(item[2]),
+				bullet = Resources.Load<Bullet>(BULLET_DATA_PATH + item[1]),
+				model = Resources.Load<GameObject>(BULLET_MODEL_PATH + item[2]),
 				speed = float.Parse(item[3]),
 				expRadius = float.Parse(item[4]),
 				expPow = int.Parse(item[5]),

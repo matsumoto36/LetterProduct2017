@@ -5,6 +5,15 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
+/// キャラクターの勢力
+/// </summary>
+public enum UnitGroup {
+	Player,
+	Enemy,
+	OtherUnit,
+}
+
+/// <summary>
 /// マップに存在するキャラクターの親クラス
 /// (タレット等の構造物も含む)
 /// </summary>
@@ -42,6 +51,7 @@ public abstract class Unit : MonoBehaviour {
 	public float rotSpeed { get { return _rotSpeed; } private set { _rotSpeed = value; } }
 	public StatusModifier statusMod { get { return _statusMod; } private set { _statusMod = value; } }
 
+	public UnitGroup group { get; protected set; }
 	public Weapon[] equipWeapon { get; private set; }
 	public int experience { get; private set; }
 	public bool isPlayMeleeAnim { get; private set; }
@@ -67,9 +77,11 @@ public abstract class Unit : MonoBehaviour {
 	int switchingWeaponNum = 0;
 	StatusModifier levelUpStatus;
 	Dictionary<string, StatusModifier> statusModStack;
-
-	// Use this for initialization
-	public virtual void Awake() {
+	
+	/// <summary>
+	/// newなど最初に行っておきたい初期化処理
+	/// </summary>
+	public virtual void InitFirst() {
 
 		equipWeapon = new Weapon[CAN_EQUIPPED_WEAPON_COUNT];
 		levelUpStatus = new StatusModifier();
@@ -87,12 +99,30 @@ public abstract class Unit : MonoBehaviour {
 			handAnchor = child.Find(HAND_ANCHOR);
 			if(handAnchor) break;
 		}
+	}
 
-		//初期値の保存
-		baseNextLevel = nextLevelEXP;
-		baseHP = maxHP;
-		baseMoveSpeed = moveSpeed;
-		baseRotSpeed = rotSpeed;
+	/// <summary>
+	/// 初期化用にデータをセットする
+	/// </summary>
+	/// <param name="baseNextLevel"></param>
+	/// <param name="baseHP"></param>
+	/// <param name="baseMoveSpeed"></param>
+	/// <param name="baseRotSpeed"></param>
+	public virtual void SetInitData(int baseNextLevel, int baseHP, float baseMoveSpeed, float baseRotSpeed) {
+
+		this.baseNextLevel = nextLevelEXP = baseNextLevel;
+		this.baseHP = maxHP = baseHP;
+		this.baseMoveSpeed = moveSpeed = baseMoveSpeed;
+		this.baseRotSpeed = rotSpeed = baseRotSpeed;
+	}
+
+	/// <summary>
+	/// データ適用などInitFirstの後に行ってもよい初期化
+	/// </summary>
+	public virtual void InitFinal() {
+
+		//勢力のセット
+		group = UnitGroup.OtherUnit;
 
 		//レベルアップ用ステータスをパッシブ効果として実装
 		ApplyModifier(levelUpStatus, LEVELUP_STATUS_MOD);
@@ -100,9 +130,6 @@ public abstract class Unit : MonoBehaviour {
 		//ステータスの計算
 		CalcStatus();
 		nowHP = maxHP;
-
-		//***武器のロード処理は移行しました***
-		WeaponDataContainer.Load();
 	}
 
 	/// <summary>
@@ -286,7 +313,7 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="animTriggerName"></param>
 	/// <param name="weaponNum"></param>
 	/// <param name="onComplete">完了時に実行</param>
-	public void SwitchWeapon(string animTriggerName, int weaponNum, Action onComplete) {
+	public void SwitchWeapon(string clipName, int weaponNum, Action onComplete) {
 
 		if(weaponNum == 0) return;
 		if(!equipWeapon[0]) return;
@@ -294,7 +321,7 @@ public abstract class Unit : MonoBehaviour {
 		if(isPlayMeleeAnim) return;
 
 		//一定時間待つ
-		StartCoroutine(SwitchWeaponAnim(animTriggerName, weaponNum, onComplete));
+		StartCoroutine(SwitchWeaponAnim(clipName, weaponNum, onComplete));
 
 	}
 
@@ -304,8 +331,8 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="triggerName"></param>
 	/// <param name="speed"></param>
 	/// <param name="onComplete">完了時に実行</param>
-	public void PlayMeleeAnimation(string triggerName, float speed, Action onComplete) {
-		StartCoroutine(PlayMeleeAnimWait(triggerName, speed, onComplete));
+	public void PlayMeleeAnimation(string clipName, float speed, Action onComplete) {
+		StartCoroutine(PlayMeleeAnimWait(clipName, speed, onComplete));
 	}
 
 	/// <summary>
@@ -408,7 +435,6 @@ public abstract class Unit : MonoBehaviour {
 
 	IEnumerator PlayMeleeAnimWait(string clipName, float speed, Action onComplete) {
 
-		Debug.Log("MeleeAnim");
 		isPlayMeleeAnim = true;
 		yield return StartCoroutine(PlayAnimation(0, clipName, speed));
 		yield return new WaitForSeconds(0.2f);

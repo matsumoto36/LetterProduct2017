@@ -7,9 +7,10 @@ public class Enemy : Unit {
 
 	public float defaultAttackDuration { get; set; }
 
-	public override void Awake() {
-		base.Awake();
+	public override void InitFinal() {
+		base.InitFinal();
 
+<<<<<<< HEAD:Assets/Matsumoto/Scripts/Enemy.cs
 		defaultAttackDuration = 2;
 
 		//適当に装備
@@ -18,8 +19,12 @@ public class Enemy : Unit {
 
         //パッシブ効果の適用
         CalcStatus();
+=======
+		//勢力のセット
+		group = UnitGroup.Enemy;
+>>>>>>> 39259bbad83678f1849abdb910a59ded0efb8ef7:Assets/Matsumoto/Scripts/Unit/Enemy.cs
 
-		Debug.Log("EnemyInitEnd");
+		defaultAttackDuration = 1;
 	}
 
 	/// <summary>
@@ -51,6 +56,10 @@ public class Enemy : Unit {
 		equipWeapon[weaponNum] = w;
 	}
 
+	public override void Move() {
+		//* 移動処理はAIで実装？ *//
+	}
+
 	/// <summary>
 	/// 指定された時間攻撃する
 	/// </summary>
@@ -67,8 +76,11 @@ public class Enemy : Unit {
 		StartCoroutine(Attacking(defaultAttackDuration));
 	}
 
-	public override void Move() {
-		//* 移動処理はAIで実装？ *//
+	public override void Death() {
+		base.Death();
+
+		//敵の死亡時は現時点では削除
+		Destroy(gameObject);
 	}
 
 	/// <summary>

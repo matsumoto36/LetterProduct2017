@@ -14,17 +14,19 @@ public abstract class Bullet : MonoBehaviour {
 
 	protected Transform body;
 
-	void Start() {
-		Init();
-	}
-
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	public virtual void Init() {
 
-		//デフォルトで突き抜けるレイヤー
-		bData.bulletOwner.SetHitMask("PlayerLayer", "BulletLayer");
+		//相手の勢力に当たるように設定
+		var maskList = UnitGroupMatrix.GetAttackableGroup(bData.bulletOwner.unitOwner.group, true)
+			.Select((item) => item.ToString() + "Layer")
+			.ToList();
+
+		maskList.Add("BulletLayer");
+
+		bData.bulletOwner.SetHitMask(maskList.ToArray());
 	}
 
 	/// <summary>
@@ -73,12 +75,14 @@ public abstract class Bullet : MonoBehaviour {
 		bulletObj.bData = bData;
 
 		//本体の生成
-		bulletObj.body = Instantiate(bData.model, transform).transform;
-		bulletObj.body.tag = "Bullet";
-		bulletObj.body.parent = bulletObj.transform;
-		bulletObj.body.localPosition = new Vector3();
-		bulletObj.body.transform.localRotation = Quaternion.identity;
-		bulletObj.body.GetComponent<BulletCollision>().parent = bulletObj;
+		var body = bulletObj.body = Instantiate(bData.model, transform).transform;
+		body.tag = "Bullet";
+		body.parent = bulletObj.transform;
+		body.localPosition = new Vector3();
+		body.transform.localRotation = Quaternion.identity;
+		body.GetComponent<BulletCollision>().parent = bulletObj;
+
+		bulletObj.Init();
 
 		return bulletObj;
 	}

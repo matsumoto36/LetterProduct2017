@@ -16,6 +16,7 @@ public abstract class WeaponRanged : Weapon {
 	public override void Init() {
 		base.Init();
 
+		weaponType = WeaponType.Ranged;
 		shotAnchor = transform.Find(SHOT_ANCHOR);
 	}
 
