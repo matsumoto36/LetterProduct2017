@@ -29,11 +29,12 @@ public class UnitDataContainer : SingletonMonoBehaviour<UnitDataContainer> {
 				modelPath = item[1],
 				classType = item[2],
 				hp = int.Parse(item[3]),
-				nextLevelExp = int.Parse(item[4]),
-				moveSpeed = float.Parse(item[5]),
-				rotSpeed = float.Parse(item[6]),
-				weaponNum = new int[2] { int.Parse(item[7]), int.Parse(item[8]) },
-				ex1 = item[9]
+				dropExp = int.Parse(item[4]),
+				nextLevelExp = int.Parse(item[5]),
+				moveSpeed = float.Parse(item[6]),
+				rotSpeed = float.Parse(item[7]),
+				weaponNum = new int[2] { int.Parse(item[8]), int.Parse(item[9]) },
+				ex1 = item[10]
 			})
 			.Select((item) => {
 				var data = new UnitData(
