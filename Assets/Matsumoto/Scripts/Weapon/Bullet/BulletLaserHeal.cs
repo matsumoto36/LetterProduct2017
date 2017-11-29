@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// レーザー光線
@@ -12,7 +13,12 @@ public class BulletLaserHeal : BulletLaser {
 		base.Init();
 
 		//回復なので判定を書き換える
-		bData.bulletOwner.SetHitMask("EnemyLayer", "BulletLayer");
+		var maskList = UnitGroupMatrix.GetAttackableGroup(bData.bulletOwner.unitOwner.group)
+			.Select((item) => item.ToString() + "Layer")
+			.ToList();
+		maskList.Add("BulletLayer");
+
+		bData.bulletOwner.SetHitMask(maskList.ToArray());
 	}
 
 

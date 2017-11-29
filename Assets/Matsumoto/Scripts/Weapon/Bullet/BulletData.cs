@@ -17,6 +17,16 @@ public class BulletData {
 	public int expPow { get; private set; }
 	public float maxLength { get; private set; }
 
+	public BulletData(BulletData data) {
+		name = data.name;
+		bullet = data.bullet;
+		model = data.model;
+		speed = data.speed;
+		expPow = data.expPow;
+		expRadius = data.expRadius;
+		maxLength = data.maxLength;
+	}
+
 	public BulletData(string name, Bullet bullet, GameObject model, float speed, int expPow, float expRadius, float maxLength) {
 		this.name = name;
 		this.bullet = bullet;

@@ -10,19 +10,12 @@ public class Player : Unit {
 
 	public GamePad.Index playerIndex;
 	public ControlType inputType;
-	
-	// Use this for initialization
-	public override void Awake() {
-		base.Awake();
 
-		//装備
-		EquipWeapon(WeaponDataContainer.CreateWeapon(0), 0);
-		EquipWeapon(WeaponDataContainer.CreateWeapon(2), 1);
+	public override void InitFinal() {
+		base.InitFinal();
 
-		//パッシブ効果の適用
-		CalcStatus();
-
-		Debug.Log("PlayerInitEnd");
+		//勢力のセット
+		group = UnitGroup.Player;
 	}
 
 	void Update() {
