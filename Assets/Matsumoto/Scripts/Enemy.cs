@@ -10,13 +10,14 @@ public class Enemy : Unit {
 	public override void Awake() {
 		base.Awake();
 
-		defaultAttackDuration = 1;
+		defaultAttackDuration = 2;
 
 		//適当に装備
-		EquipWeapon(WeaponDataContainer.CreateWeapon(1), 0);
+		EquipWeapon(WeaponDataContainer.CreateWeapon(0), 0);
+		EquipWeapon(WeaponDataContainer.CreateWeapon(0), 1);
 
-		//パッシブ効果の適用
-		CalcStatus();
+        //パッシブ効果の適用
+        CalcStatus();
 
 		Debug.Log("EnemyInitEnd");
 	}
