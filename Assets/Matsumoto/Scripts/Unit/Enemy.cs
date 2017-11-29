@@ -10,19 +10,8 @@ public class Enemy : Unit {
 	public override void InitFinal() {
 		base.InitFinal();
 
-<<<<<<< HEAD:Assets/Matsumoto/Scripts/Enemy.cs
-		defaultAttackDuration = 2;
-
-		//適当に装備
-		EquipWeapon(WeaponDataContainer.CreateWeapon(0), 0);
-		EquipWeapon(WeaponDataContainer.CreateWeapon(0), 1);
-
-        //パッシブ効果の適用
-        CalcStatus();
-=======
 		//勢力のセット
 		group = UnitGroup.Enemy;
->>>>>>> 39259bbad83678f1849abdb910a59ded0efb8ef7:Assets/Matsumoto/Scripts/Unit/Enemy.cs
 
 		defaultAttackDuration = 1;
 	}
