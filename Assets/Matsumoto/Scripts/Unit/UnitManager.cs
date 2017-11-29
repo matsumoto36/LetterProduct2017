@@ -22,6 +22,15 @@ public sealed class UnitManager : SingletonMonoBehaviour<UnitManager> {
 		return SpawnUnit(unitNum, position, rot, unitData.weaponNum);
 	}
 
+	/// <summary>
+	/// コンテナからキャラクタを生成(所持武器変更可)
+	/// </summary>
+	/// <param name="unitNum"></param>
+	/// <param name="group"></param>
+	/// <param name="position"></param>
+	/// <param name="rot"></param>
+	/// <param name="weaponNum"></param>
+	/// <returns></returns>
 	public static Unit SpawnUnit(int unitNum, Vector3 position, Quaternion rot, int[] weaponNum) {
 
 		if(unitNum < 0 || UnitDataContainer.data.Count <= unitNum) return null;

@@ -19,8 +19,14 @@ public abstract class Bullet : MonoBehaviour {
 	/// </summary>
 	public virtual void Init() {
 
-		//デフォルトで突き抜けるレイヤー
-		bData.bulletOwner.SetHitMask("PlayerLayer", "BulletLayer");
+		//相手の勢力に当たるように設定
+		var maskList = UnitGroupMatrix.GetAttackableGroup(bData.bulletOwner.unitOwner.group, true)
+			.Select((item) => item.ToString() + "Layer")
+			.ToList();
+
+		maskList.Add("BulletLayer");
+
+		bData.bulletOwner.SetHitMask(maskList.ToArray());
 	}
 
 	/// <summary>

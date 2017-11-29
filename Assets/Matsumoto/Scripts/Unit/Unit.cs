@@ -4,12 +4,14 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// キャラクターの勢力
+/// </summary>
 public enum UnitGroup {
 	Player,
 	Enemy,
-	Other,
+	OtherUnit,
 }
-
 
 /// <summary>
 /// マップに存在するキャラクターの親クラス
@@ -49,6 +51,7 @@ public abstract class Unit : MonoBehaviour {
 	public float rotSpeed { get { return _rotSpeed; } private set { _rotSpeed = value; } }
 	public StatusModifier statusMod { get { return _statusMod; } private set { _statusMod = value; } }
 
+	public UnitGroup group { get; protected set; }
 	public Weapon[] equipWeapon { get; private set; }
 	public int experience { get; private set; }
 	public bool isPlayMeleeAnim { get; private set; }
@@ -117,6 +120,9 @@ public abstract class Unit : MonoBehaviour {
 	/// データ適用などInitFirstの後に行ってもよい初期化
 	/// </summary>
 	public virtual void InitFinal() {
+
+		//勢力のセット
+		group = UnitGroup.OtherUnit;
 
 		//レベルアップ用ステータスをパッシブ効果として実装
 		ApplyModifier(levelUpStatus, LEVELUP_STATUS_MOD);
@@ -429,7 +435,6 @@ public abstract class Unit : MonoBehaviour {
 
 	IEnumerator PlayMeleeAnimWait(string clipName, float speed, Action onComplete) {
 
-		Debug.Log("MeleeAnim");
 		isPlayMeleeAnim = true;
 		yield return StartCoroutine(PlayAnimation(0, clipName, speed));
 		yield return new WaitForSeconds(0.2f);

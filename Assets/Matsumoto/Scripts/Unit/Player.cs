@@ -11,6 +11,13 @@ public class Player : Unit {
 	public GamePad.Index playerIndex;
 	public ControlType inputType;
 
+	public override void InitFinal() {
+		base.InitFinal();
+
+		//勢力のセット
+		group = UnitGroup.Player;
+	}
+
 	void Update() {
 
 		if(Input.GetKeyDown(KeyCode.E)) GainEXP(1);

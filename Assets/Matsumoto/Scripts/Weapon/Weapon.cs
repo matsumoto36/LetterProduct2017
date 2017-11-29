@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// 武器のタイプ
+/// </summary>
 public enum WeaponType {
 	Ranged,
 	Melee,
@@ -52,7 +55,6 @@ public abstract class Weapon : MonoBehaviour {
 	/// ステータスを更新する
 	/// </summary>
 	public virtual void UpdateStatus() {
-		Debug.Log(string.Format("UpdateStatus : {0}", name));
 		power = (int)(basePower * unitOwner.statusMod.mulPow);
 		interval = baseInterval / unitOwner.statusMod.mulAttackSpeed;
 	}
@@ -104,7 +106,7 @@ public abstract class Weapon : MonoBehaviour {
 		//番号で渡されるため、マスクできるようにビット列にする
 		int layer = obj.layer == 0 ? 0 : (int)Mathf.Pow(2, obj.layer);
 		//レイヤーマスクを考慮してヒットしたかどうか
-		return hitMask == 0 || (layer & hitMask) != 0;
+		return layer == 0 || (layer & hitMask) != 0;
 
 	}
 

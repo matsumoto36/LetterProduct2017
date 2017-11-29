@@ -10,6 +10,9 @@ public class Enemy : Unit {
 	public override void InitFinal() {
 		base.InitFinal();
 
+		//勢力のセット
+		group = UnitGroup.Enemy;
+
 		defaultAttackDuration = 1;
 	}
 
