@@ -9,7 +9,7 @@ using System;
 /// </summary>
 public class UnitDataContainer : SingletonMonoBehaviour<UnitDataContainer> {
 
-	const string UNIT_DATA_PATH = "Data/UnitData";
+	public const string UNIT_DATA_PATH = "Data/UnitData";
 
 	public static List<UnitData> data {
 		get { return instance.unitDataList; }

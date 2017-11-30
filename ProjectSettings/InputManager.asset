@@ -726,7 +726,7 @@ InputManager:
     axis: 7
     joyNum: 1
   - serializedVersion: 3
-    m_Name: PS4DPad1_YAxis
+    m_Name: PS4DPad2_YAxis
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -742,7 +742,7 @@ InputManager:
     axis: 7
     joyNum: 2
   - serializedVersion: 3
-    m_Name: PS4DPad1_YAxis
+    m_Name: PS4DPad3_YAxis
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -758,7 +758,7 @@ InputManager:
     axis: 7
     joyNum: 3
   - serializedVersion: 3
-    m_Name: PS4DPad1_YAxis
+    m_Name: PS4DPad4_YAxis
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 

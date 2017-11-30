@@ -10,7 +10,6 @@ public class BulletLaser : Bullet {
 
 	Unit lastAttackUnit;
 	float buffPoint = 0;
-	float oldTime = 0;
 
 	public override void Init() {
 		base.Init();
@@ -37,7 +36,6 @@ public class BulletLaser : Bullet {
 
 		if(lastAttackUnit != target) {
 			buffPoint = 0;
-			oldTime = Time.time;
 		}
 
 		lastAttackUnit = target;
@@ -50,8 +48,6 @@ public class BulletLaser : Bullet {
 			//適用
 			onApply(target, point);
 		}
-
-		oldTime = Time.time;
 	}
 
 	protected override void Attack(Unit target) {

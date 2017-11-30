@@ -3,7 +3,7 @@ using System.Collections;
 
 public sealed class UnitManager : SingletonMonoBehaviour<UnitManager> {
 
-	const string UNIT_MODEL_PATH = "Model/Unit/";
+	public const string UNIT_MODEL_PATH = "Model/Unit/";
 
 	//外部からのnew禁止
 	private UnitManager() { }
@@ -16,6 +16,8 @@ public sealed class UnitManager : SingletonMonoBehaviour<UnitManager> {
 	/// <param name="rot"></param>
 	/// <returns></returns>
 	public static Unit SpawnUnit(int unitNum, Vector3 position, Quaternion rot) {
+
+		if(unitNum < 0 || unitNum >= UnitDataContainer.data.Count) return null;
 
 		//初期装備を装備
 		var unitData = UnitDataContainer.data[unitNum];
