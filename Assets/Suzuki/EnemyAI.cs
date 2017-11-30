@@ -3,17 +3,19 @@ using System.Collections;
 
 public class EnemyAI : MonoBehaviour
 {
-    //タイプ
+    /// <summary>
+    /// 攻撃のタイプ
+    /// </summary>
     public enum Mode : int { BASIS, APPROACH, DUAL }//基本,接近,二刀流
     public Mode mode;
     
     private bool isRendered = false;    //画面内判定
-    public float speed;         //移動速度(秒速)
-    public float dashSpeed;     //急接近時の速度(秒速)
-    public float moveLine;      //検知範囲
-    public float stepLine;      //ステップ攻撃範囲
-    public float attackLine;    //攻撃距離
-    public float searchAngle;   //視野
+    public float speed;                 //移動速度(秒速)
+    public float dashSpeed;             //急接近時の速度(秒速)
+    public float moveLine;              //検知範囲
+    public float stepLine;              //ステップ攻撃範囲
+    public float attackLine;            //攻撃距離
+    public float searchAngle;           //視野
 
     private Enemy enemySC;
 
@@ -22,11 +24,14 @@ public class EnemyAI : MonoBehaviour
     //public float[] weaponDistance = new float[2];   //射程距離
     //public float[] fillingTime = new float[2];      //充填時間
 
-    //プレイヤー
-    public GameObject[] player; //
+    //プレイヤー関連
+    [SerializeField]
+    private GameObject[] player;        //Playerオブジェクト
     private Player[] playerCS;  //Playerスクリプト
-    public int target;          //一番近いプレイヤー
-    private float[] distance;   //距離
+    [SerializeField]
+    private int target;                 //一番近いプレイヤー
+    [SerializeField]
+    private float[] distance;           //距離
 
     void Awake()
     {
@@ -116,13 +121,13 @@ public class EnemyAI : MonoBehaviour
             //        break;
             //}
 
-            //確認用
-            Debug.Log("ターゲット:" + target + " 距離:" + distance[target]);
-
             if (mode >= Mode.DUAL)
             {
-                //方向転換
-                DirctionChange();
+                if (distance[target] >= moveLine)
+                {
+                    //方向転換
+                    DirctionChange();
+                }
 
                 //プレイヤーの見えている正面からの角度
                 float f = Vector3.Angle((player[target].transform.position - transform.position).normalized, transform.forward);
@@ -130,13 +135,17 @@ public class EnemyAI : MonoBehaviour
 
                 if (enemySC.isAttack == false && f <= searchAngle && distance[target] >= attackLine)
                 {
-                    Debug.Log("ビーム");
-
-                    //if(Weapon.weaponData)
-                    enemySC.SwitchWeapon(weaponNum);  //武器交換
+                    Debug.Log((int)enemySC.equipWeapon[0].weaponType);
+                    if (enemySC.equipWeapon[0].weaponType != WeaponType.Ranged)
+                    {
+                        //遠距離用の武器に交換
+                        enemySC.SwitchWeapon(weaponNum);
+                        Debug.Log("武器変更");
+                    }
 
                     //遠距離攻撃
                     enemySC.Attack();
+                    Debug.Log("ビーム");
                 }
             }
             if (distance[target] < attackLine)
@@ -146,11 +155,16 @@ public class EnemyAI : MonoBehaviour
 
                 if (enemySC.isAttack == false && mode >= Mode.BASIS)
                 {
-                    Debug.Log("剣");
+                    if (enemySC.equipWeapon[0].weaponType != WeaponType.Melee)
+                    {
+                        //近接用の武器に交換
+                        enemySC.SwitchWeapon(weaponNum);
+                        Debug.Log("武器変更");
+                    }
 
-                    //攻撃
-                    enemySC.SwitchWeapon(1);  //武器交換
+                    //攻撃    
                     enemySC.Attack();
+                    Debug.Log("剣");
                 }
             }
             else if (distance[target] < stepLine && mode >= Mode.APPROACH)
@@ -167,8 +181,10 @@ public class EnemyAI : MonoBehaviour
         isRendered = false;
     }
 
-    //方向転換
-    void DirctionChange()
+    /// <summary>
+    /// 方向転換
+    /// </summary>
+    private void DirctionChange()
     {
         transform.rotation = Quaternion.Slerp(
                                 transform.rotation,
@@ -176,8 +192,10 @@ public class EnemyAI : MonoBehaviour
                                 Time.deltaTime * speed * 0.5f);
     }
 
-    //移動処理
-    void Move()
+    /// <summary>
+    /// 移動処理
+    /// </summary>
+    private void Move()
     {
         //方向転換
         DirctionChange();
@@ -185,17 +203,21 @@ public class EnemyAI : MonoBehaviour
         transform.position += transform.forward * speed * Time.deltaTime;
     }
 
-    //急接近処理
-    void Dash()
+    /// <summary>
+    /// 急接近処理
+    /// </summary>
+    private void Dash()
     {
         //方向転換
         DirctionChange();
 
         transform.position += transform.forward * dashSpeed * Time.deltaTime;
     }
-
-    //画面内判定
+    
     //SkinnedMeshRendererなるものが必要？
+    /// <summary>
+    /// 画面内判定
+    /// </summary>
     private void OnWillRenderObject()
     {
         isRendered = true;
