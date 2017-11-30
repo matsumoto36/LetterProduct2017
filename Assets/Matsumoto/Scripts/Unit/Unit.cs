@@ -260,8 +260,8 @@ public abstract class Unit : MonoBehaviour {
 
 		foreach(var item in attackedUnitList) {
 			if(!item.attackUnit) continue;
-			item.attackUnit.GainEXP((item.damage / damageSum) * dropExp);
-			Debug.Log((item.damage / damageSum) * dropExp);
+			item.attackUnit.GainEXP((float)item.damage / damageSum * dropExp);
+			Debug.Log((float)item.damage / damageSum * dropExp);
 		}
 	}
 
