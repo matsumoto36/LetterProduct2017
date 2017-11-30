@@ -41,6 +41,7 @@ public class UnitDataContainer : SingletonMonoBehaviour<UnitDataContainer> {
 						item.name,
 						item.modelPath,
 						item.hp,
+						item.dropExp,
 						item.nextLevelExp,
 						item.moveSpeed,
 						item.rotSpeed,

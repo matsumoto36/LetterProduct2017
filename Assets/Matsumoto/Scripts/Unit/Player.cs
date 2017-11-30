@@ -11,6 +11,8 @@ public class Player : Unit {
 	public GamePad.Index playerIndex;
 	public ControlType inputType;
 
+	float ratio = 0.5f;
+
 	public override void InitFinal() {
 		base.InitFinal();
 
@@ -49,12 +51,12 @@ public class Player : Unit {
 	public override void Attack() {
 
 		//攻撃開始
-		if(InputManager.GetButtonDown(inputType, GamePad.Button.LeftShoulder, playerIndex)) {
+		if(InputManager.GetTrigger(inputType, GamePad.Trigger.LeftTrigger, playerIndex, true) > ratio && !isAttack) {
 			equipWeapon[0].AttackStart();
 			isAttack = true;
 		}
 		//攻撃ループ
-		if(InputManager.GetButton(inputType, GamePad.Button.LeftShoulder, playerIndex)) {
+		if(InputManager.GetTrigger(inputType, GamePad.Trigger.LeftTrigger, playerIndex, true) > ratio) {
 
 			//攻撃キャンセル復帰用
 			if(!isAttack) {
@@ -66,7 +68,7 @@ public class Player : Unit {
 			}
 		}
 		//攻撃終了
-		if(InputManager.GetButtonUp(inputType, GamePad.Button.LeftShoulder, playerIndex)) {
+		if(InputManager.GetTrigger(inputType, GamePad.Trigger.LeftTrigger, playerIndex, true) <= ratio && isAttack) {
 			equipWeapon[0].AttackEnd();
 			isAttack = false;
 		}
@@ -77,7 +79,7 @@ public class Player : Unit {
 	/// </summary>
 	void CheckSwitchWeapon() {
 
-		if(InputManager.GetButtonDown(inputType, GamePad.Button.RightShoulder, playerIndex)) {
+		if(InputManager.GetTrigger(inputType, GamePad.Trigger.RightTrigger, playerIndex, true) > ratio) {
 
 			//攻撃キャンセル
 			if(isAttack) equipWeapon[0].AttackEnd();

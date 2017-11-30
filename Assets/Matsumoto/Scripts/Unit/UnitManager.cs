@@ -48,7 +48,7 @@ public sealed class UnitManager : SingletonMonoBehaviour<UnitManager> {
 		unit.InitFirst();
 
 		//データをセット
-		unit.SetInitData(unitData.nextLevelExp, unitData.hp, unitData.moveSpeed, unitData.rotSpeed);
+		unit.SetInitData(unitData.hp, unitData.dropExp, unitData.nextLevelExp, unitData.moveSpeed, unitData.rotSpeed);
 
 		//武器を装備
 		unit.EquipWeapon(WeaponDataContainer.CreateWeapon(weaponNum[0]), 0);

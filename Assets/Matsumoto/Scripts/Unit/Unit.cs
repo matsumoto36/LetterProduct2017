@@ -30,7 +30,7 @@ public abstract class Unit : MonoBehaviour {
 	[SerializeField]
 	int nextLevelEXP = 10;
 	[SerializeField]
-	int dropEXP;
+	int dropExp;
 	[SerializeField]
 	int _maxHP;
 	[SerializeField]
@@ -108,10 +108,10 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="baseHP"></param>
 	/// <param name="baseMoveSpeed"></param>
 	/// <param name="baseRotSpeed"></param>
-	public virtual void SetInitData(int baseNextLevel, int baseHP, float baseMoveSpeed, float baseRotSpeed) {
-
-		this.baseNextLevel = nextLevelEXP = baseNextLevel;
+	public virtual void SetInitData(int baseHP, int dropExp, int baseNextLevel,  float baseMoveSpeed, float baseRotSpeed) {
 		this.baseHP = maxHP = baseHP;
+		this.dropExp = dropExp;
+		this.baseNextLevel = nextLevelEXP = baseNextLevel;
 		this.baseMoveSpeed = moveSpeed = baseMoveSpeed;
 		this.baseRotSpeed = rotSpeed = baseRotSpeed;
 	}
@@ -256,10 +256,12 @@ public abstract class Unit : MonoBehaviour {
 			.Select((item) => item.damage)
 			.Sum();
 
+		Debug.Log(attackedUnitList.Count);
+
 		foreach(var item in attackedUnitList) {
 			if(!item.attackUnit) continue;
-			item.attackUnit.GainEXP((item.damage / damageSum) * dropEXP);
-			Debug.Log((item.damage / damageSum) * dropEXP);
+			item.attackUnit.GainEXP((item.damage / damageSum) * dropExp);
+			Debug.Log((item.damage / damageSum) * dropExp);
 		}
 	}
 
