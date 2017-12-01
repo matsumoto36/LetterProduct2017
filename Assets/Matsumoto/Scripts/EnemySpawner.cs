@@ -37,9 +37,6 @@ public class EnemySpawner : MonoBehaviour {
 		}
 	}
 
-
-
-
 	void Update() {
 
 		if(Application.isPlaying) return;
@@ -57,6 +54,9 @@ public class EnemySpawner : MonoBehaviour {
 		ModelUpdate();
 	}
 
+	/// <summary>
+	/// 表示用モデルを取得する
+	/// </summary>
 	void GetModel() {
 
 		if(model) DestroyImmediate(model);
@@ -71,6 +71,9 @@ public class EnemySpawner : MonoBehaviour {
 		model.transform.SetParent(transform);
 	}
 
+	/// <summary>
+	/// 表示用モデルの位置を更新する
+	/// </summary>
 	void ModelUpdate() {
 
 		while(!model) {
@@ -79,6 +82,9 @@ public class EnemySpawner : MonoBehaviour {
 		model.transform.SetPositionAndRotation(transform.position, transform.rotation);
 	}
 
+	/// <summary>
+	/// 向きを表示するための各オブジェクトを取得する
+	/// </summary>
 	void GetArrow() {
 
 		if(arrow) DestroyImmediate(arrow);
@@ -95,6 +101,9 @@ public class EnemySpawner : MonoBehaviour {
 
 	}
 
+	/// <summary>
+	/// 向きを表示するための矢印を更新する
+	/// </summary>
 	void ArrowUpdate() {
 
 		while(!arrowR || !pointR) {
@@ -116,6 +125,10 @@ public class EnemySpawner : MonoBehaviour {
 
 	}
 
+	/// <summary>
+	/// 敵をスポーンする
+	/// </summary>
+	/// <returns></returns>
 	public Enemy SpawnEnemy() {
 		//0番はプレイヤーなので +1する
 		return (Enemy)UnitManager.SpawnUnit(enemyNum + 1, transform.position, transform.rotation);

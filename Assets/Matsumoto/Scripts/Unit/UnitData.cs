@@ -28,6 +28,10 @@ public class UnitData {
 		this.weaponNum = weaponNum;
 	}
 
+	/// <summary>
+	/// キャラクターのクラスを設定。Unitを継承したものに限る
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public void SetUnitType<T>() where T : Unit {
 		type = typeof(T);
 	}

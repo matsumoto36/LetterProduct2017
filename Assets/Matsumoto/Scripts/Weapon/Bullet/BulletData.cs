@@ -37,6 +37,10 @@ public class BulletData {
 		this.maxLength = maxLength;
 	}
 
+	/// <summary>
+	/// このデータの所有者をセットする
+	/// </summary>
+	/// <param name="bulletOwner"></param>
 	public void SetOwner(Weapon bulletOwner) {
 		this.bulletOwner = bulletOwner;
 	}

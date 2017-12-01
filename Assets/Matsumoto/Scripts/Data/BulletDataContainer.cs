@@ -23,6 +23,9 @@ public class BulletDataContainter : SingletonMonoBehaviour<BulletDataContainter>
 	//外部からのnew禁止
 	private BulletDataContainter() { }
 
+	/// <summary>
+	/// データをCSVから読み込む
+	/// </summary>
 	public static void Load() {
 
 		//CSVから読み込む

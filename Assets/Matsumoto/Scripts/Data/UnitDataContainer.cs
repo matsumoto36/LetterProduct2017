@@ -7,7 +7,7 @@ using System;
 /// <summary>
 /// 弾のデータを格納しておく
 /// </summary>
-public class UnitDataContainer : SingletonMonoBehaviour<UnitDataContainer> {
+public sealed class UnitDataContainer : SingletonMonoBehaviour<UnitDataContainer> {
 
 	public const string UNIT_DATA_PATH = "Data/UnitData";
 
@@ -20,6 +20,9 @@ public class UnitDataContainer : SingletonMonoBehaviour<UnitDataContainer> {
 	//外部からのnew禁止
 	private UnitDataContainer() { }
 
+	/// <summary>
+	/// データを読み込む
+	/// </summary>
 	public static void Load() {
 
 		//CSVから読み込む

@@ -4,6 +4,9 @@ using System.Linq;
 using UnityEngine;
 using GamepadInput;
 
+/// <summary>
+/// プレイヤーの入力で動くキャラクター
+/// </summary>
 public class Player : Unit {
 
 	const string WEAPON_SWITCH_ANIM = "TestPlayerAnimationSwitch";
