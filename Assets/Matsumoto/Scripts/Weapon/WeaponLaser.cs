@@ -27,7 +27,6 @@ public class WeaponLaser : WeaponRanged {
 
 	public override void Attack() {
 
-		//チャージ
 		switch(state) {
 			case LaserState.Charging:
 

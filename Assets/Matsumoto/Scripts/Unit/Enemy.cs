@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// AIで動く敵のキャラクター
+/// </summary>
 public class Enemy : Unit {
 
 	public float defaultAttackDuration { get; set; }

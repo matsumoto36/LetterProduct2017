@@ -12,6 +12,7 @@ public class UnitGroupMatrix {
 
 	static UnitGroupMatrix() {
 
+		//ここで敵対状態を定義。横で見る。
 		matrix = new List<List<bool>> {
 			new List<bool> {false, true, true},	//player
 			new List<bool> {true, false, true},	//enemy

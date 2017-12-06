@@ -25,12 +25,13 @@ public abstract class Unit : MonoBehaviour {
 	const string WEAPON_STATUS_MOD = "WEAPON_MOD";
 	const string LEVELUP_STATUS_MOD = "LEVEL_UP";
 
+	//表示用パラメータ
 	[SerializeField]
 	int _level = 1;
 	[SerializeField]
 	int nextLevelEXP = 10;
 	[SerializeField]
-	int dropEXP;
+	int dropExp;
 	[SerializeField]
 	int _maxHP;
 	[SerializeField]
@@ -41,9 +42,12 @@ public abstract class Unit : MonoBehaviour {
 	float _rotSpeed;
 	[SerializeField, Tooltip("パッシブ効果の合計値")]
 	StatusModifier _statusMod = new StatusModifier();
+
+	//パッシブ効果更新用ボタン
 	[SerializeField, Button("CalcStatus", "パッシブ効果を更新")]
 	int dummy;
 
+	//表示用パラメータのプロパティ
 	public int level { get { return _level; } private set { _level = value; } }
 	public int maxHP { get { return _maxHP; } private set { _maxHP = value; } }
 	public int nowHP { get { return _nowHP; } protected set { _nowHP = value; } }
@@ -52,12 +56,11 @@ public abstract class Unit : MonoBehaviour {
 	public StatusModifier statusMod { get { return _statusMod; } private set { _statusMod = value; } }
 
 	public UnitGroup group { get; protected set; }
+	public bool isAttack { get; protected set; }
 	public Weapon[] equipWeapon { get; private set; }
 	public int experience { get; private set; }
 	public bool isPlayMeleeAnim { get; private set; }
-	public bool isAttack { get; protected set; }
 	public bool isDead { get; private set; }
-
 	public bool canAttack { get; private set; }
 
 	protected Transform body;
@@ -108,10 +111,10 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="baseHP"></param>
 	/// <param name="baseMoveSpeed"></param>
 	/// <param name="baseRotSpeed"></param>
-	public virtual void SetInitData(int baseNextLevel, int baseHP, float baseMoveSpeed, float baseRotSpeed) {
-
-		this.baseNextLevel = nextLevelEXP = baseNextLevel;
+	public virtual void SetInitData(int baseHP, int dropExp, int baseNextLevel,  float baseMoveSpeed, float baseRotSpeed) {
 		this.baseHP = maxHP = baseHP;
+		this.dropExp = dropExp;
+		this.baseNextLevel = nextLevelEXP = baseNextLevel;
 		this.baseMoveSpeed = moveSpeed = baseMoveSpeed;
 		this.baseRotSpeed = rotSpeed = baseRotSpeed;
 	}
@@ -251,15 +254,18 @@ public abstract class Unit : MonoBehaviour {
 		nowHP = 0;
 		isDead = true;
 
-		//経験値分配
+		//ダメージの合計を出す
 		var damageSum = attackedUnitList
 			.Select((item) => item.damage)
 			.Sum();
 
+		Debug.Log(attackedUnitList.Count);
+
+		//ダメージに応じて各ユニットに経験値を分配する
 		foreach(var item in attackedUnitList) {
 			if(!item.attackUnit) continue;
-			item.attackUnit.GainEXP((item.damage / damageSum) * dropEXP);
-			Debug.Log((item.damage / damageSum) * dropEXP);
+			item.attackUnit.GainEXP((float)item.damage / damageSum * dropExp);
+			Debug.Log((float)item.damage / damageSum * dropExp);
 		}
 	}
 

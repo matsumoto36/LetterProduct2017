@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+/// <summary>
+/// シングルトンの親クラス
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour {
 
 	public static T instance { get; private set; }

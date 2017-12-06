@@ -17,22 +17,24 @@ public class EnemyAI : MonoBehaviour
     public float attackLine;            //攻撃距離
     public float searchAngle;           //視野
 
+    // Enemyスクリプト
     private Enemy enemySC;
 
-    //武器(0:近接, weaponNum:遠距離)
-    public int weaponNum;
     //public float[] weaponDistance = new float[2];   //射程距離
     //public float[] fillingTime = new float[2];      //充填時間
 
     //プレイヤー関連
     [SerializeField]
     private GameObject[] player;        //Playerオブジェクト
-    private Player[] playerCS;  //Playerスクリプト
+    private Player[] playerCS;          //Playerスクリプト
     [SerializeField]
     private int target;                 //一番近いプレイヤー
     [SerializeField]
     private float[] distance;           //距離
 
+    /// <summary>
+    /// 初期設定
+    /// </summary>
     void Awake()
     {
         //プレイ人数の取得
@@ -135,11 +137,10 @@ public class EnemyAI : MonoBehaviour
 
                 if (enemySC.isAttack == false && f <= searchAngle && distance[target] >= attackLine)
                 {
-                    Debug.Log((int)enemySC.equipWeapon[0].weaponType);
                     if (enemySC.equipWeapon[0].weaponType != WeaponType.Ranged)
                     {
                         //遠距離用の武器に交換
-                        enemySC.SwitchWeapon(weaponNum);
+                        enemySC.SwitchWeapon(1);
                         Debug.Log("武器変更");
                     }
 
@@ -158,7 +159,7 @@ public class EnemyAI : MonoBehaviour
                     if (enemySC.equipWeapon[0].weaponType != WeaponType.Melee)
                     {
                         //近接用の武器に交換
-                        enemySC.SwitchWeapon(weaponNum);
+                        enemySC.SwitchWeapon(1);
                         Debug.Log("武器変更");
                     }
 

@@ -7,9 +7,9 @@ using System;
 /// <summary>
 /// 弾のデータを格納しておく
 /// </summary>
-public class UnitDataContainer : SingletonMonoBehaviour<UnitDataContainer> {
+public sealed class UnitDataContainer : SingletonMonoBehaviour<UnitDataContainer> {
 
-	const string UNIT_DATA_PATH = "Data/UnitData";
+	public const string UNIT_DATA_PATH = "Data/UnitData";
 
 	public static List<UnitData> data {
 		get { return instance.unitDataList; }
@@ -20,6 +20,9 @@ public class UnitDataContainer : SingletonMonoBehaviour<UnitDataContainer> {
 	//外部からのnew禁止
 	private UnitDataContainer() { }
 
+	/// <summary>
+	/// データを読み込む
+	/// </summary>
 	public static void Load() {
 
 		//CSVから読み込む
@@ -41,6 +44,7 @@ public class UnitDataContainer : SingletonMonoBehaviour<UnitDataContainer> {
 						item.name,
 						item.modelPath,
 						item.hp,
+						item.dropExp,
 						item.nextLevelExp,
 						item.moveSpeed,
 						item.rotSpeed,

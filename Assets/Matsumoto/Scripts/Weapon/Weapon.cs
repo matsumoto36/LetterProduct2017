@@ -48,7 +48,6 @@ public abstract class Weapon : MonoBehaviour {
 
 		weaponType = WeaponType.Other;
 		StartCoroutine(WaitInterval());
-		Debug.Log("WeaponBaseInitEnd");
 	}
 
 	/// <summary>

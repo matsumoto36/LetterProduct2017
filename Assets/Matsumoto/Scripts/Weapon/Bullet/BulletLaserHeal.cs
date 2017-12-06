@@ -21,8 +21,6 @@ public class BulletLaserHeal : BulletLaser {
 		bData.bulletOwner.SetHitMask(maskList.ToArray());
 	}
 
-
-
 	public override void OnHitting(Collider other) {
 		Irradiation(other.GetComponent<Unit>(), (unit, heal) => {
 			Unit.Heal(bData.bulletOwner.unitOwner, unit, heal);

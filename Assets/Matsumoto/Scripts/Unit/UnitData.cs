@@ -11,21 +11,27 @@ public class UnitData {
 	public string name { get; private set; }
 	public string modelPath { get; private set; }
 	public int hp { get; private set; }
+	public int dropExp { get; private set; }
 	public int nextLevelExp { get; private set; }
 	public float moveSpeed { get; private set; }
 	public float rotSpeed { get; private set; }
 	public int[] weaponNum { get; private set; }
 
-	public UnitData(string name, string modelPath, int hp, int nextLevelExp, float moveSpeed, float rotSpeed, int[] weaponNum) {
+	public UnitData(string name, string modelPath, int hp, int dropExp, int nextLevelExp, float moveSpeed, float rotSpeed, int[] weaponNum) {
 		this.name = name;
 		this.modelPath = modelPath;
 		this.hp = hp;
+		this.dropExp = dropExp;
 		this.nextLevelExp = nextLevelExp;
 		this.moveSpeed = moveSpeed;
 		this.rotSpeed = rotSpeed;
 		this.weaponNum = weaponNum;
 	}
 
+	/// <summary>
+	/// キャラクターのクラスを設定。Unitを継承したものに限る
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public void SetUnitType<T>() where T : Unit {
 		type = typeof(T);
 	}

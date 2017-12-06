@@ -15,6 +15,8 @@ public class StatusModifier{
 	public float mulAttackSpeed;
 
 	public StatusModifier() {
+
+		//倍率なので、初期値は1
 		mulHP = 1;
 		mulMoveSpeed = 1;
 		mulPow = 1;
@@ -30,6 +32,9 @@ public class StatusModifier{
 
 	public static StatusModifier operator +(StatusModifier par1, StatusModifier par2) {
 		return new StatusModifier(
+
+			//+30% + +50% = +80%
+			// -20% + -50% = -70%
 			par1.mulHP + par2.mulHP - 1,
 			par1.mulMoveSpeed + par2.mulMoveSpeed - 1,
 			par1.mulPow + par2.mulPow - 1,
