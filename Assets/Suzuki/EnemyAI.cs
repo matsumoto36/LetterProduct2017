@@ -10,12 +10,12 @@ public class EnemyAI : MonoBehaviour
     public Mode mode;
     
     private bool isRendered = false;    //画面内判定
-    public float speed;                 //移動速度(秒速)
-    public float dashSpeed;             //急接近時の速度(秒速)
-    public float moveLine;              //検知範囲
-    public float stepLine;              //ステップ攻撃範囲
-    public float attackLine;            //攻撃距離
-    public float searchAngle;           //視野
+    public float speed = 10;            //移動速度(秒速)
+    public float dashSpeed = 15;        //急接近時の速度(秒速)
+    public float moveLine = 30;         //検知範囲
+    public float stepLine = 10;         //ステップ攻撃範囲
+    public float attackLine = 3;        //攻撃距離
+    public float searchAngle = 7;       //視野
 
     // Enemyスクリプト
     private Enemy enemySC;
@@ -65,7 +65,7 @@ public class EnemyAI : MonoBehaviour
                 if (player[i] == null || playerCS[i].isDead)
                 {
                     //初期化
-                    distance[i] = moveLine * moveLine * moveLine;//とにかく大きい数値
+                    distance[i] = 1000000f;//とにかく大きい数値
                 }
                 else
                 {
@@ -151,7 +151,6 @@ public class EnemyAI : MonoBehaviour
             }
             if (distance[target] < attackLine)
             {
-                //方向転換
                 DirctionChange();
 
                 if (enemySC.isAttack == false && mode >= Mode.BASIS)
