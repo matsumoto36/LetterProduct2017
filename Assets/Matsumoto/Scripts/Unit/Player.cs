@@ -11,16 +11,25 @@ public class Player : Unit {
 
 	const string WEAPON_SWITCH_ANIM = "TestPlayerAnimationSwitch";
 
+	public static List<Player> playerList { get; private set; }
+
 	public GamePad.Index playerIndex;
 	public ControlType inputType;
 
 	float ratio = 0.5f;
+
+	static Player() {
+		playerList = new List<Player>();
+	}
 
 	public override void InitFinal() {
 		base.InitFinal();
 
 		//勢力のセット
 		group = UnitGroup.Player;
+
+		//自分を入れる
+		playerList.Add(this);
 	}
 
 	void Update() {

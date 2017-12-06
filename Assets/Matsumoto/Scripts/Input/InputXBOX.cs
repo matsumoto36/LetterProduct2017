@@ -27,7 +27,7 @@ public static class InputXBOX {
 				xName = "R_JoyStick" + (int)controlIndex + "_XAxis";
 				yName = "R_JoyStick" + (int)controlIndex + "_YAxis";
 				break;
-		}
+		}		
 
 		//初期化
 		Vector2 axisXY = Vector3.zero;
