@@ -25,19 +25,21 @@ public class BulletGrenade : BulletNormal {
 
 		//当たり判定を追加
 		Invoke("AddCollision", NON_COL_TIME);
-		
-		rig = body.GetComponent<Rigidbody>();
+
+		var bulletData = GetBulletData<BulletGrenadeData>();
+
+		rig = GetComponent<Rigidbody>();
 		rig.isKinematic = false;
 		rig.useGravity = true;
-		rig.AddForce(transform.forward * SPEED_MAG * bData.speed);
+		rig.AddForce(transform.forward * SPEED_MAG * bulletData.speed);
 	}
 
 	/// <summary>
 	/// 当たり判定(実体)を追加
 	/// </summary>
 	void AddCollision() {
-		var col = body.gameObject.AddComponent<SphereCollider>();
-		var sc = body.transform.localScale;
+		var col = gameObject.AddComponent<SphereCollider>();
+		var sc = transform.localScale;
 		col.sharedMaterial = pMaterial;
 		col.radius = Mathf.Max(sc.x, sc.y, sc.z) * 0.5f;
 	}
@@ -55,14 +57,11 @@ public class BulletGrenade : BulletNormal {
 
 	public override void OnHitEnter(Collider other) {
 
-		//if(other.tag == "Player") return;
-		//if(other.tag == "Bullet") return;
-
 		isWallCol = true;
 		if(other.tag != "Enemy") return;
 
 		//攻撃
-		Unit.Attack(bData.bulletOwner.unitOwner, other.GetComponent<Unit>(), bData.bulletOwner.power);
+		Unit.Attack(bulletOwner.unitOwner, other.GetComponent<Unit>(), bulletOwner.power);
 
 		//爆発の処理
 		Destroy(gameObject);

@@ -28,32 +28,39 @@ public abstract class Unit : MonoBehaviour {
 	//表示用パラメータ
 	[SerializeField]
 	int _level = 1;
+	public int level { get { return _level; } private set { _level = value; } }
+
 	[SerializeField]
 	int nextLevelEXP = 10;
+
 	[SerializeField]
 	int dropExp;
+
 	[SerializeField]
 	int _maxHP;
+	public int maxHP { get { return _maxHP; } private set { _maxHP = value; } }
+
 	[SerializeField]
 	int _nowHP;
+	public int nowHP { get { return _nowHP; } protected set { _nowHP = value; } }
+
 	[SerializeField]
 	float _moveSpeed;
+	public float moveSpeed { get { return _moveSpeed; } private set { _moveSpeed = value; } }
+
 	[SerializeField]
 	float _rotSpeed;
+	public float rotSpeed { get { return _rotSpeed; } private set { _rotSpeed = value; } }
+
 	[SerializeField, Tooltip("パッシブ効果の合計値")]
 	StatusModifier _statusMod = new StatusModifier();
+	public StatusModifier statusMod { get { return _statusMod; } private set { _statusMod = value; } }
+
 
 	//パッシブ効果更新用ボタン
 	[SerializeField, Button("CalcStatus", "パッシブ効果を更新")]
 	int dummy;
 
-	//表示用パラメータのプロパティ
-	public int level { get { return _level; } private set { _level = value; } }
-	public int maxHP { get { return _maxHP; } private set { _maxHP = value; } }
-	public int nowHP { get { return _nowHP; } protected set { _nowHP = value; } }
-	public float moveSpeed { get { return _moveSpeed; } private set { _moveSpeed = value; } }
-	public float rotSpeed { get { return _rotSpeed; } private set { _rotSpeed = value; } }
-	public StatusModifier statusMod { get { return _statusMod; } private set { _statusMod = value; } }
 
 	public UnitGroup group { get; protected set; }
 	public bool isAttack { get; protected set; }

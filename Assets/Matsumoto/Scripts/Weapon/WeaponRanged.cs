@@ -10,7 +10,7 @@ public abstract class WeaponRanged : Weapon {
 
 	const string SHOT_ANCHOR = "[ShotAnchor]";
 
-	protected BulletData bData;
+	protected BulletData bulletData;
 	protected Transform shotAnchor;
 
 	public override void Init() {
@@ -24,12 +24,10 @@ public abstract class WeaponRanged : Weapon {
 	/// 必要なデータをセットする
 	/// </summary>
 	/// <param name="interval"></param>
-	/// <param name="bData"></param>
-	public virtual void SetData(float interval, int power, BulletData bData) {
+	/// <param name="bulletData"></param>
+	public virtual void SetData(float interval, int power, BulletData bulletData) {
 		baseInterval = interval;
 		basePower = power;
-		bData.SetOwner(this);
-		this.bData = bData;
-
+		this.bulletData = bulletData;
 	}
 }

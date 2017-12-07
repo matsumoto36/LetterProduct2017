@@ -19,14 +19,16 @@ public abstract class Weapon : MonoBehaviour {
 
 	[SerializeField]
 	int _power;
+	public int power { get { return _power;} private set { _power = value; } }
+
 	[SerializeField]
 	float _interval;
+	public float interval { get { return _interval; } private set { _interval = value; } }
+
 	[SerializeField]
 	StatusModifier _weaponMod = new StatusModifier();
-
-	public int power { get { return _power;} private set { _power = value; } }
-	public float interval { get { return _interval; } private set { _interval = value; } }
 	public StatusModifier weaponMod { get { return _weaponMod; } set { _weaponMod = value; } }
+
 
 	public Unit unitOwner { get; set; }
 	public WeaponType weaponType { get; protected set; }

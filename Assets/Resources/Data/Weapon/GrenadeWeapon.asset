@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e227d707ae449284a823890a1ce7f38c, type: 3}
+  m_Name: GrenadeWeapon
+  m_EditorClassIdentifier: 
+  model: {fileID: 1881917110013390, guid: 14cf0fd34d0906442b68d0cb236054d3, type: 2}
+  interval: 0.5
+  power: 10
+  mod:
+    mulHP: 2
+    mulMoveSpeed: 2
+    mulPow: 2
+    mulAttackSpeed: 2
+  bulletData: {fileID: 11400000, guid: 579c66cf6d9f17d429339560dfd177f7, type: 2}

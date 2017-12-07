@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c314df90f050746b1ab815129d8340, type: 3}
+  m_Name: LaserWeapon
+  m_EditorClassIdentifier: 
+  model: {fileID: 1956339628656310, guid: 4fe4cdf930684044eb4f912e8bded1c0, type: 2}
+  interval: 1
+  power: 20
+  mod:
+    mulHP: 1
+    mulMoveSpeed: 1
+    mulPow: 1
+    mulAttackSpeed: 1
+  bulletData: {fileID: 11400000, guid: 64ed567755c47554bac1a0e04972a5c7, type: 2}

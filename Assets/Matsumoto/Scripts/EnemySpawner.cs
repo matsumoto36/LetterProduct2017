@@ -10,8 +10,8 @@ using System.Linq;
 [ExecuteInEditMode]
 public class EnemySpawner : MonoBehaviour {
 
-	[Header("スポーンする敵の番号を入力して下さい")]
-	public int enemyNum;
+	[Header("スポーンする敵のデータを入力して下さい")]
+	public EnemyData enemyData;
 
 	[Header("ここから見やすくするためのガイド")]
 	public bool guide = true;
@@ -20,7 +20,6 @@ public class EnemySpawner : MonoBehaviour {
 	public float arrowWidth = 0.5f;
 
 	int content = 2;
-	int _enemyNum;
 	LineRenderer arrowR;
 	MeshRenderer pointR;
 	GameObject arrow;
@@ -45,30 +44,25 @@ public class EnemySpawner : MonoBehaviour {
 			Start();
 		}
 
-		if(enemyNum != _enemyNum) {
-			if(model) DestroyImmediate(model.gameObject);
-			_enemyNum = enemyNum;
-		}
-
 		ArrowUpdate();
-		ModelUpdate();
+
+		if(enemyData) ModelUpdate();
 	}
 
 	/// <summary>
 	/// 表示用モデルを取得する
 	/// </summary>
-	void GetModel() {
+	bool GetModel() {
 
 		if(model) DestroyImmediate(model);
+		if(!enemyData) return false;
+		if(!enemyData.model) return false;
 
-		var num = enemyNum + 1;
-		var data = CSVLoader.LoadData(UnitDataContainer.UNIT_DATA_PATH);
-
-		if(data.Count <= num) return;
-
-		model = Instantiate(Resources.Load<GameObject>(UnitManager.UNIT_MODEL_PATH + data[num][1]));
-		model.name += "(Preview)";
+		model = Instantiate(enemyData.model);
+		model.name = enemyData.model.name + "(Preview)";
 		model.transform.SetParent(transform);
+
+		return true;
 	}
 
 	/// <summary>
@@ -76,9 +70,10 @@ public class EnemySpawner : MonoBehaviour {
 	/// </summary>
 	void ModelUpdate() {
 
-		while(!model) {
-			GetModel();
-		} 
+		if(!model || model.name != enemyData.model.name + "(Preview)") {
+			if(!GetModel()) return;
+		}
+
 		model.transform.SetPositionAndRotation(transform.position, transform.rotation);
 	}
 
@@ -129,8 +124,7 @@ public class EnemySpawner : MonoBehaviour {
 	/// 敵をスポーンする
 	/// </summary>
 	/// <returns></returns>
-	public Enemy SpawnEnemy() {
-		//0番はプレイヤーなので +1する
-		return (Enemy)UnitManager.SpawnUnit(enemyNum + 1, transform.position, transform.rotation);
+	public void SpawnEnemy() {
+		enemyData.Spawn(transform.position, transform.rotation);
 	}
 }
