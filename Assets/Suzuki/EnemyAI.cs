@@ -70,39 +70,25 @@ public class EnemyAI : MonoBehaviour
                 else
                 {
                     //距離を計算(2乗された値)
-                    distance[i] = (transform.position - player[i].transform.position).sqrMagnitude;
+                    distance[i] = ((transform.position - player[i].transform.position) * 100 / 100).sqrMagnitude;
                 }
             }
 
             //距離比較
             target = 0;
-            for (int i = 0; i < player.Length; i++)
+            for (int i = 1; i < player.Length; i++)
             {
-                for (int j = (i + 1); j < player.Length; j++)
+                //比較対象が存在するか
+                if (player[target] == null || player[i] == null)
                 {
-                    //比較対象が存在するか
-                    if (player[i] == null || player[j] == null)
+                    continue;
+                }
+                //通常処理
+                else
+                {
+                    if (distance[i] < distance[target])
                     {
-                        if (player[i] != null && distance[i] < distance[target])
-                        {
-                            target = i;
-                        }
-                        else if (player[j] != null && distance[j] < distance[target])
-                        {
-                            target = j;
-                        }
-                    }
-                    //通常処理
-                    else
-                    {
-                        if (distance[i] < distance[j])
-                        {
-                            target = i;
-                        }
-                        else if (distance[i] > distance[j])
-                        {
-                            target = j;
-                        }
+                        target = i;
                     }
                 }
             }
@@ -133,7 +119,6 @@ public class EnemyAI : MonoBehaviour
 
                 //プレイヤーの見えている正面からの角度
                 float f = Vector3.Angle((player[target].transform.position - transform.position).normalized, transform.forward);
-                Debug.Log(f+"°");
 
                 if (enemySC.isAttack == false && f <= searchAngle && distance[target] >= attackLine)
                 {
