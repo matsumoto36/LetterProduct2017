@@ -21,6 +21,8 @@ public class CameraController : MonoBehaviour {
 
 	void Awake() {
 		cam = GetComponent<Camera>();
+
+
 	}
 
 	void LateUpdate() {
@@ -36,15 +38,20 @@ public class CameraController : MonoBehaviour {
 	/// </summary>
 	void CalcCameraPosition() {
 
-		if(Player.playerList.Count == 0) return;
+		if(Unit.unitList.Count == 0) return;
+
+		//プレイヤーを抽出
+		var playerList = Unit.unitList
+			.Where((item) => item && item is Player)
+			.ToArray();
 
 		//プレイヤー達の中心を求める
-		var trackPos = Player.playerList
+		var trackPos = playerList
 			.Select((item) => item.transform.position)
-			.Aggregate((from, to) => from + to) / Player.playerList.Count;
+			.Aggregate((from, to) => from + to) / playerList.Length;
 
 		//一番遠いプレイヤーを抽出
-		var posArray = Player.playerList
+		var posArray = playerList
 			.Select((item) => item.transform.position)
 			.ToArray();
 

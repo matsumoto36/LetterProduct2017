@@ -24,9 +24,11 @@ public class WeaponMelee : Weapon {
 		//相手の勢力に当たるように設定
 		var maskList = UnitGroupMatrix.GetAttackableGroup(unitOwner.group, true)
 			.Select((item) => item.ToString() + "Layer")
-			.ToArray();
+			.ToList();
 
-		SetHitMask(maskList);
+		maskList.Add("IgnoreHit");
+
+		SetHitMask(maskList.ToArray());
 	}
 
 	public override void Attack() {

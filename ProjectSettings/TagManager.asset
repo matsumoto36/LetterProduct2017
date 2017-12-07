@@ -20,7 +20,7 @@ TagManager:
   - BulletLayer
   - EnemyLayer
   - OtherUnitLayer
-  - 
+  - IgnoreHit
   - 
   - 
   - 

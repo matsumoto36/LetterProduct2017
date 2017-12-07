@@ -8,8 +8,8 @@ using UnityEngine;
 public class BulletGrenade : BulletNormal {
 
 	public PhysicMaterial pMaterial;
-	public float expTime = 2f;
 
+	const float EXPLOSION_TIME = 2f;
 	const float SPEED_MAG = 100f;
 	const float DEC = 0.9f;
 	const float NON_COL_TIME = 0.1f;
@@ -21,7 +21,7 @@ public class BulletGrenade : BulletNormal {
 		base.Init();
 
 		//消滅までの時間を上書き
-		Destroy(gameObject, expTime);
+		Destroy(gameObject, EXPLOSION_TIME);
 
 		//当たり判定を追加
 		Invoke("AddCollision", NON_COL_TIME);
@@ -69,5 +69,7 @@ public class BulletGrenade : BulletNormal {
 
 	void OnDestroy() {
 		Debug.Log("Explosion");
+		var data = GetBulletData<BulletGrenadeData>();
+		Explosion.Create(bulletOwner, transform.position, data.expPow, data.expRadius);
 	}
 }

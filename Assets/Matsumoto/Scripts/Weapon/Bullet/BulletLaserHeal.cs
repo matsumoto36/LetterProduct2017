@@ -16,7 +16,9 @@ public class BulletLaserHeal : BulletLaser {
 		var maskList = UnitGroupMatrix.GetAttackableGroup(bulletOwner.unitOwner.group)
 			.Select((item) => item.ToString() + "Layer")
 			.ToList();
+
 		maskList.Add("BulletLayer");
+		maskList.Add("IgnoreHit");
 
 		bulletOwner.SetHitMask(maskList.ToArray());
 	}

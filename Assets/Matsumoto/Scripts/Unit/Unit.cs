@@ -25,6 +25,8 @@ public abstract class Unit : MonoBehaviour {
 	const string WEAPON_STATUS_MOD = "WEAPON_MOD";
 	const string LEVELUP_STATUS_MOD = "LEVEL_UP";
 
+	public static List<Unit> unitList { get; private set; }
+
 	//表示用パラメータ
 	[SerializeField]
 	int _level = 1;
@@ -87,7 +89,11 @@ public abstract class Unit : MonoBehaviour {
 	int switchingWeaponNum = 0;
 	StatusModifier levelUpStatus;
 	Dictionary<string, StatusModifier> statusModStack;
-	
+
+	static Unit() {
+		unitList = new List<Unit>();
+	}
+
 	/// <summary>
 	/// newなど最初に行っておきたい初期化処理
 	/// </summary>
@@ -140,6 +146,9 @@ public abstract class Unit : MonoBehaviour {
 		//ステータスの計算
 		CalcStatus();
 		nowHP = maxHP;
+
+		//リストに追加
+		unitList.Add(this);
 	}
 
 	/// <summary>
@@ -357,6 +366,9 @@ public abstract class Unit : MonoBehaviour {
 	/// <returns>成功したかどうか</returns>
 	public static bool Attack(Unit from, Unit to, int damage) {
 
+		Debug.Log("from" + from.name);
+		Debug.Log("to" + to.name);
+
 		if(!from || !to) return false;
 		if(from.isDead || to.isDead) return false;
 
@@ -373,7 +385,6 @@ public abstract class Unit : MonoBehaviour {
 			.Select((item) => item.damage += damage);
 		}
 		else {
-			Debug.Log("New Unit");
 			to.attackedUnitList.Add(new DamageLog(from, damage));
 		}
 
@@ -444,6 +455,11 @@ public abstract class Unit : MonoBehaviour {
 		var weaponMelee = equipWeapon[0].GetComponent<WeaponMelee>();
 		if(!weaponMelee) return;
 		weaponMelee.SetCollider(false);
+	}
+
+	void OnDestroy() {
+		//リストから除外
+		unitList.Remove(this);
 	}
 
 	IEnumerator PlayMeleeAnimWait(string clipName, float speed, Action onComplete) {

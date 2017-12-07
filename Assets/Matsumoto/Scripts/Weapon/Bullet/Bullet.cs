@@ -22,6 +22,7 @@ public abstract class Bullet : MonoBehaviour {
 			.ToList();
 
 		maskList.Add("BulletLayer");
+		maskList.Add("IgnoreHit");
 
 		bulletOwner.SetHitMask(maskList.ToArray());
 	}

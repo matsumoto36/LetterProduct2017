@@ -18,7 +18,6 @@ public abstract class BulletData : ScriptableObjectBase {
 	protected static T CreateBullet<T>(BulletData data, Weapon owner, Vector3 position, Quaternion quaternion)
 		where T : Bullet {
 
-		if(data.model) Debug.Log("data");
 		var bulletObj = Instantiate(data.model, position, quaternion).AddComponent<T>();
 		bulletObj.SetBulletData(data);
 		bulletObj.tag = "Bullet";
