@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour
     private bool isRendered = false;    //画面内判定
     public float speed = 10;            //移動速度(秒速)
     public float dashSpeed = 15;        //急接近時の速度(秒速)
-    public float moveLine = 30;         //検知範囲
+    public float moveLine = 20;         //検知範囲
     public float stepLine = 10;         //ステップ攻撃範囲
     public float attackLine = 3;        //攻撃距離
     public float searchAngle = 7;       //視野
@@ -78,8 +78,8 @@ public class EnemyAI : MonoBehaviour
             target = 0;
             for (int i = 1; i < player.Length; i++)
             {
-                //比較対象が存在するか
-                if (player[target] == null || player[i] == null)
+                //比較対象が存在,生存しているか
+                if (player[target] == null || player[i] == null || playerCS[target].isDead || playerCS[i].isDead)
                 {
                     continue;
                 }
@@ -111,13 +111,7 @@ public class EnemyAI : MonoBehaviour
 
             if (mode >= Mode.DUAL)
             {
-                if (distance[target] >= moveLine)
-                {
-                    //方向転換
-                    DirctionChange();
-                }
-
-                //プレイヤーの見えている正面からの角度
+                //プレイヤーの見えている正面からの角度(正規化)
                 float f = Vector3.Angle((player[target].transform.position - transform.position).normalized, transform.forward);
 
                 if (enemySC.isAttack == false && f <= searchAngle && distance[target] >= attackLine)
@@ -133,6 +127,12 @@ public class EnemyAI : MonoBehaviour
                     enemySC.Attack();
                     Debug.Log("ビーム");
                 }
+                
+                if (distance[target] >= moveLine)
+                {
+                    //方向転換
+                    DirctionChange();
+                }
             }
             if (distance[target] < attackLine)
             {
@@ -147,20 +147,23 @@ public class EnemyAI : MonoBehaviour
                         Debug.Log("武器変更");
                     }
 
-                    //攻撃    
+                    //攻撃
                     enemySC.Attack();
                     Debug.Log("剣");
                 }
             }
-            else if (distance[target] < stepLine && mode >= Mode.APPROACH)
+            else if (enemySC.isAttack == false)//移動処理
             {
-                //急接近
-                Dash();
-            }
-            else if (distance[target] < moveLine && mode >= Mode.BASIS)
-            {
-                //移動
-                Move();
+                if (distance[target] < stepLine && mode >= Mode.APPROACH)
+                {
+                    //急接近
+                    Dash();
+                }
+                else if (distance[target] < moveLine && mode >= Mode.BASIS)
+                {
+                    //移動
+                    Move();
+                }
             }
         }
         isRendered = false;
@@ -198,7 +201,7 @@ public class EnemyAI : MonoBehaviour
 
         transform.position += transform.forward * dashSpeed * Time.deltaTime;
     }
-    
+
     //SkinnedMeshRendererなるものが必要？
     /// <summary>
     /// 画面内判定
