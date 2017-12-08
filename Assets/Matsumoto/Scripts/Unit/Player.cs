@@ -17,6 +17,7 @@ public class Player : Unit {
 	public ControlType inputType;
 
 	bool isInDuraEgg = false;
+	bool isWeak = false;
 	GameObject duraEggPrefab;
 	GameObject duraEgg;
 	float ratio = 0.5f;	//レバーの入力閾値
@@ -158,6 +159,10 @@ public class Player : Unit {
 		canMove = canAttack = true;
 
 		isInDuraEgg = false;
+
+		//一定時間弱くなる
+		if(isWeak) StopCoroutine("WeakTime");
+		StartCoroutine(WeakTime(GameBalance.instance.data.duraEggExitWeakTime));
 	}
 
 	/// <summary>
@@ -171,16 +176,16 @@ public class Player : Unit {
 
 		if(!predicate()) yield break;
 
-		bool flg = canMove;
+		bool buff = canMove;
 		//発動待機中は攻撃と移動ができない
 		canMove = canAttack = false;
 
 		float t = 0;
-		while(waitTime > (t += Time.deltaTime)) {
+		while((t += Time.deltaTime) < waitTime) {
 
 			//続けないとキャンセル
 			if(!predicate()) {
-				canMove = canAttack = flg;
+				canMove = canAttack = buff;
 				yield break;
 			}
 
@@ -191,6 +196,23 @@ public class Player : Unit {
 
 		//成功時に実行
 		onComplete();
+	}
+
+	/// <summary>
+	/// 一定時間弱くなる
+	/// </summary>
+	/// <param name="weakTime"></param>
+	/// <returns></returns>
+	IEnumerator WeakTime(float weakTime) {
+
+		isWeak = true;
+
+		float t = 0;
+		while((t += Time.deltaTime) < weakTime) {
+			yield return null;
+		}
+
+		isWeak = false;
 	}
 
 	public override void Death() {
@@ -250,5 +272,14 @@ public class Player : Unit {
 				Quaternion.RotateTowards(body.rotation, Quaternion.LookRotation(plDir), rotSpeed);
 		}
 
+	}
+
+	protected override bool ApplyDamage(int damage) {
+
+		//耐久卵の状態で変化
+		if(isInDuraEgg) return false;
+		if(isWeak) damage = (int)(damage * GameBalance.instance.data.duraEggExitDamageMag);
+
+		return base.ApplyDamage(damage);
 	}
 }

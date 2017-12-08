@@ -377,22 +377,23 @@ public abstract class Unit : MonoBehaviour {
 
 		Debug.Log("Attack " + from.name + " -> " + to.name);
 
-		//経験値分配用
-		bool findFromUnit = to.attackedUnitList
-			.Where((item) => item.attackUnit == from)
-			.Count() > 0;
-
-		if(findFromUnit) {
-			to.attackedUnitList
-			.Where((item) => item.attackUnit == from)
-			.Select((item) => item.damage += damage);
-		}
-		else {
-			to.attackedUnitList.Add(new DamageLog(from, damage));
-		}
-
 		//ダメージを与える
-		to.ApplyDamage(damage);
+		if(to.ApplyDamage(damage)) {
+
+			//経験値分配用
+			bool findFromUnit = to.attackedUnitList
+				.Where((item) => item.attackUnit == from)
+				.Count() > 0;
+
+			if(findFromUnit) {
+				to.attackedUnitList
+				.Where((item) => item.attackUnit == from)
+				.Select((item) => item.damage += damage);
+			}
+			else {
+				to.attackedUnitList.Add(new DamageLog(from, damage));
+			}
+		}
 
 		return true;
 	}
@@ -418,9 +419,10 @@ public abstract class Unit : MonoBehaviour {
 	/// </summary>
 	/// <param name="from">攻撃するキャラクター</param>
 	/// <param name="damage"></param>
-	protected virtual void ApplyDamage(int damage) {
+	protected virtual bool ApplyDamage(int damage) {
 		nowHP -= damage;
 		if(nowHP <= 0) Death();
+		return true;
 	}
 
 	/// <summary>
