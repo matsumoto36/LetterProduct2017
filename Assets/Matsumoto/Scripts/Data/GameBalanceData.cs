@@ -13,6 +13,7 @@ public class GameBalanceData : ScriptableObject {
 	public float duraEggExitTime = 0.1f;		//耐久卵から出るときの必要時間
 	public float duraEggExitWeakTime = 2f;		//耐久卵から出た時の弱くなる時間
 	public float duraEggExitDamageMag = 2f;		//耐久卵で弱くなった時のダメージ倍率
+	public float revivableRadius = 2f;			//復活可能な距離
 	public float reviveTime = 4f;				//復活に必要な時間
 
 }

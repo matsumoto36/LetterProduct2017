@@ -68,7 +68,7 @@ public abstract class Unit : MonoBehaviour {
 	public Weapon[] equipWeapon { get; private set; }
 	public int experience { get; private set; }
 	public bool isPlayMeleeAnim { get; private set; }
-	public bool isDead { get; private set; }
+	public bool isDead { get; protected set; }
 
 	public bool canAttack { get; protected set; }
 	public bool canMove { get; protected set; }	//Unit内では現状宣言のみ
@@ -280,6 +280,9 @@ public abstract class Unit : MonoBehaviour {
 			.Sum();
 
 		Debug.Log(attackedUnitList.Count);
+
+		//0除算回避
+		if(damageSum * dropExp == 0) return;
 
 		//ダメージに応じて各ユニットに経験値を分配する
 		foreach(var item in attackedUnitList) {

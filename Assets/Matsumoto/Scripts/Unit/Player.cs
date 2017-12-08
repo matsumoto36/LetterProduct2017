@@ -36,6 +36,8 @@ public class Player : Unit {
 
 	void Update() {
 
+		if(isDead) return;
+
 		if(Input.GetKeyDown(KeyCode.E)) GainEXP(1);
 		if(Input.GetKeyDown(KeyCode.R)) GainEXP(10);
 		if(Input.GetKeyDown(KeyCode.T)) GainEXP(100);
@@ -65,42 +67,67 @@ public class Player : Unit {
 				() => InputManager.GetButton(inputType, GamePad.Button.A, playerIndex),
 				OutDuraEgg));
 		}
+
+		//近くに死んだ味方がいたら回復できる
+		var rivaivablePlayer = GetRivaivablePlayer();
+		if(rivaivablePlayer) {
+			Debug.DrawLine(transform.position, rivaivablePlayer.transform.position, Color.red);
+
+			if(InputManager.GetButtonDown(inputType, GamePad.Button.B, playerIndex)) {
+
+				StartCoroutine(SkillWait(
+					GameBalance.instance.data.duraEggExitTime,
+					() => InputManager.GetButton(inputType, GamePad.Button.B, playerIndex),
+					() => RivivePlayer(rivaivablePlayer)));
+			}
+
+		}
 	}
 
 	// Update is called once per frame
 	void FixedUpdate() {
 
+		if(isDead) return;
+
 		//移動処理
 		Move();
 	}
 
-	/// <summary>
-	/// 攻撃するかどうかも含め、各攻撃状態時の処理
-	/// </summary>
-	public override void Attack() {
+	void RivivePlayer(Player target) {
+		if(!target || !target.isDead) return;
 
-		//攻撃開始
-		if(InputManager.GetTrigger(inputType, GamePad.Trigger.LeftTrigger, playerIndex, true) > ratio && !isAttack) {
-			equipWeapon[0].AttackStart();
-			isAttack = true;
-		}
-		//攻撃ループ
-		if(InputManager.GetTrigger(inputType, GamePad.Trigger.LeftTrigger, playerIndex, true) > ratio) {
+		Debug.Log(target + "is Rivive.");
 
-			//攻撃キャンセル復帰用
-			if(!isAttack) {
-				equipWeapon[0].AttackStart();
-				isAttack = true;
-			}
-			else {
-				equipWeapon[0].Attack();
+		target.isDead = false;
+		var healPoint = nowHP / 2;
+		//回復してダメージ
+		Heal(this, target, healPoint);
+		ApplyDamage(healPoint);
+	}
+
+	Player GetRivaivablePlayer() {
+
+		var rivPlayer = unitList
+			.Where((item) => item is Player && item.isDead)
+			.Select((item) => (Player)item)
+			.ToArray();
+
+		//復活できるプレイヤーがいない場合はnull
+		if(rivPlayer.Length == 0) return null;
+
+		//一番近いプレイヤーを検索
+		Player nearestPlayer = null;
+		float minLength = GameBalance.instance.data.revivableRadius;
+		foreach(var item in rivPlayer) {
+
+			var length = (item.transform.position - transform.position).magnitude;
+			if(length < minLength) {
+				minLength = length;
+				nearestPlayer = item;
 			}
 		}
-		//攻撃終了
-		if(InputManager.GetTrigger(inputType, GamePad.Trigger.LeftTrigger, playerIndex, true) <= ratio && isAttack) {
-			equipWeapon[0].AttackEnd();
-			isAttack = false;
-		}
+
+		return nearestPlayer;
 	}
 
 	/// <summary>
@@ -215,9 +242,39 @@ public class Player : Unit {
 		isWeak = false;
 	}
 
+	/// <summary>
+	/// 攻撃するかどうかも含め、各攻撃状態時の処理
+	/// </summary>
+	public override void Attack() {
+
+		//攻撃開始
+		if(InputManager.GetTrigger(inputType, GamePad.Trigger.LeftTrigger, playerIndex, true) > ratio && !isAttack) {
+			equipWeapon[0].AttackStart();
+			isAttack = true;
+		}
+		//攻撃ループ
+		if(InputManager.GetTrigger(inputType, GamePad.Trigger.LeftTrigger, playerIndex, true) > ratio) {
+
+			//攻撃キャンセル復帰用
+			if(!isAttack) {
+				equipWeapon[0].AttackStart();
+				isAttack = true;
+			}
+			else {
+				equipWeapon[0].Attack();
+			}
+		}
+		//攻撃終了
+		if(InputManager.GetTrigger(inputType, GamePad.Trigger.LeftTrigger, playerIndex, true) <= ratio && isAttack) {
+			equipWeapon[0].AttackEnd();
+			isAttack = false;
+		}
+	}
+
 	public override void Death() {
 		base.Death();
 		Debug.Log("Player" + playerIndex + " is Dead");
+		StopAllCoroutines();
 	}
 
 	public override void Move() {

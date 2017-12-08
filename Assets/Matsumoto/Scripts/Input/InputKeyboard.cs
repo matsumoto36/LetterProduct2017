@@ -93,7 +93,7 @@ public static class InputKeyboard {
 			case GamePad.Button.A:
 				return "DuraEgg";
 			case GamePad.Button.B:
-				return "NONE";
+				return "Revive";
 			case GamePad.Button.Y:
 				return "NONE";
 			case GamePad.Button.X:
