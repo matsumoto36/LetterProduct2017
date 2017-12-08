@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Weapon/Create MeleeWeapon Data")]
 public class WeaponMeleeData : WeaponData {
@@ -15,10 +14,5 @@ public class WeaponMeleeData : WeaponData {
 		return CreateWeapon<WeaponMelee>((item) => {
 			item.SetData(interval, power, motionName, motionSpeed);
 		});
-	}
-
-	[MenuItem("Weapon/Create MeleeWeapon Data")]
-	static void CreateData() {
-		CreateAsset<WeaponMeleeData>(ASSET_PATH);
 	}
 }

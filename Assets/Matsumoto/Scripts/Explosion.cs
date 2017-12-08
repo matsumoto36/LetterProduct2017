@@ -8,16 +8,6 @@ using System.Linq;
 /// </summary>
 public class Explosion : MonoBehaviour {
 
-	const string PREFAB_PATH = "System/Explosion";
-	const float EXPLOSION_TIME = 0.1f;
-
-	Weapon owner;
-	int power;
-
-	void Awake() {
-		Destroy(gameObject, EXPLOSION_TIME);
-	}
-
 	public static void Create(Weapon owner, Vector3 position, int power, float radius) {
 
 		var attackableUnit = Physics.OverlapSphere(position, radius)
@@ -28,9 +18,6 @@ public class Explosion : MonoBehaviour {
 			Unit.Attack(owner.unitOwner, item, power);
 		}
 
-		var exp = Instantiate(Resources.Load<Explosion>(PREFAB_PATH), position, Quaternion.identity);
-		exp.transform.localScale = new Vector3(1, 1, 1) * radius * 2;
-		exp.owner = owner;
-		exp.power = power;
+		//見えないので、エフェクトとか再生したい
 	}
 }

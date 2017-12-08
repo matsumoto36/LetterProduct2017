@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
 
 [CreateAssetMenu(menuName = "Unit/Create Enemy Data")]
 public class EnemyData : UnitData {
@@ -25,10 +24,5 @@ public class EnemyData : UnitData {
 		ai.searchAngle = searchAngle;
 
 		return enemy;
-	}
-
-	[MenuItem("Unit/Create Enemy Data")]
-	static void CreateData() {
-		CreateAsset<EnemyData>(ASSET_PATH);
 	}
 }

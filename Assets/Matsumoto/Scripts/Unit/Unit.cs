@@ -58,7 +58,6 @@ public abstract class Unit : MonoBehaviour {
 	StatusModifier _statusMod = new StatusModifier();
 	public StatusModifier statusMod { get { return _statusMod; } private set { _statusMod = value; } }
 
-
 	//パッシブ効果更新用ボタン
 	[SerializeField, Button("CalcStatus", "パッシブ効果を更新")]
 	int dummy;
@@ -70,7 +69,11 @@ public abstract class Unit : MonoBehaviour {
 	public int experience { get; private set; }
 	public bool isPlayMeleeAnim { get; private set; }
 	public bool isDead { get; private set; }
-	public bool canAttack { get; private set; }
+
+	public bool canAttack { get; protected set; }
+	public bool canMove { get; protected set; }	//Unit内では現状宣言のみ
+
+	public float HPRatio { get { return (float)nowHP / maxHP; } }
 
 	protected Transform body;
 	protected Vector3 moveVec;
@@ -104,6 +107,7 @@ public abstract class Unit : MonoBehaviour {
 		attackedUnitList = new List<DamageLog>();
 		statusModStack = new Dictionary<string, StatusModifier>();
 		canAttack = true;
+		canMove = true;
 
 		anim = GetComponent<Animator>();
 		unitRig = GetComponent<Rigidbody>();
@@ -281,7 +285,6 @@ public abstract class Unit : MonoBehaviour {
 		foreach(var item in attackedUnitList) {
 			if(!item.attackUnit) continue;
 			item.attackUnit.GainEXP((float)item.damage / damageSum * dropExp);
-			Debug.Log((float)item.damage / damageSum * dropExp);
 		}
 	}
 

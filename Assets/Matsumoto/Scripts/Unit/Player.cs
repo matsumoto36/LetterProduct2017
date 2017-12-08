@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using UnityEngine;
 using GamepadInput;
 
@@ -10,17 +11,26 @@ using GamepadInput;
 public class Player : Unit {
 
 	const string WEAPON_SWITCH_ANIM = "TestPlayerAnimationSwitch";
+	const string DURA_EGG_PREFAB_PATH = "System/DuraEgg";
 
 	public GamePad.Index playerIndex;
 	public ControlType inputType;
 
-	float ratio = 0.5f;
+	bool isInDuraEgg = false;
+	GameObject duraEggPrefab;
+	GameObject duraEgg;
+	float ratio = 0.5f;	//レバーの入力閾値
+
 
 	public override void InitFinal() {
 		base.InitFinal();
 
 		//勢力のセット
 		group = UnitGroup.Player;
+
+		//耐久卵オブジェクトを取得
+		duraEggPrefab = Resources.Load<GameObject>(DURA_EGG_PREFAB_PATH);
+		if(!duraEggPrefab) Debug.LogError("Failed load DuraEgg.");
 	}
 
 	void Update() {
@@ -30,15 +40,30 @@ public class Player : Unit {
 		if(Input.GetKeyDown(KeyCode.T)) GainEXP(100);
 
 		//攻撃
-		if(!equipWeapon[0]) return;
-		if(!canAttack) return;
-		if(isPlayMeleeAnim) return;
-
-		Attack();
+		if(CheckCanAttack()) Attack();
 
 		//武器交換
-		if(!equipWeapon[1]) return;
 		CheckSwitchWeapon();
+
+		//HPが一定以下になったら耐久卵が使える
+		if(HPRatio < GameBalance.instance.data.duraEggCanUseRatio
+			&& InputManager.GetButtonDown(inputType, GamePad.Button.A, playerIndex)) {
+
+			StartCoroutine(SkillWait(
+				GameBalance.instance.data.duraEggChargeTime,
+				() => InputManager.GetButton(inputType, GamePad.Button.A, playerIndex),
+				InDuraEgg));
+		}
+
+		//耐久卵から出る
+		if(isInDuraEgg
+			&& InputManager.GetButtonDown(inputType, GamePad.Button.A, playerIndex)) {
+
+			StartCoroutine(SkillWait(
+				GameBalance.instance.data.duraEggExitTime,
+				() => InputManager.GetButton(inputType, GamePad.Button.A, playerIndex),
+				OutDuraEgg));
+		}
 	}
 
 	// Update is called once per frame
@@ -82,12 +107,90 @@ public class Player : Unit {
 	/// </summary>
 	void CheckSwitchWeapon() {
 
+		if(!equipWeapon[1]) return;
+
 		if(InputManager.GetTrigger(inputType, GamePad.Trigger.RightTrigger, playerIndex, true) > ratio) {
 
 			//攻撃キャンセル
 			if(isAttack) equipWeapon[0].AttackEnd();
 			SwitchWeapon(WEAPON_SWITCH_ANIM, 1, () => { });
 		}
+	}
+
+	/// <summary>
+	/// 攻撃してよいか確認
+	/// </summary>
+	/// <returns></returns>
+	bool CheckCanAttack() {
+		if(!equipWeapon[0]) return false;
+		if(!canAttack) return false;
+		if(isPlayMeleeAnim) return false;
+
+		return true;
+	}
+
+	/// <summary>
+	/// 耐久卵にこもる
+	/// </summary>
+	void InDuraEgg() {
+
+		//卵を生成
+		if(duraEgg) Destroy(duraEgg);
+		duraEgg = Instantiate(duraEggPrefab);
+		duraEgg.transform.position = transform.position;
+		duraEgg.transform.parent = transform;
+
+		//攻撃と移動を無効化
+		canMove = canAttack = false;
+
+		isInDuraEgg = true;
+	}
+
+	/// <summary>
+	/// 耐久卵から出る
+	/// </summary>
+	void OutDuraEgg() {
+
+		//卵を破壊
+		Destroy(duraEgg);
+
+		//攻撃と移動を有効化
+		canMove = canAttack = true;
+
+		isInDuraEgg = false;
+	}
+
+	/// <summary>
+	/// 一定時間待つ
+	/// </summary>
+	/// <param name="waitTime"></param>
+	/// <param name="predicate">判断条件</param>
+	/// <param name="onComplete">成功時に実行される</param>
+	/// <returns>時間</returns>
+	IEnumerator SkillWait(float waitTime, Func<bool> predicate, Action onComplete) {
+
+		if(!predicate()) yield break;
+
+		bool flg = canMove;
+		//発動待機中は攻撃と移動ができない
+		canMove = canAttack = false;
+
+		float t = 0;
+		while(waitTime > (t += Time.deltaTime)) {
+
+			//続けないとキャンセル
+			if(!predicate()) {
+				canMove = canAttack = flg;
+				yield break;
+			}
+
+			yield return t;
+		}
+
+		canMove = canAttack = true;
+
+		//成功時に実行
+		onComplete();
 	}
 
 	public override void Death() {
@@ -97,6 +200,7 @@ public class Player : Unit {
 
 	public override void Move() {
 
+		if(!canMove) return;
 
 		//移動先
 		var axis = InputManager.GetAxis(inputType, GamePad.Axis.LeftStick, playerIndex, true);

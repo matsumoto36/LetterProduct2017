@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-using UnityEditor;
 
 /// <summary>
 /// キャラクターの情報を保存しておく

@@ -91,7 +91,7 @@ public static class InputKeyboard {
 
 		switch(button) {
 			case GamePad.Button.A:
-				return "NONE";
+				return "DuraEgg";
 			case GamePad.Button.B:
 				return "NONE";
 			case GamePad.Button.Y:
