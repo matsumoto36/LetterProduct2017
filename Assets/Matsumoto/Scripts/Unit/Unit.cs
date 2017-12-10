@@ -292,6 +292,19 @@ public abstract class Unit : MonoBehaviour {
 	}
 
 	/// <summary>
+	/// 攻撃してよいか確認
+	/// </summary>
+	/// <returns></returns>
+	public bool CheckCanAttack() {
+		if(!equipWeapon[0]) return false;
+		if(isAttack) return false;
+		if(!canAttack) return false;
+		if(isPlayMeleeAnim) return false;
+
+		return true;
+	}
+
+	/// <summary>
 	/// 武器を装備する
 	/// </summary>
 	/// <param name="weapon"></param>

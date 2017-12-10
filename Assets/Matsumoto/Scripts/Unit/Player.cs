@@ -149,18 +149,6 @@ public class Player : Unit {
 	}
 
 	/// <summary>
-	/// 攻撃してよいか確認
-	/// </summary>
-	/// <returns></returns>
-	bool CheckCanAttack() {
-		if(!equipWeapon[0]) return false;
-		if(!canAttack) return false;
-		if(isPlayMeleeAnim) return false;
-
-		return true;
-	}
-
-	/// <summary>
 	/// 耐久卵にこもる
 	/// </summary>
 	void InDuraEgg() {

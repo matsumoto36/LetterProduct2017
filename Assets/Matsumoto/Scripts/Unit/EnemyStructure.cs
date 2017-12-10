@@ -25,7 +25,7 @@ public class EnemyStructure : Enemy {
 	// Update is called once per frame
 	void Update() {
 
-		if(target) Attack();
+		if(target && CheckCanAttack()) Attack();
 		else if(isAttack) {
 			equipWeapon[0].AttackEnd();
 			isAttack = false;

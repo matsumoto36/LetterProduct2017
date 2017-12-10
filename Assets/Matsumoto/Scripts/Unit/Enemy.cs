@@ -84,8 +84,8 @@ public class Enemy : Unit {
 	/// <returns></returns>
 	IEnumerator Attacking(float duration) {
 
-		//攻撃中なら中止
-		if(isAttack) yield break;
+		//攻撃してよいか調べる
+		if(!CheckCanAttack()) yield break;
 
 		isAttack = true;
 		equipWeapon[0].AttackStart();
