@@ -26,6 +26,9 @@ public class Player : Unit {
 	public override void InitFinal() {
 		base.InitFinal();
 
+		tag = "Player";
+		gameObject.layer = LayerMask.NameToLayer("PlayerLayer");
+
 		//勢力のセット
 		group = UnitGroup.Player;
 

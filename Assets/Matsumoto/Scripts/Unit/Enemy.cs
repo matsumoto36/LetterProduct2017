@@ -13,6 +13,9 @@ public class Enemy : Unit {
 	public override void InitFinal() {
 		base.InitFinal();
 
+		tag = "Enemy";
+		gameObject.layer = LayerMask.NameToLayer("EnemyLayer");
+
 		//勢力のセット
 		group = UnitGroup.Enemy;
 

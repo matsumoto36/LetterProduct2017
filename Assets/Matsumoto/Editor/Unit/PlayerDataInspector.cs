@@ -14,7 +14,7 @@ public class PlayerDataInspector : UnitDataInspector {
 		EditorGUILayout.PropertyField(nextLevelExp, new GUIContent("レベル1から2にあげるための経験値量"));
 		EditorGUILayout.PropertyField(moveSpeed, new GUIContent("移動速度"));
 		EditorGUILayout.PropertyField(rotSpeed, new GUIContent("回転速度"));
-
+		EditorGUILayout.Separator();
 		EditorGUILayout.PropertyField(weaponData.GetArrayElementAtIndex(0), new GUIContent("メイン武器"));
 		EditorGUILayout.PropertyField(weaponData.GetArrayElementAtIndex(1), new GUIContent("サブ武器"));
 

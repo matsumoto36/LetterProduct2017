@@ -102,7 +102,7 @@ public abstract class Weapon : MonoBehaviour {
 	public bool CheckHit(GameObject obj) {
 
 		//自分の場合はヒットしない
-		if(obj == unitOwner.gameObject) return false;
+		if(unitOwner && obj == unitOwner.gameObject) return false;
 
 		//番号で渡されるため、マスクできるようにビット列にする
 		int layer = obj.layer == 0 ? 0 : (int)Mathf.Pow(2, obj.layer);

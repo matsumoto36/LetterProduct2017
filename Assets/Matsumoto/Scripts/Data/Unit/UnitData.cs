@@ -47,8 +47,8 @@ public abstract class UnitData : ScriptableObjectBase {
 		unit.SetInitData(hp, dropExp, nextLevelExp, moveSpeed, rotSpeed);
 
 		//武器を装備
-		unit.EquipWeapon(weaponData[0].Create(), 0);
-		unit.EquipWeapon(weaponData[1].Create(), 1);
+		if(weaponData[0]) unit.EquipWeapon(weaponData[0].Create(), 0);
+		if(weaponData[1]) unit.EquipWeapon(weaponData[1].Create(), 1);
 
 		//初期化処理2
 		unit.InitFinal();

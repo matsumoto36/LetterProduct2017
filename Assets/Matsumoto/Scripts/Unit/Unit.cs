@@ -347,6 +347,7 @@ public abstract class Unit : MonoBehaviour {
 		if(!equipWeapon[0]) return;
 		if(!equipWeapon[weaponNum]) return;
 		if(isPlayMeleeAnim) return;
+		if(switchingWeaponNum != 0) return;
 
 		//一定時間待つ
 		StartCoroutine(SwitchWeaponAnim(clipName, weaponNum, onComplete));
@@ -371,9 +372,6 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="damage"></param>
 	/// <returns>成功したかどうか</returns>
 	public static bool Attack(Unit from, Unit to, int damage) {
-
-		Debug.Log("from" + from.name);
-		Debug.Log("to" + to.name);
 
 		if(!from || !to) return false;
 		if(from.isDead || to.isDead) return false;
@@ -432,6 +430,8 @@ public abstract class Unit : MonoBehaviour {
 	/// 武器が入れ替わる瞬間
 	/// </summary>
 	void OnSwitchWeaponModel() {
+
+		Debug.Log("Switch");
 
 		//0番同士の交換はありえないので実行しない
 		if(switchingWeaponNum == 0) return;
@@ -499,7 +499,8 @@ public abstract class Unit : MonoBehaviour {
 		var w = equipWeapon[0];
 		equipWeapon[0] = equipWeapon[weaponNum];
 		equipWeapon[weaponNum] = w;
-
+		switchingWeaponNum = 0;
+				
 		//Idleに戻す
 		StartCoroutine(PlayAnimation(0, "Idle", 1));
 

@@ -18,5 +18,5 @@ MonoBehaviour:
   moveSpeed: 6
   rotSpeed: 10
   weaponData:
-  - {fileID: 11400000, guid: 8d93ce8eb5292e046a2bd5337c068e1f, type: 2}
+  - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
   - {fileID: 11400000, guid: c8d587155205ac143810ee4022b55a1c, type: 2}
