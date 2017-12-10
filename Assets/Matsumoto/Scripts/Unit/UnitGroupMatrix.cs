@@ -37,9 +37,12 @@ public class UnitGroupMatrix {
 	/// <returns></returns>
 	public static UnitGroup[] GetAttackableGroup(UnitGroup group, bool isInvert) {
 
-		return matrix[(int)group]
-			.Where((item) => isInvert ? !item : item)
-			.Select((item, index) => ((UnitGroup)index))
-			.ToArray();
+		List<UnitGroup> attackableGroup = new List<UnitGroup>();
+		for(int i = 0;i < matrix[(int)group].Count;i++) {
+			//Ex-ORで反転
+			if(isInvert ^ matrix[(int)group][i]) attackableGroup.Add((UnitGroup)i);
+		}
+
+		return attackableGroup.ToArray();
 	}
 }

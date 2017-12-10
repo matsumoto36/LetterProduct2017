@@ -20,6 +20,10 @@ public class BulletLaserHeal : BulletLaser {
 		maskList.Add("BulletLayer");
 		maskList.Add("IgnoreHit");
 
+		foreach(var item in maskList) {
+			Debug.Log(item);
+		}
+
 		bulletOwner.SetHitMask(maskList.ToArray());
 	}
 

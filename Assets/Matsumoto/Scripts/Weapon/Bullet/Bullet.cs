@@ -82,6 +82,7 @@ public abstract class Bullet : MonoBehaviour {
 		if(bulletOwner.CheckHit(other.gameObject)) OnHitEnter(other);
 	}
 	void OnTriggerStay(Collider other) {
+		Debug.Log(other.name);
 		if(bulletOwner.CheckHit(other.gameObject)) OnHitting(other);
 	}
 	void OnTriggerExit(Collider other) {

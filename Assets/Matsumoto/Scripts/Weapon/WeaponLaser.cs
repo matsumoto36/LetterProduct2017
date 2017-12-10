@@ -50,6 +50,7 @@ public class WeaponLaser : WeaponRanged {
 				//当たった場所もしくは最大の長さにする
 				float length = maxLength;
 
+				Debug.Log(hitMask.ToString());
 				RaycastHit[] hitAll = Physics.RaycastAll(shotAnchor.position, shotAnchor.forward, length, hitMask);
 
 				foreach(var hit in hitAll) {

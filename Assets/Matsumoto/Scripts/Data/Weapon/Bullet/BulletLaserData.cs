@@ -10,6 +10,9 @@ public class BulletLaserData : BulletData {
 	public bool isHeal;
 
 	public override Bullet Create(Weapon owner, Vector3 position, Quaternion quaternion) {
+
+		if(isHeal) return CreateBullet<BulletLaserHeal>(this, owner, position, quaternion);
+
 		return CreateBullet<BulletLaser>(this, owner, position, quaternion);
 	}
 }

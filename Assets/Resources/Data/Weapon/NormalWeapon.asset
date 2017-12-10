@@ -16,7 +16,7 @@ MonoBehaviour:
   power: 10
   mod:
     mulHP: 2
-    mulMoveSpeed: 2
+    mulMoveSpeed: 1
     mulPow: 2
-    mulAttackSpeed: 2
+    mulAttackSpeed: 1
   bulletData: {fileID: 11400000, guid: 104eea1aa70125f44a3a30279778f772, type: 2}
