@@ -71,7 +71,7 @@ public abstract class Unit : MonoBehaviour {
 	public bool isDead { get; protected set; }
 
 	public bool canAttack { get; protected set; }
-	public bool canMove { get; protected set; }	//Unit内では現状宣言のみ
+	public bool canMove { get; protected set; }
 
 	public float HPRatio { get { return (float)nowHP / maxHP; } }
 
@@ -297,7 +297,6 @@ public abstract class Unit : MonoBehaviour {
 	/// <returns></returns>
 	public bool CheckCanAttack() {
 		if(!equipWeapon[0]) return false;
-		if(isAttack) return false;
 		if(!canAttack) return false;
 		if(isPlayMeleeAnim) return false;
 
@@ -394,6 +393,9 @@ public abstract class Unit : MonoBehaviour {
 		//ダメージを与える
 		if(to.ApplyDamage(damage)) {
 
+			//攻撃してきた敵を伝える
+			to.OnAttacked(from);
+
 			//経験値分配用
 			bool findFromUnit = to.attackedUnitList
 				.Where((item) => item.attackUnit == from)
@@ -438,6 +440,12 @@ public abstract class Unit : MonoBehaviour {
 		if(nowHP <= 0) Death();
 		return true;
 	}
+
+	/// <summary>
+	/// 攻撃した相手を通知
+	/// </summary>
+	/// <param name="from"></param>
+	protected virtual void OnAttacked(Unit from) { }
 
 	/// <summary>
 	/// 武器が入れ替わる瞬間

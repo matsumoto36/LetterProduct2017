@@ -15,9 +15,12 @@ public class EnemyStructure : Enemy {
 	public bool isDetectAttacked;
 
 	Unit target;
+	Quaternion lookRotation;
 
 	public override void InitFinal() {
 		base.InitFinal();
+
+		lookRotation = body.rotation;
 
 		StartCoroutine(CheckTargetUpdate());
 	}
@@ -31,7 +34,7 @@ public class EnemyStructure : Enemy {
 			isAttack = false;
 		}
 
-		if(target) Move();
+		Move();
 	}
 
 	/// <summary>
@@ -66,7 +69,11 @@ public class EnemyStructure : Enemy {
 
 	}
 
-	bool CheckFindTarget() {
+	/// <summary>
+	/// ターゲットが検出できているか確認
+	/// </summary>
+	/// <returns></returns>
+	bool CheckTrackTarget() {
 		if(!target || target.isDead) return false;
 		if(Vector3.Angle(target.transform.position - body.position, body.forward) > detectAngle / 2) return false;
 		if((target.transform.position - body.position).magnitude > detectRadius) return false;
@@ -76,7 +83,7 @@ public class EnemyStructure : Enemy {
 
 	IEnumerator CheckTargetUpdate() {
 
-		if(!CheckFindTarget()) target = GetNearestTarget();
+		if(!CheckTrackTarget()) target = GetNearestTarget();
 
 		yield return new WaitForSeconds(TARGET_CHECK_INTERVAL);
 		StartCoroutine(CheckTargetUpdate());
@@ -100,8 +107,23 @@ public class EnemyStructure : Enemy {
 	public override void Move() {
 
 		//回転のみ
-		var dir = target.transform.position - body.position;
-		body.rotation = Quaternion.RotateTowards(body.rotation, Quaternion.LookRotation(dir), rotSpeed);
+		if(target) {
+			var dir = target.transform.position - body.position;
+			lookRotation = Quaternion.LookRotation(dir);
+		}
+
+		body.rotation = Quaternion.RotateTowards(body.rotation, lookRotation, rotSpeed);
+	}
+
+	protected override void OnAttacked(Unit from) {
+
+		if(!isDetectAttacked) return;
+		if(!from) return;
+		if(target) return;
+
+		//振り向く(検出ではない)
+		var dir = from.transform.position - body.position;
+		lookRotation = Quaternion.LookRotation(dir);
 	}
 
 	void OnDrawGizmos() {
