@@ -16,6 +16,7 @@ public abstract class UnitData : ScriptableObjectBase {
 	public float moveSpeed;
 	public float rotSpeed;
 	public WeaponData[] weaponData;
+	public bool isDrawWeapon = true;
 
 	public UnitData() {
 		weaponData = new WeaponData[2];
@@ -47,8 +48,28 @@ public abstract class UnitData : ScriptableObjectBase {
 		unit.SetInitData(hp, dropExp, nextLevelExp, moveSpeed, rotSpeed);
 
 		//武器を装備
-		if(weaponData[0]) unit.EquipWeapon(weaponData[0].Create(), 0);
-		if(weaponData[1]) unit.EquipWeapon(weaponData[1].Create(), 1);
+		if(weaponData[0]) {
+			var weapon = weaponData[0].Create();
+
+			//表示しない場合は描画を無効化
+			if(!isDrawWeapon)
+			foreach(var item in weapon.GetComponentsInChildren<Renderer>()) {
+					item.enabled = false;
+			}
+
+			unit.EquipWeapon(weapon, 0);
+		}
+		if(weaponData[1]) {
+			var weapon = weaponData[1].Create();
+
+			//表示しない場合は描画を無効化
+			if(!isDrawWeapon)
+				foreach(var item in weapon.GetComponentsInChildren<Renderer>()) {
+					item.enabled = false;
+				}
+
+			unit.EquipWeapon(weapon, 1);
+		}
 
 		//初期化処理2
 		unit.InitFinal();
