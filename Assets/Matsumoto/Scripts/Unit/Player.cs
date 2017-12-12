@@ -10,12 +10,18 @@ using GamepadInput;
 /// </summary>
 public class Player : Unit {
 
+	const string COMBO_STATUS_MOD = "COMBO_MOD";
+
 	const string WEAPON_SWITCH_ANIM = "TestPlayerAnimationSwitch";
 	const string DURA_EGG_PREFAB_PATH = "System/DuraEgg";
 
 	public GamePad.Index playerIndex;
 	public ControlType inputType;
 
+	int combo = 0;
+	float comboDuration = 0;
+
+	StatusModifier comboStatus;
 	bool isInDuraEgg = false;
 	bool isWeak = false;
 	GameObject duraEggPrefab;
@@ -29,6 +35,10 @@ public class Player : Unit {
 		tag = "Player";
 		gameObject.layer = LayerMask.NameToLayer("PlayerLayer");
 
+		//コンボで上昇するステータスをパッシブ効果として実装
+		comboStatus = new StatusModifier();
+		ApplyModifier(comboStatus, COMBO_STATUS_MOD);
+
 		//勢力のセット
 		group = UnitGroup.Player;
 
@@ -41,12 +51,11 @@ public class Player : Unit {
 
 		if(isDead) return;
 
-		if(Input.GetKeyDown(KeyCode.E)) GainEXP(1);
-		if(Input.GetKeyDown(KeyCode.R)) GainEXP(10);
-		if(Input.GetKeyDown(KeyCode.T)) GainEXP(100);
-
 		//攻撃
 		if(CheckCanAttack()) Attack();
+
+		//コンボの処理
+		ComboDurationUpdate();
 
 		//武器交換
 		CheckSwitchWeapon();
@@ -96,6 +105,10 @@ public class Player : Unit {
 		Move();
 	}
 
+	/// <summary>
+	/// プレイヤーを復活させる
+	/// </summary>
+	/// <param name="target"></param>
 	void RivivePlayer(Player target) {
 		if(!target || !target.isDead) return;
 
@@ -108,6 +121,10 @@ public class Player : Unit {
 		ApplyDamage(healPoint);
 	}
 
+	/// <summary>
+	/// 復活可能なプレイヤーを取得する
+	/// </summary>
+	/// <returns></returns>
 	Player GetRivaivablePlayer() {
 
 		var rivPlayer = unitList
@@ -181,6 +198,43 @@ public class Player : Unit {
 		//一定時間弱くなる
 		if(isWeak) StopCoroutine("WeakTime");
 		StartCoroutine(WeakTime(GameBalance.instance.data.duraEggExitWeakTime));
+	}
+	
+	/// <summary>
+	/// コンボを加算する
+	/// </summary>
+	void AddCombo() {
+
+		combo++;
+		//ステータスの強化
+		GameBalance.ApplyNextComboStatus(comboStatus, combo);
+		CalcStatus();
+
+		//コンボが途切れるまで待つ
+		comboDuration = GameBalance.CalcNextComboDuration(combo);
+	}
+
+	/// <summary>
+	/// コンボをリセットする
+	/// </summary>
+	void ResetCombo() {
+		combo = 0;
+		comboStatus = new StatusModifier();
+	}
+
+	/// <summary>
+	/// コンボが途切れるまで待つ
+	/// </summary>
+	/// <param name="comboDurationTime"></param>
+	/// <returns></returns>
+	void ComboDurationUpdate() {
+
+		if(combo == 0) return;
+
+		comboDuration -= Time.deltaTime;
+
+		//持続時間が過ぎたらコンボをリセット
+		if(comboDuration < 0) ResetCombo();
 	}
 
 	/// <summary>
@@ -320,6 +374,10 @@ public class Player : Unit {
 				Quaternion.RotateTowards(body.rotation, Quaternion.LookRotation(plDir), rotSpeed);
 		}
 
+	}
+
+	protected override void OnAttackHit(Unit to) {
+		AddCombo();
 	}
 
 	protected override bool ApplyDamage(int damage) {

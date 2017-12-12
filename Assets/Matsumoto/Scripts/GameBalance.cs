@@ -45,4 +45,23 @@ public sealed class GameBalance : SingletonMonoBehaviour<GameBalance> {
 	public static float CalcHealExp(int healPoint) {
 		return healPoint * instance.data.healPointPerExp;
 	}
+
+	/// <summary>
+	/// コンボに対して効果を得る
+	/// </summary>
+	/// <param name="mod"></param>
+	/// <param name="combo"></param>
+	public static void ApplyNextComboStatus(StatusModifier mod, int combo) {
+		if(combo == 0) return;
+		mod.mulPow = Mathf.Pow(instance.data.comboMulPower, combo / 10.0f + 1);
+	}
+
+	/// <summary>
+	/// コンボの持続を求める
+	/// </summary>
+	/// <param name="combo"></param>
+	/// <returns></returns>
+	public static float CalcNextComboDuration(int combo) {
+		return instance.data.comboStartDuration / (1 + combo / 20.0f);
+	}
 }

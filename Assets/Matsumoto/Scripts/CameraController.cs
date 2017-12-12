@@ -21,8 +21,6 @@ public class CameraController : MonoBehaviour {
 
 	void Awake() {
 		cam = GetComponent<Camera>();
-
-
 	}
 
 	void LateUpdate() {

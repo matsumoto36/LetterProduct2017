@@ -393,6 +393,9 @@ public abstract class Unit : MonoBehaviour {
 		//ダメージを与える
 		if(to.ApplyDamage(damage)) {
 
+			//攻撃がヒットしたことを伝える
+			from.OnAttackHit(to);
+
 			//攻撃してきた敵を伝える
 			to.OnAttacked(from);
 
@@ -446,6 +449,12 @@ public abstract class Unit : MonoBehaviour {
 	/// </summary>
 	/// <param name="from"></param>
 	protected virtual void OnAttacked(Unit from) { }
+
+	/// <summary>
+	/// 攻撃がヒットしたことを通知
+	/// </summary>
+	/// <param name="to"></param>
+	protected virtual void OnAttackHit(Unit to) { }
 
 	/// <summary>
 	/// 武器が入れ替わる瞬間

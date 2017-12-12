@@ -15,5 +15,7 @@ public class GameBalanceData : ScriptableObject {
 	public float duraEggExitDamageMag = 2f;		//耐久卵で弱くなった時のダメージ倍率
 	public float revivableRadius = 2f;			//復活可能な距離
 	public float reviveTime = 4f;				//復活に必要な時間
+	public float comboStartDuration = 2.0f;		//1コンボ目で待ってくれる時間
+	public float comboMulPower = 1.001f;		//コンボで増える攻撃力増加倍率
 
 }
