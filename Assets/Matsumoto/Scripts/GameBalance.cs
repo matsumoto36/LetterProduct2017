@@ -56,6 +56,15 @@ public sealed class GameBalance : SingletonMonoBehaviour<GameBalance> {
 		mod.mulPow = Mathf.Pow(instance.data.comboMulPower, combo / 10.0f + 1);
 	}
 
+	public static int CalcScore(int combo, float stageClearTime, float bossClearTime) {
+
+		var comboScore = (1 + (float)combo / 10) * 10;
+		var bossScore = 1000 + Mathf.Max(200 - bossClearTime, 0);
+		var stageScore = Mathf.Max(600 - stageClearTime, 0);
+
+		return (int)((comboScore + bossScore + stageScore) * 10);
+	}
+
 	/// <summary>
 	/// コンボの持続を求める
 	/// </summary>
