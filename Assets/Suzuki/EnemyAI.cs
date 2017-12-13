@@ -54,7 +54,7 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         //画面に映っていたら行動を起こす
-        if (isRendered)
+        if (true)//isRendered
         {
             for (int i = 0; i < player.Length; i++)
             {
