@@ -13,17 +13,23 @@ public class BulletLaserHeal : BulletLaser {
 		base.Init();
 
 		//回復なので判定を書き換える
-		var maskList = UnitGroupMatrix.GetAttackableGroup(bData.bulletOwner.unitOwner.group)
+		var maskList = UnitGroupMatrix.GetAttackableGroup(bulletOwner.unitOwner.group)
 			.Select((item) => item.ToString() + "Layer")
 			.ToList();
-		maskList.Add("BulletLayer");
 
-		bData.bulletOwner.SetHitMask(maskList.ToArray());
+		maskList.Add("BulletLayer");
+		maskList.Add("IgnoreHit");
+
+		foreach(var item in maskList) {
+			Debug.Log(item);
+		}
+
+		bulletOwner.SetHitMask(maskList.ToArray());
 	}
 
 	public override void OnHitting(Collider other) {
 		Irradiation(other.GetComponent<Unit>(), (unit, heal) => {
-			Unit.Heal(bData.bulletOwner.unitOwner, unit, heal);
+			Unit.Heal(bulletOwner.unitOwner, unit, heal);
 		});
 	}
 }

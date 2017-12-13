@@ -25,43 +25,55 @@ public abstract class Unit : MonoBehaviour {
 	const string WEAPON_STATUS_MOD = "WEAPON_MOD";
 	const string LEVELUP_STATUS_MOD = "LEVEL_UP";
 
+	public static List<Unit> unitList { get; private set; }
+
 	//表示用パラメータ
 	[SerializeField]
 	int _level = 1;
+	public int level { get { return _level; } private set { _level = value; } }
+
 	[SerializeField]
 	int nextLevelEXP = 10;
+
 	[SerializeField]
 	int dropExp;
+
 	[SerializeField]
 	int _maxHP;
+	public int maxHP { get { return _maxHP; } private set { _maxHP = value; } }
+
 	[SerializeField]
 	int _nowHP;
+	public int nowHP { get { return _nowHP; } protected set { _nowHP = value; } }
+
 	[SerializeField]
 	float _moveSpeed;
+	public float moveSpeed { get { return _moveSpeed; } private set { _moveSpeed = value; } }
+
 	[SerializeField]
 	float _rotSpeed;
+	public float rotSpeed { get { return _rotSpeed; } private set { _rotSpeed = value; } }
+
 	[SerializeField, Tooltip("パッシブ効果の合計値")]
 	StatusModifier _statusMod = new StatusModifier();
+	public StatusModifier statusMod { get { return _statusMod; } private set { _statusMod = value; } }
 
 	//パッシブ効果更新用ボタン
 	[SerializeField, Button("CalcStatus", "パッシブ効果を更新")]
 	int dummy;
 
-	//表示用パラメータのプロパティ
-	public int level { get { return _level; } private set { _level = value; } }
-	public int maxHP { get { return _maxHP; } private set { _maxHP = value; } }
-	public int nowHP { get { return _nowHP; } protected set { _nowHP = value; } }
-	public float moveSpeed { get { return _moveSpeed; } private set { _moveSpeed = value; } }
-	public float rotSpeed { get { return _rotSpeed; } private set { _rotSpeed = value; } }
-	public StatusModifier statusMod { get { return _statusMod; } private set { _statusMod = value; } }
 
 	public UnitGroup group { get; protected set; }
 	public bool isAttack { get; protected set; }
 	public Weapon[] equipWeapon { get; private set; }
 	public int experience { get; private set; }
 	public bool isPlayMeleeAnim { get; private set; }
-	public bool isDead { get; private set; }
-	public bool canAttack { get; private set; }
+	public bool isDead { get; protected set; }
+
+	public bool canAttack { get; protected set; }
+	public bool canMove { get; protected set; }
+
+	public float HPRatio { get { return (float)nowHP / maxHP; } }
 
 	protected Transform body;
 	protected Vector3 moveVec;
@@ -80,7 +92,11 @@ public abstract class Unit : MonoBehaviour {
 	int switchingWeaponNum = 0;
 	StatusModifier levelUpStatus;
 	Dictionary<string, StatusModifier> statusModStack;
-	
+
+	static Unit() {
+		unitList = new List<Unit>();
+	}
+
 	/// <summary>
 	/// newなど最初に行っておきたい初期化処理
 	/// </summary>
@@ -91,6 +107,7 @@ public abstract class Unit : MonoBehaviour {
 		attackedUnitList = new List<DamageLog>();
 		statusModStack = new Dictionary<string, StatusModifier>();
 		canAttack = true;
+		canMove = true;
 
 		anim = GetComponent<Animator>();
 		unitRig = GetComponent<Rigidbody>();
@@ -133,6 +150,9 @@ public abstract class Unit : MonoBehaviour {
 		//ステータスの計算
 		CalcStatus();
 		nowHP = maxHP;
+
+		//リストに追加
+		unitList.Add(this);
 	}
 
 	/// <summary>
@@ -261,12 +281,26 @@ public abstract class Unit : MonoBehaviour {
 
 		Debug.Log(attackedUnitList.Count);
 
+		//0除算回避
+		if(damageSum * dropExp == 0) return;
+
 		//ダメージに応じて各ユニットに経験値を分配する
 		foreach(var item in attackedUnitList) {
 			if(!item.attackUnit) continue;
 			item.attackUnit.GainEXP((float)item.damage / damageSum * dropExp);
-			Debug.Log((float)item.damage / damageSum * dropExp);
 		}
+	}
+
+	/// <summary>
+	/// 攻撃してよいか確認
+	/// </summary>
+	/// <returns></returns>
+	public bool CheckCanAttack() {
+		if(!equipWeapon[0]) return false;
+		if(!canAttack) return false;
+		if(isPlayMeleeAnim) return false;
+
+		return true;
 	}
 
 	/// <summary>
@@ -325,6 +359,7 @@ public abstract class Unit : MonoBehaviour {
 		if(!equipWeapon[0]) return;
 		if(!equipWeapon[weaponNum]) return;
 		if(isPlayMeleeAnim) return;
+		if(switchingWeaponNum != 0) return;
 
 		//一定時間待つ
 		StartCoroutine(SwitchWeaponAnim(clipName, weaponNum, onComplete));
@@ -355,23 +390,29 @@ public abstract class Unit : MonoBehaviour {
 
 		Debug.Log("Attack " + from.name + " -> " + to.name);
 
-		//経験値分配用
-		bool findFromUnit = to.attackedUnitList
-			.Where((item) => item.attackUnit == from)
-			.Count() > 0;
-
-		if(findFromUnit) {
-			to.attackedUnitList
-			.Where((item) => item.attackUnit == from)
-			.Select((item) => item.damage += damage);
-		}
-		else {
-			Debug.Log("New Unit");
-			to.attackedUnitList.Add(new DamageLog(from, damage));
-		}
-
 		//ダメージを与える
-		to.ApplyDamage(damage);
+		if(to.ApplyDamage(damage)) {
+
+			//攻撃がヒットしたことを伝える
+			from.OnAttackHit(to);
+
+			//攻撃してきた敵を伝える
+			to.OnAttacked(from);
+
+			//経験値分配用
+			bool findFromUnit = to.attackedUnitList
+				.Where((item) => item.attackUnit == from)
+				.Count() > 0;
+
+			if(findFromUnit) {
+				to.attackedUnitList
+				.Where((item) => item.attackUnit == from)
+				.Select((item) => item.damage += damage);
+			}
+			else {
+				to.attackedUnitList.Add(new DamageLog(from, damage));
+			}
+		}
 
 		return true;
 	}
@@ -397,15 +438,30 @@ public abstract class Unit : MonoBehaviour {
 	/// </summary>
 	/// <param name="from">攻撃するキャラクター</param>
 	/// <param name="damage"></param>
-	protected virtual void ApplyDamage(int damage) {
+	protected virtual bool ApplyDamage(int damage) {
 		nowHP -= damage;
 		if(nowHP <= 0) Death();
+		return true;
 	}
+
+	/// <summary>
+	/// 攻撃した相手を通知
+	/// </summary>
+	/// <param name="from"></param>
+	protected virtual void OnAttacked(Unit from) { }
+
+	/// <summary>
+	/// 攻撃がヒットしたことを通知
+	/// </summary>
+	/// <param name="to"></param>
+	protected virtual void OnAttackHit(Unit to) { }
 
 	/// <summary>
 	/// 武器が入れ替わる瞬間
 	/// </summary>
 	void OnSwitchWeaponModel() {
+
+		Debug.Log("Switch");
 
 		//0番同士の交換はありえないので実行しない
 		if(switchingWeaponNum == 0) return;
@@ -439,6 +495,11 @@ public abstract class Unit : MonoBehaviour {
 		weaponMelee.SetCollider(false);
 	}
 
+	void OnDestroy() {
+		//リストから除外
+		unitList.Remove(this);
+	}
+
 	IEnumerator PlayMeleeAnimWait(string clipName, float speed, Action onComplete) {
 
 		isPlayMeleeAnim = true;
@@ -468,7 +529,8 @@ public abstract class Unit : MonoBehaviour {
 		var w = equipWeapon[0];
 		equipWeapon[0] = equipWeapon[weaponNum];
 		equipWeapon[weaponNum] = w;
-
+		switchingWeaponNum = 0;
+				
 		//Idleに戻す
 		StartCoroutine(PlayAnimation(0, "Idle", 1));
 

@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyAI : MonoBehaviour
 {
     /// <summary>
-    /// 攻撃のタイプ
+    /// 攻撃タイプ
     /// </summary>
     public enum Mode : int { BASIS, APPROACH, DUAL }//基本,接近,二刀流
     public Mode mode;
@@ -19,9 +19,6 @@ public class EnemyAI : MonoBehaviour
 
     // Enemyスクリプト
     private Enemy enemySC;
-
-    //public float[] weaponDistance = new float[2];   //射程距離
-    //public float[] fillingTime = new float[2];      //充填時間
 
     //プレイヤー関連
     [SerializeField]
@@ -96,23 +93,11 @@ public class EnemyAI : MonoBehaviour
             //ルート化し正しき値へ
             distance[target] = Mathf.Sqrt(distance[target]);
 
-            //switch (mode)
-            //{
-            //    case Mode.BASIS:
-            //        Basis();
-            //        break;
-            //    case Mode.APPROACH:
-            //        Approach();
-            //        break;
-            //    case Mode.DUAL:
-            //        Dual();
-            //        break;
-            //}
-
             if (mode >= Mode.DUAL)
             {
                 //プレイヤーの見えている正面からの角度(正規化)
-                float f = Vector3.Angle((player[target].transform.position - transform.position).normalized, transform.forward);
+                Vector3 v = (player[target].transform.position - transform.position).normalized;
+                float f = Vector3.Angle(v, transform.forward);
 
                 if (enemySC.isAttack == false && f <= searchAngle && distance[target] >= attackLine)
                 {
@@ -210,119 +195,4 @@ public class EnemyAI : MonoBehaviour
     {
         isRendered = true;
     }
-
-    ////基本型(保存用)
-    //private void Basis()
-    //{
-    //    if (distance[target] < attackLine)
-    //    {
-    //        if (attackCan)
-    //        {
-    //            Debug.Log("剣");
-    //            //攻撃
-
-
-    //            //充填処理
-    //            StartCoroutine(AttackTime(fillingTime[0]));
-    //        }
-    //    }
-    //    else if (distance[target] < moveLine)
-    //    {
-    //        //移動
-    //        transform.rotation = Quaternion.Slerp(
-    //            transform.rotation,
-    //            Quaternion.LookRotation(player[target].transform.position - transform.position),
-    //            Time.deltaTime * speed);
-    //        transform.position += transform.forward * speed * Time.deltaTime;
-    //    }
-    //}
-
-    //近接型(保存用)
-    //private void Approach()
-    //{
-    //    if (distance[target] < attackLine)
-    //    {
-    //        if (attackCan)
-    //        {
-    //            //攻撃
-
-
-    //            //充填処理
-    //            StartCoroutine(AttackTime(fillingTime[0]));
-    //        }
-    //    }
-    //    else if (distance[target] < stepLine)
-    //    {
-    //        //急接近
-    //        transform.rotation = Quaternion.Slerp(
-    //            transform.rotation,
-    //            Quaternion.LookRotation(player[target].transform.position - transform.position),
-    //            Time.deltaTime * dashSpeed);
-    //        transform.position += transform.forward * dashSpeed * Time.deltaTime;
-    //    }
-    //    else if (distance[target] < moveLine)
-    //    {
-    //        //移動
-    //        transform.rotation = Quaternion.Slerp(
-    //            transform.rotation,
-    //            Quaternion.LookRotation(player[target].transform.position - transform.position),
-    //            Time.deltaTime * speed);
-    //        transform.position += transform.forward * speed * Time.deltaTime;
-    //    }
-    //}
-
-    //二刀流(保存用)
-    //private void Dual()
-    //{
-
-    //    if (distance[target] >= attackLine && attackCan)
-    //    {
-    //        Debug.Log("ビーム");
-    //        //遠距離攻撃
-
-
-    //        //充填処理
-    //        StartCoroutine(AttackTime(fillingTime[1]));
-    //    }
-
-    //    if (distance[target] < attackLine)
-    //    {
-    //        if (attackCan)
-    //        {
-    //            Debug.Log("剣");
-    //            //攻撃
-
-
-    //            //充填処理
-    //            StartCoroutine(AttackTime(fillingTime[0]));
-    //        }
-    //    }
-    //    else if (distance[target] < stepLine)
-    //    {
-    //        //急接近
-    //        transform.rotation = Quaternion.Slerp(
-    //            transform.rotation,
-    //            Quaternion.LookRotation(player[target].transform.position - transform.position),
-    //            Time.deltaTime * dashSpeed);
-    //        transform.position += transform.forward * dashSpeed * Time.deltaTime;
-    //    }
-    //    else if (distance[target] < moveLine)
-    //    {
-    //        //移動
-    //        transform.rotation = Quaternion.Slerp(
-    //            transform.rotation,
-    //            Quaternion.LookRotation(player[target].transform.position - transform.position),
-    //            Time.deltaTime * speed);
-    //        transform.position += transform.forward * speed * Time.deltaTime;
-    //    }
-    //}
-
-    //充填時間カウントコルーチン
-    //private IEnumerator AttackTime(int i)
-    //{
-    //    //0:近接 1:遠距離
-    //    attackCan[i] = false;
-    //    yield return new WaitForSeconds(fillingTime[i]);
-    //    attackCan[i] = true;
-    //}
 }

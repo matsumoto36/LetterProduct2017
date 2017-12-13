@@ -13,6 +13,9 @@ public class Enemy : Unit {
 	public override void InitFinal() {
 		base.InitFinal();
 
+		tag = "Enemy";
+		gameObject.layer = LayerMask.NameToLayer("EnemyLayer");
+
 		//勢力のセット
 		group = UnitGroup.Enemy;
 
@@ -81,8 +84,8 @@ public class Enemy : Unit {
 	/// <returns></returns>
 	IEnumerator Attacking(float duration) {
 
-		//攻撃中なら中止
-		if(isAttack) yield break;
+		//攻撃してよいか調べる
+		if(!CheckCanAttack() || isAttack) yield break;
 
 		isAttack = true;
 		equipWeapon[0].AttackStart();

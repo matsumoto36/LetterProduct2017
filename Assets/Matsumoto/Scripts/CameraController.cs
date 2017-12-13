@@ -20,12 +20,14 @@ public class CameraController : MonoBehaviour {
 	Camera cam;
 
 	void Awake() {
-		cam = Camera.main;
+		cam = GetComponent<Camera>();
 	}
 
 	void LateUpdate() {
-
+		
+		//カメラの目標位置を計算
 		CalcCameraPosition();
+		//移動
 		Move();
 	}
 
@@ -34,13 +36,20 @@ public class CameraController : MonoBehaviour {
 	/// </summary>
 	void CalcCameraPosition() {
 
+		if(Unit.unitList.Count == 0) return;
+
+		//プレイヤーを抽出
+		var playerList = Unit.unitList
+			.Where((item) => item && item is Player)
+			.ToArray();
+
 		//プレイヤー達の中心を求める
-		var trackPos = Player.playerList
+		var trackPos = playerList
 			.Select((item) => item.transform.position)
-			.Aggregate((from, to) => from + to) / Player.playerList.Count;
+			.Aggregate((from, to) => from + to) / playerList.Length;
 
 		//一番遠いプレイヤーを抽出
-		var posArray = Player.playerList
+		var posArray = playerList
 			.Select((item) => item.transform.position)
 			.ToArray();
 
@@ -51,9 +60,9 @@ public class CameraController : MonoBehaviour {
 				Mathf.Abs(item.y),
 				Mathf.Abs(item.z)
 				))
-			.Sum();
+			.Max();
 
-		//目標の長さを求める(fov=60 * 0.5f)
+		//目標の長さを求める
 		camLength = Mathf.Abs(diffMax * Mathf.Tan(Mathf.Deg2Rad * (90 - cam.fieldOfView / 2))) + lengthOffset;
 
 		//長さを制限
@@ -67,6 +76,7 @@ public class CameraController : MonoBehaviour {
 	/// 移動
 	/// </summary>
 	void Move() {
+		//補間で移動する
 		transform.position = Vector3.Lerp(transform.position, camPosition, moveRatio);
 	}
 }
