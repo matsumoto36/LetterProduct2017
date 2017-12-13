@@ -61,13 +61,12 @@ public class EnemyAI : MonoBehaviour
                 //player[i]が居ない,死亡なら処理をパス
                 if (player[i] == null || playerCS[i].isDead)
                 {
-                    //初期化
-                    distance[i] = 1000000f;//とにかく大きい数値
+
                 }
                 else
                 {
                     //距離を計算(2乗された値)
-                    distance[i] = ((transform.position - player[i].transform.position) * 100 / 100).sqrMagnitude;
+                    distance[i] = ((transform.position - player[i].transform.position) * 10000 / 10000).sqrMagnitude;
                 }
             }
 
@@ -76,10 +75,15 @@ public class EnemyAI : MonoBehaviour
             for (int i = 1; i < player.Length; i++)
             {
                 //比較対象が存在,生存しているか
-                if (player[target] == null || player[i] == null || playerCS[target].isDead || playerCS[i].isDead)
+                if (player[target] == null || playerCS[target].isDead)
                 {
-                    continue;
+                    target = i;
                 }
+                else if (player[i] == null || playerCS[i].isDead)
+                {
+
+                }
+
                 //通常処理
                 else
                 {
@@ -95,11 +99,14 @@ public class EnemyAI : MonoBehaviour
 
             if (mode >= Mode.DUAL)
             {
+                //方向転換
+                DirctionChange();
+
                 //プレイヤーの見えている正面からの角度(正規化)
                 Vector3 v = (player[target].transform.position - transform.position).normalized;
                 float f = Vector3.Angle(v, transform.forward);
 
-                if (enemySC.isAttack == false && f <= searchAngle && distance[target] >= attackLine)
+                if (enemySC.isAttack == false && f <= searchAngle && distance[target] >= stepLine)
                 {
                     if (enemySC.equipWeapon[0].weaponType != WeaponType.Ranged)
                     {
@@ -112,18 +119,12 @@ public class EnemyAI : MonoBehaviour
                     enemySC.Attack();
                     Debug.Log("ビーム");
                 }
-                
-                if (distance[target] >= moveLine)
-                {
-                    //方向転換
-                    DirctionChange();
-                }
             }
             if (distance[target] < attackLine)
             {
                 DirctionChange();
 
-                if (enemySC.isAttack == false && mode >= Mode.BASIS)
+                if (enemySC.isAttack == false)
                 {
                     if (enemySC.equipWeapon[0].weaponType != WeaponType.Melee)
                     {
@@ -159,10 +160,17 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     private void DirctionChange()
     {
+        float f = 0.5f;
+
+        if (enemySC.isAttack)
+        {
+            f /= 2;
+        }
+
         transform.rotation = Quaternion.Slerp(
                                 transform.rotation,
                                 Quaternion.LookRotation(player[target].transform.position - transform.position),
-                                Time.deltaTime * speed * 0.5f);
+                                Time.deltaTime * speed * f);
     }
 
     /// <summary>
