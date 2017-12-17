@@ -45,10 +45,20 @@ public class Enemy : Unit {
 		if(!equipWeapon[weaponNum]) return;
 		if(isPlayMeleeAnim) return;
 
+		//攻撃を終了する
+		if(isAttack) equipWeapon[0].AttackEnd();
+		isAttack = false;
+
+		switchingWeaponNum = weaponNum;
+		OnSwitchWeaponModel();
+
 		//即時に交換
 		var w = equipWeapon[0];
 		equipWeapon[0] = equipWeapon[weaponNum];
 		equipWeapon[weaponNum] = w;
+		switchingWeaponNum = 0;
+		equipWeapon[0].OnSwitchActive();
+
 	}
 
 	public override void Move() {

@@ -79,6 +79,7 @@ public abstract class Unit : MonoBehaviour {
 	protected Vector3 moveVec;
 	protected Transform handAnchor;
 	protected Rigidbody unitRig;
+	protected int switchingWeaponNum = 0;
 
 	//計算用
 	int baseNextLevel;
@@ -89,7 +90,7 @@ public abstract class Unit : MonoBehaviour {
 
 	List<DamageLog> attackedUnitList;
 	Animator anim;
-	int switchingWeaponNum = 0;
+	
 	StatusModifier levelUpStatus;
 	Dictionary<string, StatusModifier> statusModStack;
 
@@ -459,9 +460,7 @@ public abstract class Unit : MonoBehaviour {
 	/// <summary>
 	/// 武器が入れ替わる瞬間
 	/// </summary>
-	void OnSwitchWeaponModel() {
-
-		Debug.Log("Switch");
+	protected void OnSwitchWeaponModel() {
 
 		//0番同士の交換はありえないので実行しない
 		if(switchingWeaponNum == 0) return;
@@ -530,7 +529,8 @@ public abstract class Unit : MonoBehaviour {
 		equipWeapon[0] = equipWeapon[weaponNum];
 		equipWeapon[weaponNum] = w;
 		switchingWeaponNum = 0;
-				
+		equipWeapon[0].OnSwitchActive();
+
 		//Idleに戻す
 		StartCoroutine(PlayAnimation(0, "Idle", 1));
 

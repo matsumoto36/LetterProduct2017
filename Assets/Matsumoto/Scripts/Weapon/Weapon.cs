@@ -111,6 +111,11 @@ public abstract class Weapon : MonoBehaviour {
 
 	}
 
+	public void OnSwitchActive() {
+		canAction = false;
+		StartCoroutine(WaitInterval());
+	}
+
 	/// <summary>
 	/// 次の発射まで待つ
 	/// </summary>
