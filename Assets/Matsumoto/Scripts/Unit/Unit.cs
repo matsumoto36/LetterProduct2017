@@ -411,7 +411,7 @@ public abstract class Unit : MonoBehaviour {
 				.Select((item) => item.damage += damage);
 			}
 			else {
-				to.attackedUnitList.Add(new DamageLog(from, damage));
+				to.attackedUnitList.Add(new DamageLog(from, damage, Time.time));
 			}
 		}
 

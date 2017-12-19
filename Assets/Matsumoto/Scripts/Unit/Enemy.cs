@@ -8,7 +8,21 @@ using UnityEngine;
 /// </summary>
 public class Enemy : Unit {
 
-	public float defaultAttackDuration { get; set; }
+	[SerializeField]
+	float _attackDuration;						//攻撃する時間
+	public float attackDuration {
+		get { return _attackDuration; }
+		set { _attackDuration = value; }
+	}
+
+	[SerializeField]
+	float _attackRestDuration;					//攻撃の待ち時間
+	public float attackRestDuration {
+		get { return _attackDuration; }
+		set { _attackDuration = value; }
+	}
+
+	public bool isRest { get; private set; }	//攻撃の待ち時間かどうか
 
 	public override void InitFinal() {
 		base.InitFinal();
@@ -18,8 +32,6 @@ public class Enemy : Unit {
 
 		//勢力のセット
 		group = UnitGroup.Enemy;
-
-		defaultAttackDuration = 1;
 	}
 
 	/// <summary>
@@ -27,8 +39,6 @@ public class Enemy : Unit {
 	/// </summary>
 	public void AttackCancel() {
 		if(isAttack) {
-
-			StopCoroutine(Attacking(defaultAttackDuration));
 			equipWeapon[0].AttackEnd();
 			isAttack = false;
 		}
@@ -74,11 +84,10 @@ public class Enemy : Unit {
 	}
 
 	/// <summary>
-	/// defaultAttackDurationで設定されている時間の間攻撃する
-	/// 初期値は1秒。
+	/// attackDurationで設定されている時間の間攻撃する
 	/// </summary>
 	public override void Attack() {
-		StartCoroutine(Attacking(defaultAttackDuration));
+		StartCoroutine(Attacking(attackDuration));
 	}
 
 	public override void Death() {
@@ -95,7 +104,7 @@ public class Enemy : Unit {
 	IEnumerator Attacking(float duration) {
 
 		//攻撃してよいか調べる
-		if(!CheckCanAttack() || isAttack) yield break;
+		if(!CheckCanAttack() || isAttack || isRest) yield break;
 
 		isAttack = true;
 		equipWeapon[0].AttackStart();
@@ -108,5 +117,17 @@ public class Enemy : Unit {
 
 		isAttack = false;
 		equipWeapon[0].AttackEnd();
+
+		yield return StartCoroutine(AttackRest());
+	}
+
+	IEnumerator AttackRest() {
+
+		if(isRest) yield break;
+
+		isRest = true;
+		yield return new WaitForSeconds(attackRestDuration);
+
+		isRest = false;
 	}
 }

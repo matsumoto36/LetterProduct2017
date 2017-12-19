@@ -4,6 +4,9 @@ using UnityEditor;
 [CanEditMultipleObjects, CustomEditor(typeof(EnemyData))]
 public class EnemyDataInspector : UnitDataInspector {
 
+	protected SerializedProperty attackDuration;
+	protected SerializedProperty attackRestDuration;
+
 	SerializedProperty enemyAIType;
 	SerializedProperty dashSpeed;
 	SerializedProperty moveLine;
@@ -13,6 +16,9 @@ public class EnemyDataInspector : UnitDataInspector {
 
 	protected override void OnEnable() {
 		base.OnEnable();
+
+		attackDuration = serializedObject.FindProperty("attackDuration");
+		attackRestDuration = serializedObject.FindProperty("attackRestDuration");
 
 		enemyAIType = serializedObject.FindProperty("enemyAIType");
 		dashSpeed = serializedObject.FindProperty("dashSpeed");
@@ -32,6 +38,9 @@ public class EnemyDataInspector : UnitDataInspector {
 		EditorGUILayout.PropertyField(nextLevelExp, new GUIContent("レベル1から2にあげるための経験値量"));
 		EditorGUILayout.PropertyField(moveSpeed, new GUIContent("移動速度"));
 		EditorGUILayout.PropertyField(rotSpeed, new GUIContent("回転速度"));
+		EditorGUILayout.Separator();
+		EditorGUILayout.PropertyField(attackDuration, new GUIContent("攻撃時間"));
+		EditorGUILayout.PropertyField(attackRestDuration, new GUIContent("攻撃休止時間"));
 		EditorGUILayout.Separator();
 		EditorGUILayout.PropertyField(enemyAIType, new GUIContent("敵AIの種類"));
 		EditorGUILayout.PropertyField(searchAngle, new GUIContent("視野"));

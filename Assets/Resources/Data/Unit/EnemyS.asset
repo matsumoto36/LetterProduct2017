@@ -20,6 +20,9 @@ MonoBehaviour:
   weaponData:
   - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
   - {fileID: 0}
+  isDrawWeapon: 1
+  attackDuration: 1
+  attackRestDuration: 1
   enemyAIType: 0
   dashSpeed: 0
   moveLine: 0

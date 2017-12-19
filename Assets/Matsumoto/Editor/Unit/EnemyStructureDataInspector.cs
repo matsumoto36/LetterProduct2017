@@ -2,7 +2,7 @@
 using UnityEditor;
 
 [CanEditMultipleObjects, CustomEditor(typeof(EnemyStructureData))]
-public class EnemyStructureDataInspector : UnitDataInspector {
+public class EnemyStructureDataInspector : EnemyDataInspector {
 
 	SerializedProperty detectAngle;
 	SerializedProperty detectRadius;
@@ -26,6 +26,9 @@ public class EnemyStructureDataInspector : UnitDataInspector {
 		EditorGUILayout.PropertyField(nextLevelExp, new GUIContent("レベル1から2にあげるための経験値量"));
 		EditorGUILayout.PropertyField(moveSpeed, new GUIContent("移動速度"));
 		EditorGUILayout.PropertyField(rotSpeed, new GUIContent("回転速度"));
+		EditorGUILayout.Separator();
+		EditorGUILayout.PropertyField(attackDuration, new GUIContent("攻撃時間"));
+		EditorGUILayout.PropertyField(attackRestDuration, new GUIContent("攻撃休止時間"));
 		EditorGUILayout.Separator();
 		EditorGUILayout.PropertyField(detectAngle, new GUIContent("視野角(度)"));
 		EditorGUILayout.PropertyField(detectRadius, new GUIContent("視認できる範囲(半径)"));
