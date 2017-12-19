@@ -14,7 +14,6 @@ public class CameraController : MonoBehaviour {
 	public Vector3 trackOffset;
 	public float lengthOffset;
 
-	public Vector3[] posList;
 	Vector3 camPosition;
 	float camLength;
 

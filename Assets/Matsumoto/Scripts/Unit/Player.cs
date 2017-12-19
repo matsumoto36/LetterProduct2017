@@ -99,6 +99,9 @@ public class Player : Unit {
 	}
 
 	void FixedUpdate() {
+
+		if(isDead) return;
+
 		//移動処理
 		Move();
 	}
