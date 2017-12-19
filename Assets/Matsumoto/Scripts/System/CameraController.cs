@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour {
 	public Vector3 trackOffset;
 	public float lengthOffset;
 
+	public Vector3[] posList;
 	Vector3 camPosition;
 	float camLength;
 
@@ -23,7 +24,7 @@ public class CameraController : MonoBehaviour {
 		cam = GetComponent<Camera>();
 	}
 
-	void LateUpdate() {
+	void FixedUpdate() {
 		
 		//カメラの目標位置を計算
 		CalcCameraPosition();
@@ -49,17 +50,16 @@ public class CameraController : MonoBehaviour {
 			.Aggregate((from, to) => from + to) / playerList.Length;
 
 		//一番遠いプレイヤーを抽出
-		var posArray = playerList
-			.Select((item) => item.transform.position)
-			.ToArray();
-
-		var diffMax = posArray
-			.Select((item) => Mathf.Max(
-				//スクリーンの比で合わせる
-				Mathf.Abs(item.x) * ((float)Screen.height / Screen.width),
-				Mathf.Abs(item.y),
-				Mathf.Abs(item.z)
-				))
+		var diffMax = playerList
+			.Select((item) => {
+				var diff = item.transform.position - trackPos;
+				return Mathf.Max(
+					//スクリーンの比で合わせる
+					Mathf.Abs(diff.x) * ((float)Screen.height / Screen.width),
+					Mathf.Abs(diff.y),
+					Mathf.Abs(diff.z)
+					);
+			})
 			.Max();
 
 		//目標の長さを求める

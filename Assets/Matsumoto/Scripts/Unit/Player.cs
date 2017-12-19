@@ -51,6 +51,8 @@ public class Player : Unit {
 
 		if(isDead) return;
 
+
+
 		//攻撃
 		if(CheckCanAttack()) Attack();
 
@@ -96,11 +98,7 @@ public class Player : Unit {
 		}
 	}
 
-	// Update is called once per frame
 	void FixedUpdate() {
-
-		if(isDead) return;
-
 		//移動処理
 		Move();
 	}
@@ -331,7 +329,8 @@ public class Player : Unit {
 		moveVec.x = axis.x;
 		moveVec.z = axis.y;
 
-		unitRig.MovePosition(transform.position + moveVec * moveSpeed * Time.deltaTime);
+		//unitRig.MovePosition(transform.position + moveVec * moveSpeed * Time.deltaTime);
+		transform.position += moveVec * moveSpeed * Time.deltaTime;
 
 		//回転の計算
 		Vector3 plDir;
