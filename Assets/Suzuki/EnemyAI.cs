@@ -9,7 +9,7 @@ public class EnemyAI : MonoBehaviour
     public enum Mode : int { BASIS, APPROACH, DUAL }//基本,接近,二刀流
     public Mode mode;
     
-    private bool isRendered = false;    //画面内判定
+    //private bool isRendered = false;    //画面内判定
     public float speed = 10;            //移動速度(秒速)
     public float dashSpeed = 15;        //急接近時の速度(秒速)
     public float moveLine = 20;         //検知範囲
@@ -56,18 +56,25 @@ public class EnemyAI : MonoBehaviour
         //画面に映っていたら行動を起こす
         if (true)//isRendered
         {
+            int passCount = 0;
             for (int i = 0; i < player.Length; i++)
             {
                 //player[i]が居ない,死亡なら処理をパス
                 if (player[i] == null || playerCS[i].isDead)
                 {
-
+                    passCount++;
                 }
                 else
                 {
                     //距離を計算(2乗された値)
                     distance[i] = ((transform.position - player[i].transform.position) * 10000 / 10000).sqrMagnitude;
                 }
+            }
+
+            //全滅したので以下の処理をしない
+            if (passCount == player.Length)
+            {
+                return;
             }
 
             //距離比較
@@ -152,7 +159,7 @@ public class EnemyAI : MonoBehaviour
                 }
             }
         }
-        isRendered = false;
+        //isRendered = false;
     }
 
     /// <summary>
