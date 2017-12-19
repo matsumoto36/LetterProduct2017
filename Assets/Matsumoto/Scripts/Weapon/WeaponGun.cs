@@ -16,7 +16,7 @@ public class WeaponGun : WeaponRanged {
 		if(!canAction) return;
 
 		//弾を発射
-		Bullet.CreateBullet(bData, shotAnchor);
+		bulletData.Create(this, shotAnchor.position, shotAnchor.rotation);
 
 		//intervalの設定(最後に呼ぶこと)
 		base.Attack();

@@ -10,7 +10,6 @@ public class BulletLaser : Bullet {
 
 	Unit lastAttackUnit;
 	float buffPoint = 0;
-	float oldTime = 0;
 
 	public override void Init() {
 		base.Init();
@@ -37,11 +36,10 @@ public class BulletLaser : Bullet {
 
 		if(lastAttackUnit != target) {
 			buffPoint = 0;
-			oldTime = Time.time;
 		}
 
 		lastAttackUnit = target;
-		buffPoint += bData.bulletOwner.power * Time.deltaTime;
+		buffPoint += bulletOwner.power * Time.deltaTime;
 		//与える量を合計して1以上になったら実際に攻撃
 		if(buffPoint >= 1) {
 			var point = (int)buffPoint;
@@ -50,14 +48,12 @@ public class BulletLaser : Bullet {
 			//適用
 			onApply(target, point);
 		}
-
-		oldTime = Time.time;
 	}
 
 	protected override void Attack(Unit target) {
 		//照射系ダメージ
 		Irradiation(target, (unit, damage) => {
-			Unit.Attack(bData.bulletOwner.unitOwner, target, damage);
+			Unit.Attack(bulletOwner.unitOwner, target, damage);
 		});
 	}
 

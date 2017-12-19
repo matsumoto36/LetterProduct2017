@@ -3,12 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// AIで動く敵のキャラクター
+/// </summary>
 public class Enemy : Unit {
 
 	public float defaultAttackDuration { get; set; }
 
 	public override void InitFinal() {
 		base.InitFinal();
+
+		tag = "Enemy";
+		gameObject.layer = LayerMask.NameToLayer("EnemyLayer");
 
 		//勢力のセット
 		group = UnitGroup.Enemy;
@@ -39,10 +45,20 @@ public class Enemy : Unit {
 		if(!equipWeapon[weaponNum]) return;
 		if(isPlayMeleeAnim) return;
 
+		//攻撃を終了する
+		if(isAttack) equipWeapon[0].AttackEnd();
+		isAttack = false;
+
+		switchingWeaponNum = weaponNum;
+		OnSwitchWeaponModel();
+
 		//即時に交換
 		var w = equipWeapon[0];
 		equipWeapon[0] = equipWeapon[weaponNum];
 		equipWeapon[weaponNum] = w;
+		switchingWeaponNum = 0;
+		equipWeapon[0].OnSwitchActive();
+
 	}
 
 	public override void Move() {
@@ -78,8 +94,8 @@ public class Enemy : Unit {
 	/// <returns></returns>
 	IEnumerator Attacking(float duration) {
 
-		//攻撃中なら中止
-		if(isAttack) yield break;
+		//攻撃してよいか調べる
+		if(!CheckCanAttack() || isAttack) yield break;
 
 		isAttack = true;
 		equipWeapon[0].AttackStart();
