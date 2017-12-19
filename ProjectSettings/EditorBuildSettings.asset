@@ -4,4 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Umemura/Fade IN&OUT.unity
+    guid: 587f72b0dfaab774fb04bc26e63ca04a
+  - enabled: 1
+    path: Assets/Umemura/Camera.unity
+    guid: 0842e7c781a50b84087878d8e0611944
