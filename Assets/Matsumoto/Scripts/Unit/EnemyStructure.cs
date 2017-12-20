@@ -92,17 +92,17 @@ public class EnemyStructure : Enemy {
 	/// <summary>
 	/// 撃ちっぱなし
 	/// </summary>
-	public override void Attack() {
+	//public override void Attack() {
 
-		if(!equipWeapon[0]) return;
+	//	if(!equipWeapon[0]) return;
 
-		if(!isAttack) {
-			equipWeapon[0].AttackStart();
-			isAttack = true;
-		}
+	//	if(!isAttack) {
+	//		equipWeapon[0].AttackStart();
+	//		isAttack = true;
+	//	}
 
-		equipWeapon[0].Attack();
-	}
+	//	equipWeapon[0].Attack();
+	//}
 
 	public override void Move() {
 

@@ -18,7 +18,7 @@ public class BulletNormal : Bullet {
 		speed = GetBulletData<BulletNormalData>().speed;
 	}
 
-	public virtual void Update() {
+	public virtual void FixedUpdate() {
 		transform.position += transform.forward * speed * Time.deltaTime;
 	}
 

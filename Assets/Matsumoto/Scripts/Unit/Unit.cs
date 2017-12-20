@@ -411,7 +411,7 @@ public abstract class Unit : MonoBehaviour {
 				.Select((item) => item.damage += damage);
 			}
 			else {
-				to.attackedUnitList.Add(new DamageLog(from, damage));
+				to.attackedUnitList.Add(new DamageLog(from, damage, Time.time));
 			}
 		}
 
@@ -422,7 +422,10 @@ public abstract class Unit : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	public static bool Heal(Unit from, Unit to, int heal) {
+
 		if(!from || !to) return false;
+		if(from.isDead || to.isDead) return false;
+
 		Debug.Log("Heal " + from.name + " -> " + to.name);
 
 		int healPoint = Mathf.Min(heal, to.maxHP - to.nowHP);
