@@ -53,7 +53,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        //画面に映っていたら行動を起こす
+        //画面に映っていたら行動を起こす(廃止)
         if (true)//isRendered
         {
             int passCount = 0;
@@ -202,12 +202,21 @@ public class EnemyAI : MonoBehaviour
         transform.position += transform.forward * dashSpeed * Time.deltaTime;
     }
 
+    /// <summary>
+    /// ターゲット変更時間
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator TargetChange()
+    {
+        yield return new WaitForSeconds(5.0f);
+    }
+
     //SkinnedMeshRendererなるものが必要？
     /// <summary>
     /// 画面内判定
     /// </summary>
-    private void OnWillRenderObject()
-    {
-        isRendered = true;
-    }
+    //private void OnWillRenderObject()
+    //{
+    //    isRendered = true;
+    //}
 }
