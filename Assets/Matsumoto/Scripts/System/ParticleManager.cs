@@ -78,6 +78,8 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 			return null;
 		}
 
+		Debug.Log("Spawn:" + particleName);
+
 		var pObj = Instantiate(pData, position, rotation);
 		pObj.StartEffect();
 
