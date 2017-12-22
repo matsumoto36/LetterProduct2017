@@ -2,65 +2,67 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GamepadInput;
+using System;
 
 /// <summary>
 /// 特定のコントローラの特定の番号をログに出力するクラス
 /// </summary>
 public class DebugInputView : MonoBehaviour {
 
-	public ControlType inputControllerType;
-	public GamePad.Index inputControllerNum;
+	public int playerIndex;
+
+	public string[] names;
 
 	void Update () {
 
+		names = Input.GetJoystickNames();
+
 		//Axisの入力を調べる
-		CheckAxis(inputControllerType, GamePad.Axis.Dpad, inputControllerNum, true);
-		CheckAxis(inputControllerType, GamePad.Axis.LeftStick, inputControllerNum, true);
-		CheckAxis(inputControllerType, GamePad.Axis.RightStick, inputControllerNum, true);
+		foreach(GamePad.Axis item in Enum.GetValues(typeof(GamePad.Axis))) {
+			CheckAxis(playerIndex, item, true);
+		}
 
 		//Triggerの入力を調べる
-		CheckTrigger(inputControllerType, GamePad.Trigger.LeftTrigger, inputControllerNum, true);
-		CheckTrigger(inputControllerType, GamePad.Trigger.RightTrigger, inputControllerNum, true);
+		foreach(GamePad.Trigger item in Enum.GetValues(typeof(GamePad.Trigger))) {
+			CheckTrigger(playerIndex, item, true);
+		}
 
 		//Buttonの入力を調べる
-		CheckButton(inputControllerType, GamePad.Button.A, inputControllerNum);
-		CheckButton(inputControllerType, GamePad.Button.B, inputControllerNum);
-		CheckButton(inputControllerType, GamePad.Button.Back, inputControllerNum);
-		CheckButton(inputControllerType, GamePad.Button.LeftShoulder, inputControllerNum);
-		CheckButton(inputControllerType, GamePad.Button.LeftStick, inputControllerNum);
-		CheckButton(inputControllerType, GamePad.Button.RightShoulder, inputControllerNum);
-		CheckButton(inputControllerType, GamePad.Button.RightStick, inputControllerNum);
-		CheckButton(inputControllerType, GamePad.Button.Start, inputControllerNum);
-		CheckButton(inputControllerType, GamePad.Button.X, inputControllerNum);
-		CheckButton(inputControllerType, GamePad.Button.Y, inputControllerNum);
+		foreach(GamePad.Button item in Enum.GetValues(typeof(GamePad.Button))) {
+			CheckButton(playerIndex, item);
+		}
 	}
 
 	#region CheckInput
 
-	void CheckAxis(ControlType type, GamePad.Axis axisType, GamePad.Index playerNum, bool isRaw) {
-		Vector2 axis = InputManager.GetAxis(type, axisType, playerNum, true);
+	void CheckAxis(int playerIndex, GamePad.Axis axisType, bool isRaw) {
+		Vector2 axis = InputManager.GetAxis(playerIndex, axisType, true);
 		if(!(axis.x == 0 && axis.y == 0)) {
-			Debug.Log(GetLog(type, axisType.ToString(), playerNum, axis));
+			var controllerData = InputManager.GetControllerData(playerIndex);
+			Debug.Log(GetLog(controllerData.type, axisType.ToString(), controllerData.controllerIndex, axis));
 		}
 	}
 
-	void CheckTrigger(ControlType type, GamePad.Trigger triggerType, GamePad.Index playerNum, bool isRaw) {
-		float trigger = InputManager.GetTrigger(type, triggerType, playerNum, true);
+	void CheckTrigger(int playerIndex, GamePad.Trigger triggerType, bool isRaw) {
+		float trigger = InputManager.GetTrigger(playerIndex, triggerType, true);
 		if(trigger != 0) {
-			Debug.Log(GetLog(type, triggerType.ToString(), playerNum, trigger));
+			var controllerData = InputManager.GetControllerData(playerIndex);
+			Debug.Log(GetLog(controllerData.type, triggerType.ToString(), controllerData.controllerIndex, trigger));
 		}
 	}
 
-	void CheckButton(ControlType type, GamePad.Button buttonType, GamePad.Index playerNum) {
+	void CheckButton(int playerIndex, GamePad.Button buttonType) {
 
-		bool button = InputManager.GetButtonDown(type, buttonType, playerNum);
+		bool button = InputManager.GetButtonDown(playerIndex, buttonType);
+		var controllerData = InputManager.GetControllerData(playerIndex);
+
 		if(button) {
-			Debug.Log(GetLog(type, buttonType.ToString(), playerNum, false));
+			Debug.Log(GetLog(controllerData.type, buttonType.ToString(), controllerData.controllerIndex, false));
 		}
 
-		button = InputManager.GetButtonUp(type, buttonType, playerNum);
+		button = InputManager.GetButtonUp(playerIndex, buttonType);
 		if(button) {
-			Debug.Log(GetLog(type, buttonType.ToString(), playerNum, true));
+			Debug.Log(GetLog(controllerData.type, buttonType.ToString(), controllerData.controllerIndex, true));
 		}
 	}
 

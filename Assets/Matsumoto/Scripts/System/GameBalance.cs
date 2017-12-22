@@ -9,7 +9,9 @@ public sealed class GameBalance : SingletonMonoBehaviour<GameBalance> {
 
 	public GameBalanceData data { get; private set; }
 
-	void Awake() {
+	protected override void Init() {
+		base.Init();
+
 		//データをロード
 		data = Resources.Load<GameBalanceData>(GameBalanceData.ASSET_PATH);
 		if(!data) Debug.LogError("Failed load GameBalanceData.");
