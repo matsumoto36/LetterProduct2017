@@ -6,7 +6,6 @@ public class BossAI : MonoBehaviour
     //private bool isRendered = false;    //画面内判定
 
     //基本
-    private bool attacked;                  //被ダメ判定
     public float speed = 10;                //移動速度(秒速)
     public float attackLine = 3;            //近接攻撃可能距離
     public float searchAngle = 7;           //視野
@@ -62,6 +61,9 @@ public class BossAI : MonoBehaviour
             damage[i] = 0;
         }
 
+        //攻撃されたときの通知に登録
+        enemySC.OnAttacked += OnAttacked;
+
         //カウントコルーチン始動
         StartCoroutine(TargetChange());
         //StartCoroutine(SpecialAttackCounter());
@@ -69,16 +71,6 @@ public class BossAI : MonoBehaviour
     
     void Update()
     {
-        //ダメージ加算
-        for (int i = 0; i < player.Length; i++)
-        {
-            if (/**/)
-            {
-                damage[i]=
-                fainalPlayer = i;
-            }
-        }
-
         //ターゲットとの距離を計算(2乗された値)
         distance = ((transform.position - player[target].transform.position) * 10000 / 10000).sqrMagnitude;
 
@@ -178,6 +170,27 @@ public class BossAI : MonoBehaviour
             }
         }
     }
+    
+    /// <summary>
+    /// 攻撃されたときに実行される
+    /// </summary>
+    /// <param name="from">攻撃したキャラクター</param>
+    void OnAttacked(Unit from)
+    {
+        for (int i = 0; i < player.Length; i++)
+        {
+            if (player[i] == from)
+            {
+                damage[i] += enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].damage;
+            }
+        }
+
+        //ログの取得
+        //enemySC.attackedUnitList
+        //何秒前に攻撃されたか求める
+        //Time.time - enemySC.attackedUnitList[0].time
+        //配列の.length = Listの .Count
+    }
 
     /// <summary>
     /// ターゲット変更
@@ -189,7 +202,7 @@ public class BossAI : MonoBehaviour
         yield return new WaitForSeconds(targetChangeTime);
 
         //targetChangeTime秒間に攻撃を受けた
-        if (attacked)
+        if (enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].time <= targetChangeTime)
         {
             //ダメージ比較
             for (int i = 0; i < player.Length; i++)
@@ -221,11 +234,16 @@ public class BossAI : MonoBehaviour
         //攻撃を受けなかった
         else
         {
-            target = fainalPlayer;
+            for (int i = 0; i < player.Length; i++)
+            {
+                if (player[i] == enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].attackUnit)
+                {
+                    target = i;
+                }
+            }
         }
 
         //初期化
-        attacked = false;
         for (int i = 0; i < player.Length; i++)
         {
             damage[i] = 0;
