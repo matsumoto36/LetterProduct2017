@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MoveCamera : MonoBehaviour
 {
+    /// <summary>移動先のシーン名</summary>
+    public string sceneName;
 
     // Use this for initialization
     void Start()
@@ -21,7 +23,7 @@ public class MoveCamera : MonoBehaviour
     {
         if (c.gameObject.CompareTag("Player1"))
         {
-            FadeManager.Instance.LoadScene("Camera", 2.0f);
+            FadeManager.Instance.LoadScene(sceneName, 2.0f);
         }
     }
 }
