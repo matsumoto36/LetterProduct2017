@@ -8,33 +8,57 @@ using System.Linq;
 /// </summary>
 public abstract class Bullet : MonoBehaviour {
 
-	const string BODY_ANCHOR = "Body";
-
-	public BulletData bData { get; private set; }
-	public int hitMask { get; private set; }
-
-	protected Transform body;
-
-	void Start() {
-		Init();
-	}
+	public Weapon bulletOwner { get; set; }
+	object bulletData { get; set; }
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	public virtual void Init() {
 
-		//デフォルトで突き抜けるレイヤー
-		SetHitMask("PlayerLayer", "BulletLayer");
+		//相手の勢力に当たるように設定
+		var maskList = UnitGroupMatrix.GetAttackableGroup(bulletOwner.unitOwner.group, true)
+			.Select((item) => item.ToString() + "Layer")
+			.ToList();
+
+		maskList.Add("BulletLayer");
+		maskList.Add("IgnoreHit");
+
+		bulletOwner.SetHitMask(maskList.ToArray());
 	}
 
 	/// <summary>
-	/// 当たらないマスクをセットする
-	/// *武器にマスクを知らせるために必要*
+	/// 弾のデータをセットする
 	/// </summary>
-	/// <param name="mask"></param>
-	public void SetHitMask(params string[] maskName) {
-		hitMask = ~maskName.Sum((item) => LayerMask.GetMask(item));
+	/// <param name="data"></param>
+	public void SetBulletData(BulletData data) {
+		bulletData = data;
+	}
+
+	/// <summary>
+	/// 弾のデータを取得する
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <returns></returns>
+	public T GetBulletData<T>() where T : BulletData {
+		return (T)bulletData;
+	}
+
+	/// <summary>
+	/// 攻撃する
+	/// </summary>
+	/// <param name="target"></param>
+	protected virtual void Attack(Unit target) {
+		if(!target) return;
+		Unit.Attack(bulletOwner.unitOwner, target, bulletOwner.power);
+	}
+
+	/// <summary>
+	/// 回復する
+	/// </summary>
+	/// <param name="target"></param>
+	protected virtual void Heal(Unit target) {
+		Unit.Heal(bulletOwner.unitOwner, target, bulletOwner.power);
 	}
 
 	/// <summary>
@@ -53,27 +77,14 @@ public abstract class Bullet : MonoBehaviour {
 	/// <param name="other"></param>
 	public virtual void OnHitExit(Collider other) { }
 
-	/// <summary>
-	/// 弾を生成する
-	/// </summary>
-	/// <param name="bData"></param>
-	/// <param name="transform"></param>
-	/// <returns></returns>
-	public static Bullet CreateBullet(BulletData bData, Transform transform) {
-
-		//親の生成
-		var bulletObj = Instantiate(bData.bullet, transform.position, transform.rotation);
-		bulletObj.bData = bData;
-
-		//本体の生成
-		bulletObj.body = Instantiate(bData.model, transform).transform;
-		bulletObj.body.tag = "Bullet";
-		bulletObj.body.parent = bulletObj.transform;
-		bulletObj.body.localPosition = new Vector3();
-		bulletObj.body.transform.localRotation = Quaternion.identity;
-		bulletObj.body.GetComponent<BulletCollision>().parent = bulletObj;
-
-		return bulletObj;
+	void OnTriggerEnter(Collider other) {
+		//ヒットしない定義のものだったらスキップ
+		if(bulletOwner.CheckHit(other.gameObject)) OnHitEnter(other);
 	}
-
+	void OnTriggerStay(Collider other) {
+		if(bulletOwner.CheckHit(other.gameObject)) OnHitting(other);
+	}
+	void OnTriggerExit(Collider other) {
+		if(bulletOwner.CheckHit(other.gameObject)) OnHitExit(other);
+	}
 }

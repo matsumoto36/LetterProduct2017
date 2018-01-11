@@ -8,17 +8,62 @@ using UnityEngine;
 /// </summary>
 public class BulletLaser : Bullet {
 
+	Unit lastAttackUnit;
+	PKFxManager.Attribute laserLengthAtt;
+	float buffPoint = 0;
+
+	public override void Init() {
+		base.Init();
+
+		laserLengthAtt = GetComponentInChildren<PKFxFX>()
+			.GetAttribute("Length");
+
+		laserLengthAtt.ValueFloat = 0;
+	}
+
 	public float length {
 		get { return _length; }
 		set {
 			var s = transform.localScale;
-			s.z = _length = value;
+			s.z = laserLengthAtt.ValueFloat = _length = value;
 			transform.localScale = s;
 		}
 	}
 	float _length;
 
-	public override void OnHitEnter(Collider other) {
+	/// <summary>
+	/// 継続的にヒットするとき
+	/// </summary>
+	/// <param name="target"></param>
+	/// <param name="onApply">ダメージ等を与えるとき</param>
+	protected void Irradiation(Unit target, Action<Unit, int> onApply) {
 
+		if(!target) return;
+
+		if(lastAttackUnit != target) {
+			buffPoint = 0;
+		}
+
+		lastAttackUnit = target;
+		buffPoint += bulletOwner.power * Time.deltaTime;
+		//与える量を合計して1以上になったら実際に攻撃
+		if(buffPoint >= 1) {
+			var point = (int)buffPoint;
+			buffPoint -= point;
+
+			//適用
+			onApply(target, point);
+		}
+	}
+
+	protected override void Attack(Unit target) {
+		//照射系ダメージ
+		Irradiation(target, (unit, damage) => {
+			Unit.Attack(bulletOwner.unitOwner, target, damage);
+		});
+	}
+
+	public override void OnHitting(Collider other) {
+		Attack(other.GetComponent<Unit>());
 	}
 }

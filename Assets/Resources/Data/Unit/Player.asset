@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0073dccb5160bae4a8fe76aafd5a4b13, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  model: {fileID: 1349390152942022, guid: e17fda962bc096945b66b312987c529b, type: 2}
+  hp: 100
+  dropExp: 0
+  nextLevelExp: 10
+  moveSpeed: 6
+  rotSpeed: 10
+  weaponData:
+  - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
+  - {fileID: 11400000, guid: ca1cadd95c8f34b4a85826b2f7da8930, type: 2}
+  isDrawWeapon: 1

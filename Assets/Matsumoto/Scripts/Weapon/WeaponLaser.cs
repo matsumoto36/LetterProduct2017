@@ -16,29 +16,32 @@ public class WeaponLaser : WeaponRanged {
 	BulletLaser laser;
 	LaserState state = LaserState.Idle;
 
+	float maxLength;
 	float chargeTime;
 
 	public override void AttackStart() {
-		Debug.Log("ChargeStart");
 
 		//チャージ開始
 		state = LaserState.Charging;
 		chargeTime = 0;
+
+		//発射準備
+		laser = (BulletLaser)bulletData.Create(this, shotAnchor.position, shotAnchor.rotation);
+		laser.transform.parent = shotAnchor;
+		laser.transform.localPosition = new Vector3();
+		laser.transform.localRotation = Quaternion.identity;
+		laser.length = 0.01f;
+		//laser.transform.localScale = Vector3.one;
+
+		maxLength = laser.GetBulletData<BulletLaserData>().maxLength;
 	}
 
 	public override void Attack() {
 
-		//チャージ
 		switch(state) {
 			case LaserState.Charging:
 
 				if((chargeTime += Time.deltaTime) > interval) {
-					//照射準備
-					Debug.Log("Shot");
-					laser = (BulletLaser)Bullet.CreateBullet(bData, shotAnchor);
-					laser.transform.parent = shotAnchor;
-					laser.transform.localPosition = new Vector3();
-					laser.transform.localRotation = Quaternion.identity;
 
 					//照射ステートに変更
 					state = LaserState.Shot;
@@ -47,13 +50,13 @@ public class WeaponLaser : WeaponRanged {
 			case LaserState.Shot:
 
 				//当たった場所もしくは最大の長さにする
-				var length = laser.bData.maxLength;
+				float length = maxLength;
 
-				RaycastHit[] hitAll = Physics.RaycastAll(shotAnchor.position, shotAnchor.forward, length, laser.hitMask);
+				RaycastHit[] hitAll = Physics.RaycastAll(shotAnchor.position, shotAnchor.forward, length, hitMask);
 
 				foreach(var hit in hitAll) {
 					//自分のデータは除外
-					if(ReferenceEquals(hit.collider.gameObject, bData.bulletOwner.unitOwner.gameObject)) continue;
+					if(ReferenceEquals(hit.collider.gameObject, unitOwner.gameObject)) continue;
 					//当たったものの中で一番近い奴
 					if(hit.distance < length) length = hit.distance;
 				}
@@ -68,8 +71,6 @@ public class WeaponLaser : WeaponRanged {
 	}
 
 	public override void AttackEnd() {
-
-		Debug.Log("End");
 
 		//照射終了
 		if(laser) Destroy(laser.gameObject);

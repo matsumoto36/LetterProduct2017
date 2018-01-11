@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// 近接武器
@@ -15,9 +16,19 @@ public class WeaponMelee : Weapon {
 	public override void Init() {
 		base.Init();
 
+		weaponType = WeaponType.Melee;
 		meleeCol = GetComponent<Collider>();
 		//あらかじめ当たり判定を無効にしておく
 		meleeCol.enabled = false;
+
+		//相手の勢力に当たるように設定
+		var maskList = UnitGroupMatrix.GetAttackableGroup(unitOwner.group, true)
+			.Select((item) => item.ToString() + "Layer")
+			.ToList();
+
+		maskList.Add("IgnoreHit");
+
+		SetHitMask(maskList.ToArray());
 	}
 
 	public override void Attack() {
@@ -55,10 +66,12 @@ public class WeaponMelee : Weapon {
 
 	void OnTriggerEnter(Collider other) {
 
-		//味方を除外する
-		if(other.tag == "Player") return;
+		Unit unit;
 
-		Debug.Log("Hit:" + other.name);
-
+		if(unit = other.GetComponent<Unit>()) {
+			//攻撃
+			if(CheckHit(other.gameObject))
+				Unit.Attack(unitOwner, unit, power);
+		}
 	}
 }
