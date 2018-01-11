@@ -44,6 +44,9 @@ public class Player : Unit {
 		//耐久卵オブジェクトを取得
 		duraEggPrefab = Resources.Load<GameObject>(DURA_EGG_PREFAB_PATH);
 		if(!duraEggPrefab) Debug.LogError("Failed load DuraEgg.");
+
+		//ヒット通知でコンボ加算
+		OnAttackHit += (_) => AddCombo();
 	}
 
 	void Update() {
@@ -375,10 +378,6 @@ public class Player : Unit {
 				Quaternion.RotateTowards(body.rotation, Quaternion.LookRotation(plDir), rotSpeed);
 		}
 
-	}
-
-	protected override void OnAttackHit(Unit to) {
-		AddCombo();
 	}
 
 	protected override bool ApplyDamage(int damage) {

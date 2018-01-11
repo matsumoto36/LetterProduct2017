@@ -23,6 +23,17 @@ public class EnemyStructure : Enemy {
 		lookRotation = body.rotation;
 
 		StartCoroutine(CheckTargetUpdate());
+
+		//攻撃されたら振り向く
+		OnAttacked += (from) => {
+			if(!isDetectAttacked) return;
+			if(!from) return;
+			if(target) return;
+
+			//振り向く(検出ではない)
+			var dir = from.transform.position - body.position;
+			lookRotation = Quaternion.LookRotation(dir);
+		};
 	}
 
 	// Update is called once per frame
@@ -113,17 +124,6 @@ public class EnemyStructure : Enemy {
 		}
 
 		body.rotation = Quaternion.RotateTowards(body.rotation, lookRotation, rotSpeed);
-	}
-
-	protected override void OnAttacked(Unit from) {
-
-		if(!isDetectAttacked) return;
-		if(!from) return;
-		if(target) return;
-
-		//振り向く(検出ではない)
-		var dir = from.transform.position - body.position;
-		lookRotation = Quaternion.LookRotation(dir);
 	}
 
 	void OnDrawGizmos() {

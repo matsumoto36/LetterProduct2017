@@ -4,14 +4,20 @@ using System.Collections;
 public class BossAI : MonoBehaviour
 {
     //private bool isRendered = false;    //画面内判定
-    private bool spAttackFlg;
-    public float rotationNum = 0;           //回転数(角度)
+
+    //基本
+    private bool attacked;                  //被ダメ判定
     public float speed = 10;                //移動速度(秒速)
     public float attackLine = 3;            //近接攻撃可能距離
     public float searchAngle = 7;           //視野
-    public float targetChangeTime = 5.0f;   //
-    public float spAttackTime = 2;
-    public float spChargeTime = 60.0f;      //
+    public float targetChangeTime = 5.0f;   //ターゲット変更時間
+
+    //必殺関連
+    private bool spAttackFlg;
+    private bool oneRolling;
+    public float spChargeTime = 60.0f;      //チャージ時間
+    public float spAttackTime = 2;          //攻撃持続時間
+    public float rotationNum = 0;           //回転数(角度)
 
     // Enemyスクリプト
     private Enemy enemySC;
@@ -25,20 +31,14 @@ public class BossAI : MonoBehaviour
     [SerializeField]
     private int target;             //狙うプレイヤー
     [SerializeField]
-    private float distance;             //距離
+    private int fainalPlayer;       //最後に攻撃したプレイヤー
     [SerializeField]
-    private int[] damage;               //負わされたダメージ
+    private float distance;         //ターゲットとの距離
+    [SerializeField]
+    private int[] damage;           //各々に負わされたダメージ
 
     void Awake()
     {
-        //初期化
-        spAttackFlg = false;
-        target = 0;
-        for (int i = 0; i < player.Length; i++)
-        {
-            damage[i] = 0;
-        }
-
         //プレイ人数の取得
         player = GameObject.FindGameObjectsWithTag("Player");
         playerCS = new Player[player.Length];
@@ -54,13 +54,31 @@ public class BossAI : MonoBehaviour
         //Enemyスクリプトを取得
         enemySC = GetComponent<Enemy>();
 
+        //初期化
+        spAttackFlg = false;
+        target = 0;
+        for (int i = 0; i < player.Length; i++)
+        {
+            damage[i] = 0;
+        }
+
         //カウントコルーチン始動
         StartCoroutine(TargetChange());
-        StartCoroutine(SpecialAttackCounter());
+        //StartCoroutine(SpecialAttackCounter());
     }
     
     void Update()
     {
+        //ダメージ加算
+        for (int i = 0; i < player.Length; i++)
+        {
+            if (/**/)
+            {
+                damage[i]=
+                fainalPlayer = i;
+            }
+        }
+
         //ターゲットとの距離を計算(2乗された値)
         distance = ((transform.position - player[target].transform.position) * 10000 / 10000).sqrMagnitude;
 
@@ -71,13 +89,13 @@ public class BossAI : MonoBehaviour
             spAttackFlg = true;
         }
 
-        //行動処理
-        if (spAttackFlg)
-        {
-            //必殺技
-            SpecialAttack();
-        }
-        else if (distance < Mathf.Pow(attackLine, 2))
+        ////行動処理
+        //if (spAttackFlg)
+        //{
+        //    //必殺技
+        //    SpecialAttack();
+        //}
+        /*else */if (distance < Mathf.Pow(attackLine, 2))
         {
             if (enemySC.equipWeapon[0].weaponType != WeaponType.Melee)
             {
@@ -146,10 +164,18 @@ public class BossAI : MonoBehaviour
         transform.Rotate(new Vector3(0, f, 0));
         rotationNum += f;
 
-        if (rotationNum >= 720)
+        if (rotationNum >= 360)
         {
-            rotationNum = 0;    //初期化
-            spAttackFlg = false;
+            rotationNum -= 360;    //初期化
+            if (oneRolling)
+            {
+                oneRolling = false;
+                spAttackFlg = false;
+            }
+            else
+            {
+                oneRolling = true;
+            }
         }
     }
 
@@ -159,38 +185,49 @@ public class BossAI : MonoBehaviour
     /// <returns></returns>
     IEnumerator TargetChange()
     {
+        //targetChangeTime秒待つ(5秒)
         yield return new WaitForSeconds(targetChangeTime);
 
-        //ダメージ比較
-        for (int i = 0; i < player.Length; i++)
+        //targetChangeTime秒間に攻撃を受けた
+        if (attacked)
         {
-            if (target == i)
+            //ダメージ比較
+            for (int i = 0; i < player.Length; i++)
             {
-                //比較対象がすでにターゲット状態
-            }
-            //比較対象が存在,生存しているか
-            else if (player[target] == null || playerCS[target].isDead)
-            {
-                target = i;
-            }
-            else if (player[i] == null || playerCS[i].isDead)
-            {
-                //処理無し
-            }
-
-            //通常処理
-            else
-            {
-                if (damage[i] < damage[target])
+                if (target == i)
+                {
+                    //比較対象がすでにターゲット状態
+                }
+                //比較対象が存在,生存しているか
+                else if (player[target] == null || playerCS[target].isDead)
                 {
                     target = i;
                 }
+                else if (player[i] == null || playerCS[i].isDead)
+                {
+                    //処理無し
+                }
+
+                //通常処理
+                else
+                {
+                    if (damage[i] < damage[target])
+                    {
+                        target = i;
+                    }
+                }
             }
         }
-
-        for(int i = 0; i < player.Length; i++)
+        //攻撃を受けなかった
+        else
         {
-            //初期化
+            target = fainalPlayer;
+        }
+
+        //初期化
+        attacked = false;
+        for (int i = 0; i < player.Length; i++)
+        {
             damage[i] = 0;
         }
 

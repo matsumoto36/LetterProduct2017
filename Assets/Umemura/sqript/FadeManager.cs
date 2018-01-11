@@ -42,18 +42,18 @@ public class FadeManager : MonoBehaviour
 	/// <summary>フェード色</summary>
 	public Color fadeColor = Color.black;
 
+    public void Awake()
+    {
+        if (this != Instance)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
 
-	//public void Awake ()
-	//{
-	//	if (this != Instance) {
-	//		Destroy (this.gameObject);
-	//		return;
-	//	}
+        DontDestroyOnLoad(this.gameObject);
+    }
 
-	//	DontDestroyOnLoad (this.gameObject);
-	//}
-
-	public void OnGUI ()
+    public void OnGUI ()
 	{
 
 		// Fade .
@@ -117,6 +117,8 @@ public class FadeManager : MonoBehaviour
 	/// <param name='interval'>暗転にかかる時間(秒)</param>
 	private IEnumerator TransScene (string scene, float interval)
 	{
+        GetComponent<Collider>().enabled = false;
+
 		//だんだん暗く .
 		this.isFading = true;
 		float time = 0;
@@ -138,5 +140,6 @@ public class FadeManager : MonoBehaviour
 		}
 
 		this.isFading = false;
+        Destroy(gameObject);
 	}
 }
