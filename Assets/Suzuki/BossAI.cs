@@ -202,7 +202,7 @@ public class BossAI : MonoBehaviour
         yield return new WaitForSeconds(targetChangeTime);
 
         //targetChangeTime秒間に攻撃を受けた
-        if (enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].time <= targetChangeTime)
+        if (Time.time - enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].time <= targetChangeTime)
         {
             //ダメージ比較
             for (int i = 0; i < player.Length; i++)
