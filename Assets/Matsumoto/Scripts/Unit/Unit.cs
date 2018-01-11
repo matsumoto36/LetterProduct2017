@@ -558,7 +558,7 @@ public abstract class Unit : MonoBehaviour {
 		while(true) {
 
 			anim.speed = speed;
-
+			
 			if((t += Time.deltaTime) >= duration) break;
 			yield return null;
 		}

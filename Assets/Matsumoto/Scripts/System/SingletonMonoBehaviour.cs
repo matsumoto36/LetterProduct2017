@@ -17,7 +17,14 @@ public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBe
 			.AddComponent<T>();
 
 		DontDestroyOnLoad(instance.gameObject);
+
+		instance.GetComponent<SingletonMonoBehaviour<T>>().Init();
 	}
+
+	/// <summary>
+	/// 初期化用
+	/// </summary>
+	protected virtual void Init() { }
 
 	void Awake() {
 		if(instance) Destroy(gameObject);

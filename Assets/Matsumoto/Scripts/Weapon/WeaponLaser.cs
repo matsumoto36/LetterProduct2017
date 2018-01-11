@@ -24,6 +24,16 @@ public class WeaponLaser : WeaponRanged {
 		//チャージ開始
 		state = LaserState.Charging;
 		chargeTime = 0;
+
+		//発射準備
+		laser = (BulletLaser)bulletData.Create(this, shotAnchor.position, shotAnchor.rotation);
+		laser.transform.parent = shotAnchor;
+		laser.transform.localPosition = new Vector3();
+		laser.transform.localRotation = Quaternion.identity;
+		laser.length = 0.01f;
+		//laser.transform.localScale = Vector3.one;
+
+		maxLength = laser.GetBulletData<BulletLaserData>().maxLength;
 	}
 
 	public override void Attack() {
@@ -32,14 +42,6 @@ public class WeaponLaser : WeaponRanged {
 			case LaserState.Charging:
 
 				if((chargeTime += Time.deltaTime) > interval) {
-					//照射準備
-					laser = (BulletLaser)bulletData.Create(this, shotAnchor.position, shotAnchor.rotation);
-
-					laser.transform.parent = shotAnchor;
-					laser.transform.localPosition = new Vector3();
-					laser.transform.localRotation = Quaternion.identity;
-
-					maxLength = laser.GetBulletData<BulletLaserData>().maxLength;
 
 					//照射ステートに変更
 					state = LaserState.Shot;

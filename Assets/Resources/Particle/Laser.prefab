@@ -73,6 +73,111 @@ MonoBehaviour:
     m_Value1: 0
     m_Value2: 0
     m_Value3: 0
+  - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 3
+      Name: BaseSize
+      Description: 
+      DefaultValue0: 0.792079
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 10
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 0.83
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 3
+      Name: LaserSize
+      Description: 
+      DefaultValue0: 0.426799
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 1
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 0.426799
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 31
+      MinMaxFlag: 3
+      Name: MainColor
+      Description: 
+      DefaultValue0: 0.1633663
+      DefaultValue1: 0.7846535
+      DefaultValue2: 0.1089109
+      DefaultValue3: 1
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 1
+      MaxValue1: 1
+      MaxValue2: 1
+      MaxValue3: 1
+    m_Value0: 0.1633663
+    m_Value1: 0.7846535
+    m_Value2: 0.1089109
+    m_Value3: 1
+  - m_Descriptor:
+      Type: 31
+      MinMaxFlag: 3
+      Name: SubColor
+      Description: 
+      DefaultValue0: 0.1509901
+      DefaultValue1: 0.8316832
+      DefaultValue2: 0.1633663
+      DefaultValue3: 1
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 1
+      MaxValue1: 1
+      MaxValue2: 1
+      MaxValue3: 1
+    m_Value0: 0.1509901
+    m_Value1: 0.8316832
+    m_Value2: 0.1633663
+    m_Value3: 1
+  - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 1
+      Name: Intensity
+      Description: 
+      DefaultValue0: 4
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 0
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 2
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
   m_FxSamplersList: []
   m_PlayOnStart: 1
   m_IsPlaying: 0
