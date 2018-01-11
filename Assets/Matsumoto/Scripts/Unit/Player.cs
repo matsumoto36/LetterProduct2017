@@ -15,8 +15,7 @@ public class Player : Unit {
 	const string WEAPON_SWITCH_ANIM = "TestPlayerAnimationSwitch";
 	const string DURA_EGG_PREFAB_PATH = "System/DuraEgg";
 
-	public GamePad.Index playerIndex;
-	public ControlType inputType;
+	public int playerIndex;
 
 	int combo = 0;
 	float comboDuration = 0;
@@ -51,6 +50,8 @@ public class Player : Unit {
 
 		if(isDead) return;
 
+
+
 		//攻撃
 		if(CheckCanAttack()) Attack();
 
@@ -62,21 +63,21 @@ public class Player : Unit {
 
 		//HPが一定以下になったら耐久卵が使える
 		if(HPRatio < GameBalance.instance.data.duraEggCanUseRatio
-			&& InputManager.GetButtonDown(inputType, GamePad.Button.A, playerIndex)) {
+			&& InputManager.GetButtonDown(playerIndex, GamePad.Button.A)) {
 
 			StartCoroutine(SkillWait(
 				GameBalance.instance.data.duraEggChargeTime,
-				() => InputManager.GetButton(inputType, GamePad.Button.A, playerIndex),
+				() => InputManager.GetButton(playerIndex, GamePad.Button.A),
 				InDuraEgg));
 		}
 
 		//耐久卵から出る
 		if(isInDuraEgg
-			&& InputManager.GetButtonDown(inputType, GamePad.Button.A, playerIndex)) {
+			&& InputManager.GetButtonDown(playerIndex, GamePad.Button.A)) {
 
 			StartCoroutine(SkillWait(
 				GameBalance.instance.data.duraEggExitTime,
-				() => InputManager.GetButton(inputType, GamePad.Button.A, playerIndex),
+				() => InputManager.GetButton(playerIndex, GamePad.Button.A),
 				OutDuraEgg));
 		}
 
@@ -85,18 +86,17 @@ public class Player : Unit {
 		if(rivaivablePlayer) {
 			Debug.DrawLine(transform.position, rivaivablePlayer.transform.position, Color.red);
 
-			if(InputManager.GetButtonDown(inputType, GamePad.Button.B, playerIndex)) {
+			if(InputManager.GetButtonDown(playerIndex, GamePad.Button.B)) {
 
 				StartCoroutine(SkillWait(
 					GameBalance.instance.data.duraEggExitTime,
-					() => InputManager.GetButton(inputType, GamePad.Button.B, playerIndex),
+					() => InputManager.GetButton(playerIndex, GamePad.Button.B),
 					() => RivivePlayer(rivaivablePlayer)));
 			}
 
 		}
 	}
 
-	// Update is called once per frame
 	void FixedUpdate() {
 
 		if(isDead) return;
@@ -157,7 +157,7 @@ public class Player : Unit {
 
 		if(!equipWeapon[1]) return;
 
-		if(InputManager.GetTrigger(inputType, GamePad.Trigger.RightTrigger, playerIndex, true) > ratio) {
+		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.RightTrigger, true) > ratio) {
 
 			//攻撃キャンセル
 			if(isAttack) equipWeapon[0].AttackEnd();
@@ -293,12 +293,12 @@ public class Player : Unit {
 	public override void Attack() {
 
 		//攻撃開始
-		if(InputManager.GetTrigger(inputType, GamePad.Trigger.LeftTrigger, playerIndex, true) > ratio && !isAttack) {
+		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) > ratio && !isAttack) {
 			equipWeapon[0].AttackStart();
 			isAttack = true;
 		}
 		//攻撃ループ
-		if(InputManager.GetTrigger(inputType, GamePad.Trigger.LeftTrigger, playerIndex, true) > ratio) {
+		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) > ratio) {
 
 			//攻撃キャンセル復帰用
 			if(!isAttack) {
@@ -310,7 +310,7 @@ public class Player : Unit {
 			}
 		}
 		//攻撃終了
-		if(InputManager.GetTrigger(inputType, GamePad.Trigger.LeftTrigger, playerIndex, true) <= ratio && isAttack) {
+		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) <= ratio && isAttack) {
 			equipWeapon[0].AttackEnd();
 			isAttack = false;
 		}
@@ -327,16 +327,17 @@ public class Player : Unit {
 		if(!canMove) return;
 
 		//移動先
-		var axis = InputManager.GetAxis(inputType, GamePad.Axis.LeftStick, playerIndex, true);
+		var axis = InputManager.GetAxis(playerIndex, GamePad.Axis.LeftStick, true);
 		moveVec.x = axis.x;
 		moveVec.z = axis.y;
 
-		unitRig.MovePosition(transform.position + moveVec * moveSpeed * Time.deltaTime);
+		//unitRig.MovePosition(transform.position + moveVec * moveSpeed * Time.deltaTime);
+		transform.position += moveVec * moveSpeed * Time.deltaTime;
 
 		//回転の計算
 		Vector3 plDir;
-		if(inputType != ControlType.Keyboard) {
-			plDir = InputManager.GetAxis(inputType, GamePad.Axis.RightStick, playerIndex, true);
+		if(InputManager.GetControllerData(playerIndex).type != ControlType.Keyboard) {
+			plDir = InputManager.GetAxis(playerIndex, GamePad.Axis.RightStick, true);
 			plDir.z = plDir.y;
 			plDir.y = 0;
 		}

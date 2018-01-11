@@ -15,24 +15,21 @@ public class TestSpawnUnit : MonoBehaviour {
 		var playerData = Resources.Load<PlayerData>("Data/Unit/Player");
 
 		var player1 = (Player)playerData.Spawn(new Vector3(), Quaternion.identity);
-		player1.inputType = ControlType.Keyboard;
-		player1.playerIndex = GamepadInput.GamePad.Index.One;
+		InputManager.SetControllerData(0, ControlType.Keyboard, GamepadInput.GamePad.Index.One);
+		player1.playerIndex = 0;
 
-		//var player2 = (Player)playerData.Spawn(new Vector3(2, 0, 0), Quaternion.identity);
-		//player2.inputType = ControlType.GamePadXBOX;
-		//player2.playerIndex = GamepadInput.GamePad.Index.One;
+		var player2 = (Player)playerData.Spawn(new Vector3(2, 0, 0), Quaternion.identity);
+		InputManager.SetControllerData(1, ControlType.GamePadXBOX, GamepadInput.GamePad.Index.Two);
+		player2.playerIndex = 1;
 
-		//var player3 = (Player)playerData.Spawn(new Vector3(4, 0, 0), Quaternion.identity);
-		//player3.inputType = ControlType.GamePadXBOX;
-		//player3.playerIndex = GamepadInput.GamePad.Index.Two;
+		var player3 = (Player)playerData.Spawn(new Vector3(4, 0, 0), Quaternion.identity);
+		InputManager.SetControllerData(2, ControlType.GamePadXBOX, GamepadInput.GamePad.Index.Three);
+		player3.playerIndex = 2;
 
-		//var player4 = (Player)playerData.Spawn(new Vector3(6, 0, 0), Quaternion.identity);
-		//player4.inputType = ControlType.GamePadXBOX;
-		//player4.playerIndex = GamepadInput.GamePad.Index.Three;
+		var player4 = (Player)playerData.Spawn(new Vector3(6, 0, 0), Quaternion.identity);
+		InputManager.SetControllerData(3, ControlType.GamePadXBOX, GamepadInput.GamePad.Index.Four);
+		player4.playerIndex = 3;
 
-		//var player5 = (Player)playerData.Spawn(new Vector3(8, 0, 0), Quaternion.identity);
-		//player5.inputType = ControlType.GamePadXBOX;
-		//player5.playerIndex = GamepadInput.GamePad.Index.Four;
 	}
 
 }

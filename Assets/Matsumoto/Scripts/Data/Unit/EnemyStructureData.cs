@@ -11,6 +11,10 @@ public class EnemyStructureData : EnemyData {
 	public override Unit Spawn(Vector3 position, Quaternion rot) {
 
 		var enemy = SpawnUnit<EnemyStructure>(position, rot);
+
+		enemy.attackDuration = attackDuration;
+		enemy.attackRestDuration = attackRestDuration;
+
 		enemy.detectAngle = detectAngle;
 		enemy.detectRadius = detectRadius;
 		enemy.isDetectAttacked = isDetectAttacked;

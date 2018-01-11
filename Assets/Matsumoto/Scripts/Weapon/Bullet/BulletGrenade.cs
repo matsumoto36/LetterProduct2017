@@ -44,7 +44,7 @@ public class BulletGrenade : BulletNormal {
 		col.radius = Mathf.Max(sc.x, sc.y, sc.z) * 0.5f;
 	}
 
-	public override void Update() {
+	public override void FixedUpdate() {
 
 		//壁に触れるまで減衰
 		if(!isWallCol) {

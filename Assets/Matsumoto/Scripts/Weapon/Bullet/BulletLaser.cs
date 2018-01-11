@@ -9,17 +9,23 @@ using UnityEngine;
 public class BulletLaser : Bullet {
 
 	Unit lastAttackUnit;
+	PKFxManager.Attribute laserLengthAtt;
 	float buffPoint = 0;
 
 	public override void Init() {
 		base.Init();
+
+		laserLengthAtt = GetComponentInChildren<PKFxFX>()
+			.GetAttribute("Length");
+
+		laserLengthAtt.ValueFloat = 0;
 	}
 
 	public float length {
 		get { return _length; }
 		set {
 			var s = transform.localScale;
-			s.z = _length = value;
+			s.z = laserLengthAtt.ValueFloat = _length = value;
 			transform.localScale = s;
 		}
 	}
