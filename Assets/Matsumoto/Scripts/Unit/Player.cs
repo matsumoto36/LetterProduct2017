@@ -334,8 +334,12 @@ public class Player : Unit {
 		moveVec.x = axis.x;
 		moveVec.z = axis.y;
 
-		//unitRig.MovePosition(transform.position + moveVec * moveSpeed * Time.deltaTime);
-		transform.position += moveVec * moveSpeed * Time.deltaTime;
+		var newPos = moveVec * moveSpeed * Time.deltaTime;
+
+		//移動量の差でアニメーションを決定
+		anim.SetFloat("Speed", (newPos).magnitude);
+
+		transform.position += newPos;
 
 		//回転の計算
 		Vector3 plDir;
@@ -377,6 +381,15 @@ public class Player : Unit {
 			body.rotation =
 				Quaternion.RotateTowards(body.rotation, Quaternion.LookRotation(plDir), rotSpeed);
 		}
+
+		//移動方向と回転で走る向きを選択
+		//0 前 1 左 2 後ろ 3 右
+		var angle = Vector2.SignedAngle(body.forward, moveVec);
+		int state = 0;
+		if(angle < -70)            state++;
+		if(Mathf.Abs(angle) > 70)  state++;
+		if(Mathf.Abs(angle) > 110) state++;
+		anim.SetInteger("State", state);
 
 	}
 

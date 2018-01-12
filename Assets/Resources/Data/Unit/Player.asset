@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0073dccb5160bae4a8fe76aafd5a4b13, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  model: {fileID: 1349390152942022, guid: e17fda962bc096945b66b312987c529b, type: 2}
+  model: {fileID: 1336118053342800, guid: df1d47c3075b1ed4882cfef781fc2512, type: 2}
   hp: 100
   dropExp: 0
   nextLevelExp: 10

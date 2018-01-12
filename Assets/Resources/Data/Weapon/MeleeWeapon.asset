@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e9ad032342b7594a91cd34e9aac4f6d, type: 3}
   m_Name: MeleeWeapon
   m_EditorClassIdentifier: 
-  model: {fileID: 1574533290150038, guid: 773221f8406dab543b5b1311c99e9dc8, type: 2}
+  model: {fileID: 1126669553478676, guid: a3b450854be2cd9459551048951bb0e9, type: 2}
   interval: 1
   power: 10
   mod:
