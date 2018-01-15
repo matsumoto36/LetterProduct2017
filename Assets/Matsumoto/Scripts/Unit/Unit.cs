@@ -409,8 +409,6 @@ public abstract class Unit : MonoBehaviour {
 		//攻撃がヒットしたことを伝える
 		if(from.OnAttackHit != null) from.OnAttackHit(to);
 
-		Debug.Log(from);
-		Debug.Log(to);
 		//攻撃してきた敵を伝える
 		if(to.OnAttacked != null) to.OnAttacked(from);
 

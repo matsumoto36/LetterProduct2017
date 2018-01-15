@@ -53,16 +53,47 @@ public class Player : Unit {
 
 		if(isDead) return;
 
-
-
 		//攻撃
 		if(CheckCanAttack()) Attack();
 
 		//コンボの処理
 		ComboDurationUpdate();
-
 		//武器交換
 		CheckSwitchWeapon();
+		//耐久卵の処理
+		DurationEggUpdate();
+		//復活の処理
+		RiviveUpdate();
+
+	}
+
+	void FixedUpdate() {
+
+		if(isDead) return;
+
+		//移動処理
+		Move();
+	}
+
+	/// <summary>
+	/// 武器を交換するかどうか判断、交換する。
+	/// </summary>
+	void CheckSwitchWeapon() {
+
+		if(!equipWeapon[1]) return;
+
+		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.RightTrigger, true) > ratio) {
+
+			//攻撃キャンセル
+			if(isAttack) equipWeapon[0].AttackEnd();
+			SwitchWeapon(WEAPON_SWITCH_ANIM, 1, () => { });
+		}
+	}
+
+	/// <summary>
+	/// 耐久卵の更新処理
+	/// </summary>
+	void DurationEggUpdate() {
 
 		//HPが一定以下になったら耐久卵が使える
 		if(HPRatio < GameBalance.instance.data.duraEggCanUseRatio
@@ -83,6 +114,80 @@ public class Player : Unit {
 				() => InputManager.GetButton(playerIndex, GamePad.Button.A),
 				OutDuraEgg));
 		}
+	}
+	/// <summary>
+	/// 耐久卵にこもる
+	/// </summary>
+	void InDuraEgg() {
+
+		//卵を生成
+		if(duraEgg) Destroy(duraEgg);
+		duraEgg = Instantiate(duraEggPrefab);
+		duraEgg.transform.position = transform.position;
+		duraEgg.transform.parent = transform;
+
+		//攻撃と移動を無効化
+		canMove = canAttack = false;
+
+		isInDuraEgg = true;
+	}
+	/// <summary>
+	/// 耐久卵から出る
+	/// </summary>
+	void OutDuraEgg() {
+
+		//卵を破壊
+		Destroy(duraEgg);
+
+		//攻撃と移動を有効化
+		canMove = canAttack = true;
+
+		isInDuraEgg = false;
+
+		//一定時間弱くなる
+		if(isWeak) StopCoroutine("WeakTime");
+		StartCoroutine(WeakTime(GameBalance.instance.data.duraEggExitWeakTime));
+	}
+
+	/// <summary>
+	/// コンボが途切れるまで待つ
+	/// </summary>
+	/// <param name="comboDurationTime"></param>
+	/// <returns></returns>
+	void ComboDurationUpdate() {
+
+		if(combo == 0) return;
+
+		comboDuration -= Time.deltaTime;
+
+		//持続時間が過ぎたらコンボをリセット
+		if(comboDuration < 0) ResetCombo();
+	}
+	/// <summary>
+	/// コンボを加算する
+	/// </summary>
+	void AddCombo() {
+
+		combo++;
+		//ステータスの強化
+		GameBalance.ApplyNextComboStatus(comboStatus, combo);
+		CalcStatus();
+
+		//コンボが途切れるまで待つ
+		comboDuration = GameBalance.CalcNextComboDuration(combo);
+	}
+	/// <summary>
+	/// コンボをリセットする
+	/// </summary>
+	void ResetCombo() {
+		combo = 0;
+		comboStatus = new StatusModifier();
+	}
+
+	/// <summary>
+	/// 復活の更新処理
+	/// </summary>
+	void RiviveUpdate() {
 
 		//近くに死んだ味方がいたら回復できる
 		var rivaivablePlayer = GetRivaivablePlayer();
@@ -99,15 +204,6 @@ public class Player : Unit {
 
 		}
 	}
-
-	void FixedUpdate() {
-
-		if(isDead) return;
-
-		//移動処理
-		Move();
-	}
-
 	/// <summary>
 	/// プレイヤーを復活させる
 	/// </summary>
@@ -123,7 +219,6 @@ public class Player : Unit {
 		Heal(this, target, healPoint);
 		ApplyDamage(healPoint);
 	}
-
 	/// <summary>
 	/// 復活可能なプレイヤーを取得する
 	/// </summary>
@@ -151,93 +246,6 @@ public class Player : Unit {
 		}
 
 		return nearestPlayer;
-	}
-
-	/// <summary>
-	/// 武器を交換するかどうか判断、交換する。
-	/// </summary>
-	void CheckSwitchWeapon() {
-
-		if(!equipWeapon[1]) return;
-
-		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.RightTrigger, true) > ratio) {
-
-			//攻撃キャンセル
-			if(isAttack) equipWeapon[0].AttackEnd();
-			SwitchWeapon(WEAPON_SWITCH_ANIM, 1, () => { });
-		}
-	}
-
-	/// <summary>
-	/// 耐久卵にこもる
-	/// </summary>
-	void InDuraEgg() {
-
-		//卵を生成
-		if(duraEgg) Destroy(duraEgg);
-		duraEgg = Instantiate(duraEggPrefab);
-		duraEgg.transform.position = transform.position;
-		duraEgg.transform.parent = transform;
-
-		//攻撃と移動を無効化
-		canMove = canAttack = false;
-
-		isInDuraEgg = true;
-	}
-
-	/// <summary>
-	/// 耐久卵から出る
-	/// </summary>
-	void OutDuraEgg() {
-
-		//卵を破壊
-		Destroy(duraEgg);
-
-		//攻撃と移動を有効化
-		canMove = canAttack = true;
-
-		isInDuraEgg = false;
-
-		//一定時間弱くなる
-		if(isWeak) StopCoroutine("WeakTime");
-		StartCoroutine(WeakTime(GameBalance.instance.data.duraEggExitWeakTime));
-	}
-	
-	/// <summary>
-	/// コンボを加算する
-	/// </summary>
-	void AddCombo() {
-
-		combo++;
-		//ステータスの強化
-		GameBalance.ApplyNextComboStatus(comboStatus, combo);
-		CalcStatus();
-
-		//コンボが途切れるまで待つ
-		comboDuration = GameBalance.CalcNextComboDuration(combo);
-	}
-
-	/// <summary>
-	/// コンボをリセットする
-	/// </summary>
-	void ResetCombo() {
-		combo = 0;
-		comboStatus = new StatusModifier();
-	}
-
-	/// <summary>
-	/// コンボが途切れるまで待つ
-	/// </summary>
-	/// <param name="comboDurationTime"></param>
-	/// <returns></returns>
-	void ComboDurationUpdate() {
-
-		if(combo == 0) return;
-
-		comboDuration -= Time.deltaTime;
-
-		//持続時間が過ぎたらコンボをリセット
-		if(comboDuration < 0) ResetCombo();
 	}
 
 	/// <summary>
@@ -382,13 +390,21 @@ public class Player : Unit {
 				Quaternion.RotateTowards(body.rotation, Quaternion.LookRotation(plDir), rotSpeed);
 		}
 
-		//移動方向と回転で走る向きを選択
-		//0 前 1 左 2 後ろ 3 右
-		var angle = Vector2.SignedAngle(body.forward, moveVec);
-		int state = 0;
-		if(angle < -70)            state++;
-		if(Mathf.Abs(angle) > 70)  state++;
-		if(Mathf.Abs(angle) > 110) state++;
+
+		int state;
+		if(newPos.magnitude > 0.1f) {
+
+			//移動方向と回転で走る向きを選択
+			//0,4 後ろ 1 左 2 前 3 右
+			var angle = Vector3.SignedAngle(body.forward, moveVec, Vector2.up);
+			state = (int)((angle + 180) / 90 + 0.5f);
+			if(state == 4) state = 0;
+		}
+		else {
+			state = -1;
+		}
+
+		//走るモーションをセット
 		anim.SetInteger("State", state);
 
 	}
