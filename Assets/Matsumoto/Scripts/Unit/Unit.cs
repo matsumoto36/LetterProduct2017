@@ -90,6 +90,8 @@ public abstract class Unit : MonoBehaviour {
 
 	public float HPRatio { get { return (float)nowHP / maxHP; } }
 
+	protected Animator anim { get; private set; }
+
 	protected Transform body;
 	protected Vector3 moveVec;
 	protected Transform handAnchor;
@@ -103,8 +105,6 @@ public abstract class Unit : MonoBehaviour {
 	float baseRotSpeed;
 	float buffEXP = 0;
 
-	Animator anim;
-	
 	StatusModifier levelUpStatus;
 	Dictionary<string, StatusModifier> statusModStack;
 
@@ -129,11 +129,11 @@ public abstract class Unit : MonoBehaviour {
 
 		//アンカーを取得
 		body = transform.GetChild(0);
-		foreach(Transform child in body.transform) {
+		handAnchor = transform.GetComponentsInChildren<Transform>()
+			.Where((item) => item.name == HAND_ANCHOR)
+			.ToArray()[0];
 
-			handAnchor = child.Find(HAND_ANCHOR);
-			if(handAnchor) break;
-		}
+		Debug.Log(handAnchor);
 	}
 
 	/// <summary>
@@ -143,7 +143,7 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="baseHP"></param>
 	/// <param name="baseMoveSpeed"></param>
 	/// <param name="baseRotSpeed"></param>
-	public virtual void SetInitData(int baseHP, int dropExp, int baseNextLevel,  float baseMoveSpeed, float baseRotSpeed) {
+	public virtual void SetInitData(int baseHP, int dropExp, int baseNextLevel, float baseMoveSpeed, float baseRotSpeed) {
 		this.baseHP = maxHP = baseHP;
 		this.dropExp = dropExp;
 		this.baseNextLevel = nextLevelEXP = baseNextLevel;
@@ -334,6 +334,7 @@ public abstract class Unit : MonoBehaviour {
 		weapon.transform.parent = handAnchor;
 		weapon.transform.localPosition = new Vector3();
 		weapon.transform.localRotation = Quaternion.identity;
+		weapon.transform.localScale = Vector3.one;
 
 		//所持する
 		equipWeapon[slot] = weapon;
@@ -405,29 +406,28 @@ public abstract class Unit : MonoBehaviour {
 
 		Debug.Log("Attack " + from.name + " -> " + to.name);
 
-		//ダメージを与える
-		if(to.ApplyDamage(damage)) {
+		//攻撃がヒットしたことを伝える
+		if(from.OnAttackHit != null) from.OnAttackHit(to);
 
-			//攻撃がヒットしたことを伝える
-			from.OnAttackHit(to);
+		//攻撃してきた敵を伝える
+		if(to.OnAttacked != null) to.OnAttacked(from);
 
-			//攻撃してきた敵を伝える
-			to.OnAttacked(from);
+		//経験値分配用
+		bool findFromUnit = to.attackedUnitList
+			.Where((item) => item.attackUnit == from)
+			.Count() > 0;
 
-			//経験値分配用
-			bool findFromUnit = to.attackedUnitList
-				.Where((item) => item.attackUnit == from)
-				.Count() > 0;
-
-			if(findFromUnit) {
-				to.attackedUnitList
-				.Where((item) => item.attackUnit == from)
-				.Select((item) => item.damage += damage);
-			}
-			else {
-				to.attackedUnitList.Add(new DamageLog(from, damage, Time.time));
-			}
+		if(findFromUnit) {
+			to.attackedUnitList
+			.Where((item) => item.attackUnit == from)
+			.Select((item) => item.damage += damage);
 		}
+		else {
+			to.attackedUnitList.Add(new DamageLog(from, damage, Time.time));
+		}
+
+		//ダメージを与える
+		to.ApplyDamage(damage);
 
 		return true;
 	}
@@ -526,7 +526,7 @@ public abstract class Unit : MonoBehaviour {
 
 		//交換中は攻撃できません
 		canAttack = false;
-		yield return StartCoroutine(PlayAnimation(0, clipName, 1));
+		yield return StartCoroutine(PlayAnimation(1, clipName, 1));
 		canAttack = true;
 
 		//内部的に交換
@@ -560,7 +560,7 @@ public abstract class Unit : MonoBehaviour {
 		while(true) {
 
 			anim.speed = speed;
-			
+
 			if((t += Time.deltaTime) >= duration) break;
 			yield return null;
 		}

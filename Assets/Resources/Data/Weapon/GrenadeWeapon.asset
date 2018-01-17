@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e227d707ae449284a823890a1ce7f38c, type: 3}
   m_Name: GrenadeWeapon
   m_EditorClassIdentifier: 
-  model: {fileID: 1468059957356390, guid: 0bc92e658e46bed44a36a331bc46fb85, type: 2}
+  model: {fileID: 1116969592381008, guid: 3bfe9eac3ff4a80499eb37b971406237, type: 2}
   interval: 0.5
   power: 10
   mod:

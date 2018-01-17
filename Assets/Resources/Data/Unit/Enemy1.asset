@@ -11,16 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4544952da89274c8e26a8fe4bc4e98, type: 3}
   m_Name: Enemy1
   m_EditorClassIdentifier: 
-  model: {fileID: 1020633296785988, guid: 7336bbde7f9109f45916cebb24649a1b, type: 2}
+  model: {fileID: 1684041354851596, guid: 5d0890b6b9d293d4eaa0e0fc1753edb5, type: 2}
   hp: 20
   dropExp: 100
   nextLevelExp: 10
   moveSpeed: 6
   rotSpeed: 10
   weaponData:
+  - {fileID: 11400000, guid: ca1cadd95c8f34b4a85826b2f7da8930, type: 2}
   - {fileID: 11400000, guid: 3b2f234c55bddca45986162a1d7564d8, type: 2}
-  - {fileID: 11400000, guid: 3b2f234c55bddca45986162a1d7564d8, type: 2}
-  enemyAIType: 0
+  isDrawWeapon: 1
+  attackDuration: 0
+  attackRestDuration: 0
+  enemyAIType: 2
   dashSpeed: 10
   moveLine: 20
   stepLine: 5
