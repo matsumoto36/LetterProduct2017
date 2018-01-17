@@ -32,13 +32,45 @@ public class EnemyAI : MonoBehaviour
     /// <summary>
     /// 初期設定
     /// </summary>
-    void Awake()
+    void Start()
     {
-        //プレイ人数の取得
-        player = GameObject.FindGameObjectsWithTag("Player");
-        playerCS = new Player[player.Length];
-        distance = new float[player.Length];
+        ////プレイ人数の取得
+        //player = GameObject.FindGameObjectsWithTag("Player");
+        //playerCS = new Player[player.Length];
+        //distance = new float[player.Length];
 
+        ////Player参照
+        //for (int i = 0; i < player.Length; i++)
+        //{
+        //    player[i] = Unit.unitList[0].gameObject;
+        //    if (player[i] != null)
+        //    {
+        //        //Playerスクリプトを人数分取得
+        //        playerCS[i] = player[i].GetComponent<Player>();
+        //    }
+        //}
+
+        //リストからプレイ人数の取得
+        player = new GameObject[1];
+        int playerCount = 0;
+        for (int i = 0; i < Unit.unitList.Count; i++)
+        {
+            if (Unit.unitList[i].gameObject.tag == "Player")
+            {
+                //playerを増量し登録
+                if (playerCount != 0)
+                {
+                    var copyBox = player;
+                    player = new GameObject[playerCount + 1];
+                    player = copyBox;
+                }
+                player[playerCount] = Unit.unitList[i].gameObject;
+                playerCount++;
+            }
+        }
+        playerCS = new Player[player.Length];
+
+        //Player参照
         for (int i = 0; i < player.Length; i++)
         {
             if (player[i] != null)
@@ -47,6 +79,7 @@ public class EnemyAI : MonoBehaviour
                 playerCS[i] = player[i].GetComponent<Player>();
             }
         }
+
         //Enemyスクリプトを取得
         enemySC = GetComponent<Enemy>();
     }

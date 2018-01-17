@@ -13,7 +13,8 @@ public class BossAI : MonoBehaviour
 
     //必殺関連
     private bool spAttackFlg;
-    private bool oneRolling;
+    private int rollingCount;
+    private int rollingMax;                 //何回転するか
     public float spChargeTime = 60.0f;      //チャージ時間
     public float spAttackTime = 2;          //攻撃持続時間
     public float rotationNum = 0;           //回転数(角度)
@@ -36,12 +37,29 @@ public class BossAI : MonoBehaviour
     [SerializeField]
     private int[] damage;           //各々に負わされたダメージ
 
-    void Awake()
+    void Start()
     {
-        //プレイ人数の取得
-        player = GameObject.FindGameObjectsWithTag("Player");
+        //リストからプレイ人数の取得
+        player = new GameObject[1];
+        int playerCount = 0;
+        for (int i = 0; i < Unit.unitList.Count; i++)
+        {
+            if (Unit.unitList[i].gameObject.tag == "Player")
+            {
+                //playerを増量し登録
+                if (playerCount != 0)
+                {
+                    var copyBox = player;
+                    player = new GameObject[playerCount + 1];
+                    player = copyBox;
+                }
+                player[playerCount] = Unit.unitList[i].gameObject;
+                playerCount++;
+            }
+        }
         playerCS = new Player[player.Length];
 
+        //Player参照
         for (int i = 0; i < player.Length; i++)
         {
             if (player[i] != null)
@@ -50,6 +68,7 @@ public class BossAI : MonoBehaviour
                 playerCS[i] = player[i].GetComponent<Player>();
             }
         }
+
         //Enemyスクリプトを取得
         enemySC = GetComponent<Enemy>();
 
@@ -159,14 +178,16 @@ public class BossAI : MonoBehaviour
         if (rotationNum >= 360)
         {
             rotationNum -= 360;    //初期化
-            if (oneRolling)
+            if (rollingCount >= (rollingMax - 1))
             {
-                oneRolling = false;
+                //必殺終了
+                rollingCount = 0;
                 spAttackFlg = false;
             }
             else
             {
-                oneRolling = true;
+                //継続
+                rollingCount++;
             }
         }
     }
@@ -260,5 +281,7 @@ public class BossAI : MonoBehaviour
     {
         yield return new WaitForSeconds(spChargeTime);
         spAttackFlg = true;
+
+        StartCoroutine(SpecialAttackCounter());
     }
 }
