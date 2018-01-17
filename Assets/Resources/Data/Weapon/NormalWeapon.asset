@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e227d707ae449284a823890a1ce7f38c, type: 3}
   m_Name: NormalWeapon
   m_EditorClassIdentifier: 
-  model: {fileID: 1881917110013390, guid: 14cf0fd34d0906442b68d0cb236054d3, type: 2}
+  model: {fileID: 1729854461742384, guid: 084e35fefebd0754ca40fd8ca8cbedc4, type: 2}
   interval: 0.1
   power: 10
   mod:

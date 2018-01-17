@@ -32,6 +32,7 @@ public class Enemy : Unit {
 
 		//勢力のセット
 		group = UnitGroup.Enemy;
+
 	}
 
 	/// <summary>
