@@ -13,6 +13,9 @@ public enum UnitGroup {
 	OtherUnit,
 }
 
+//Unit通知系デリゲート
+public delegate void UnitMessage(Unit unit);
+
 /// <summary>
 /// マップに存在するキャラクターの親クラス
 /// (タレット等の構造物も含む)
@@ -26,6 +29,18 @@ public abstract class Unit : MonoBehaviour {
 	const string LEVELUP_STATUS_MOD = "LEVEL_UP";
 
 	public static List<Unit> unitList { get; private set; }
+
+	public List<DamageLog> attackedUnitList { get; private set; }
+
+	/// <summary>
+	/// 攻撃した相手を通知
+	/// </summary>
+	public event UnitMessage OnAttacked;
+
+	/// <summary>
+	/// 攻撃がヒットしたことを通知
+	/// </summary>
+	public event UnitMessage OnAttackHit;
 
 	//表示用パラメータ
 	[SerializeField]
@@ -88,7 +103,6 @@ public abstract class Unit : MonoBehaviour {
 	float baseRotSpeed;
 	float buffEXP = 0;
 
-	List<DamageLog> attackedUnitList;
 	Animator anim;
 	
 	StatusModifier levelUpStatus;
@@ -447,18 +461,6 @@ public abstract class Unit : MonoBehaviour {
 		if(nowHP <= 0) Death();
 		return true;
 	}
-
-	/// <summary>
-	/// 攻撃した相手を通知
-	/// </summary>
-	/// <param name="from"></param>
-	protected virtual void OnAttacked(Unit from) { }
-
-	/// <summary>
-	/// 攻撃がヒットしたことを通知
-	/// </summary>
-	/// <param name="to"></param>
-	protected virtual void OnAttackHit(Unit to) { }
 
 	/// <summary>
 	/// 武器が入れ替わる瞬間
