@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d51353230610d04e94b716629d9e31e, type: 3}
   m_Name: EnemyS
   m_EditorClassIdentifier: 
-  model: {fileID: 1539213676415530, guid: 868a7ba4ebcbcd446b697bea005a5305, type: 2}
+  model: {fileID: 1794379494665480, guid: 0d1aac9bca4be2c46a3ae53628236402, type: 2}
   hp: 100
   dropExp: 100
   nextLevelExp: 10

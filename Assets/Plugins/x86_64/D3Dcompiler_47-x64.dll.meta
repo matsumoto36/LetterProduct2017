@@ -1,18 +1,6 @@
 fileFormatVersion: 2
 guid: 6b1f46ff5f877fb45a4a7a24ee4bd180
-timeCreated: 1510936381
-licenseType: Pro
 PluginImporter:
-<<<<<<< HEAD
-  serializedVersion: 1
-  iconMap: {}
-  executionOrder: {}
-  isPreloaded: 0
-  platformData:
-    Any:
-      enabled: 1
-      settings: {}
-=======
   externalObjects: {}
   serializedVersion: 2
   iconMap: {}
@@ -92,7 +80,6 @@ PluginImporter:
       enabled: 1
       settings:
         CPU: AnyCPU
->>>>>>> fee8b7daafdcde3e3a280ecbef7e5491ffd3c93a
   userData: 
   assetBundleName: 
   assetBundleVariant: 
