@@ -333,7 +333,8 @@ public abstract class Unit : MonoBehaviour {
 		weapon.transform.parent = handAnchor;
 		weapon.transform.localPosition = new Vector3();
 		weapon.transform.localRotation = Quaternion.identity;
-		weapon.transform.localScale = Vector3.one;
+		//いったん消します(松元)
+		//weapon.transform.localScale = Vector3.one;
 
 		//所持する
 		equipWeapon[slot] = weapon;
