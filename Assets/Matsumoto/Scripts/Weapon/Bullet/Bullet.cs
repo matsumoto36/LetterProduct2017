@@ -9,6 +9,7 @@ using System.Linq;
 public abstract class Bullet : MonoBehaviour {
 
 	public Weapon bulletOwner { get; set; }
+	public PKFxFX attackParticle { get; set; }
 	object bulletData { get; set; }
 
 	/// <summary>

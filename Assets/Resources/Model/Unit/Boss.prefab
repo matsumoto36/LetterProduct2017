@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 4850680330220052}
   - component: {fileID: 54320692827796348}
   - component: {fileID: 136317194973639368}
+  - component: {fileID: 95387441203856056}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -272,7 +273,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4077095651431824}
-  - component: {fileID: 95190611890474040}
   m_Layer: 0
   m_Name: P_THRESHING_CLAWER
   m_TagString: Untagged
@@ -1267,13 +1267,13 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!95 &95190611890474040
+--- !u!95 &95387441203856056
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1865292141730418}
+  m_GameObject: {fileID: 1158953667820146}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 731ad0f3e241ad44f8cc5ff1a7d4a032, type: 3}
   m_Controller: {fileID: 0}

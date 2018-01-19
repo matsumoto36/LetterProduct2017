@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 4532206698615862}
   - component: {fileID: 54687195138250724}
   - component: {fileID: 136574334239265470}
+  - component: {fileID: 95667333497354054}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Untagged
@@ -157,6 +158,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!95 &95667333497354054
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1684041354851596}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!136 &136574334239265470
 CapsuleCollider:
   m_ObjectHideFlags: 1
