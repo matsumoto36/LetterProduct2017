@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GamepadInput;
 public class OptionButton : MonoBehaviour {
     public Canvas OptionMenuCanvas;
 
+    public int playerIndex;
 
     // Use this for initialization
     void Start ()
@@ -15,8 +17,11 @@ public class OptionButton : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-       
 
+        if (InputManager.GetButtonDown(playerIndex, GamePad.Button.B))
+        {
+            OnOptionBackClicked();
+        }
     }
 
     public  void OnOptionClicked()
