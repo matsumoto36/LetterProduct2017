@@ -282,8 +282,8 @@ GameObject:
   - component: {fileID: 117134689}
   - component: {fileID: 117134688}
   - component: {fileID: 117134687}
-  - component: {fileID: 117134690}
   - component: {fileID: 117134691}
+  - component: {fileID: 117134690}
   m_Layer: 0
   m_Name: GOAL
   m_TagString: Untagged
@@ -339,11 +339,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 117134686}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a46fbc8abca843b3a095e3f7b6ea63f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d1958cc3090dd14e949e9d97ffe9794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugMode: 0
-  fadeColor: {r: 0, g: 0, b: 0, a: 1}
+  sceneName: Camera
 --- !u!114 &117134691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,9 +351,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 117134686}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d1958cc3090dd14e949e9d97ffe9794, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a46fbc8abca843b3a095e3f7b6ea63f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LoadingUi: {fileID: 971706508}
+  Slider: {fileID: 206025370}
+  DebugMode: 0
+  fadeColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &141759806
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,7 +505,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.12
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -652,7 +655,7 @@ GameObject:
   - component: {fileID: 958266457}
   - component: {fileID: 958266462}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Player
   m_TagString: Player1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -747,7 +750,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 958266456}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e184a9cf70d20564381b74d6484712ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 3affcd74b23143e41a5fe23a263b5fe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &971706508

@@ -4,16 +4,4 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-    path: Assets/Nakamura/Scenes/Title.unity
-    guid: b230b29371f53c24da87c3069db890f1
-  - enabled: 1
-    path: Assets/Nakamura/Scenes/Select.unity
-    guid: 49a813c76b048874f847ff5e805c3ad6
-  - enabled: 1
-    path: Assets/Nakamura/Scenes/Main.unity
-    guid: 6ea8743816f581d4db19849b79d57c5b
-  - enabled: 1
-    path: Assets/Nakamura/Scenes/Result.unity
-    guid: 627a5b07843fc2a479d4a9ad9bb717fb
+  m_Scenes: []
