@@ -18,9 +18,9 @@ public class TestSpawnUnit : MonoBehaviour {
 		InputManager.SetControllerData(0, ControlType.Keyboard, GamepadInput.GamePad.Index.One);
 		player1.playerIndex = 0;
 
-		//var player2 = (Player)playerData.Spawn(new Vector3(2, 0, 0), Quaternion.identity);
-		//InputManager.SetControllerData(1, ControlType.GamePadXBOX, GamepadInput.GamePad.Index.Two);
-		//player2.playerIndex = 1;
+		var player2 = (Player)playerData.Spawn(new Vector3(2, 0, 0), Quaternion.identity);
+		InputManager.SetControllerData(1, ControlType.GamePadXBOX, GamepadInput.GamePad.Index.Two);
+		player2.playerIndex = 1;
 
 		//var player3 = (Player)playerData.Spawn(new Vector3(4, 0, 0), Quaternion.identity);
 		//InputManager.SetControllerData(2, ControlType.GamePadXBOX, GamepadInput.GamePad.Index.Three);

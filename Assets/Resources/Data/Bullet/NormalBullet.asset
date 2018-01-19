@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Name: NormalBullet
   m_EditorClassIdentifier: 
   model: {fileID: 1252001322391814, guid: 5be1327275cf86c46b45f2dbe690dec5, type: 2}
+  particleNameAttack: BulletNormal
+  particleNameHit: BulletHit
   speed: 10

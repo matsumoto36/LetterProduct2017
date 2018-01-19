@@ -64,6 +64,12 @@ public class WeaponLaser : WeaponRanged {
 				//照射距離の設定
 				laser.length = length;
 
+				if(length == maxLength && laser.laserHitParticle) {
+					//当たらなかった場合はヒットエフェクトの再生を止める
+					Destroy(laser.laserHitParticle.gameObject);
+					laser.laserHitParticle = null;
+				}
+
 				break;
 			default:
 				break;
@@ -72,8 +78,15 @@ public class WeaponLaser : WeaponRanged {
 
 	public override void AttackEnd() {
 
+		//ヒットエフェクトがあれば消す
+		if(laser.laserHitParticle) Destroy(laser.laserHitParticle.gameObject);
+
 		//照射終了
-		if(laser) Destroy(laser.gameObject);
+		if(laser) {
+			laser.GetComponent<Collider>().enabled = false;
+			Destroy(laser.gameObject, 4);
+			laser.GetComponentInChildren<PKFxFX>().StopEffect();
+		}
 		laser = null;
 
 		//待機ステートに変更

@@ -36,7 +36,6 @@ public abstract class Unit : MonoBehaviour {
 	/// 攻撃した相手を通知
 	/// </summary>
 	public event UnitMessage OnAttacked;
-
 	/// <summary>
 	/// 攻撃がヒットしたことを通知
 	/// </summary>
@@ -545,10 +544,12 @@ public abstract class Unit : MonoBehaviour {
 
 	IEnumerator PlayAnimation(int layer, string clipName, float speed) {
 
-		var clip = anim.runtimeAnimatorController
+		var clips = anim.runtimeAnimatorController
 			.animationClips
 			.Where((item) => item.name == clipName)
-			.ToArray()[0];
+			.ToArray();
+
+		var clip = clips.Length == 0 ? null : clips[0];
 
 		if(!clip) yield break;
 
