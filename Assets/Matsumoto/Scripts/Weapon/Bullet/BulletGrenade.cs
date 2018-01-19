@@ -68,8 +68,14 @@ public class BulletGrenade : BulletNormal {
 	}
 
 	void OnDestroy() {
-		Debug.Log("Explosion");
+
 		var data = GetBulletData<BulletGrenadeData>();
+
+		//エフェクトの再生
+		Debug.Log(data.particleNameHit);
+		ParticleManager.Spawn(data.particleNameHit, transform.position, transform.rotation);
+
+		//爆発
 		Explosion.Create(bulletOwner, transform.position, data.expPow, data.expRadius);
 	}
 }

@@ -10,12 +10,15 @@ public class BulletNormal : Bullet {
 	const float LIFETIME = 5.0f;
 
 	float speed;
+	string hitParticleName;
 
 	public override void Init() {
 		base.Init();
 		Destroy(gameObject, LIFETIME);
 
-		speed = GetBulletData<BulletNormalData>().speed;
+		var data = GetBulletData<BulletNormalData>();
+		speed = data.speed;
+		hitParticleName = data.particleNameHit;
 	}
 
 	public virtual void FixedUpdate() {
@@ -24,6 +27,13 @@ public class BulletNormal : Bullet {
 
 	public override void OnHitEnter(Collider other) {
 		Attack(other.GetComponent<Unit>());
+
+		//再生中のパーティクルを止める
+		attackParticle.transform.parent = null;
+		Destroy(attackParticle.gameObject, 0.1f);	//少しずらさないと、なぜか進み続けてしまう
+
+		//ヒットパーティクルの再生
+		ParticleManager.Spawn(hitParticleName, transform.position, Quaternion.identity);
 		Destroy(gameObject);
 	}
 }

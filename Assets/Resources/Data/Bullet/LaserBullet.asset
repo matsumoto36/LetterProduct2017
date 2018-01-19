@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: LaserBullet
   m_EditorClassIdentifier: 
   model: {fileID: 1551192208105922, guid: 5420b8ad4b7bc83418d1742dbd9d3113, type: 2}
-  particleName: Laser
+  particleNameAttack: Laser
+  particleNameHit: LaserHit
   maxLength: 20
   isHeal: 0

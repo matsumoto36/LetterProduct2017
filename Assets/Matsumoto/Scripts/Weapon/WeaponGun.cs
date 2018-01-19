@@ -15,6 +15,8 @@ public class WeaponGun : WeaponRanged {
 		//親クラスで攻撃ができるかの判断を行っている
 		if(!canAction) return;
 
+		//エフェクト再生
+		ParticleManager.Spawn("MuzzleFlash", shotAnchor.position, shotAnchor.rotation);
 		//弾を発射
 		bulletData.Create(this, shotAnchor.position, shotAnchor.rotation);
 

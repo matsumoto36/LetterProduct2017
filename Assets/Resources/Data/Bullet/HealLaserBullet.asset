@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: HealLaserBullet
   m_EditorClassIdentifier: 
   model: {fileID: 1322618021246674, guid: 76197c525d18ae14ca113bc45ed8ebaf, type: 2}
-  particleName: Laser
+  particleNameAttack: HealLaser
+  particleNameHit: Heal
   maxLength: 10
   isHeal: 1

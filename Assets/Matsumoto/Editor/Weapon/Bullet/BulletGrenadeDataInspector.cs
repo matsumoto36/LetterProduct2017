@@ -19,7 +19,8 @@ public class BulletGrenadeDataInspector : BulletNormalDataInspector {
 		serializedObject.Update();
 
 		EditorGUILayout.PropertyField(model, new GUIContent("モデルデータ"));
-		EditorGUILayout.PropertyField(particleName, new GUIContent("再生するパーティクルの名前"));
+		EditorGUILayout.PropertyField(particleNameAttack, new GUIContent("発射時に再生されるパーティクルの名前"));
+		EditorGUILayout.PropertyField(particleNameHit, new GUIContent("爆発時に再生するパーティクルの名前"));
 		EditorGUILayout.PropertyField(speed, new GUIContent("弾の速さ"));
 		EditorGUILayout.PropertyField(expRadius, new GUIContent("爆発の半径"));
 		EditorGUILayout.PropertyField(expPow, new GUIContent("爆発の威力"));

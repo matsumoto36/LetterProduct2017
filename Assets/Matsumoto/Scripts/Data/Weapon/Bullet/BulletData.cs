@@ -11,7 +11,8 @@ public abstract class BulletData : ScriptableObjectBase {
 	public const string ASSET_PATH = "Resources/Data/Bullet";
 
 	public GameObject model;
-	public string particleName;
+	public string particleNameAttack;
+	public string particleNameHit;
 
 	public abstract Bullet Create(Weapon owner, Vector3 position, Quaternion quaternio);
 
@@ -24,8 +25,9 @@ public abstract class BulletData : ScriptableObjectBase {
 		bulletObj.bulletOwner = owner;
 
 		//エフェクトの生成
-		if(data.particleName != "") {
-			var bulletParticle = ParticleManager.Spawn(data.particleName, bulletObj.transform.position, bulletObj.transform.rotation, 0);
+		if(data.particleNameAttack != "") {
+			var bulletParticle = ParticleManager.Spawn(data.particleNameAttack, bulletObj.transform.position, bulletObj.transform.rotation, 0);
+			bulletObj.attackParticle = bulletParticle;
 			bulletParticle.transform.SetParent(bulletObj.transform);
 		}
 

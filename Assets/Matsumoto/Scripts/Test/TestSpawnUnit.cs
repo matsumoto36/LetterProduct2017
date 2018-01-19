@@ -22,13 +22,13 @@ public class TestSpawnUnit : MonoBehaviour {
 		InputManager.SetControllerData(1, ControlType.GamePadXBOX, GamepadInput.GamePad.Index.Two);
 		player2.playerIndex = 1;
 
-		var player3 = (Player)playerData.Spawn(new Vector3(4, 0, 0), Quaternion.identity);
-		InputManager.SetControllerData(2, ControlType.GamePadXBOX, GamepadInput.GamePad.Index.Three);
-		player3.playerIndex = 2;
+		//var player3 = (Player)playerData.Spawn(new Vector3(4, 0, 0), Quaternion.identity);
+		//InputManager.SetControllerData(2, ControlType.GamePadXBOX, GamepadInput.GamePad.Index.Three);
+		//player3.playerIndex = 2;
 
-		var player4 = (Player)playerData.Spawn(new Vector3(6, 0, 0), Quaternion.identity);
-		InputManager.SetControllerData(3, ControlType.GamePadXBOX, GamepadInput.GamePad.Index.Four);
-		player4.playerIndex = 3;
+		//var player4 = (Player)playerData.Spawn(new Vector3(6, 0, 0), Quaternion.identity);
+		//InputManager.SetControllerData(3, ControlType.GamePadXBOX, GamepadInput.GamePad.Index.Four);
+		//player4.playerIndex = 3;
 
 	}
 
