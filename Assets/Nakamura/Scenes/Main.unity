@@ -2671,11 +2671,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab505cf0dcfc34e48a277070a7a6575c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  splitecamera: {fileID: 1572385365}
   readyPanel: {fileID: 514106352}
+  GameUI: {fileID: 715486054}
   weponDropdown: {fileID: 1635105333}
   readytext: {fileID: 885347294}
   weponchoice: {fileID: 1766191456}
   gameStart: {fileID: 342199028}
+  flg: 0
+  playerIndex: 3
+  inputType: 0
 --- !u!114 &514106355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5323,11 +5328,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab505cf0dcfc34e48a277070a7a6575c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  splitecamera: {fileID: 1572385365}
   readyPanel: {fileID: 1133340869}
+  GameUI: {fileID: 1795774553}
   weponDropdown: {fileID: 1523903390}
   readytext: {fileID: 259479934}
   weponchoice: {fileID: 1921178804}
   gameStart: {fileID: 908130847}
+  flg: 0
+  playerIndex: 2
+  inputType: 0
 --- !u!114 &1133340867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6187,6 +6197,54 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: 30}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1378145691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1378145692}
+  - component: {fileID: 1378145693}
+  m_Layer: 0
+  m_Name: ReadySelect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1378145692
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1378145691}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.784457, y: 9.552844, z: 89.89778}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1378145693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1378145691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24849f5883dd18b4c9838bc30fb6a48b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playercnt: 0
+  flg: 0
+  player1Ready: {fileID: 1368391853}
+  player2Ready: {fileID: 1439360894}
+  player3Ready: {fileID: 259479934}
+  player4Ready: {fileID: 885347294}
+  playerIndex: 0
+  inputType: 0
 --- !u!1 &1389574437
 GameObject:
   m_ObjectHideFlags: 0
@@ -6264,11 +6322,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab505cf0dcfc34e48a277070a7a6575c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  splitecamera: {fileID: 1572385365}
   readyPanel: {fileID: 1405286495}
+  GameUI: {fileID: 949680829}
   weponDropdown: {fileID: 2110173553}
   readytext: {fileID: 1368391853}
   weponchoice: {fileID: 429223904}
   gameStart: {fileID: 1977829074}
+  flg: 0
+  playerIndex: 0
+  inputType: 0
 --- !u!114 &1405286493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7326,6 +7389,11 @@ MonoBehaviour:
   player2Camera: {fileID: 1465792569}
   player3Camera: {fileID: 1350395691}
   player4Camera: {fileID: 1692336938}
+  playercnt: 0
+  playerIndex: 0
+  inputType: 0
+  uiflg: 0
+  ready: {fileID: 1405286492}
 --- !u!4 &1572385366
 Transform:
   m_ObjectHideFlags: 0
@@ -8170,11 +8238,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab505cf0dcfc34e48a277070a7a6575c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  splitecamera: {fileID: 1572385365}
   readyPanel: {fileID: 1795458187}
+  GameUI: {fileID: 298554511}
   weponDropdown: {fileID: 660088173}
   readytext: {fileID: 1439360894}
   weponchoice: {fileID: 870303536}
   gameStart: {fileID: 241888365}
+  flg: 0
+  playerIndex: 1
+  inputType: 0
 --- !u!114 &1795458185
 MonoBehaviour:
   m_ObjectHideFlags: 0

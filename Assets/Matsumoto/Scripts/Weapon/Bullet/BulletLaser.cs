@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class BulletLaser : Bullet {
 
+	public Transform laserHitParticle { get; set; }
+
 	Unit lastAttackUnit;
 	PKFxManager.Attribute laserLengthAtt;
 	float buffPoint = 0;
@@ -64,6 +66,15 @@ public class BulletLaser : Bullet {
 	}
 
 	public override void OnHitting(Collider other) {
+
+		//ヒットエフェクト再生
+		if(!laserHitParticle) {
+			laserHitParticle =
+			ParticleManager.Spawn(GetBulletData<BulletLaserData>().particleNameHit, new Vector3(), transform.rotation, 0).transform;
+			laserHitParticle.SetParent(transform);
+			laserHitParticle.localPosition = new Vector3(0, 0, 0.25f);
+		}
+
 		Attack(other.GetComponent<Unit>());
 	}
 }

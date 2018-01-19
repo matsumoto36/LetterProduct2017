@@ -36,7 +36,6 @@ public abstract class Unit : MonoBehaviour {
 	/// 攻撃した相手を通知
 	/// </summary>
 	public event UnitMessage OnAttacked;
-
 	/// <summary>
 	/// 攻撃がヒットしたことを通知
 	/// </summary>
@@ -334,7 +333,8 @@ public abstract class Unit : MonoBehaviour {
 		weapon.transform.parent = handAnchor;
 		weapon.transform.localPosition = new Vector3();
 		weapon.transform.localRotation = Quaternion.identity;
-		weapon.transform.localScale = Vector3.one;
+		//いったん消します(松元)
+		//weapon.transform.localScale = Vector3.one;
 
 		//所持する
 		equipWeapon[slot] = weapon;
@@ -545,10 +545,12 @@ public abstract class Unit : MonoBehaviour {
 
 	IEnumerator PlayAnimation(int layer, string clipName, float speed) {
 
-		var clip = anim.runtimeAnimatorController
+		var clips = anim.runtimeAnimatorController
 			.animationClips
 			.Where((item) => item.name == clipName)
-			.ToArray()[0];
+			.ToArray();
+
+		var clip = clips.Length == 0 ? null : clips[0];
 
 		if(!clip) yield break;
 

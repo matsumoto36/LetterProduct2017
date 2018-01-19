@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Name: GrenadeBullet
   m_EditorClassIdentifier: 
   model: {fileID: 1041638215394264, guid: 20528c271a04e63458087deb3e4cdbc9, type: 2}
+  particleNameAttack: BulletGrenade
+  particleNameHit: Explosive
   speed: 10
   expRadius: 10
   expPow: 50
