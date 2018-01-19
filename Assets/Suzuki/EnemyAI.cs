@@ -69,6 +69,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
         playerCS = new Player[player.Length];
+        distance = new float[player.Length];
 
         //Player参照
         for (int i = 0; i < player.Length; i++)
@@ -143,8 +144,8 @@ public class EnemyAI : MonoBehaviour
                 DirctionChange();
 
                 //プレイヤーの見えている正面からの角度(正規化)
-                Vector3 v = (player[target].transform.position - transform.position).normalized;
-                float f = Vector3.Angle(v, transform.forward);
+                Vector3 vec3 = (player[target].transform.position - transform.position).normalized;
+                float f = Vector3.Angle(vec3, transform.forward);
 
                 if (enemySC.isAttack == false && f <= searchAngle && distance[target] >= stepLine)
                 {
