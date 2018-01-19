@@ -23,6 +23,7 @@ public class EnemyAI : MonoBehaviour
     //プレイヤー関連
     [SerializeField]
     private GameObject[] player;        //Playerオブジェクト
+    [SerializeField]
     private Player[] playerCS;          //Playerスクリプト
     [SerializeField]
     private int target;                 //一番近いプレイヤー
@@ -55,15 +56,20 @@ public class EnemyAI : MonoBehaviour
         int playerCount = 0;
         for (int i = 0; i < Unit.unitList.Count; i++)
         {
+            Debug.Log("ループ数 : " + i);
             if (Unit.unitList[i].gameObject.tag == "Player")
             {
                 //playerを増量し登録
                 if (playerCount != 0)
                 {
-                    var copyBox = player;
+                    GameObject[] copyBox = player;
                     player = new GameObject[playerCount + 1];
-                    player = copyBox;
+                    for (int j = 0; j < copyBox.Length; j++)
+                    {
+                        player[j] = copyBox[j];
+                    }
                 }
+                Debug.Log(player.Length);
                 player[playerCount] = Unit.unitList[i].gameObject;
                 playerCount++;
             }

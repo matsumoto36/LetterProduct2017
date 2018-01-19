@@ -22,8 +22,8 @@ public class BossAI : MonoBehaviour
 
     // Enemyスクリプト
     private Enemy enemySC;
-    ////ステータス
-    //private EnemyStructure statusSC;
+    //ステータス
+    private EnemyStructure statusSC;
 
     //プレイヤー関連
     [SerializeField]
@@ -54,9 +54,12 @@ public class BossAI : MonoBehaviour
                 //playerを増量し登録
                 if (playerCount != 0)
                 {
-                    var copyBox = player;
+                    GameObject[] copyBox = player;
                     player = new GameObject[playerCount + 1];
-                    player = copyBox;
+                    for (int j = 0; j < copyBox.Length; j++)
+                    {
+                        player[j] = copyBox[j];
+                    }
                 }
                 player[playerCount] = Unit.unitList[i].gameObject;
                 playerCount++;
@@ -223,7 +226,7 @@ public class BossAI : MonoBehaviour
     {
         for (int i = 0; i < player.Length; i++)
         {
-            if (player[i] == from)
+            if (player[i] == from.gameObject)
             {
                 damage[i] += enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].damage;
             }
