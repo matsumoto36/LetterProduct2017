@@ -4,6 +4,7 @@
 public class WeaponMeleeData : WeaponData {
 
 	public string motionName;
+	public string particleName;
 	public float motionSpeed = 1;
 
 	/// <summary>
@@ -12,7 +13,7 @@ public class WeaponMeleeData : WeaponData {
 	/// <returns></returns>
 	public override Weapon Create() {
 		return CreateWeapon<WeaponMelee>((item) => {
-			item.SetData(interval, power, motionName, motionSpeed);
+			item.SetData(interval, power, particleName, motionName, motionSpeed);
 		});
 	}
 }

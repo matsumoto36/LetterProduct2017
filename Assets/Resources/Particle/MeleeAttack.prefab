@@ -33,13 +33,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1011113037323276}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.43, y: 1.29, z: -0.262}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.25, y: 1.29, z: 0.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114452348877189042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -57,8 +57,8 @@ MonoBehaviour:
       MinMaxFlag: 3
       Name: ColorMain
       Description: 
-      DefaultValue0: 1
-      DefaultValue1: 1
+      DefaultValue0: 0.0594059
+      DefaultValue1: 0.1633663
       DefaultValue2: 1
       DefaultValue3: 1
       MinValue0: 0
@@ -69,8 +69,8 @@ MonoBehaviour:
       MaxValue1: 1
       MaxValue2: 1
       MaxValue3: 1
-    m_Value0: 1
-    m_Value1: 1
+    m_Value0: 0.0594059
+    m_Value1: 0.1633663
     m_Value2: 1
     m_Value3: 1
   - m_Descriptor:
@@ -78,7 +78,7 @@ MonoBehaviour:
       MinMaxFlag: 1
       Name: Intensity
       Description: 
-      DefaultValue0: 7.079208
+      DefaultValue0: 7.3267326
       DefaultValue1: 0
       DefaultValue2: 0
       DefaultValue3: 0
@@ -90,14 +90,98 @@ MonoBehaviour:
       MaxValue1: 0
       MaxValue2: 0
       MaxValue3: 0
-    m_Value0: 7.079208
+    m_Value0: 1.2
     m_Value1: 0
     m_Value2: 0
     m_Value3: 0
   - m_Descriptor:
       Type: 28
-      MinMaxFlag: 1
-      Name: SizeMain
+      MinMaxFlag: 3
+      Name: SizeMax
+      Description: 
+      DefaultValue0: 0.05
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 1
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 0.05
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 3
+      Name: SizeMin
+      Description: 
+      DefaultValue0: 0
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 1
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 0.001
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 3
+      Name: SizeScale
+      Description: 
+      DefaultValue0: 0.029703
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 1
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 0.029703
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 3
+      Name: EmitThreshold
+      Description: 
+      DefaultValue0: 0.0173267
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 1
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 0.483
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 3
+      Name: Duration
       Description: 
       DefaultValue0: 1
       DefaultValue1: 0
@@ -107,16 +191,100 @@ MonoBehaviour:
       MinValue1: 0
       MinValue2: 0
       MinValue3: 0
+      MaxValue0: 1
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 0.501
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 1
+      Name: Dencity
+      Description: 
+      DefaultValue0: 0.2
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
       MaxValue0: 0
       MaxValue1: 0
       MaxValue2: 0
       MaxValue3: 0
-    m_Value0: 1
+    m_Value0: 0.3
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 30
+      MinMaxFlag: 0
+      Name: Pos1
+      Description: 
+      DefaultValue0: 0
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 0
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 0
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 30
+      MinMaxFlag: 0
+      Name: Pos2
+      Description: 
+      DefaultValue0: 0
+      DefaultValue1: 1
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 0
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 0
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 22
+      MinMaxFlag: 3
+      Name: IsEmit
+      Description: 
+      DefaultValue0: 0
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 1e-45
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 0
     m_Value1: 0
     m_Value2: 0
     m_Value3: 0
   m_FxSamplersList: []
   m_PlayOnStart: 1
   m_IsPlaying: 1
-  m_BoundFx: {fileID: 102900000, guid: 426e562ac72bd5543af1271afd8a5d62, type: 3}
-  m_FxName: EnemyHit.pkfx
+  m_BoundFx: {fileID: 102900000, guid: 8795dfab53445ee4f874c525a881c96c, type: 3}
+  m_FxName: MeleeAttack.pkfx

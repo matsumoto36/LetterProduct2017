@@ -10,7 +10,7 @@ public class TestParticleSpawn : MonoBehaviour {
 
 	public string particleName;
 
-	void Start() {
+	void Awake() {
 		//GameManagerに移行してください
 		ParticleManager.Load();
 	}

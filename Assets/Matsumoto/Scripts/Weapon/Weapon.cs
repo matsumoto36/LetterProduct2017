@@ -39,17 +39,13 @@ public abstract class Weapon : MonoBehaviour {
 	protected int basePower;
 	protected float baseInterval;
 
-	void Start() {
-		Init();
-	}
-
 	/// <summary>
 	/// 初期設定
 	/// </summary>
 	public virtual void Init() {
 
 		weaponType = WeaponType.Other;
-		StartCoroutine(WaitInterval());
+		canAction = true;
 	}
 
 	/// <summary>
