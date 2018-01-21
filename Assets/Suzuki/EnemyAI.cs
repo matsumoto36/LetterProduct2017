@@ -23,6 +23,7 @@ public class EnemyAI : MonoBehaviour
     //プレイヤー関連
     [SerializeField]
     private GameObject[] player;        //Playerオブジェクト
+    [SerializeField]
     private Player[] playerCS;          //Playerスクリプト
     [SerializeField]
     private int target;                 //一番近いプレイヤー
@@ -32,13 +33,51 @@ public class EnemyAI : MonoBehaviour
     /// <summary>
     /// 初期設定
     /// </summary>
-    void Awake()
+    void Start()
     {
-        //プレイ人数の取得
-        player = GameObject.FindGameObjectsWithTag("Player");
+        ////プレイ人数の取得
+        //player = GameObject.FindGameObjectsWithTag("Player");
+        //playerCS = new Player[player.Length];
+        //distance = new float[player.Length];
+
+        ////Player参照
+        //for (int i = 0; i < player.Length; i++)
+        //{
+        //    player[i] = Unit.unitList[0].gameObject;
+        //    if (player[i] != null)
+        //    {
+        //        //Playerスクリプトを人数分取得
+        //        playerCS[i] = player[i].GetComponent<Player>();
+        //    }
+        //}
+
+        //リストからプレイ人数の取得
+        player = new GameObject[1];
+        int playerCount = 0;
+        for (int i = 0; i < Unit.unitList.Count; i++)
+        {
+            Debug.Log("ループ数 : " + i);
+            if (Unit.unitList[i].gameObject.tag == "Player")
+            {
+                //playerを増量し登録
+                if (playerCount != 0)
+                {
+                    GameObject[] copyBox = player;
+                    player = new GameObject[playerCount + 1];
+                    for (int j = 0; j < copyBox.Length; j++)
+                    {
+                        player[j] = copyBox[j];
+                    }
+                }
+                Debug.Log(player.Length);
+                player[playerCount] = Unit.unitList[i].gameObject;
+                playerCount++;
+            }
+        }
         playerCS = new Player[player.Length];
         distance = new float[player.Length];
 
+        //Player参照
         for (int i = 0; i < player.Length; i++)
         {
             if (player[i] != null)
@@ -47,6 +86,7 @@ public class EnemyAI : MonoBehaviour
                 playerCS[i] = player[i].GetComponent<Player>();
             }
         }
+
         //Enemyスクリプトを取得
         enemySC = GetComponent<Enemy>();
     }
@@ -110,8 +150,8 @@ public class EnemyAI : MonoBehaviour
                 DirctionChange();
 
                 //プレイヤーの見えている正面からの角度(正規化)
-                Vector3 v = (player[target].transform.position - transform.position).normalized;
-                float f = Vector3.Angle(v, transform.forward);
+                Vector3 vec3 = (player[target].transform.position - transform.position).normalized;
+                float f = Vector3.Angle(vec3, transform.forward);
 
                 if (enemySC.isAttack == false && f <= searchAngle && distance[target] >= stepLine)
                 {

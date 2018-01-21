@@ -12,11 +12,13 @@ public class BossAI : MonoBehaviour
     public float targetChangeTime = 5.0f;   //ターゲット変更時間
 
     //必殺関連
+    [SerializeField]
     private bool spAttackFlg;
-    private bool oneRolling;
-    public float spChargeTime = 60.0f;      //チャージ時間
+    private int rollingCount = 0;           //回転した回数
+    private int rollingMax = 2;             //何回転するか
+    public float spChargeTime = 10.0f;      //チャージ時間
     public float spAttackTime = 2;          //攻撃持続時間
-    public float rotationNum = 0;           //回転数(角度)
+    public float rotationNum = 0;           //回転した角度
 
     // Enemyスクリプト
     private Enemy enemySC;
@@ -36,12 +38,37 @@ public class BossAI : MonoBehaviour
     [SerializeField]
     private int[] damage;           //各々に負わされたダメージ
 
-    void Awake()
-    {
-        //プレイ人数の取得
-        player = GameObject.FindGameObjectsWithTag("Player");
-        playerCS = new Player[player.Length];
+    //確認用変数
+    [SerializeField]
+    private float spCountDown = 10;//spChargeTimeの値
 
+    void Start()
+    {
+        //リストからプレイ人数の取得
+        player = new GameObject[1];
+        int playerCount = 0;
+        for (int i = 0; i < Unit.unitList.Count; i++)
+        {
+            if (Unit.unitList[i].gameObject.tag == "Player")
+            {
+                //playerを増量し登録
+                if (playerCount != 0)
+                {
+                    GameObject[] copyBox = player;
+                    player = new GameObject[playerCount + 1];
+                    for (int j = 0; j < copyBox.Length; j++)
+                    {
+                        player[j] = copyBox[j];
+                    }
+                }
+                player[playerCount] = Unit.unitList[i].gameObject;
+                playerCount++;
+            }
+        }
+        playerCS = new Player[player.Length];
+        damage = new int[player.Length];
+
+        //Player参照
         for (int i = 0; i < player.Length; i++)
         {
             if (player[i] != null)
@@ -50,6 +77,7 @@ public class BossAI : MonoBehaviour
                 playerCS[i] = player[i].GetComponent<Player>();
             }
         }
+
         //Enemyスクリプトを取得
         enemySC = GetComponent<Enemy>();
 
@@ -66,7 +94,7 @@ public class BossAI : MonoBehaviour
 
         //カウントコルーチン始動
         StartCoroutine(TargetChange());
-        //StartCoroutine(SpecialAttackCounter());
+        StartCoroutine(SpecialAttackCounter());
     }
     
     void Update()
@@ -74,21 +102,26 @@ public class BossAI : MonoBehaviour
         //ターゲットとの距離を計算(2乗された値)
         distance = ((transform.position - player[target].transform.position) * 10000 / 10000).sqrMagnitude;
 
-        //HP判定
-        if (statusSC.nowHP <= statusSC.maxHP * 0.3f)
+        ////HP判定
+        if (enemySC.nowHP <= enemySC.maxHP * 0.3f)
         {
             //HPが30%以下なら必殺技を使う
             spAttackFlg = true;
         }
 
-        ////行動処理
-        //if (spAttackFlg)
-        //{
-        //    //必殺技
-        //    SpecialAttack();
-        //}
-        /*else */if (distance < Mathf.Pow(attackLine, 2))
+        //行動処理
+        if (spAttackFlg)
         {
+            //必殺技
+            SpecialAttack();
+        }
+        else if (distance < Mathf.Pow(attackLine, 2))
+        {
+            if (!enemySC.isAttack)
+            {
+                DirctionChange();
+            }
+
             if (enemySC.equipWeapon[0].weaponType != WeaponType.Melee)
             {
                 //近接用の武器に交換
@@ -102,6 +135,7 @@ public class BossAI : MonoBehaviour
         else
         {
             Move();
+
             if (enemySC.equipWeapon[0].weaponType != WeaponType.Ranged)
             {
                 //遠距離用の武器に交換
@@ -112,6 +146,9 @@ public class BossAI : MonoBehaviour
             //遠距離攻撃
             enemySC.Attack();
         }
+
+        //確認用
+        spCountDown -= Time.deltaTime;
     }
 
     /// <summary>
@@ -132,7 +169,6 @@ public class BossAI : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        //方向転換
         DirctionChange();
 
         transform.position += transform.forward * speed * Time.deltaTime;
@@ -152,22 +188,33 @@ public class BossAI : MonoBehaviour
 
         enemySC.Attack();
 
-        float f = 720 * Time.deltaTime / spAttackTime;
-        transform.Rotate(new Vector3(0, f, 0));
-        rotationNum += f;
+        ////案1 回るが自然でない
+        //float f = 360 * rollingMax * Time.deltaTime / spAttackTime;
+        //rotationNum += f;
+        //transform.Rotate(new Vector3(0, f, 0));
 
-        if (rotationNum >= 360)
+        //案2 微妙に良くなった?
+        float f = 360 * rollingMax * Time.deltaTime / spAttackTime;
+        rotationNum += f;
+        var v = Quaternion.Slerp
+            (Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z),
+            Quaternion.Euler(transform.rotation.x, 180, transform.rotation.z),
+            Time.deltaTime);
+        transform.Rotate(v.eulerAngles * spAttackTime);
+
+        if (rotationNum >= 360 * (rollingCount + 1))
         {
-            rotationNum -= 360;    //初期化
-            if (oneRolling)
-            {
-                oneRolling = false;
-                spAttackFlg = false;
-            }
-            else
-            {
-                oneRolling = true;
-            }
+            //回転数カウント
+            rollingCount++;
+        }
+
+        //指定回数回った
+        if (rollingCount >= rollingMax)
+        {
+            //終了
+            rollingCount = 0;
+            rotationNum = 0;
+            spAttackFlg = false;
         }
     }
     
@@ -179,7 +226,7 @@ public class BossAI : MonoBehaviour
     {
         for (int i = 0; i < player.Length; i++)
         {
-            if (player[i] == from)
+            if (player[i] == from.gameObject)
             {
                 damage[i] += enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].damage;
             }
@@ -260,5 +307,8 @@ public class BossAI : MonoBehaviour
     {
         yield return new WaitForSeconds(spChargeTime);
         spAttackFlg = true;
+
+        spCountDown = 10;
+        StartCoroutine(SpecialAttackCounter());
     }
 }
