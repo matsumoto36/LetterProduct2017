@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour {
 	GameObject arrow;
 	GameObject model;
 
-	void Start() {
+	void Awake() {
 		foreach(Transform item in transform) {
 			if(Application.isPlaying) {
 				Destroy(item.gameObject);
@@ -41,7 +41,7 @@ public class EnemySpawner : MonoBehaviour {
 		if(Application.isPlaying) return;
 
 		if(transform.childCount > content) {
-			Start();
+			Awake();
 		}
 
 		ArrowUpdate();

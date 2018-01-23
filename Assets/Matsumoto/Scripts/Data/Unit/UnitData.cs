@@ -49,6 +49,7 @@ public abstract class UnitData : ScriptableObjectBase {
 
 		//武器を装備
 		if(weaponData[0]) {
+
 			var weapon = weaponData[0].Create();
 
 			//表示しない場合は描画を無効化
@@ -57,9 +58,12 @@ public abstract class UnitData : ScriptableObjectBase {
 					item.enabled = false;
 			}
 
+			weapon.Init();
 			unit.EquipWeapon(weapon, 0);
+
 		}
 		if(weaponData[1]) {
+
 			var weapon = weaponData[1].Create();
 
 			//表示しない場合は描画を無効化
@@ -68,6 +72,7 @@ public abstract class UnitData : ScriptableObjectBase {
 					item.enabled = false;
 				}
 
+			weapon.Init();
 			unit.EquipWeapon(weapon, 1);
 		}
 
