@@ -84,6 +84,7 @@ public class WeaponLaser : WeaponRanged {
 		//照射終了
 		if(laser) {
 			laser.GetComponent<Collider>().enabled = false;
+			laser.length = 0;
 			Destroy(laser.gameObject, 4);
 			laser.GetComponentInChildren<PKFxFX>().StopEffect();
 		}

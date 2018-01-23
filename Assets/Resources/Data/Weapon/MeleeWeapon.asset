@@ -19,5 +19,6 @@ MonoBehaviour:
     mulMoveSpeed: 1
     mulPow: 2.2
     mulAttackSpeed: 1
-  motionName: TestPlayerAnimation
+  motionName: 
+  particleName: MeleeAttack
   motionSpeed: 1

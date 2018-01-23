@@ -89,7 +89,7 @@ public abstract class Unit : MonoBehaviour {
 
 	public float HPRatio { get { return (float)nowHP / maxHP; } }
 
-	protected Animator anim { get; private set; }
+	public Animator anim { get; private set; }
 
 	protected Transform body;
 	protected Vector3 moveVec;
@@ -306,23 +306,11 @@ public abstract class Unit : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// 攻撃してよいか確認
-	/// </summary>
-	/// <returns></returns>
-	public bool CheckCanAttack() {
-		if(!equipWeapon[0]) return false;
-		if(!canAttack) return false;
-		if(isPlayMeleeAnim) return false;
-
-		return true;
-	}
-
-	/// <summary>
 	/// 武器を装備する
 	/// </summary>
 	/// <param name="weapon"></param>
 	/// <param name="slot"></param>
-	public void EquipWeapon(Weapon weapon, int slot) {
+	public virtual void EquipWeapon(Weapon weapon, int slot) {
 
 		//すでに装備してたら外す
 		if(equipWeapon[slot]) {
@@ -330,11 +318,9 @@ public abstract class Unit : MonoBehaviour {
 		}
 
 		//位置合わせ
-		weapon.transform.parent = handAnchor;
+		weapon.transform.SetParent(handAnchor);
 		weapon.transform.localPosition = new Vector3();
 		weapon.transform.localRotation = Quaternion.identity;
-		//いったん消します(松元)
-		//weapon.transform.localScale = Vector3.one;
 
 		//所持する
 		equipWeapon[slot] = weapon;
@@ -345,6 +331,18 @@ public abstract class Unit : MonoBehaviour {
 
 		//0番以外の武器は無効化
 		if(slot != 0) equipWeapon[slot].gameObject.SetActive(false);
+	}
+
+	/// <summary>
+	/// 攻撃してよいか確認
+	/// </summary>
+	/// <returns></returns>
+	public bool CheckCanAttack() {
+		if(!equipWeapon[0]) return false;
+		if(!canAttack) return false;
+		if(isPlayMeleeAnim) return false;
+
+		return true;
 	}
 
 	/// <summary>
@@ -369,17 +367,18 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="animTriggerName"></param>
 	/// <param name="weaponNum"></param>
 	/// <param name="onComplete">完了時に実行</param>
-	public void SwitchWeapon(string clipName, int weaponNum, Action onComplete) {
+	public bool SwitchWeapon(float animPlayTime, float weaponChangeDelay, int weaponNum, Action onComplete) {
 
-		if(weaponNum == 0) return;
-		if(!equipWeapon[0]) return;
-		if(!equipWeapon[weaponNum]) return;
-		if(isPlayMeleeAnim) return;
-		if(switchingWeaponNum != 0) return;
+		if(weaponNum == 0) return false;
+		if(!equipWeapon[0]) return false;
+		if(!equipWeapon[weaponNum]) return false;
+		if(isPlayMeleeAnim) return false;
+		if(switchingWeaponNum != 0) return false;
 
 		//一定時間待つ
-		StartCoroutine(SwitchWeaponAnim(clipName, weaponNum, onComplete));
+		StartCoroutine(SwitchWeaponAnim(animPlayTime, weaponChangeDelay, weaponNum, onComplete));
 
+		return true;
 	}
 
 	/// <summary>
@@ -484,6 +483,9 @@ public abstract class Unit : MonoBehaviour {
 
 		var weaponMelee = equipWeapon[0].GetComponent<WeaponMelee>();
 		if(!weaponMelee) return;
+
+		//エフェクトを発生
+		weaponMelee.SetEffectEnable(true);
 		weaponMelee.SetCollider(true);
 	}
 
@@ -496,6 +498,9 @@ public abstract class Unit : MonoBehaviour {
 
 		var weaponMelee = equipWeapon[0].GetComponent<WeaponMelee>();
 		if(!weaponMelee) return;
+
+		//エフェクトを止める
+		weaponMelee.SetEffectEnable(false);
 		weaponMelee.SetCollider(false);
 	}
 
@@ -518,15 +523,19 @@ public abstract class Unit : MonoBehaviour {
 		onComplete();
 	}
 
-	IEnumerator SwitchWeaponAnim(string clipName, int weaponNum, Action onComplete) {
+	IEnumerator SwitchWeaponAnim(float animPlayTime, float weaponChangeDelay, int weaponNum, Action onComplete) {
 
 		//攻撃キャンセル
 		isAttack = false;
 		switchingWeaponNum = weaponNum;
 
+		//モデル交換にディレイをかける
+		Invoke("OnSwitchWeaponModel", weaponChangeDelay);
+
 		//交換中は攻撃できません
 		canAttack = false;
-		yield return StartCoroutine(PlayAnimation(1, clipName, 1));
+		anim.SetTrigger("SwitchTrigger");
+		yield return new WaitForSeconds(animPlayTime);
 		canAttack = true;
 
 		//内部的に交換
@@ -535,9 +544,6 @@ public abstract class Unit : MonoBehaviour {
 		equipWeapon[weaponNum] = w;
 		switchingWeaponNum = 0;
 		equipWeapon[0].OnSwitchActive();
-
-		//Idleに戻す
-		StartCoroutine(PlayAnimation(0, "Idle", 1));
 
 		//完了後に実行
 		onComplete();

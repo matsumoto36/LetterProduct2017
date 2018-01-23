@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using System;
 using System.Linq;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,10 +11,13 @@ using System.Collections.Generic;
 /// </summary>
 public class FadeManager : MonoBehaviour
 {
+    private AsyncOperation async;
+    public GameObject LoadingUi;
+    public Slider Slider;
 
-	#region Singleton
+    #region Singleton
 
-	private static FadeManager instance;
+    private static FadeManager instance;
 
 	public static FadeManager Instance {
 		get {
@@ -107,32 +111,39 @@ public class FadeManager : MonoBehaviour
 	/// <param name='interval'>暗転にかかる時間(秒)</param>
 	public void LoadScene (string scene, float interval)
 	{
-		StartCoroutine (TransScene (scene, interval));
+        LoadingUi.SetActive(true);
+        StartCoroutine (TransScene (scene, interval));
 	}
 
-	/// <summary>
-	/// シーン遷移用コルーチン .
-	/// </summary>
-	/// <param name='scene'>シーン名</param>
-	/// <param name='interval'>暗転にかかる時間(秒)</param>
-	private IEnumerator TransScene (string scene, float interval)
-	{
+    /// <summary>
+    /// シーン遷移用コルーチン .
+    /// </summary>
+    /// <param name='scene'>シーン名</param>
+    /// <param name='interval'>暗転にかかる時間(秒)</param>
+    private IEnumerator TransScene(string scene, float interval)
+    {
         GetComponent<Collider>().enabled = false;
 
-		//だんだん暗く .
-		this.isFading = true;
-		float time = 0;
-		while (time <= interval) {
-			this.fadeAlpha = Mathf.Lerp (0f, 1f, time / interval);
-			time += Time.deltaTime;
-			yield return 0;
-		}
+        //だんだん暗く .
+        this.isFading = true;
+        float time = 0;
+        while (time <= interval) {
+            this.fadeAlpha = Mathf.Lerp(0f, 1f, time / interval);
+            time += Time.deltaTime;
+            yield return 0;
+        }
 
-		//シーン切替 .
-		SceneManager.LoadScene (scene);
+        //シーン切替 .
+        yield return async = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
+        while (!async.isDone)
+        {
+            Debug.Log(async.progress * 100 + "%");
+            Slider.value = async.progress;
+            yield return null;
+        }
 
-		//だんだん明るく .
-		time = 0;
+            //だんだん明るく .
+            time = 0;
 		while (time <= interval) {
 			this.fadeAlpha = Mathf.Lerp (1f, 0f, time / interval);
 			time += Time.deltaTime;

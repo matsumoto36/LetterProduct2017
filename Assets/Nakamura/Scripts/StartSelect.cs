@@ -3,31 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using GamepadInput;
 
 public class StartSelect : MonoBehaviour {
+    public  int playercnt = 0;
+    public bool flg = false;
 
-    public static int playercnt;
-    public void OnClick(Dropdown dropdown)
-    {
-        playercnt = dropdown.value;
-        Debug.Log("dropdown.value = " + dropdown.value);    
-        Debug.Log("text(options) = " + dropdown.options[dropdown.value].text); 
-        Debug.Log("text(captionText) = " + dropdown.captionText.text); 
-        //シーン遷移
-        SceneManager.LoadScene("Main");
-    }
+    public Button startButton;
+
+    public Text player1Ready;
+    public Text player2Ready;
+    public Text player3Ready;
+    public Text player4Ready;
+
+    public int playerIndex;
+
     // Use this for initialization
     void Start ()
     {
+        GetComponent<Button>().Select();
+    }
 
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update ()
     {
-		
-	}
+       
+            if (InputManager.GetButtonDown(playerIndex, GamePad.Button.A) )
+            {
+                OnGoSelect();
+            }
+      
+       
+    }
 
     public void OnGoSelect()
     {

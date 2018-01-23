@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GamepadInput;
 
 public class SpliteCamera : MonoBehaviour
 {
@@ -22,30 +23,70 @@ public class SpliteCamera : MonoBehaviour
     public Camera player3Camera;
     public Camera player4Camera;
 
+    public int playercnt = 0;
+    
+
+    public int playerIndex;
+
+
+    bool flg = false;
+    public  bool uiflg = false;
+    public Ready ready;
     // Use this for initialization
     void Start ()
     {
-        switch (StartSelect.playercnt)
+        /*
+        player1Camera.rect = new Rect(0f, 0.5f, 0.5f, 0.5f);
+        player2Camera.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
+        player3Camera.rect = new Rect(0f, 0f, 0.5f, 0.5f);
+        player4Camera.rect = new Rect(0.5f, 0f, 0.5f, 0.5f);
+        */
+
+        mode = SpriteCameraMode.quartet;
+
+    }
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        if (ready.flg == true)
         {
-            case 0:
-                mode = SpriteCameraMode.solo;
-                break;
-            case 1:
-                mode = SpriteCameraMode.duo;
-                break;
-            case 2:
-                mode = SpriteCameraMode.trio;
-                break;
-            case 3:
-                mode = SpriteCameraMode.quartet;
-                break;
+            if (InputManager.GetButtonDown(playerIndex, GamePad.Button.Start) || Input.GetKeyDown(KeyCode.A))
+            {
+                flg = true;
+
+                switch (playercnt)
+                {
+                    case 1:
+                        mode = SpriteCameraMode.solo;
+                        uiflg = true;
+                        break;
+                    case 2:
+                        mode = SpriteCameraMode.duo;
+                        uiflg = true;
+                        break;
+                    case 3:
+                        mode = SpriteCameraMode.trio;
+                        uiflg = true;
+                        break;
+                    case 4:
+                        mode = SpriteCameraMode.quartet;
+                        uiflg = true;
+                        break;
+                }
+
+            }
         }
-        
+
         //プレイヤーに応じて画面を分割する 
         switch (mode)
         {
             //１プレイヤー
             case SpriteCameraMode.solo:
+                player1Camera.rect = new Rect(0f, 0f, 1f, 1f);
+                player2Camera.gameObject.SetActive(false);
+                player3Camera.gameObject.SetActive(false);
+                player4Camera.gameObject.SetActive(false);
                 break;
 
             //２プレイヤー  
@@ -76,11 +117,6 @@ public class SpliteCamera : MonoBehaviour
                 player4Camera.rect = new Rect(0.5f, 0f, 0.5f, 0.5f);
                 break;
         }
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    }
 }
