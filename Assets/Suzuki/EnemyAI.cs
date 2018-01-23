@@ -97,11 +97,8 @@ public class EnemyAI : MonoBehaviour
         //Player参照
         for (int i = 0; i < playerList.Count; i++)
         {
-            if (playerList[i] != null)
-            {
-                //Playerスクリプトを人数分取得
-                playerCS[i] = playerList[i].GetComponent<Player>();
-            }
+            //Playerスクリプトを人数分取得
+            playerCS[i] = playerList[i].GetComponent<Player>();
         }
 
         //Enemyスクリプトを取得
@@ -116,8 +113,8 @@ public class EnemyAI : MonoBehaviour
             int passCount = 0;
             for (int i = 0; i < playerList.Count; i++)
             {
-                //player[i]が居ない,死亡なら処理をパス
-                if (playerList[i] == null || playerCS[i].isDead)
+                //player[i]が死亡なら処理をパス
+                if (playerCS[i].isDead)
                 {
                     passCount++;
                 }
@@ -139,11 +136,11 @@ public class EnemyAI : MonoBehaviour
             for (int i = 1; i < playerList.Count; i++)
             {
                 //比較対象が存在,生存しているか
-                if (playerList[target] == null || playerCS[target].isDead)
+                if (playerCS[target].isDead)
                 {
                     target = i;
                 }
-                else if (playerList[i] == null || playerCS[i].isDead)
+                else if (playerCS[i].isDead)
                 {
 
                 }

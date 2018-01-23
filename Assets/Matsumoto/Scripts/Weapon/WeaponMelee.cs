@@ -59,6 +59,7 @@ public class WeaponMelee : Weapon {
 	public override void Attack() {
 
 		if(!isInit) {
+			isInit = true;
 			//相手の勢力に当たるように設定
 			var maskList = UnitGroupMatrix.GetAttackableGroup(unitOwner.group, true)
 				.Select((item) => item.ToString() + "Layer")
@@ -73,7 +74,6 @@ public class WeaponMelee : Weapon {
 		if(!canAction) return;
 
 		//アニメーションを再生
-		//unitOwner.PlayMeleeAnimation(motionName, motionSpeed * unitOwner.statusMod.mulAttackSpeed, () => { });
 		unitOwner.anim.SetTrigger("MeleeAttack");
 
 		//intervalの設定(最後に呼ぶこと)
@@ -107,8 +107,6 @@ public class WeaponMelee : Weapon {
 	}
 
 	void OnTriggerEnter(Collider other) {
-
-
 
 		Unit unit;
 		if(unit = other.GetComponent<Unit>()) {

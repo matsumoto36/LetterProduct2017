@@ -19,9 +19,11 @@ public enum ControlType {
 /// </summary>
 public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 
-	const int MAX_PAYER_NUM = 4;		//最大のプレイヤー人数
+	public const int MAX_PAYER_NUM = 4;     //最大のプレイヤー人数
 
-	ControllerData[] controllerData;	//各プレイヤーのコントローラのデータ
+	public static bool canControlButton { get; set; }
+
+	ControllerData[] controllerData;    //各プレイヤーのコントローラのデータ
 
 	// new禁止
 	private InputManager() { }
@@ -37,6 +39,52 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 		}
 	}
 
+	/// <summary>
+	/// 全てのAxisの入力を取る
+	/// </summary>
+	/// <param name="axis"></param>
+	/// <param name="isRaw"></param>
+	/// <returns></returns>
+	public static Vector2 GetAxisAny(GamePad.Axis axis, bool isRaw) {
+
+		var inputStr = "";
+
+		switch(axis) {
+			case GamePad.Axis.LeftStick:
+				inputStr = "L_JoyStick";
+				break;
+			case GamePad.Axis.RightStick:
+				inputStr = "R_JoyStick";
+				break;
+			case GamePad.Axis.Dpad:
+				inputStr = "DPad";
+				break;
+			default:
+				inputStr = "L_JoyStick";
+				break;
+		}
+
+		Vector2 vec;
+		for(int i = 1;i <= MAX_PAYER_NUM;i++) {
+
+			var strX = inputStr + i + "_XAxis";
+			var strY = inputStr + i + "_YAxis";
+
+			if(isRaw) {
+				vec.x = Input.GetAxisRaw(strX);
+				vec.y = Input.GetAxisRaw(strY);
+			}
+			else {
+				vec.x = Input.GetAxis(strX);
+				vec.y = Input.GetAxis(strY);
+			}
+
+			if(vec != new Vector2()) return vec;
+		}
+
+		return GetAxis(ControlType.Keyboard, axis, GamePad.Index.One, isRaw);
+
+	}
 	/// <summary>
 	/// Axisの入力を取る
 	/// </summary>
@@ -75,7 +123,6 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 				return new Vector2();
 		}
 	}
-
 
 	/// <summary>
 	/// Triggerの入力を取る
@@ -117,6 +164,23 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 
 
 	/// <summary>
+	/// 全てのコントローラーでボタンを押されたときの入力を取る
+	/// </summary>
+	/// <param name="button"></param>
+	/// <returns></returns>
+	public static bool GetButtonDownAny(GamePad.Button button) {
+
+		var code = GetAllKeyCode(button);
+
+		//コントローラー側を調べる
+		foreach(var item in code) {
+			if(Input.GetKeyDown(item)) return true;
+		}
+
+		//無ければキーボード側
+		return InputKeyboard.GetKeyDown(button);
+	}
+	/// <summary>
 	/// ボタンが押されたときの入力を取る
 	/// </summary>
 	/// <param name="playerIndex"></param>
@@ -153,7 +217,23 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 		}
 	}
 
+	/// <summary>
+	/// 全てのコントローラーでボタンを押されているときの入力を取る
+	/// </summary>
+	/// <param name="button"></param>
+	/// <returns></returns>
+	public static bool GetButtonAny(GamePad.Button button) {
 
+		var code = GetAllKeyCode(button);
+
+		//コントローラー側を調べる
+		foreach(var item in code) {
+			if(Input.GetKey(item)) return true;
+		}
+
+		//無ければキーボード側
+		return InputKeyboard.GetKey(button);
+	}
 	/// <summary>
 	/// ボタンを押しているときの入力を取る
 	/// </summary>
@@ -191,7 +271,23 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 		}
 	}
 
+	/// <summary>
+	/// 全てのコントローラーでボタンを離したときの入力を取る
+	/// </summary>
+	/// <param name="button"></param>
+	/// <returns></returns>
+	public static bool GetButtonUpAny(GamePad.Button button) {
 
+		var code = GetAllKeyCode(button);
+
+		//コントローラー側を調べる
+		foreach(var item in code) {
+			if(Input.GetKeyUp(item)) return true;
+		}
+
+		//無ければキーボード側
+		return InputKeyboard.GetKeyUp(button);
+	}
 	/// <summary>
 	/// ボタンを離した時の入力を取る
 	/// </summary>
@@ -252,5 +348,86 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 		if(playerIndex < 0 || playerIndex >= MAX_PAYER_NUM) return null;
 
 		return instance.controllerData[playerIndex];
+	}
+
+	/// <summary>
+	/// ボタンに対応するキーコードすべてを返す
+	/// </summary>
+	/// <param name="button"></param>
+	/// <returns></returns>
+	static KeyCode[] GetAllKeyCode(GamePad.Button button) {
+
+		KeyCode[] code = new KeyCode[MAX_PAYER_NUM];
+
+		switch(button) {
+			case GamePad.Button.A:
+				code[0] = KeyCode.Joystick1Button0;
+				code[1] = KeyCode.Joystick2Button0;
+				code[2] = KeyCode.Joystick3Button0;
+				code[3] = KeyCode.Joystick4Button0;
+				break;
+			case GamePad.Button.B:
+				code[0] = KeyCode.Joystick1Button1;
+				code[1] = KeyCode.Joystick2Button1;
+				code[2] = KeyCode.Joystick3Button1;
+				code[3] = KeyCode.Joystick4Button1;
+				break;
+			case GamePad.Button.Y:
+				code[0] = KeyCode.Joystick1Button3;
+				code[1] = KeyCode.Joystick2Button3;
+				code[2] = KeyCode.Joystick3Button3;
+				code[3] = KeyCode.Joystick4Button3;
+				break;
+			case GamePad.Button.X:
+				code[0] = KeyCode.Joystick1Button2;
+				code[1] = KeyCode.Joystick2Button2;
+				code[2] = KeyCode.Joystick3Button2;
+				code[3] = KeyCode.Joystick4Button2;
+				break;
+			case GamePad.Button.RightShoulder:
+				code[0] = KeyCode.Joystick1Button5;
+				code[1] = KeyCode.Joystick2Button5;
+				code[2] = KeyCode.Joystick3Button5;
+				code[3] = KeyCode.Joystick4Button5;
+				break;
+			case GamePad.Button.LeftShoulder:
+				code[0] = KeyCode.Joystick1Button4;
+				code[1] = KeyCode.Joystick2Button4;
+				code[2] = KeyCode.Joystick3Button4;
+				code[3] = KeyCode.Joystick4Button4;
+				break;
+			case GamePad.Button.RightStick:
+				code[0] = KeyCode.Joystick1Button9;
+				code[1] = KeyCode.Joystick2Button9;
+				code[2] = KeyCode.Joystick3Button9;
+				code[3] = KeyCode.Joystick4Button9;
+				break;
+			case GamePad.Button.LeftStick:
+				code[0] = KeyCode.Joystick1Button8;
+				code[1] = KeyCode.Joystick2Button8;
+				code[2] = KeyCode.Joystick3Button8;
+				code[3] = KeyCode.Joystick4Button8;
+				break;
+			case GamePad.Button.Back:
+				code[0] = KeyCode.Joystick1Button6;
+				code[1] = KeyCode.Joystick2Button6;
+				code[2] = KeyCode.Joystick3Button6;
+				code[3] = KeyCode.Joystick4Button6;
+				break;
+			case GamePad.Button.Start:
+				code[0] = KeyCode.Joystick1Button7;
+				code[1] = KeyCode.Joystick2Button7;
+				code[2] = KeyCode.Joystick3Button7;
+				code[3] = KeyCode.Joystick4Button7;
+				break;
+			default:
+				code[0] = KeyCode.Joystick1Button0;
+				code[1] = KeyCode.Joystick2Button0;
+				code[2] = KeyCode.Joystick3Button0;
+				code[3] = KeyCode.Joystick4Button0;
+				break;
+		}
+
+		return code;
 	}
 }

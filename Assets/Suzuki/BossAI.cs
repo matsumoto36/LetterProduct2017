@@ -61,11 +61,8 @@ public class BossAI : MonoBehaviour
         //Player参照
         for (int i = 0; i < playerList.Count; i++)
         {
-            if (playerList[i] != null)
-            {
-                //Playerスクリプトを人数分取得
-                playerCS[i] = playerList[i].GetComponent<Player>();
-            }
+            //Playerスクリプトを人数分取得
+            playerCS[i] = playerList[i].GetComponent<Player>();
         }
 
         //Enemyスクリプトを取得
