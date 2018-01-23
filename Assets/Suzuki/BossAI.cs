@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BossAI : MonoBehaviour
 {
@@ -8,74 +9,60 @@ public class BossAI : MonoBehaviour
     //基本
     public float speed = 10;                //移動速度(秒速)
     public float attackLine = 3;            //近接攻撃可能距離
-    public float searchAngle = 7;           //視野
-    public float targetChangeTime = 5.0f;   //ターゲット変更時間
+    public float searchAngle = 7;           //視野(度)
+    public float targetChangeTime = 5.0f;   //ターゲット変更時間(秒)
 
     //必殺関連
     [SerializeField]
     private bool spAttackFlg;
     private int rollingCount = 0;           //回転した回数
     private int rollingMax = 2;             //何回転するか
-    public float spChargeTime = 10.0f;      //チャージ時間
-    public float spAttackTime = 2;          //攻撃持続時間
-    public float rotationNum = 0;           //回転した角度
+    private float spChargeTime = 60.0f;     //チャージ時間(秒)
+    private float spAttackTime = 2;         //攻撃持続時間(秒)
+    private float rotationNum = 0;          //回転した角度(度)
 
     // Enemyスクリプト
     private Enemy enemySC;
-    //ステータス
-    private EnemyStructure statusSC;
 
     //プレイヤー関連
     [SerializeField]
-    private GameObject[] player;    //Playerオブジェクト
-    private Player[] playerCS;      //Playerスクリプト
+    private List<GameObject> playerList;    //Playerリスト
+    private Player[] playerCS;              //Playerスクリプト
     [SerializeField]
-    private int target;             //狙うプレイヤー
+    private int target;                     //狙うプレイヤー
     [SerializeField]
-    private int fainalPlayer;       //最後に攻撃したプレイヤー
+    private float distance;                 //ターゲットとの距離
     [SerializeField]
-    private float distance;         //ターゲットとの距離
-    [SerializeField]
-    private int[] damage;           //各々に負わされたダメージ
+    private int[] damage;                   //各々に負わされたダメージ
+    //[SerializeField]
+    //private GameObject[] player;            //Playerオブジェクト
 
     //確認用変数
     [SerializeField]
-    private float spCountDown = 10;//spChargeTimeの値
+    private float spCountDown = 60;//spChargeTimeの値
 
     void Start()
     {
         //リストからプレイ人数の取得
-        player = new GameObject[1];
+        playerList = new List<GameObject>();
         int playerCount = 0;
         for (int i = 0; i < Unit.unitList.Count; i++)
         {
             if (Unit.unitList[i].gameObject.tag == "Player")
             {
-                //playerを増量し登録
-                if (playerCount != 0)
-                {
-                    GameObject[] copyBox = player;
-                    player = new GameObject[playerCount + 1];
-                    for (int j = 0; j < copyBox.Length; j++)
-                    {
-                        player[j] = copyBox[j];
-                    }
-                }
-                player[playerCount] = Unit.unitList[i].gameObject;
+                //playerList登録
+                playerList.Add(Unit.unitList[i].gameObject);
                 playerCount++;
             }
         }
-        playerCS = new Player[player.Length];
-        damage = new int[player.Length];
+        playerCS = new Player[playerList.Count];
+        damage = new int[playerList.Count];
 
         //Player参照
-        for (int i = 0; i < player.Length; i++)
+        for (int i = 0; i < playerList.Count; i++)
         {
-            if (player[i] != null)
-            {
-                //Playerスクリプトを人数分取得
-                playerCS[i] = player[i].GetComponent<Player>();
-            }
+            //Playerスクリプトを人数分取得
+            playerCS[i] = playerList[i].GetComponent<Player>();
         }
 
         //Enemyスクリプトを取得
@@ -84,7 +71,7 @@ public class BossAI : MonoBehaviour
         //初期化
         spAttackFlg = false;
         target = 0;
-        for (int i = 0; i < player.Length; i++)
+        for (int i = 0; i < playerList.Count; i++)
         {
             damage[i] = 0;
         }
@@ -100,7 +87,7 @@ public class BossAI : MonoBehaviour
     void Update()
     {
         //ターゲットとの距離を計算(2乗された値)
-        distance = ((transform.position - player[target].transform.position) * 10000 / 10000).sqrMagnitude;
+        distance = ((transform.position - playerList[target].transform.position) * 10000 / 10000).sqrMagnitude;
 
         ////HP判定
         if (enemySC.nowHP <= enemySC.maxHP * 0.3f)
@@ -160,7 +147,7 @@ public class BossAI : MonoBehaviour
 
         transform.rotation = Quaternion.Slerp(
                                 transform.rotation,
-                                Quaternion.LookRotation(player[target].transform.position - transform.position),
+                                Quaternion.LookRotation(playerList[target].transform.position - transform.position),
                                 Time.deltaTime * speed * f);
     }
 
@@ -224,9 +211,9 @@ public class BossAI : MonoBehaviour
     /// <param name="from">攻撃したキャラクター</param>
     void OnAttacked(Unit from)
     {
-        for (int i = 0; i < player.Length; i++)
+        for (int i = 0; i < playerList.Count; i++)
         {
-            if (player[i] == from.gameObject)
+            if (playerList[i] == from.gameObject)
             {
                 damage[i] += enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].damage;
             }
@@ -252,18 +239,18 @@ public class BossAI : MonoBehaviour
         if (Time.time - enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].time <= targetChangeTime)
         {
             //ダメージ比較
-            for (int i = 0; i < player.Length; i++)
+            for (int i = 0; i < playerList.Count; i++)
             {
                 if (target == i)
                 {
                     //比較対象がすでにターゲット状態
                 }
                 //比較対象が存在,生存しているか
-                else if (player[target] == null || playerCS[target].isDead)
+                else if (playerList[target] == null || playerCS[target].isDead)
                 {
                     target = i;
                 }
-                else if (player[i] == null || playerCS[i].isDead)
+                else if (playerList[i] == null || playerCS[i].isDead)
                 {
                     //処理無し
                 }
@@ -281,9 +268,9 @@ public class BossAI : MonoBehaviour
         //攻撃を受けなかった
         else
         {
-            for (int i = 0; i < player.Length; i++)
+            for (int i = 0; i < playerList.Count; i++)
             {
-                if (player[i] == enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].attackUnit)
+                if (playerList[i] == enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].attackUnit)
                 {
                     target = i;
                 }
@@ -291,7 +278,7 @@ public class BossAI : MonoBehaviour
         }
 
         //初期化
-        for (int i = 0; i < player.Length; i++)
+        for (int i = 0; i < playerList.Count; i++)
         {
             damage[i] = 0;
         }

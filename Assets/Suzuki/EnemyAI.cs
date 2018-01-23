@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -15,20 +16,21 @@ public class EnemyAI : MonoBehaviour
     public float moveLine = 20;         //検知範囲
     public float stepLine = 10;         //ステップ攻撃範囲
     public float attackLine = 3;        //攻撃距離
-    public float searchAngle = 7;       //視野
+    public float searchAngle = 7;       //視野(度)
 
     // Enemyスクリプト
     private Enemy enemySC;
 
     //プレイヤー関連
     [SerializeField]
-    private GameObject[] player;        //Playerオブジェクト
-    [SerializeField]
+    private List<GameObject> playerList;//Playerリスト
     private Player[] playerCS;          //Playerスクリプト
     [SerializeField]
     private int target;                 //一番近いプレイヤー
     [SerializeField]
     private float[] distance;           //距離
+    //[SerializeField]
+    //private GameObject[] player;        //Playerオブジェクト
 
     /// <summary>
     /// 初期設定
@@ -51,40 +53,52 @@ public class EnemyAI : MonoBehaviour
         //    }
         //}
 
+        ////リストからプレイ人数の取得
+        //player = new GameObject[1];
+        //int playerCount = 0;
+        //for (int i = 0; i < Unit.unitList.Count; i++)
+        //{
+        //    Debug.Log("ループ数 : " + i);
+        //    if (Unit.unitList[i].gameObject.tag == "Player")
+        //    {
+        //        //playerを増量し登録
+        //        if (playerCount != 0)
+        //        {
+        //            GameObject[] copyBox = player;
+        //            player = new GameObject[playerCount + 1];
+        //            for (int j = 0; j < copyBox.Length; j++)
+        //            {
+        //                player[j] = copyBox[j];
+        //            }
+        //        }
+        //        Debug.Log(player.Length);
+        //        player[playerCount] = Unit.unitList[i].gameObject;
+        //        playerCount++;
+        //    }
+        //}
+        //playerCS = new Player[player.Length];
+        //distance = new float[player.Length];
+
         //リストからプレイ人数の取得
-        player = new GameObject[1];
+        playerList = new List<GameObject>();
         int playerCount = 0;
         for (int i = 0; i < Unit.unitList.Count; i++)
         {
-            Debug.Log("ループ数 : " + i);
             if (Unit.unitList[i].gameObject.tag == "Player")
             {
-                //playerを増量し登録
-                if (playerCount != 0)
-                {
-                    GameObject[] copyBox = player;
-                    player = new GameObject[playerCount + 1];
-                    for (int j = 0; j < copyBox.Length; j++)
-                    {
-                        player[j] = copyBox[j];
-                    }
-                }
-                Debug.Log(player.Length);
-                player[playerCount] = Unit.unitList[i].gameObject;
+                //playerListに登録
+                playerList.Add(Unit.unitList[i].gameObject);
                 playerCount++;
             }
         }
-        playerCS = new Player[player.Length];
-        distance = new float[player.Length];
+        playerCS = new Player[playerList.Count];
+        distance = new float[playerList.Count];
 
         //Player参照
-        for (int i = 0; i < player.Length; i++)
+        for (int i = 0; i < playerList.Count; i++)
         {
-            if (player[i] != null)
-            {
-                //Playerスクリプトを人数分取得
-                playerCS[i] = player[i].GetComponent<Player>();
-            }
+            //Playerスクリプトを人数分取得
+            playerCS[i] = playerList[i].GetComponent<Player>();
         }
 
         //Enemyスクリプトを取得
@@ -97,36 +111,36 @@ public class EnemyAI : MonoBehaviour
         if (true)//isRendered
         {
             int passCount = 0;
-            for (int i = 0; i < player.Length; i++)
+            for (int i = 0; i < playerList.Count; i++)
             {
-                //player[i]が居ない,死亡なら処理をパス
-                if (player[i] == null || playerCS[i].isDead)
+                //player[i]が死亡なら処理をパス
+                if (playerCS[i].isDead)
                 {
                     passCount++;
                 }
                 else
                 {
                     //距離を計算(2乗された値)
-                    distance[i] = ((transform.position - player[i].transform.position) * 10000 / 10000).sqrMagnitude;
+                    distance[i] = ((transform.position - playerList[i].transform.position) * 10000 / 10000).sqrMagnitude;
                 }
             }
 
             //全滅したので以下の処理をしない
-            if (passCount == player.Length)
+            if (passCount == playerList.Count)
             {
                 return;
             }
 
             //距離比較
             target = 0;
-            for (int i = 1; i < player.Length; i++)
+            for (int i = 1; i < playerList.Count; i++)
             {
                 //比較対象が存在,生存しているか
-                if (player[target] == null || playerCS[target].isDead)
+                if (playerCS[target].isDead)
                 {
                     target = i;
                 }
-                else if (player[i] == null || playerCS[i].isDead)
+                else if (playerCS[i].isDead)
                 {
 
                 }
@@ -150,7 +164,7 @@ public class EnemyAI : MonoBehaviour
                 DirctionChange();
 
                 //プレイヤーの見えている正面からの角度(正規化)
-                Vector3 vec3 = (player[target].transform.position - transform.position).normalized;
+                Vector3 vec3 = (playerList[target].transform.position - transform.position).normalized;
                 float f = Vector3.Angle(vec3, transform.forward);
 
                 if (enemySC.isAttack == false && f <= searchAngle && distance[target] >= stepLine)
@@ -216,7 +230,7 @@ public class EnemyAI : MonoBehaviour
 
         transform.rotation = Quaternion.Slerp(
                                 transform.rotation,
-                                Quaternion.LookRotation(player[target].transform.position - transform.position),
+                                Quaternion.LookRotation(playerList[target].transform.position - transform.position),
                                 Time.deltaTime * speed * f);
     }
 
