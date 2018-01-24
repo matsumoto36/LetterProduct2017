@@ -46,6 +46,17 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 	/// <param name="isRaw"></param>
 	/// <returns></returns>
 	public static Vector2 GetAxisAny(GamePad.Axis axis, bool isRaw) {
+		int d;
+		return GetAxisAny(axis, isRaw, out d);
+	}
+	/// <summary>
+	/// 全てのAxisの入力を取る
+	/// </summary>
+	/// <param name="axis"></param>
+	/// <param name="isRaw"></param>
+	/// <param name="joyStickNum">押されたコントローラーの番号。0はキーボード</param>
+	/// <returns></returns>
+	public static Vector2 GetAxisAny(GamePad.Axis axis, bool isRaw, out int joyStickNum) {
 
 		var inputStr = "";
 
@@ -64,6 +75,7 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 				break;
 		}
 
+		joyStickNum = 0;
 		Vector2 vec;
 		for(int i = 1;i <= MAX_PAYER_NUM;i++) {
 
@@ -79,12 +91,16 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 				vec.y = Input.GetAxis(strY);
 			}
 
-			if(vec != new Vector2()) return vec;
+			if(vec != new Vector2()) {
+				joyStickNum = i;
+				return vec;
+			}
 		}
 
 		return GetAxis(ControlType.Keyboard, axis, GamePad.Index.One, isRaw);
 
 	}
+
 	/// <summary>
 	/// Axisの入力を取る
 	/// </summary>
@@ -169,12 +185,26 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 	/// <param name="button"></param>
 	/// <returns></returns>
 	public static bool GetButtonDownAny(GamePad.Button button) {
+		int d;
+		return GetButtonDownAny(button, out d);
+	}
+	/// <summary>
+	/// 全てのコントローラーでボタンを押されたときの入力を取る
+	/// </summary>
+	/// <param name="button"></param>
+	/// <param name="joyStickNum">押されたコントローラーの番号。0はキーボード</param>
+	/// <returns></returns>
+	public static bool GetButtonDownAny(GamePad.Button button, out int joyStickNum) {
 
 		var code = GetAllKeyCode(button);
 
 		//コントローラー側を調べる
-		foreach(var item in code) {
-			if(Input.GetKeyDown(item)) return true;
+		joyStickNum = 0;
+		for(int i = 0;i < code.Length;i++) {
+			if(Input.GetKeyDown(code[i])) {
+				joyStickNum = i + 1;
+				return true;
+			}
 		}
 
 		//無ければキーボード側
@@ -223,12 +253,26 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 	/// <param name="button"></param>
 	/// <returns></returns>
 	public static bool GetButtonAny(GamePad.Button button) {
+		int d;
+		return GetButtonAny(button, out d);
+	}
+	/// <summary>
+	/// 全てのコントローラーでボタンを押されているときの入力を取る
+	/// </summary>
+	/// <param name="button"></param>
+	/// <param name="joyStickNum">押されたコントローラーの番号。0はキーボード</param>
+	/// <returns></returns>
+	public static bool GetButtonAny(GamePad.Button button, out int joyStickNum) {
 
 		var code = GetAllKeyCode(button);
 
 		//コントローラー側を調べる
-		foreach(var item in code) {
-			if(Input.GetKey(item)) return true;
+		joyStickNum = 0;
+		for(int i = 0;i < code.Length;i++) {
+			if(Input.GetKey(code[i])) {
+				joyStickNum = i + 1;
+				return true;
+			}
 		}
 
 		//無ければキーボード側
@@ -277,12 +321,26 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 	/// <param name="button"></param>
 	/// <returns></returns>
 	public static bool GetButtonUpAny(GamePad.Button button) {
+		int d;
+		return GetButtonUpAny(button, out d);
+	}
+	/// <summary>
+	/// 全てのコントローラーでボタンを離したときの入力を取る
+	/// </summary>
+	/// <param name="button"></param>
+	/// <param name="joyStickNum">押されたコントローラーの番号。0はキーボード</param>
+	/// <returns></returns>
+	public static bool GetButtonUpAny(GamePad.Button button, out int joyStickNum) {
 
 		var code = GetAllKeyCode(button);
 
 		//コントローラー側を調べる
-		foreach(var item in code) {
-			if(Input.GetKeyUp(item)) return true;
+		joyStickNum = 0;
+		for(int i = 0;i < code.Length;i++) {
+			if(Input.GetKeyUp(code[i])) {
+				joyStickNum = i + 1;
+				return true;
+			}
 		}
 
 		//無ければキーボード側

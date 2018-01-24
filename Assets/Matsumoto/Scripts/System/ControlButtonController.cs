@@ -10,11 +10,10 @@ public class ControlButtonController : MonoBehaviour {
 	const GamePad.Axis MOVE_KEY = GamePad.Axis.LeftStick;
 	const GamePad.Button EXEC_KEY = GamePad.Button.A;
 
-
 	const float MAX_SPEED = 10f;
 	const float ACCEL = 0.1f;
-	const float HIGHLIGHT_RATE = 2.5f;
-	const float HIGHLIGHT_FREQ = 4;
+
+	public static bool isFreeze;
 
 	static List<ControlButtonController> controls = new List<ControlButtonController>();
 
@@ -25,11 +24,11 @@ public class ControlButtonController : MonoBehaviour {
 	float accSpeed = 0;
 	float speed = 1;
 
-	Coroutine flashCoroutine;
-	Image buttonImage;
-	Color buttonColor;
 
 	void Update() {
+
+		if(isFreeze) return;
+
 		CheckAndExecMove(id);
 		CheckAndExecSelect(id);
 	}
@@ -83,16 +82,9 @@ public class ControlButtonController : MonoBehaviour {
 	public void Focus(ControlButton button) {
 
 		//フォーカス時の処理
-		button.OnFocus();
+		if(focusButton) focusButton.OnFocusChanged();
 		focusButton = button;
-
-		//点滅アニメーション
-		if(flashCoroutine != null) {
-			StopCoroutine(flashCoroutine);
-			buttonImage.color = buttonColor;
-		}
-
-		flashCoroutine = StartCoroutine(Flashing());
+		focusButton.OnFocus();
 	}
 
 	/// <summary>
@@ -107,22 +99,7 @@ public class ControlButtonController : MonoBehaviour {
 		return angle % 4;
 	}
 
-	IEnumerator Flashing() {
 
-		buttonImage = focusButton.GetComponent<Image>();
-		buttonColor = buttonImage.color;
-		var highLightColor = buttonColor * HIGHLIGHT_RATE;
-		float t = 0;
-
-		while(true) {
-			t += Time.deltaTime;
-
-			var ratio = Mathf.Abs(Mathf.Sin(t * HIGHLIGHT_FREQ));
-			buttonImage.color = Color.Lerp(buttonColor, highLightColor, ratio);
-
-			yield return null;
-		}
-	}
 
 	/// <summary>
 	/// コントローラーで操作するボタンシステムを生成

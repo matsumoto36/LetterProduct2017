@@ -21,17 +21,26 @@ public class StartSelect : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        GetComponent<Button>().Select();
-    }
+		//GetComponent<Button>().Select();
+
+		ControlButton.GetButton(ButtonName.Title_Start).onSelect += () => {
+			//シーン移動
+			FadeManager.Instance.LoadScene("Main_Select", 2);
+		};
+		ControlButton.GetButton(ButtonName.Option).onSelect += () => {
+			//オプション画面を表示
+			return;
+		};
+	}
 
     // Update is called once per frame
     void Update ()
     {
        
-            if (InputManager.GetButtonDown(playerIndex, GamePad.Button.A) )
-            {
-                OnGoSelect();
-            }
+            //if (InputManager.GetButtonDown(playerIndex, GamePad.Button.A) )
+            //{
+            //    OnGoSelect();
+            //}
       
        
     }
