@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: MeleeWeapon
   m_EditorClassIdentifier: 
   model: {fileID: 1126669553478676, guid: a3b450854be2cd9459551048951bb0e9, type: 2}
+  icon: {fileID: 21300000, guid: 7b6b2d34f0527574e8e7073295b0555d, type: 3}
   interval: 1
   power: 10
   mod:

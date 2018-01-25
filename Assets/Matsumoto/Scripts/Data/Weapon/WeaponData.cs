@@ -9,6 +9,8 @@ public abstract class WeaponData : ScriptableObjectBase {
 	public const string ASSET_PATH = "Assets/Resources/Data/Weapon";
 
 	public GameObject model;
+	public Sprite icon;
+
 	public float interval;
 	public int power;
 	public StatusModifier mod;
@@ -27,6 +29,7 @@ public abstract class WeaponData : ScriptableObjectBase {
 
 		var weapon = Instantiate(model).AddComponent<T>();
 		weapon.name = name;
+		weapon.icon = icon;
 		weapon.weaponMod = mod;
 		
 		setDataMethod(weapon);

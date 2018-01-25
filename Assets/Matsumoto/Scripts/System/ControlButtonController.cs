@@ -132,6 +132,9 @@ public class ControlButtonController : MonoBehaviour {
 			return;
 		}
 
-		Destroy(controls.Find(item => item.id == controlID).gameObject);
+		var controller = controls.Find(item => item.id == controlID);
+		controller.focusButton.OnFocusChanged();
+		controls.Remove(controller);
+		Destroy(controller.gameObject);
 	}
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: GrenadeWeapon
   m_EditorClassIdentifier: 
   model: {fileID: 1116969592381008, guid: 3bfe9eac3ff4a80499eb37b971406237, type: 2}
+  icon: {fileID: 21300000, guid: 284e9102cc70a3b46854c2a2d317fb7d, type: 3}
   interval: 0.5
   power: 10
   mod:

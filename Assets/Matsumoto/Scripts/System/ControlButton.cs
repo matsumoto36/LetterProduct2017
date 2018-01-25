@@ -9,26 +9,29 @@ public enum ButtonName {
 	Title_Start,
 	Option,
 
-	Pl1Center,
-	Pl1Left,
-	Pl1Down,
-	Pl1Right,
-	Pl1Up,
-	Pl2Center,
-	Pl2Left,
-	Pl2Down,
-	Pl2Right,
-	Pl2Up,
-	Pl3Center,
-	Pl3Left,
-	Pl3Down,
-	Pl3Right,
-	Pl3Up,
-	Pl4Center,
-	Pl4Left,
-	Pl4Down,
-	Pl4Right,
-	Pl4Up,
+	Pl1Weapon1,
+	Pl1Weapon2,
+	Pl1Weapon3,
+	Pl1Weapon4,
+	Pl1Weapon5,
+
+	Pl2Weapon1,
+	Pl2Weapon2,
+	Pl2Weapon3,
+	Pl2Weapon4,
+	Pl2Weapon5,
+
+	Pl3Weapon1,
+	Pl3Weapon2,
+	Pl3Weapon3,
+	Pl3Weapon4,
+	Pl3Weapon5,
+
+	Pl4Weapon1,
+	Pl4Weapon2,
+	Pl4Weapon3,
+	Pl4Weapon4,
+	Pl4Weapon5,
 }
 
 /// <summary>
@@ -52,6 +55,7 @@ public class ControlButton : MonoBehaviour {
 
 	public Shader buttonShader;
 
+	bool isSelecting = false;
 	Coroutine flashCoroutine;
 	Button button;
 	Image buttonImage;
@@ -71,9 +75,7 @@ public class ControlButton : MonoBehaviour {
 	IEnumerator Flashing() {
 
 		float t = 0;
-
 		while(true) {
-
 			if(!buttonImage) yield break;
 
 			t += Time.deltaTime;
@@ -87,10 +89,14 @@ public class ControlButton : MonoBehaviour {
 
 	IEnumerator SelectAnim() {
 
+		isSelecting = true;
+
 		buttonImage.material.SetTexture("_Texture1", button.spriteState.pressedSprite.texture);
 		buttonImage.materialForRendering.SetFloat("_Blend", 0);
 
 		yield return new WaitForSeconds(SELECT_IMAGE_TIME);
+
+		isSelecting = false;
 
 		buttonImage.material.SetTexture("_Texture1", button.targetGraphic.mainTexture);
 	}
@@ -120,10 +126,23 @@ public class ControlButton : MonoBehaviour {
 	/// </summary>
 	public void OnSelect() {
 
+		if(isSelecting) return;
+
 		if(flashCoroutine != null) StopCoroutine(flashCoroutine);
 		StartCoroutine(SelectAnim());
 
 		if(onSelect != null) onSelect();
+	}
+
+	public void AnimCancel() {
+
+		if(flashCoroutine != null) StopCoroutine(flashCoroutine);
+		StopCoroutine(SelectAnim());
+
+		isSelecting = false;
+		buttonImage.material.SetTexture("_Texture1", button.targetGraphic.mainTexture);
+		buttonImage.materialForRendering.SetFloat("_Blend", 0);
+
 	}
 
 	public static ControlButton GetButton(ButtonName buttonName) {

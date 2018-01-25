@@ -12,7 +12,7 @@ public class TestSpawnUnit : MonoBehaviour {
 		//処理はGameManagerに移行してください
 		//UnitManager.LoadUnitData();
 
-		var playerData = Resources.Load<PlayerData>("Data/Unit/Player");
+		var playerData = Resources.Load<PlayerData>("Data/Unit/Player1");
 
 		var player1 = (Player)playerData.Spawn(new Vector3(), Quaternion.identity);
 		InputManager.SetControllerData(0, ControlType.Keyboard, GamepadInput.GamePad.Index.One);

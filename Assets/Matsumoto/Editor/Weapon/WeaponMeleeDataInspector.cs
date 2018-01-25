@@ -21,6 +21,7 @@ public class WeaponMeleeDataInspector : WeaponDataInspector {
 		serializedObject.Update();
 
 		EditorGUILayout.PropertyField(model, new GUIContent("モデルデータ"));
+		EditorGUILayout.PropertyField(icon, new GUIContent("アイコン"));
 		EditorGUILayout.PropertyField(interval, new GUIContent("次の攻撃までの待ち時間"));
 		EditorGUILayout.PropertyField(power, new GUIContent("1ヒット時のダメージ"));
 		EditorGUILayout.PropertyField(mod, new GUIContent("パッシブ効果"), true);
