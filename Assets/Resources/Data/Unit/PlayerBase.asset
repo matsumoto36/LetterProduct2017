@@ -9,15 +9,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0073dccb5160bae4a8fe76aafd5a4b13, type: 3}
-  m_Name: Player2
+  m_Name: PlayerBase
   m_EditorClassIdentifier: 
-  model: {fileID: 1543448793856946, guid: e9bb997283248d14f8c35c98af029b98, type: 2}
+  model: {fileID: 1336118053342800, guid: df1d47c3075b1ed4882cfef781fc2512, type: 2}
   hp: 100
   dropExp: 0
   nextLevelExp: 10
   moveSpeed: 6
   rotSpeed: 10
   weaponData:
-  - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
-  - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
+  - {fileID: 11400000, guid: ca1cadd95c8f34b4a85826b2f7da8930, type: 2}
+  - {fileID: 11400000, guid: c8d587155205ac143810ee4022b55a1c, type: 2}
   isDrawWeapon: 1

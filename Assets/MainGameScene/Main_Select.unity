@@ -3579,6 +3579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24849f5883dd18b4c9838bc30fb6a48b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initSelectButton: {fileID: 0}
   playercnt: 0
   flg: 0
   startButton: {fileID: 0}
@@ -12351,6 +12352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entryButton: 0
+  playerBase: {fileID: 11400000, guid: cff9415863ed7f547bf2a8ab71c1761e, type: 2}
   custom:
   - {fileID: 650377346}
   - {fileID: 1995974052}
@@ -12573,6 +12575,48 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1613131889}
+--- !u!1 &1614882025
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1614882027}
+  - component: {fileID: 1614882026}
+  m_Layer: 0
+  m_Name: '[Fade]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1614882026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1614882025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a46fbc8abca843b3a095e3f7b6ea63f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DebugMode: 0
+  fadeColor: {r: 0, g: 0, b: 0, a: 1}
+--- !u!4 &1614882027
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1614882025}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.499018, y: 4.0722175, z: -1.8970072}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1641251637
 GameObject:
   m_ObjectHideFlags: 0

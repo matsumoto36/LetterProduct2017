@@ -6,7 +6,11 @@ using UnityEngine.SceneManagement;
 using GamepadInput;
 
 public class StartSelect : MonoBehaviour {
-    public  int playercnt = 0;
+
+	const string NEXT_SCENE_NAME = "Main_Select";
+	public ControlButton initSelectButton;
+
+	public  int playercnt = 0;
     public bool flg = false;
 
     public Button startButton;
@@ -21,11 +25,13 @@ public class StartSelect : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-		//GetComponent<Button>().Select();
+		var controller = ControlButtonController.CreateController(-1);
+		controller.Focus(initSelectButton);
 
 		ControlButton.GetButton(ButtonName.Title_Start).onSelect += () => {
 			//シーン移動
-			FadeManager.Instance.LoadScene("Main_Select", 2);
+			FadeManager.Instance.LoadScene(NEXT_SCENE_NAME, 1);
+			ControlButtonController.DestroyController(-1);
 		};
 		ControlButton.GetButton(ButtonName.Option).onSelect += () => {
 			//オプション画面を表示

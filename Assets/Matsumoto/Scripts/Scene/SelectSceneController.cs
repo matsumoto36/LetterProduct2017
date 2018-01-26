@@ -6,7 +6,11 @@ using GamepadInput;
 
 public class SelectSceneController : MonoBehaviour {
 
+	const string NEXT_SCENE_NAME = "TestPlayerSpawn";
+
 	public GamePad.Button entryButton;
+
+	public UnitData playerBase;
 	public CustomizeCharactor[] custom;
 
 	int[] entryControllerID = new int[InputManager.MAX_PAYER_NUM];
@@ -20,12 +24,9 @@ public class SelectSceneController : MonoBehaviour {
 
 	public void Init() {
 
-		//
 		for(int i = 0;i < entryControllerID.Length;i++) {
 			entryControllerID[i] = -1;
 		}
-
-		ControlButtonController.DestroyController(-1);
 
 		//初期化
 		foreach(var item in custom) {
@@ -64,7 +65,7 @@ public class SelectSceneController : MonoBehaviour {
 
 		//プレイヤーと紐づけ
 		if(joystickNum == 0) {
-			InputManager.SetControllerData(playerID, ControlType.Keyboard, (GamePad.Index)joystickNum);
+			InputManager.SetControllerData(playerID, ControlType.Keyboard, (GamePad.Index)3);
 		}
 		else {
 			InputManager.SetControllerData(playerID, ControlType.GamePadXBOX, (GamePad.Index)(joystickNum - 1));
@@ -80,13 +81,23 @@ public class SelectSceneController : MonoBehaviour {
 
 		Debug.Log("GameStart");
 
-		foreach(var item in custom) {
-			if(!item.isReady) continue;
+		//ゲームデータ初期化
+		GameData.InitData();
 
-			item.isFreeze = true;
-			item.Customize();
+		for(int i = 0; i < custom.Length;i++) {
+			if(!custom[i].isReady) continue;
+
+			//データ登録
+			custom[i].isFreeze = true;
+			custom[i].Customize();
+
+			//エントリー情報登録
+			GameData.instance.isEntryPlayer[i] = true;
+
 		}
 
+		//シーン移動
+		FadeManager.Instance.LoadScene(NEXT_SCENE_NAME, 2);
 	}
 
 	public void Exit(int playerID) {

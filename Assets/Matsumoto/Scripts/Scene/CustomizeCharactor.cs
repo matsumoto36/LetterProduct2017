@@ -218,14 +218,16 @@ public class CustomizeCharactor : MonoBehaviour {
 
 	public void Customize() {
 
-		//var unitData = Instantiate(customizeTarget);
-		Debug.Log(customizeTarget);
+		customizeTarget.hp = owner.playerBase.hp;
+		customizeTarget.dropExp = owner.playerBase.dropExp;
+		customizeTarget.nextLevelExp = owner.playerBase.nextLevelExp;
+		customizeTarget.moveSpeed = owner.playerBase.moveSpeed;
+		customizeTarget.rotSpeed = owner.playerBase.rotSpeed;
+		customizeTarget.isDrawWeapon = owner.playerBase.isDrawWeapon;
 
 		customizeTarget.weaponData = selectedButton
 			.Select(item => item.viewData)
 			.ToArray();
 
-		//AssetDatabase.CreateAsset(unitData, );
-		//AssetDatabase.Refresh();
 	}
 }

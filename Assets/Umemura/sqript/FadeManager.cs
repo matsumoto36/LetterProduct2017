@@ -150,6 +150,5 @@ public class FadeManager : MonoBehaviour
 		}
 
 		this.isFading = false;
-        Destroy(gameObject);
 	}
 }

@@ -394,6 +394,8 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 
 		if(playerIndex < 0 || playerIndex >= MAX_PAYER_NUM) return;
 
+		Debug.Log(playerIndex + "," + type + "," + controllerIndex);
+
 		instance.controllerData[playerIndex] = new ControllerData(type, controllerIndex);
 	}
 	/// <summary>
