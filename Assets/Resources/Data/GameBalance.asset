@@ -11,3 +11,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc01970b321468498cc9d32d8335d79, type: 3}
   m_Name: GameBalance
   m_EditorClassIdentifier: 
+  enemyHPMul: 2
+  nextExpMagnification: 1.1
+  levelUpMulHP: 1.01
+  levelUpMulPower: 1.1
+  healPointPerExp: 0.25
+  duraEggCanUseRatio: 0.25
+  duraEggChargeTime: 0.1
+  duraEggExitTime: 0.1
+  duraEggExitWeakTime: 2
+  duraEggExitDamageMag: 2
+  revivableRadius: 2
+  reviveTime: 4
+  comboStartDuration: 2
+  comboMulPower: 1.001

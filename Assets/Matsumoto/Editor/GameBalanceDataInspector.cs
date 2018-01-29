@@ -4,6 +4,7 @@ using UnityEditor;
 [CustomEditor(typeof(GameBalanceData))]
 public class GameBalanceDataInspector : Editor {
 
+	SerializedProperty enemyHPMul;
 	SerializedProperty nextExpMagnification;
 	SerializedProperty levelUpMulHP;
 	SerializedProperty levelUpMulPower;
@@ -16,6 +17,7 @@ public class GameBalanceDataInspector : Editor {
 	SerializedProperty reviveTime;
 
 	void OnEnable() {
+		enemyHPMul = serializedObject.FindProperty("enemyHPMul");
 		nextExpMagnification = serializedObject.FindProperty("nextExpMagnification");
 		levelUpMulHP = serializedObject.FindProperty("levelUpMulHP");
 		levelUpMulPower = serializedObject.FindProperty("levelUpMulPower");
@@ -32,6 +34,8 @@ public class GameBalanceDataInspector : Editor {
 
 		serializedObject.Update();
 
+		EditorGUILayout.PropertyField(enemyHPMul, new GUIContent("プレイヤー4人の時の敵の体力の倍率"));
+		EditorGUILayout.Separator();
 		EditorGUILayout.PropertyField(nextExpMagnification, new GUIContent("次のレベルの必要経験値倍率"));
 		EditorGUILayout.PropertyField(levelUpMulHP, new GUIContent("レベルアップ時のHP増加倍率"));
 		EditorGUILayout.PropertyField(levelUpMulPower, new GUIContent("レベルアップ時の攻撃力増加倍率"));
