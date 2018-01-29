@@ -18,14 +18,19 @@ MonoBehaviour:
   moveSpeed: 6
   rotSpeed: 10
   weaponData:
-  - {fileID: 11400000, guid: 3b2f234c55bddca45986162a1d7564d8, type: 2}
+  - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
   - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
   isDrawWeapon: 1
   attackDuration: 1
   attackRestDuration: 1
+  isBoss: 1
+  attackLine: 5
+  searchAngle: 40
   enemyAIType: 2
   dashSpeed: 10
   moveLine: 20
   stepLine: 5
-  attackLine: 5
-  searchAngle: 40
+  speed: 10
+  targetChangeTime: 5
+  rollingMax: 2
+  spAttackTime: 2
