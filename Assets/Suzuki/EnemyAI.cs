@@ -103,12 +103,12 @@ public class EnemyAI : MonoBehaviour
 
         //Enemyスクリプトを取得
         enemySC = GetComponent<Enemy>();
-    }
+	}
 
-    void Update()
+	void Update()
     {
-        //画面に映っていたら行動を起こす(廃止)
-        if (true)//isRendered
+		//画面に映っていたら行動を起こす(廃止)
+		if (true)//isRendered
         {
             int passCount = 0;
             for (int i = 0; i < playerList.Count; i++)

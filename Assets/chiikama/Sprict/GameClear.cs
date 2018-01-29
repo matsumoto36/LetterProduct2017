@@ -11,7 +11,7 @@ public class GameClear : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(boss.nowHP <= 0)
+		if(boss && boss.nowHP <= 0)
 		{
 			Debug.Log("GameClear");
 		}
