@@ -8,7 +8,11 @@ public abstract class WeaponDataInspector : Editor {
 	protected SerializedProperty interval;
 	protected SerializedProperty power;
 	protected SerializedProperty mod;
-	
+
+	protected SerializedProperty equipSound;
+	protected SerializedProperty useSound;
+	protected SerializedProperty hitSound;
+
 	protected virtual void OnEnable() {
 
 		model = serializedObject.FindProperty("model");
@@ -16,5 +20,9 @@ public abstract class WeaponDataInspector : Editor {
 		interval = serializedObject.FindProperty("interval");
 		power = serializedObject.FindProperty("power");
 		mod = serializedObject.FindProperty("mod");
+
+		equipSound = serializedObject.FindProperty("equipSound");
+		useSound = serializedObject.FindProperty("useSound");
+		hitSound = serializedObject.FindProperty("hitSound");
 	}
 }

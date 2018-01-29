@@ -15,6 +15,10 @@ public abstract class WeaponData : ScriptableObjectBase {
 	public int power;
 	public StatusModifier mod;
 
+	public string equipSound;
+	public string useSound;
+	public string hitSound;
+
 	/// <summary>
 	/// 武器を生成
 	/// </summary>
@@ -31,7 +35,11 @@ public abstract class WeaponData : ScriptableObjectBase {
 		weapon.name = name;
 		weapon.icon = icon;
 		weapon.weaponMod = mod;
-		
+
+		weapon.equipSound = equipSound;
+		weapon.useSound = useSound;
+		weapon.hitSound = hitSound;
+
 		setDataMethod(weapon);
 
 		return weapon;

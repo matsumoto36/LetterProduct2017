@@ -11,9 +11,7 @@ using GamepadInput;
 public class Player : Unit {
 
 	const string ANIM_HAND_R = "[AnimHandR]";
-
 	const string COMBO_STATUS_MOD = "COMBO_MOD";
-
 	const string DURA_EGG_PREFAB_PATH = "System/DuraEgg";
 
 	public int playerIndex;
@@ -142,7 +140,8 @@ public class Player : Unit {
 			StartCoroutine(SkillWait(
 				GameBalance.instance.data.duraEggChargeTime,
 				() => InputManager.GetButton(playerIndex, GamePad.Button.A),
-				InDuraEgg));
+				InDuraEgg,
+				() => { }));
 		}
 
 		//耐久卵から出る
@@ -152,7 +151,8 @@ public class Player : Unit {
 			StartCoroutine(SkillWait(
 				GameBalance.instance.data.duraEggExitTime,
 				() => InputManager.GetButton(playerIndex, GamePad.Button.A),
-				OutDuraEgg));
+				OutDuraEgg,
+				() => { }));
 		}
 	}
 	/// <summary>
@@ -236,10 +236,16 @@ public class Player : Unit {
 
 			if(InputManager.GetButtonDown(playerIndex, GamePad.Button.B)) {
 
+				//SE再生
+				var se = AudioManager.PlaySE("Revive_Motion", autoDelete:false);
+				se.loop = true;
+				se.transform.position = transform.position;
+
 				StartCoroutine(SkillWait(
-					GameBalance.instance.data.duraEggExitTime,
+					GameBalance.instance.data.reviveTime,
 					() => InputManager.GetButton(playerIndex, GamePad.Button.B),
-					() => RivivePlayer(rivaivablePlayer)));
+					() => { RivivePlayer(rivaivablePlayer); Destroy(se.gameObject); },
+					() => Destroy(se.gameObject)));
 			}
 
 		}
@@ -255,9 +261,15 @@ public class Player : Unit {
 
 		target.isDead = false;
 		var healPoint = nowHP / 2;
+
 		//回復してダメージ
 		Heal(this, target, healPoint);
 		ApplyDamage(healPoint);
+
+		//SE再生
+		var se = AudioManager.PlaySE("Revive");
+		se.transform.position = transform.position;
+
 	}
 	/// <summary>
 	/// 復活可能なプレイヤーを取得する
@@ -289,7 +301,13 @@ public class Player : Unit {
 	}
 
 	void OnAttackAnimStart() {
-		anim.speed = ((WeaponMelee)equipWeapon[0]).motionSpeed;
+
+		var weapon = ((WeaponMelee)equipWeapon[0]);
+		anim.speed = weapon.motionSpeed;
+
+		//振るSEの再生
+		var se = AudioManager.PlaySE(weapon.useSound);
+		se.transform.position = transform.position;
 	}
 
 	void OnAttackAnimComplete() {
@@ -303,7 +321,7 @@ public class Player : Unit {
 	/// <param name="predicate">判断条件</param>
 	/// <param name="onComplete">成功時に実行される</param>
 	/// <returns>時間</returns>
-	IEnumerator SkillWait(float waitTime, Func<bool> predicate, Action onComplete) {
+	IEnumerator SkillWait(float waitTime, Func<bool> predicate, Action onComplete, Action onFailed) {
 
 		if(!predicate()) yield break;
 
@@ -317,6 +335,9 @@ public class Player : Unit {
 			//続けないとキャンセル
 			if(!predicate()) {
 				canMove = canAttack = buff;
+
+				//失敗時に実行
+				onFailed();
 				yield break;
 			}
 
@@ -324,6 +345,8 @@ public class Player : Unit {
 		}
 
 		canMove = canAttack = true;
+
+		//
 
 		//成功時に実行
 		onComplete();

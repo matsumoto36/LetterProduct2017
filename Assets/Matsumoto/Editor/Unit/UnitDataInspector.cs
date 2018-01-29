@@ -12,6 +12,9 @@ public abstract class UnitDataInspector : Editor {
 	 
 	protected SerializedProperty weaponData;
 
+	protected SerializedProperty deathSE;
+	protected SerializedProperty deathParticle;
+
 	protected virtual void OnEnable() {
 
 		model = serializedObject.FindProperty("model");
@@ -22,5 +25,8 @@ public abstract class UnitDataInspector : Editor {
 		rotSpeed = serializedObject.FindProperty("rotSpeed");
 
 		weaponData = serializedObject.FindProperty("weaponData");
+
+		deathSE = serializedObject.FindProperty("deathSE");
+		deathParticle = serializedObject.FindProperty("deathParticle");
 	}
 }

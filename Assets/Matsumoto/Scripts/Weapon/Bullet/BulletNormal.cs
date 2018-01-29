@@ -35,5 +35,9 @@ public class BulletNormal : Bullet {
 		//ヒットパーティクルの再生
 		ParticleManager.Spawn(hitParticleName, transform.position, Quaternion.identity);
 		Destroy(gameObject);
+
+		//SEの再生
+		var se = AudioManager.PlaySE(bulletOwner.hitSound);
+		se.transform.position = other.ClosestPointOnBounds(transform.position);
 	}
 }

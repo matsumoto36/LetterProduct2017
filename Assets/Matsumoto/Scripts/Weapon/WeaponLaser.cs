@@ -13,6 +13,9 @@ enum LaserState {
 /// </summary>
 public class WeaponLaser : WeaponRanged {
 
+	public string chargeSound;
+	AudioSource laserSE;
+	
 	BulletLaser laser;
 	LaserState state = LaserState.Idle;
 
@@ -25,13 +28,17 @@ public class WeaponLaser : WeaponRanged {
 		state = LaserState.Charging;
 		chargeTime = 0;
 
+		//SE再生
+		laserSE = AudioManager.PlaySE(chargeSound, autoDelete:false);
+		laserSE.loop = true;
+		laserSE.transform.SetParent(transform);
+
 		//発射準備
 		laser = (BulletLaser)bulletData.Create(this, shotAnchor.position, shotAnchor.rotation);
 		laser.transform.parent = shotAnchor;
 		laser.transform.localPosition = new Vector3();
 		laser.transform.localRotation = Quaternion.identity;
 		laser.length = 0.01f;
-		//laser.transform.localScale = Vector3.one;
 
 		maxLength = laser.GetBulletData<BulletLaserData>().maxLength;
 	}
@@ -42,6 +49,14 @@ public class WeaponLaser : WeaponRanged {
 			case LaserState.Charging:
 
 				if((chargeTime += Time.deltaTime) > interval) {
+
+					//チャージSE終了
+					Destroy(laserSE.gameObject);
+
+					//SE再生
+					laserSE = AudioManager.PlaySE(useSound, autoDelete: false);
+					laserSE.loop = true;
+					laserSE.transform.SetParent(transform);
 
 					//照射ステートに変更
 					state = LaserState.Shot;
@@ -64,10 +79,17 @@ public class WeaponLaser : WeaponRanged {
 				//照射距離の設定
 				laser.length = length;
 
-				if(length == maxLength && laser.laserHitParticle) {
+				if(length == maxLength) {
 					//当たらなかった場合はヒットエフェクトの再生を止める
-					Destroy(laser.laserHitParticle.gameObject);
-					laser.laserHitParticle = null;
+					if(laser.laserHitParticle) {
+						Destroy(laser.laserHitParticle.gameObject);
+						laser.laserHitParticle = null;
+					}
+					//ヒットSEも止める
+					if(laser.laserHitSE) {
+						Destroy(laser.laserHitSE.gameObject);
+						laser.laserHitSE = null;
+					}
 				}
 
 				break;
@@ -80,6 +102,8 @@ public class WeaponLaser : WeaponRanged {
 
 		//ヒットエフェクトがあれば消す
 		if(laser.laserHitParticle) Destroy(laser.laserHitParticle.gameObject);
+		//ヒットSEがあれば消す
+		if(laser.laserHitSE) Destroy(laser.laserHitSE.gameObject);
 
 		//照射終了
 		if(laser) {
@@ -89,6 +113,9 @@ public class WeaponLaser : WeaponRanged {
 			laser.GetComponentInChildren<PKFxFX>().StopEffect();
 		}
 		laser = null;
+
+		//SE終了
+		Destroy(laserSE.gameObject);
 
 		//待機ステートに変更
 		state = LaserState.Idle;

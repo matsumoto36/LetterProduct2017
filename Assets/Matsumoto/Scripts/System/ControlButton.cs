@@ -101,13 +101,16 @@ public class ControlButton : MonoBehaviour {
 		buttonImage.material.SetTexture("_Texture1", button.targetGraphic.mainTexture);
 	}
 
+	public void Flash() {
+		flashCoroutine = StartCoroutine(Flashing());
+	}
+
 	/// <summary>
 	/// カーソルが来たとき
 	/// </summary>
 	public void OnFocus() {
 
-		flashCoroutine = StartCoroutine(Flashing());
-
+		Flash();
 		if(onFocus != null) onFocus();
 	}
 

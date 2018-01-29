@@ -10,11 +10,15 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 
 	const string MIXER_PATH = "Sounds/MainAudioMixer";		//ミキサーのパス
 	const string BGM_PATH = "Sounds/BGM/";					//BGMのフォルダーパス
-	const string SE_PATH = "Sounds/SE/";					//SEのフォルダーパス
+	const string SE_PATH = "Sounds/SE/";                    //SEのフォルダーパス
+
+	public AudioMixer mixer { get; private set; }			//ミキサー
 
 	AudioMixerGroup[] mixerGroups = new AudioMixerGroup[2];	//ミキサーのグループ [0]SE [1]BGM
+
 	Dictionary<string, AudioClip> SEclips;					//再生用リスト
 	Dictionary<string, AudioClip> BGMclips;					//再生用リスト
+
 	AudioSource nowPlayingBGM;								//現在再生されているBGM
 	string latestPlayBGM = "";								//再生されているBGMの種類
 
@@ -44,13 +48,15 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 
 
 		//BGM読み込み
+		instance.BGMclips = new Dictionary<string, AudioClip>();
 		foreach(var item in Resources.LoadAll<AudioClip>(BGM_PATH)) {
 			instance.BGMclips.Add(item.name, item);
 		}
 
 		//SE読み込み
+		instance.SEclips = new Dictionary<string, AudioClip>();
 		foreach(var item in Resources.LoadAll<AudioClip>(SE_PATH)) {
-			instance.BGMclips.Add(item.name, item);
+			instance.SEclips.Add(item.name, item);
 		}
 
 	}
@@ -65,7 +71,7 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	public static AudioSource PlaySE(string SEName, float vol = 1.0f, bool autoDelete = true) {
 
 		//SE取得
-		var clip = GetBGM(SEName);
+		var clip = GetSE(SEName);
 		if(!clip) return null;
 
 		var src = new GameObject("[Audio SE - " + SEName + "]").AddComponent<AudioSource>();
@@ -154,7 +160,7 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// <returns>SE</returns>
 	static AudioClip GetSE(string SEName) {
 
-		var clip = instance.BGMclips[SEName];
+		var clip = instance.SEclips[SEName];
 		if(!clip) {
 			Debug.LogError("SEName:" + SEName + " is not found.");
 			return null;
