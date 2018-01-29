@@ -23,7 +23,7 @@ MonoBehaviour:
   isDrawWeapon: 1
   attackDuration: 0
   attackRestDuration: 0
-  enemyAIType: 1
+  enemyAIType: 0
   dashSpeed: 10
   moveLine: 20
   stepLine: 5

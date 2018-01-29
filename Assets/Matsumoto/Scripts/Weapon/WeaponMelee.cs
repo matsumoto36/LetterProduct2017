@@ -15,10 +15,10 @@ public class WeaponMelee : Weapon {
 	public Transform effectPos1 { get; private set; }
 	public Transform effectPos2 { get; private set; }
 	public string attackParticleName { get; set; }
+	public float motionSpeed { get; set; }
 
 	bool isInit;
 	string motionName;
-	float motionSpeed;
 	Collider meleeCol;
 	PKFxFX effect;
 	float effectSize;
@@ -105,6 +105,8 @@ public class WeaponMelee : Weapon {
 	public void SetEffectEnable(bool enable) {
 		effect.GetAttribute("SizeMax").ValueFloat = enable ? effectSize : 0;
 	}
+
+
 
 	void OnTriggerEnter(Collider other) {
 

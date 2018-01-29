@@ -23,7 +23,7 @@ public class SpliteCamera : MonoBehaviour
     public Camera player3Camera;
     public Camera player4Camera;
 
-    public int playercnt = 0;
+    public int playercnt = 4;
     
 
     public int playerIndex;

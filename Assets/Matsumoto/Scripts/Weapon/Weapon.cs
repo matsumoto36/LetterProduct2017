@@ -29,7 +29,7 @@ public abstract class Weapon : MonoBehaviour {
 	StatusModifier _weaponMod = new StatusModifier();
 	public StatusModifier weaponMod { get { return _weaponMod; } set { _weaponMod = value; } }
 
-
+	public Sprite icon { get; set; }
 	public Unit unitOwner { get; set; }
 	public WeaponType weaponType { get; protected set; }
 	public bool canAction { get; private set; }
