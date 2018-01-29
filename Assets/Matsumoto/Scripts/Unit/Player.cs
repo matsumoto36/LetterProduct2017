@@ -59,6 +59,9 @@ public class Player : Unit {
 
 		//ヒット通知でコンボ加算
 		OnAttackHit += (_) => AddCombo();
+
+		//アニメーションの初期状態をセット
+		anim.SetBool("IsRanged", equipWeapon[0].weaponType == WeaponType.Ranged);
 	}
 
 	void Update() {
