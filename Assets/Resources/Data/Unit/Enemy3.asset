@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Name: Enemy3
   m_EditorClassIdentifier: 
   model: {fileID: 1158953667820146, guid: 04b145cc9f8467244a39a9c06406791f, type: 2}
-  hp: 20
+  hp: 1000
   dropExp: 100
   nextLevelExp: 10
   moveSpeed: 6
   rotSpeed: 10
   weaponData:
   - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
-  - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
+  - {fileID: 11400000, guid: ca1cadd95c8f34b4a85826b2f7da8930, type: 2}
   isDrawWeapon: 1
   attackDuration: 1
   attackRestDuration: 1
