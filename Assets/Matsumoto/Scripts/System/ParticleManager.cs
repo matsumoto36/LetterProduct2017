@@ -88,11 +88,6 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 			Destroy(pObj.gameObject, deleteTime);
 		}
 
-		//マイナスの場合はパーティクルの長さで削除
-		//if(deleteTime < 0) {
-		//	Destroy(pObj.gameObject, pObj.)
-		//}
-
 		return pObj;
 	}
 }

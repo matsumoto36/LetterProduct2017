@@ -10,18 +10,6 @@ public class StartSelect : MonoBehaviour {
 	const string NEXT_SCENE_NAME = "Main_Select";
 	public ControlButton initSelectButton;
 
-	public  int playercnt = 0;
-    public bool flg = false;
-
-    public Button startButton;
-
-    public Text player1Ready;
-    public Text player2Ready;
-    public Text player3Ready;
-    public Text player4Ready;
-
-    public int playerIndex;
-
     // Use this for initialization
     void Start ()
     {
