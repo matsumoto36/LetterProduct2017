@@ -57,8 +57,14 @@ public class Player : Unit {
 		duraEggPrefab = Resources.Load<GameObject>(DURA_EGG_PREFAB_PATH);
 		if(!duraEggPrefab) Debug.LogError("Failed load DuraEgg.");
 
-		//ヒット通知でコンボ加算
-		OnAttackHit += (_) => AddCombo();
+		//ヒット通知
+		OnAttackHit += (other) => {
+			//総ダメージ加算
+			GameData.instance.sumDamage[playerIndex] += other.attackedUnitList[other.attackedUnitList.Count - 1].damage;
+			//コンボ加算
+			AddCombo();
+			};
+
 
 		//アニメーションの初期状態をセット
 		anim.SetBool("IsRanged", equipWeapon[0].weaponType == WeaponType.Ranged);

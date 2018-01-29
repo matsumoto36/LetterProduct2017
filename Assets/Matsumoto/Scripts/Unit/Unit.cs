@@ -405,12 +405,6 @@ public abstract class Unit : MonoBehaviour {
 
 		Debug.Log("Attack " + from.name + " -> " + to.name);
 
-		//攻撃がヒットしたことを伝える
-		if(from.OnAttackHit != null) from.OnAttackHit(to);
-
-		//攻撃してきた敵を伝える
-		if(to.OnAttacked != null) to.OnAttacked(from);
-
 		//経験値分配用
 		bool findFromUnit = to.attackedUnitList
 			.Where((item) => item.attackUnit == from)
@@ -424,6 +418,12 @@ public abstract class Unit : MonoBehaviour {
 		else {
 			to.attackedUnitList.Add(new DamageLog(from, damage, Time.time));
 		}
+
+		//攻撃がヒットしたことを伝える
+		if(from.OnAttackHit != null) from.OnAttackHit(to);
+
+		//攻撃してきた敵を伝える
+		if(to.OnAttacked != null) to.OnAttacked(from);
 
 		//ダメージを与える
 		to.ApplyDamage(damage);
