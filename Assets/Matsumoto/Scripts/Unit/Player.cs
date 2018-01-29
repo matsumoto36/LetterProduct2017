@@ -279,6 +279,14 @@ public class Player : Unit {
 		return nearestPlayer;
 	}
 
+	void OnAttackAnimStart() {
+		anim.speed = ((WeaponMelee)equipWeapon[0]).motionSpeed;
+	}
+
+	void OnAttackAnimComplete() {
+		anim.speed = 1;
+	}
+
 	/// <summary>
 	/// 一定時間待つ
 	/// </summary>

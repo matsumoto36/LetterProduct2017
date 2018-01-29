@@ -26,7 +26,7 @@ public class WeaponMeleeDataInspector : WeaponDataInspector {
 		EditorGUILayout.PropertyField(power, new GUIContent("1ヒット時のダメージ"));
 		EditorGUILayout.PropertyField(mod, new GUIContent("パッシブ効果"), true);
 		EditorGUILayout.PropertyField(particleName, new GUIContent("攻撃時に再生するエフェクト"));
-		EditorGUILayout.PropertyField(motionName, new GUIContent("再生するアニメーション"));
+		//EditorGUILayout.PropertyField(motionName, new GUIContent("再生するアニメーション"));
 		EditorGUILayout.PropertyField(motionSpeed, new GUIContent("再生するアニメーションの再生速度"));
 
 		serializedObject.ApplyModifiedProperties();
