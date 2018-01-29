@@ -66,9 +66,4 @@ public static void Pauser()
 			obj.OnResume();
 		}
 	}
-	// Update is called once per frame
-	void Update()
-	{
-
-	}
 }
