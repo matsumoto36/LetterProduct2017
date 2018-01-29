@@ -21,9 +21,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
   - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
   isDrawWeapon: 1
+<<<<<<< HEAD
   attackDuration: 2
   attackRestDuration: 2
   enemyAIType: 1
+=======
+  attackDuration: 0
+  attackRestDuration: 0
+  enemyAIType: 0
+>>>>>>> d9053b00fed5b0b8c2775fb5e563ac4149e2ac23
   dashSpeed: 10
   moveLine: 20
   stepLine: 5

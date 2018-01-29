@@ -11,9 +11,9 @@ using System.Collections.Generic;
 /// </summary>
 public class FadeManager : MonoBehaviour
 {
-    private AsyncOperation async;
-    public GameObject LoadingUi;
-    public Slider Slider;
+	private AsyncOperation async;
+	//public GameObject LoadingUi;
+	//public Slider Slider;
 
     #region Singleton
 
@@ -111,7 +111,7 @@ public class FadeManager : MonoBehaviour
 	/// <param name='interval'>暗転にかかる時間(秒)</param>
 	public void LoadScene (string scene, float interval)
 	{
-        LoadingUi.SetActive(true);
+        //LoadingUi.SetActive(true);
         StartCoroutine (TransScene (scene, interval));
 	}
 
@@ -122,7 +122,6 @@ public class FadeManager : MonoBehaviour
     /// <param name='interval'>暗転にかかる時間(秒)</param>
     private IEnumerator TransScene(string scene, float interval)
     {
-        GetComponent<Collider>().enabled = false;
 
         //だんだん暗く .
         this.isFading = true;
@@ -138,7 +137,7 @@ public class FadeManager : MonoBehaviour
         while (!async.isDone)
         {
             Debug.Log(async.progress * 100 + "%");
-            Slider.value = async.progress;
+            //Slider.value = async.progress;
             yield return null;
         }
 
@@ -151,6 +150,5 @@ public class FadeManager : MonoBehaviour
 		}
 
 		this.isFading = false;
-        Destroy(gameObject);
 	}
 }

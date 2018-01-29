@@ -9,6 +9,7 @@ public class WeaponLaserDataInspector : WeaponRangedDataInspector {
 		serializedObject.Update();
 
 		EditorGUILayout.PropertyField(model, new GUIContent("モデルデータ"));
+		EditorGUILayout.PropertyField(icon, new GUIContent("アイコン"));
 		EditorGUILayout.PropertyField(interval, new GUIContent("チャージ時間(秒)"));
 		EditorGUILayout.PropertyField(power, new GUIContent("一秒に与えるダメージ"));
 		EditorGUILayout.PropertyField(mod, new GUIContent("パッシブ効果"), true);
