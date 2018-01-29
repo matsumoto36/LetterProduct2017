@@ -13,13 +13,17 @@ public class BossAI : MonoBehaviour
     public float targetChangeTime = 5.0f;   //ターゲット変更時間(秒)
 
     //必殺関連
-    [SerializeField]
     private bool spAttackFlg;
     private int rollingCount = 0;           //回転した回数
-    private int rollingMax = 2;             //何回転するか
+    public int rollingMax = 2;             //何回転するか
+    private float rollingSpeed = 0;         //回転速度
+    [SerializeField]
+    private float acceleration;             //加速度
+    [SerializeField]
+    private float frameParSecond;
     private float spChargeTime = 60.0f;     //チャージ時間(秒)
-    private float spAttackTime = 2;         //攻撃持続時間(秒)
-    private float rotationNum = 0;          //回転した角度(度)
+    public float spAttackTime = 2;         //攻撃持続時間(秒)
+    private float rotationNum = 0;          //回った角度(度)
 
     // Enemyスクリプト
     private Enemy enemySC;
@@ -39,7 +43,7 @@ public class BossAI : MonoBehaviour
 
     //確認用変数
     [SerializeField]
-    private float spCountDown = 60;//spChargeTimeの値
+    private float spCountDown;//spChargeTimeの値
 
     void Start()
     {
@@ -75,6 +79,12 @@ public class BossAI : MonoBehaviour
         {
             damage[i] = 0;
         }
+        frameParSecond = 1 / Time.deltaTime;
+        while (frameParSecond > 60)
+        {
+            frameParSecond = 1 / Time.deltaTime;
+        }
+        
 
         //攻撃されたときの通知に登録
         enemySC.OnAttacked += OnAttacked;
@@ -82,6 +92,9 @@ public class BossAI : MonoBehaviour
         //カウントコルーチン始動
         StartCoroutine(TargetChange());
         StartCoroutine(SpecialAttackCounter());
+
+        //確認用
+        spCountDown = spChargeTime;
     }
     
     void Update()
@@ -180,14 +193,37 @@ public class BossAI : MonoBehaviour
         //rotationNum += f;
         //transform.Rotate(new Vector3(0, f, 0));
 
-        //案2 微妙に良くなった?
-        float f = 360 * rollingMax * Time.deltaTime / spAttackTime;
-        rotationNum += f;
-        var v = Quaternion.Slerp
-            (Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z),
-            Quaternion.Euler(transform.rotation.x, 180, transform.rotation.z),
-            Time.deltaTime);
-        transform.Rotate(v.eulerAngles * spAttackTime);
+        ////案2 微妙に良くなった?　やってることが変わらない
+        //float f = 360 * rollingMax * Time.deltaTime / spAttackTime;
+        //rotationNum += f;
+        //var v = Quaternion.Slerp
+        //    (Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z),
+        //    Quaternion.Euler(transform.rotation.x, 180, transform.rotation.z),
+        //    Time.deltaTime);
+        //transform.Rotate(v.eulerAngles * spAttackTime);
+
+        //案3 加速して回る 時々速度が速い
+        CalculateRollingSpeed();
+        if (rotationNum <= 360 * rollingMax / 2)
+        {
+            rollingSpeed += acceleration;
+        }
+        else
+        {
+            rollingSpeed += -acceleration;
+        }
+
+        if (rollingSpeed >= 0)
+        {
+            //通常
+            transform.Rotate(new Vector3(0, rollingSpeed, 0));
+            rotationNum += rollingSpeed;
+        }
+        else
+        {
+            //逆回転防止
+            rollingCount++;
+        }
 
         if (rotationNum >= 360 * (rollingCount + 1))
         {
@@ -201,10 +237,25 @@ public class BossAI : MonoBehaviour
             //終了
             rollingCount = 0;
             rotationNum = 0;
+            rollingSpeed = 0;
             spAttackFlg = false;
         }
     }
-    
+
+    void CalculateRollingSpeed()
+    {
+        int i = 1000;
+
+        ////誤差が出るためあらかじめにTime.deltaTimeを計算
+        //float f2 = Mathf.Round(Mathf.Pow(Time.deltaTime, 2) * Mathf.Pow(i, 2)) / Mathf.Pow(i, 2);
+        //float f = 360 * rollingMax / Mathf.Pow(spAttackTime / 2, 2) * f2;
+        
+        float f = 360 * rollingMax / Mathf.Pow(spAttackTime / 2, 2) / Mathf.Pow(frameParSecond, 2);
+
+        acceleration = Mathf.Round(f * i) / i;//小数点第3位未満
+    }
+
+
     /// <summary>
     /// 攻撃されたときに実行される
     /// </summary>
@@ -295,7 +346,7 @@ public class BossAI : MonoBehaviour
         yield return new WaitForSeconds(spChargeTime);
         spAttackFlg = true;
 
-        spCountDown = 10;
+        spCountDown = spChargeTime;
         StartCoroutine(SpecialAttackCounter());
     }
 }

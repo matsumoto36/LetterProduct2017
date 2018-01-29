@@ -136,13 +136,13 @@ public class EnemyAI : MonoBehaviour
             for (int i = 1; i < playerList.Count; i++)
             {
                 //比較対象が存在,生存しているか
-                if (playerCS[target].isDead)
+                if (playerCS[i].isDead)
+                {
+                    /*ターゲット変更無*/
+                }
+                else if (playerCS[target].isDead)
                 {
                     target = i;
-                }
-                else if (playerCS[i].isDead)
-                {
-
                 }
 
                 //通常処理
@@ -158,7 +158,7 @@ public class EnemyAI : MonoBehaviour
             //ルート化し正しき値へ
             distance[target] = Mathf.Sqrt(distance[target]);
 
-            if (mode >= Mode.DUAL)
+            if (mode == Mode.DUAL)
             {
                 //方向転換
                 DirctionChange();
@@ -181,6 +181,7 @@ public class EnemyAI : MonoBehaviour
                     Debug.Log("ビーム");
                 }
             }
+
             if (distance[target] < attackLine)
             {
                 DirctionChange();
@@ -201,12 +202,12 @@ public class EnemyAI : MonoBehaviour
             }
             else if (enemySC.isAttack == false)//移動処理
             {
-                if (distance[target] < stepLine && mode >= Mode.APPROACH)
+                if (distance[target] < stepLine && mode != Mode.BASIS)
                 {
                     //急接近
                     Dash();
                 }
-                else if (distance[target] < moveLine && mode >= Mode.BASIS)
+                else if (distance[target] < moveLine)
                 {
                     //移動
                     Move();
@@ -225,6 +226,7 @@ public class EnemyAI : MonoBehaviour
 
         if (enemySC.isAttack)
         {
+            //攻撃中は少し遅い
             f /= 2;
         }
 
@@ -254,15 +256,6 @@ public class EnemyAI : MonoBehaviour
         DirctionChange();
 
         transform.position += transform.forward * dashSpeed * Time.deltaTime;
-    }
-
-    /// <summary>
-    /// ターゲット変更時間
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator TargetChange()
-    {
-        yield return new WaitForSeconds(5.0f);
     }
 
     //SkinnedMeshRendererなるものが必要？
