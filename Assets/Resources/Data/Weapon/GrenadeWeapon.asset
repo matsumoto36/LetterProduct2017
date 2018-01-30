@@ -16,11 +16,11 @@ MonoBehaviour:
   interval: 0.5
   power: 10
   mod:
-    mulHP: 2
-    mulMoveSpeed: 2
+    mulHP: 1
+    mulMoveSpeed: 1
     mulPow: 2
-    mulAttackSpeed: 2
+    mulAttackSpeed: 0.75
   equipSound: gun_ready
   useSound: grenade
-  hitSound: 
+  hitSound: grenade_Launcher_explosion
   bulletData: {fileID: 11400000, guid: 579c66cf6d9f17d429339560dfd177f7, type: 2}

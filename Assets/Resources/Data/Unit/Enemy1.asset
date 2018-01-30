@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Enemy1
   m_EditorClassIdentifier: 
   model: {fileID: 1684041354851596, guid: 5d0890b6b9d293d4eaa0e0fc1753edb5, type: 2}
-  hp: 140
-  dropExp: 100
+  hp: 200
+  dropExp: 10
   nextLevelExp: 10
   moveSpeed: 6
   rotSpeed: 10
@@ -21,6 +21,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d0e8fb6ad32c50e44bcf93dbbbafa7ca, type: 2}
   - {fileID: 11400000, guid: d0e8fb6ad32c50e44bcf93dbbbafa7ca, type: 2}
   isDrawWeapon: 1
+  deathSE: 
+  deathParticle: 
   attackDuration: 0
   attackRestDuration: 0
   isBoss: 0

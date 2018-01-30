@@ -11,13 +11,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63c314df90f050746b1ab815129d8340, type: 3}
   m_Name: LaserEnemyWeapon
   m_EditorClassIdentifier: 
-  model: {fileID: 0}
+  model: {fileID: 1633574998664960, guid: 55238d07e4edd084eaaf5e8280e9db4b, type: 2}
   icon: {fileID: 0}
-  interval: 0
-  power: 0
+  interval: 2
+  power: 10
   mod:
     mulHP: 1
     mulMoveSpeed: 1
     mulPow: 1
     mulAttackSpeed: 1
-  bulletData: {fileID: 0}
+  equipSound: gun_ready
+  useSound: beam_No1
+  hitSound: beam_No3
+  bulletData: {fileID: 11400000, guid: 730a15274f15c9e428a3680594cc7161, type: 2}
+  shootingMoveMul: 0
+  chargeSound: beam-gun-charge
