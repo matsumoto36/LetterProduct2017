@@ -18,8 +18,8 @@ public class ControlButtonController : MonoBehaviour {
 	static List<ControlButtonController> controls = new List<ControlButtonController>();
 
 	public int id;
+	public ControlButton focusButton { get; private set; }
 
-	ControlButton focusButton;
 
 	float accSpeed = 0;
 	float speed = 1;

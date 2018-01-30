@@ -50,6 +50,9 @@ public class CustomizeCharactor : MonoBehaviour {
 			item.Init();
 			//カーソル合わせた時
 			item.button.onFocus += () => {
+
+				AudioManager.PlaySE("Weapon_Button");
+
 				if(viewModel) Destroy(viewModel);
 				viewModel = Instantiate(item.viewData.model, viewModelAnchor.position, viewModelAnchor.rotation);
 				viewModel.transform.SetParent(viewModelAnchor);
@@ -82,16 +85,22 @@ public class CustomizeCharactor : MonoBehaviour {
 			case SelectState.FirstWeapon:
 				state--;
 
+				AudioManager.PlaySE("back_button");
+
 				Exit();
 				break;
 			case SelectState.SecondWeapon:
 				state--;
+
+				AudioManager.PlaySE("back_button");
 
 				controller.Focus(selectedButton[0].button);
 				RemoveWeapon(0);
 				break;
 			case SelectState.Ready:
 				state--;
+
+				AudioManager.PlaySE("back_button");
 
 				isReady = false;
 				owner.ReadyCancel();
@@ -114,11 +123,15 @@ public class CustomizeCharactor : MonoBehaviour {
 			case SelectState.FirstWeapon:
 				state++;
 
+				AudioManager.PlaySE("Weapon_select");
+
 				SetWeapon(0, button);
-				controller.Focus(button.button);
+				button.button.Flash();
 				break;
 			case SelectState.SecondWeapon:
 				state++;
+
+				AudioManager.PlaySE("Weapon_select");
 
 				SetWeapon(1, button);
 				isReady = true;
@@ -224,6 +237,8 @@ public class CustomizeCharactor : MonoBehaviour {
 		customizeTarget.moveSpeed = owner.playerBase.moveSpeed;
 		customizeTarget.rotSpeed = owner.playerBase.rotSpeed;
 		customizeTarget.isDrawWeapon = owner.playerBase.isDrawWeapon;
+		customizeTarget.deathSE = owner.playerBase.deathSE;
+		customizeTarget.deathParticle = owner.playerBase.deathParticle;
 
 		customizeTarget.weaponData = selectedButton
 			.Select(item => item.viewData)

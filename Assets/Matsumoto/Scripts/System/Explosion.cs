@@ -18,6 +18,8 @@ public class Explosion : MonoBehaviour {
 			Unit.Attack(owner.unitOwner, item, power);
 		}
 
-		//見えないので、エフェクトとか再生したい
+		//SEの再生
+		AudioManager.PlaySE("grenade_Launcher_explosion");
+
 	}
 }

@@ -18,6 +18,9 @@ public abstract class UnitData : ScriptableObjectBase {
 	public WeaponData[] weaponData;
 	public bool isDrawWeapon = true;
 
+	public string deathSE;
+	public string deathParticle;
+
 	public UnitData() {
 		weaponData = new WeaponData[2];
 	}
@@ -46,6 +49,8 @@ public abstract class UnitData : ScriptableObjectBase {
 
 		//データをセット
 		unit.SetInitData(hp, dropExp, nextLevelExp, moveSpeed, rotSpeed);
+		unit.deathSE = deathSE;
+		unit.deathParticle = deathParticle;
 
 		//武器を装備
 		if(weaponData[0]) {

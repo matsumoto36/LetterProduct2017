@@ -29,6 +29,10 @@ public class WeaponMeleeDataInspector : WeaponDataInspector {
 		//EditorGUILayout.PropertyField(motionName, new GUIContent("再生するアニメーション"));
 		EditorGUILayout.PropertyField(motionSpeed, new GUIContent("再生するアニメーションの再生速度"));
 
+		EditorGUILayout.PropertyField(equipSound, new GUIContent("持ち替えた時のSE"));
+		EditorGUILayout.PropertyField(useSound, new GUIContent("振ったときのSE"));
+		EditorGUILayout.PropertyField(hitSound, new GUIContent("当たったときのSE"));
+
 		serializedObject.ApplyModifiedProperties();
 	}
 }

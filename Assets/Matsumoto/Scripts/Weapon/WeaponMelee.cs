@@ -106,7 +106,21 @@ public class WeaponMelee : Weapon {
 		effect.GetAttribute("SizeMax").ValueFloat = enable ? effectSize : 0;
 	}
 
+	/// <summary>
+	/// 何かに当たった時の共通処理
+	/// </summary>
+	/// <param name="other"></param>
+	void HitAny(Collider other) {
 
+		var hitPos = other.ClosestPointOnBounds(transform.position);
+
+		//エフェクトの再生
+		ParticleManager.Spawn("MeleeHit", hitPos, Quaternion.identity);
+		//SEの再生
+		var se = AudioManager.PlaySE(hitSound);
+		se.transform.position = hitPos;
+
+	}
 
 	void OnTriggerEnter(Collider other) {
 
@@ -116,15 +130,11 @@ public class WeaponMelee : Weapon {
 			if(CheckHit(other.gameObject)) {
 				Unit.Attack(unitOwner, unit, power);
 
-				//エフェクトの再生
-				var hitPos = other.ClosestPointOnBounds(transform.position);
-				ParticleManager.Spawn("MeleeHit", hitPos, Quaternion.identity);
+				HitAny(other);
 			}
 		}
 		else {
-			//エフェクトの再生
-			var hitPos = other.ClosestPointOnBounds(transform.position);
-			ParticleManager.Spawn("MeleeHit", hitPos, Quaternion.identity);
+			HitAny(other);
 		}
 	}
 }

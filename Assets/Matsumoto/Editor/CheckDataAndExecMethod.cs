@@ -27,4 +27,12 @@ public class CheckDataAndExecMethod : Editor {
 		AssetDatabase.CreateAsset(asset, GameBalanceData.ASSET_PATH + ".asset");
 		AssetDatabase.Refresh();
 	}
+
+	[MenuItem("Assets/Create/Create GameBalanceData")]
+	static void CreateGameBalanceData() {
+		var exampleAsset = CreateInstance<GameBalanceData>();
+
+		AssetDatabase.CreateAsset(exampleAsset, "Assets/Resources/" + GameBalanceData.ASSET_PATH + ".asset");
+		AssetDatabase.Refresh();
+	}
 }

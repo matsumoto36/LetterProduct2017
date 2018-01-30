@@ -20,6 +20,9 @@ MonoBehaviour:
     mulMoveSpeed: 1
     mulPow: 2.2
     mulAttackSpeed: 1
+  equipSound: sword-ready
+  useSound: sword-gesture
+  hitSound: Blade_Hit
   motionName: 
   particleName: MeleeAttack
   motionSpeed: 1

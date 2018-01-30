@@ -75,6 +75,10 @@ public class BulletGrenade : BulletNormal {
 		Debug.Log(data.particleNameHit);
 		ParticleManager.Spawn(data.particleNameHit, transform.position, transform.rotation);
 
+		//SEの再生
+		var se = AudioManager.PlaySE(bulletOwner.hitSound);
+		se.transform.position = transform.position;
+
 		//爆発
 		Explosion.Create(bulletOwner, transform.position, data.expPow, data.expRadius);
 	}
