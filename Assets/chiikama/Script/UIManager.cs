@@ -20,6 +20,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 	// Use this for initialization
 	void Start ()
 	{
+		
 	}
 	
 	// Update is called once per frame
