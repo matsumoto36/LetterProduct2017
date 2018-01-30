@@ -291,6 +291,9 @@ public abstract class Unit : MonoBehaviour {
 		nowHP = 0;
 		isDead = true;
 
+		//死亡時のパーティクル再生
+		ParticleManager.Spawn(deathParticle, transform.position, transform.rotation);
+
 		//SEの再生
 		var se = AudioManager.PlaySE(deathSE);
 		if(se) se.transform.position = transform.position;
