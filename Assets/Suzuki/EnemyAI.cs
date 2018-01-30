@@ -18,7 +18,7 @@ public class EnemyAI : MonoBehaviour
     public float searchAngle = 7;       //視野
 
     // Enemyスクリプト
-    private Enemy enemySC;
+    private denger2 enemySC;
 
     //プレイヤー関連
     [SerializeField]
@@ -48,7 +48,7 @@ public class EnemyAI : MonoBehaviour
             }
         }
         //Enemyスクリプトを取得
-        enemySC = GetComponent<Enemy>();
+        enemySC = GetComponent<denger2>();
     }
 
     void Update()

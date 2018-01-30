@@ -19,7 +19,7 @@ public class BossAI : MonoBehaviour
     public float rotationNum = 0;           //回転数(角度)
 
     // Enemyスクリプト
-    private Enemy enemySC;
+    private denger2 enemySC;
     //ステータス
     private EnemyStructure statusSC;
 
@@ -51,7 +51,7 @@ public class BossAI : MonoBehaviour
             }
         }
         //Enemyスクリプトを取得
-        enemySC = GetComponent<Enemy>();
+        enemySC = GetComponent<denger2>();
 
         //初期化
         spAttackFlg = false;

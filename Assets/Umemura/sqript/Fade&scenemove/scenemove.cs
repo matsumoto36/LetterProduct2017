@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class MoveCamera : MonoBehaviour
+public class scenemove : MonoBehaviour
 {
     /// <summary>移動先のシーン名</summary>
     public string sceneName;
@@ -19,11 +20,10 @@ public class MoveCamera : MonoBehaviour
 
     }
 
-    void OnTriggerEnter(Collider c)
+    public void OnClick()
     {
-        if (c.gameObject.CompareTag("Player1"))
         {
-            FadeManager.Instance.LoadScene(sceneName, 2.0f);
+            SceneManager.LoadScene(sceneName);
         }
     }
 }

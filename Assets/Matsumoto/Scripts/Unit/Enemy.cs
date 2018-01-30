@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// AIで動く敵のキャラクター
 /// </summary>
-public class Enemy : Unit {
+public class denger2 : Unit {
 
 	[SerializeField]
 	float _attackDuration;						//攻撃する時間
