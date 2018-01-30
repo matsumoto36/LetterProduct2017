@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d0e8fb6ad32c50e44bcf93dbbbafa7ca, type: 2}
   isDrawWeapon: 1
   deathSE: 
-  deathParticle: 
+  deathParticle: EnemyDeath
   attackDuration: 0
   attackRestDuration: 0
   isBoss: 0
