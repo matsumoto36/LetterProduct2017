@@ -13,6 +13,9 @@ enum LaserState {
 /// </summary>
 public class WeaponLaser : WeaponRanged {
 
+	const string MOVE_MOD = "MOVE_MOD";
+
+	public float shootingMoveMul;
 	public string chargeSound;
 	AudioSource laserSE;
 	
@@ -41,6 +44,9 @@ public class WeaponLaser : WeaponRanged {
 		laser.length = 0.01f;
 
 		maxLength = laser.GetBulletData<BulletLaserData>().maxLength;
+
+		//移動速度を変更する処理をパッシブ効果で実装
+		unitOwner.ApplyModifier(new StatusModifier(1, shootingMoveMul, 1, 1), MOVE_MOD);
 	}
 
 	public override void Attack() {
@@ -116,6 +122,9 @@ public class WeaponLaser : WeaponRanged {
 
 		//SE終了
 		Destroy(laserSE.gameObject);
+
+		//移動速度を変更する処理を解除
+		unitOwner.RemoveModifier(MOVE_MOD);
 
 		//待機ステートに変更
 		state = LaserState.Idle;

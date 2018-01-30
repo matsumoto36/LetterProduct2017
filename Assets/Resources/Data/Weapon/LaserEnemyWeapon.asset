@@ -9,20 +9,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63c314df90f050746b1ab815129d8340, type: 3}
-  m_Name: HealLaserWeapon
+  m_Name: LaserEnemyWeapon
   m_EditorClassIdentifier: 
-  model: {fileID: 1368071919355132, guid: 4ca2a5448b26d364fb7a70d4e33b8527, type: 2}
-  icon: {fileID: 21300000, guid: a019a8c9a7c408a4eb988f70be445cb7, type: 3}
-  interval: 1
+  model: {fileID: 1633574998664960, guid: 55238d07e4edd084eaaf5e8280e9db4b, type: 2}
+  icon: {fileID: 0}
+  interval: 2
   power: 10
   mod:
-    mulHP: 0.9
-    mulMoveSpeed: 0.9
+    mulHP: 1
+    mulMoveSpeed: 1
     mulPow: 1
     mulAttackSpeed: 1
   equipSound: gun_ready
-  useSound: curebeams
-  hitSound: HP_recovery
-  bulletData: {fileID: 11400000, guid: daa6a0da107578048ae4c11874e174c6, type: 2}
+  useSound: beam_No1
+  hitSound: beam_No3
+  bulletData: {fileID: 11400000, guid: 730a15274f15c9e428a3680594cc7161, type: 2}
   shootingMoveMul: 0
   chargeSound: beam-gun-charge

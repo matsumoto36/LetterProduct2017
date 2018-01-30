@@ -293,14 +293,12 @@ public abstract class Unit : MonoBehaviour {
 
 		//SEの再生
 		var se = AudioManager.PlaySE(deathSE);
-		se.transform.position = transform.position;
+		if(se) se.transform.position = transform.position;
 
 		//ダメージの合計を出す
 		var damageSum = attackedUnitList
 			.Select((item) => item.damage)
 			.Sum();
-
-		Debug.Log(attackedUnitList.Count);
 
 		//0除算回避
 		if(damageSum * dropExp == 0) return;
@@ -410,8 +408,6 @@ public abstract class Unit : MonoBehaviour {
 		if(!from || !to) return false;
 		if(from.isDead || to.isDead) return false;
 
-		Debug.Log("Attack " + from.name + " -> " + to.name);
-
 		//経験値分配用
 		bool findFromUnit = to.attackedUnitList
 			.Where((item) => item.attackUnit == from)
@@ -420,9 +416,15 @@ public abstract class Unit : MonoBehaviour {
 		if(findFromUnit) {
 			to.attackedUnitList
 			.Where((item) => item.attackUnit == from)
-			.Select((item) => item.damage += damage);
+			.Select((item) => {
+				Debug.Log("AttackUnit : " + item.attackUnit.name + ", Damage : " + item.damage + ", Time : " + item.time);
+				item.damage += damage;
+				return 0;
+			});
+
 		}
 		else {
+			Debug.Log("AttackUnit : " + from.name + ", Damage : " + damage + ", Time : " + Time.time);
 			to.attackedUnitList.Add(new DamageLog(from, damage, Time.time));
 		}
 
