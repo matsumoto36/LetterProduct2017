@@ -1,16 +1,21 @@
 using UnityEngine;
 using System.Collections;
+using System.Linq;
 
-public class door : MonoBehaviour {
-	GameObject thedoor;
+public class door : MonoBehaviour
+{
+	public GameObject thedoor;
 
-void OnTriggerEnter ( Collider obj  ){
-	thedoor= GameObject.FindWithTag("SF_Door");
-	thedoor.GetComponent<Animation>().Play("open");
-}
 
-void OnTriggerExit ( Collider obj  ){
-	thedoor= GameObject.FindWithTag("SF_Door");
-	thedoor.GetComponent<Animation>().Play("close");
-}
+
+	void Start()
+	{
+        int enemyCount = Unit.unitList
+                .Where(unit => unit.group != UnitGroup.Player)
+                .Count();
+        if (enemyCount <= 0)
+        {
+            thedoor.GetComponent<Animation>().Play("open");
+        }
+    }
 }

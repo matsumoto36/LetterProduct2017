@@ -18,6 +18,16 @@ public sealed class GameBalance : SingletonMonoBehaviour<GameBalance> {
 	}
 
 	/// <summary>
+	/// プレイヤー人数で変わる敵のHP倍率を計算
+	/// </summary>
+	/// <param name="playerCount"></param>
+	/// <returns></returns>
+	public static float CalcEnemyHPEnrich(int playerCount) {
+		if(playerCount == 1) return 1;
+		return instance.data.enemyHPMul / (3 / (playerCount - 1)) + 1;
+	}
+
+	/// <summary>
 	/// 次のレベルに必要な経験値を取得
 	/// </summary>
 	/// <param name="baseEXP">1から2に上げるための経験値</param>

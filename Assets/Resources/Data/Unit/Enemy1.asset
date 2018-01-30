@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Enemy1
   m_EditorClassIdentifier: 
   model: {fileID: 1684041354851596, guid: 5d0890b6b9d293d4eaa0e0fc1753edb5, type: 2}
-  hp: 20
+  hp: 140
   dropExp: 100
   nextLevelExp: 10
   moveSpeed: 6
@@ -23,9 +23,14 @@ MonoBehaviour:
   isDrawWeapon: 1
   attackDuration: 0
   attackRestDuration: 0
+  isBoss: 0
+  attackLine: 5
+  searchAngle: 40
   enemyAIType: 2
   dashSpeed: 10
   moveLine: 20
   stepLine: 5
-  attackLine: 5
-  searchAngle: 40
+  speed: 10
+  targetChangeTime: 5
+  rollingMax: 2
+  spAttackTime: 2
