@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bdd69715e5cb824eb010fbdf7e29519, type: 3}
   m_Name: EnemyBulletLaser
   m_EditorClassIdentifier: 
-  model: {fileID: 0}
-  particleNameAttack: 
-  particleNameHit: 
-  maxLength: 0
+  model: {fileID: 1452217599058280, guid: c9f535ab94295db408456a8b4f824360, type: 2}
+  particleNameAttack: EnemyLaser
+  particleNameHit: EnemyLaserHit
+  maxLength: 10
   isHeal: 0

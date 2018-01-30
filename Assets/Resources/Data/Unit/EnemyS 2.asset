@@ -18,14 +18,24 @@ MonoBehaviour:
   moveSpeed: 0
   rotSpeed: 20
   weaponData:
-  - {fileID: 11400000, guid: ca1cadd95c8f34b4a85826b2f7da8930, type: 2}
   - {fileID: 0}
+  - {fileID: 0}
+  isDrawWeapon: 1
+  deathSE: 
+  deathParticle: EnemyDeath
+  attackDuration: 0
+  attackRestDuration: 0
+  isBoss: 0
+  attackLine: 0
+  searchAngle: 0
   enemyAIType: 0
   dashSpeed: 0
   moveLine: 0
   stepLine: 0
-  attackLine: 0
-  searchAngle: 0
+  speed: 10
+  targetChangeTime: 5
+  rollingMax: 2
+  spAttackTime: 2
   detectAngle: 180
   detectRadius: 10
   isDetectAttacked: 1

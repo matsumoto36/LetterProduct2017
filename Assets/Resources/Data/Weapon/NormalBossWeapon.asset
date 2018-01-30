@@ -19,7 +19,7 @@ MonoBehaviour:
     mulHP: 1
     mulMoveSpeed: 1
     mulPow: 1
-    mulAttackSpeed: 1
+    mulAttackSpeed: 1.2
   equipSound: gun_ready
   useSound: gun_shot
   hitSound: shot-hit
