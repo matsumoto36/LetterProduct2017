@@ -24,5 +24,9 @@ MonoBehaviour:
   useSound: beam_No1
   hitSound: beam_No3
   bulletData: {fileID: 11400000, guid: 64ed567755c47554bac1a0e04972a5c7, type: 2}
+<<<<<<< HEAD
   shootingMoveMul: 0.5
+=======
+  shootingMoveMul: 0.2
+>>>>>>> ab786dff5b8c6902df0cb63fcf9f687468d5155f
   chargeSound: beam-gun-charge
