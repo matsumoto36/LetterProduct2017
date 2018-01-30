@@ -173,12 +173,10 @@ public class EnemyAI : MonoBehaviour
                     {
                         //遠距離用の武器に交換
                         enemySC.SwitchWeapon(1);
-                        Debug.Log("武器変更");
                     }
 
                     //遠距離攻撃
                     enemySC.Attack();
-                    Debug.Log("ビーム");
                 }
             }
 
@@ -192,12 +190,10 @@ public class EnemyAI : MonoBehaviour
                     {
                         //近接用の武器に交換
                         enemySC.SwitchWeapon(1);
-                        Debug.Log("武器変更");
                     }
 
                     //攻撃
                     enemySC.Attack();
-                    Debug.Log("剣");
                 }
             }
             else if (enemySC.isAttack == false)//移動処理

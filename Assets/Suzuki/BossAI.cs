@@ -25,6 +25,7 @@ public class BossAI : MonoBehaviour
     public float spAttackTime = 2;         //攻撃持続時間(秒)
     private float rotationNum = 0;          //回った角度(度)
 
+
     // Enemyスクリプト
     private Enemy enemySC;
 
@@ -34,10 +35,13 @@ public class BossAI : MonoBehaviour
     private Player[] playerCS;              //Playerスクリプト
     [SerializeField]
     private int target;                     //狙うプレイヤー
+    int lastAttackUnit;                     //最後に攻撃したPlayer
     [SerializeField]
     private float distance;                 //ターゲットとの距離
     [SerializeField]
     private int[] damage;                   //各々に負わされたダメージ
+    [SerializeField]
+    private int[] beforeTotalDamage;
     //[SerializeField]
     //private GameObject[] player;            //Playerオブジェクト
 
@@ -61,6 +65,7 @@ public class BossAI : MonoBehaviour
         }
         playerCS = new Player[playerList.Count];
         damage = new int[playerList.Count];
+        beforeTotalDamage = new int[playerList.Count];
 
         //Player参照
         for (int i = 0; i < playerList.Count; i++)
@@ -75,16 +80,17 @@ public class BossAI : MonoBehaviour
         //初期化
         spAttackFlg = false;
         target = 0;
+        lastAttackUnit = 0;
         for (int i = 0; i < playerList.Count; i++)
         {
             damage[i] = 0;
+            beforeTotalDamage[i] = 0;
         }
         frameParSecond = 1 / Time.deltaTime;
         while (frameParSecond > 60)
         {
             frameParSecond = 1 / Time.deltaTime;
         }
-        
 
         //攻撃されたときの通知に登録
         enemySC.OnAttacked += OnAttacked;
@@ -126,7 +132,6 @@ public class BossAI : MonoBehaviour
             {
                 //近接用の武器に交換
                 enemySC.SwitchWeapon(1);
-                Debug.Log("武器変更");
             }
 
             //近接攻撃
@@ -136,11 +141,10 @@ public class BossAI : MonoBehaviour
         {
             Move();
 
-            if (enemySC.equipWeapon[0].weaponType != WeaponType.Ranged)
+            if (enemySC.equipWeapon[0].weaponType != WeaponType.Ranged && distance > Mathf.Pow(attackLine, 2) + 1)
             {
                 //遠距離用の武器に交換
                 enemySC.SwitchWeapon(1);
-                Debug.Log("武器変更");
             }
 
             //遠距離攻撃
@@ -183,7 +187,6 @@ public class BossAI : MonoBehaviour
         {
             //遠距離用の武器に交換
             enemySC.SwitchWeapon(1);
-            Debug.Log("武器変更");
         }
 
         enemySC.Attack();
@@ -266,7 +269,15 @@ public class BossAI : MonoBehaviour
         {
             if (playerList[i] == from.gameObject)
             {
-                damage[i] += enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].damage;
+                for (int j = 0; j < enemySC.attackedUnitList.Count; j++)
+                {
+                    if (enemySC.attackedUnitList[j].attackUnit == from)
+                    {
+                        damage[i] = enemySC.attackedUnitList[j].damage - beforeTotalDamage[i];
+                        break;
+                    }
+                }
+                break;
             }
         }
 
@@ -286,52 +297,94 @@ public class BossAI : MonoBehaviour
         //targetChangeTime秒待つ(5秒)
         yield return new WaitForSeconds(targetChangeTime);
 
-        //targetChangeTime秒間に攻撃を受けた
-        if (Time.time - enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].time <= targetChangeTime)
+        //まだ一度も攻撃されていない
+        if (enemySC.attackedUnitList.Count < 1)
         {
-            //ダメージ比較
-            for (int i = 0; i < playerList.Count; i++)
+            target = 0;
+        }
+        else
+        {
+            //最後に攻撃したPlayerを算出
+            for (int i = 0; i < enemySC.attackedUnitList.Count; i++)
             {
-                if (target == i)
+                if (i == 0)
                 {
-                    //比較対象がすでにターゲット状態
+                    lastAttackUnit = 0;
                 }
-                //比較対象が存在,生存しているか
-                else if (playerList[target] == null || playerCS[target].isDead)
+                else if (enemySC.attackedUnitList[lastAttackUnit].time > enemySC.attackedUnitList[i].time)
                 {
-                    target = i;
+                    lastAttackUnit = i;
                 }
-                else if (playerList[i] == null || playerCS[i].isDead)
-                {
-                    //処理無し
-                }
+            }
 
-                //通常処理
-                else
+            //targetChangeTime秒間に攻撃を受けた
+            if (Time.time - enemySC.attackedUnitList[lastAttackUnit].time <= targetChangeTime)
+            {
+                List<int> maxDamage = new List<int>();
+
+                //ダメージ比較
+                for (int i = 0; i < playerList.Count; i++)
                 {
-                    if (damage[i] < damage[target])
+                    if (target == i)
+                    {
+                        //比較対象がすでにターゲット状態
+                    }
+                    //比較対象が生存しているか
+                    else if (playerCS[target].isDead)
+                    {
+                        target = i;
+                    }
+                    else if (playerCS[i].isDead)
+                    {
+                        //処理無し
+                    }
+                    //通常処理
+                    else
+                    {
+                        if (damage[i] > damage[target])
+                        {
+                            maxDamage.Clear();
+                            maxDamage.Add(i);
+                        }
+                        else if (damage[i] == damage[target])
+                        {
+                            maxDamage.Add(i);
+                        }
+                    }
+                }
+                //乱数でターゲット変更
+                int j = Random.Range(0, maxDamage.Count);
+                target = maxDamage[j];
+            }
+            //攻撃を受けなかった
+            else
+            {
+                for (int i = 0; i < playerList.Count; i++)
+                {
+                    if (playerList[i] == enemySC.attackedUnitList[lastAttackUnit].attackUnit)
                     {
                         target = i;
                     }
                 }
             }
-        }
-        //攻撃を受けなかった
-        else
-        {
-            for (int i = 0; i < playerList.Count; i++)
+
+            //初期化
+            for (int i = 0; i < damage.Length; i++)
             {
-                if (playerList[i] == enemySC.attackedUnitList[enemySC.attackedUnitList.Count - 1].attackUnit)
+                damage[i] = 0;
+            }
+            for (int i = 0; i < beforeTotalDamage.Length; i++)
+            {
+                for (int j = 0; j < enemySC.attackedUnitList.Count; j++)
                 {
-                    target = i;
+                    if(playerList[i] == enemySC.attackedUnitList[j].attackUnit.gameObject)
+                    {
+                        //合計値を記録
+                        beforeTotalDamage[i] = enemySC.attackedUnitList[j].damage;
+                        break;
+                    }
                 }
             }
-        }
-
-        //初期化
-        for (int i = 0; i < playerList.Count; i++)
-        {
-            damage[i] = 0;
         }
 
         StartCoroutine(TargetChange());
