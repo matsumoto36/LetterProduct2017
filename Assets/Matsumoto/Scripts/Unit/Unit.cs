@@ -293,7 +293,7 @@ public abstract class Unit : MonoBehaviour {
 
 		//SEの再生
 		var se = AudioManager.PlaySE(deathSE);
-		se.transform.position = transform.position;
+		if(se) se.transform.position = transform.position;
 
 		//ダメージの合計を出す
 		var damageSum = attackedUnitList

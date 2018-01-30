@@ -160,13 +160,11 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// <returns>SE</returns>
 	static AudioClip GetSE(string SEName) {
 
-		var clip = instance.SEclips[SEName];
-		if(!clip) {
+		if(!instance.SEclips.ContainsKey(SEName)) {
 			Debug.LogError("SEName:" + SEName + " is not found.");
 			return null;
 		}
-
-		return clip;
+		return instance.SEclips[SEName];
 	}
 
 	/// <summary>
@@ -176,13 +174,11 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// <returns>BGM</returns>
 	static AudioClip GetBGM(string BGMName) {
 
-		var clip = instance.BGMclips[BGMName];
-		if(!clip) {
+		if(!instance.BGMclips.ContainsKey(BGMName)) {
 			Debug.LogError("BGMName:" + BGMName + " is not found.");
 			return null;
 		}
-
-		return clip;
+		return instance.BGMclips[BGMName];
 	}
 
 	IEnumerator FadeInAnim(float fadeTime, string BGMName, float vol, bool isLoop) {
