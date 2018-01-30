@@ -14,7 +14,7 @@ MonoBehaviour:
   model: {fileID: 1543448793856946, guid: e9bb997283248d14f8c35c98af029b98, type: 2}
   hp: 100
   dropExp: 0
-  nextLevelExp: 30
+  nextLevelExp: 100
   moveSpeed: 6
   rotSpeed: 10
   weaponData:
@@ -22,4 +22,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
   isDrawWeapon: 1
   deathSE: 
-  deathParticle: 
+  deathParticle: EnemyDeath
