@@ -16,4 +16,4 @@ MonoBehaviour:
   particleNameHit: Explosive
   speed: 10
   expRadius: 10
-  expPow: 30
+  expPow: 15

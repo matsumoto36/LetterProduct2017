@@ -20,7 +20,7 @@ MonoBehaviour:
     mulMoveSpeed: 1
     mulPow: 1
     mulAttackSpeed: 1
-  equipSound: gun_ready
+  equipSound: 
   useSound: beam_No1
   hitSound: beam_No3
   bulletData: {fileID: 11400000, guid: 730a15274f15c9e428a3680594cc7161, type: 2}
