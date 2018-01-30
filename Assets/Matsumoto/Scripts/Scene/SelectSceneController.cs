@@ -6,7 +6,7 @@ using GamepadInput;
 
 public class SelectSceneController : MonoBehaviour {
 
-	const string NEXT_SCENE_NAME = "TestPlayerSpawn";
+	const string NEXT_SCENE_NAME = "Stage1";
 
 	public GamePad.Button entryButton;
 
