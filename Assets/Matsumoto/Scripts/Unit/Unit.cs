@@ -91,6 +91,9 @@ public abstract class Unit : MonoBehaviour {
 
 	public Animator anim { get; private set; }
 
+	public string deathSE { get; set; }
+	public string deathParticle { get; set; }
+
 	protected Transform body;
 	protected Vector3 moveVec;
 	protected Transform handAnchor;
@@ -288,6 +291,10 @@ public abstract class Unit : MonoBehaviour {
 		nowHP = 0;
 		isDead = true;
 
+		//SEの再生
+		var se = AudioManager.PlaySE(deathSE);
+		se.transform.position = transform.position;
+
 		//ダメージの合計を出す
 		var damageSum = attackedUnitList
 			.Select((item) => item.damage)
@@ -405,12 +412,6 @@ public abstract class Unit : MonoBehaviour {
 
 		Debug.Log("Attack " + from.name + " -> " + to.name);
 
-		//攻撃がヒットしたことを伝える
-		if(from.OnAttackHit != null) from.OnAttackHit(to);
-
-		//攻撃してきた敵を伝える
-		if(to.OnAttacked != null) to.OnAttacked(from);
-
 		//経験値分配用
 		bool findFromUnit = to.attackedUnitList
 			.Where((item) => item.attackUnit == from)
@@ -424,6 +425,12 @@ public abstract class Unit : MonoBehaviour {
 		else {
 			to.attackedUnitList.Add(new DamageLog(from, damage, Time.time));
 		}
+
+		//攻撃がヒットしたことを伝える
+		if(from.OnAttackHit != null) from.OnAttackHit(to);
+
+		//攻撃してきた敵を伝える
+		if(to.OnAttacked != null) to.OnAttacked(from);
 
 		//ダメージを与える
 		to.ApplyDamage(damage);
@@ -472,6 +479,10 @@ public abstract class Unit : MonoBehaviour {
 		//モデルの表示・非表示を切り替えるのみ
 		equipWeapon[0].gameObject.SetActive(false);
 		equipWeapon[switchingWeaponNum].gameObject.SetActive(true);
+
+		//SEの再生
+		var se = AudioManager.PlaySE(equipWeapon[1].equipSound);
+		se.transform.position = transform.position;
 	}
 
 	/// <summary>

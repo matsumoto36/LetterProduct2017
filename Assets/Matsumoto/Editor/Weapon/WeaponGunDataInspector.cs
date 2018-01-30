@@ -15,6 +15,10 @@ public class WeaponGunDataInspector : WeaponRangedDataInspector {
 		EditorGUILayout.PropertyField(mod, new GUIContent("パッシブ効果"), true);
 		EditorGUILayout.PropertyField(bulletData, new GUIContent("発射する弾のデータ"));
 
+		EditorGUILayout.PropertyField(equipSound, new GUIContent("持ち替えた時のSE"));
+		EditorGUILayout.PropertyField(useSound, new GUIContent("発射したときのSE"));
+		EditorGUILayout.PropertyField(hitSound, new GUIContent("当たったときのSE"));
+
 		serializedObject.ApplyModifiedProperties();
 	}
 }

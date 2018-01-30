@@ -14,9 +14,9 @@ public class TestSpawnUnit : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 
-		var spawnflgArray = useCustomSpawn ? customSpawnFlg : GameData.instance.isEntryPlayer;
+		if(useCustomSpawn) GameData.instance.isEntryPlayer = customSpawnFlg;
 		for(int i = 0;i < InputManager.MAX_PAYER_NUM;i++) {
-			if(spawnflgArray[i]) spawner.SpawnPlayer(i);
+			if(GameData.instance.isEntryPlayer[i]) spawner.SpawnPlayer(i);
 		}
 
 	}

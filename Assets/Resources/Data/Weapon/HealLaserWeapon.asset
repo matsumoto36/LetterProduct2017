@@ -20,4 +20,8 @@ MonoBehaviour:
     mulMoveSpeed: 1
     mulPow: 1
     mulAttackSpeed: 1
+  equipSound: gun_ready
+  useSound: curebeams
+  hitSound: HP_recovery
   bulletData: {fileID: 11400000, guid: daa6a0da107578048ae4c11874e174c6, type: 2}
+  chargeSound: beam-gun-charge

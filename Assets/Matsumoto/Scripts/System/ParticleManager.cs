@@ -78,8 +78,6 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 			return null;
 		}
 
-		Debug.Log("Spawn:" + particleName);
-
 		var pObj = Instantiate(pData, position, rotation);
 		pObj.StartEffect();
 
@@ -87,11 +85,6 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 		if(deleteTime > 0) {
 			Destroy(pObj.gameObject, deleteTime);
 		}
-
-		//マイナスの場合はパーティクルの長さで削除
-		//if(deleteTime < 0) {
-		//	Destroy(pObj.gameObject, pObj.)
-		//}
 
 		return pObj;
 	}

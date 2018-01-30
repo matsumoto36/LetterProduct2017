@@ -17,6 +17,9 @@ public class PlayerDataInspector : UnitDataInspector {
 		EditorGUILayout.Separator();
 		EditorGUILayout.PropertyField(weaponData.GetArrayElementAtIndex(0), new GUIContent("メイン武器"));
 		EditorGUILayout.PropertyField(weaponData.GetArrayElementAtIndex(1), new GUIContent("サブ武器"));
+		EditorGUILayout.Separator();
+		EditorGUILayout.PropertyField(deathSE, new GUIContent("死んだときのSE"));
+		EditorGUILayout.PropertyField(deathParticle, new GUIContent("死んだときのパーティクル"));
 
 		serializedObject.ApplyModifiedProperties();
 	}

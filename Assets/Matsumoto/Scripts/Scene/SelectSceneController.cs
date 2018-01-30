@@ -32,6 +32,8 @@ public class SelectSceneController : MonoBehaviour {
 		foreach(var item in custom) {
 			item.Init();
 		}
+
+		AudioManager.FadeIn(1, "Menu");
 	}
 
 	void Update() {
@@ -74,6 +76,9 @@ public class SelectSceneController : MonoBehaviour {
 		//カスタムのエントリー処理
 		custom[playerID].Entry(playerID);
 
+		//SEの再生
+		AudioManager.PlaySE("Player_Entry");
+
 		playerCount++;
 	}
 
@@ -96,6 +101,9 @@ public class SelectSceneController : MonoBehaviour {
 
 		}
 
+		AudioManager.PlaySE("Weapon_ALL_Ready");
+		AudioManager.FadeOut(2);
+		
 		//シーン移動
 		FadeManager.Instance.LoadScene(NEXT_SCENE_NAME, 2);
 	}

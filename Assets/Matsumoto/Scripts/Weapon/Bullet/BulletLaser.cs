@@ -9,6 +9,8 @@ using UnityEngine;
 public class BulletLaser : Bullet {
 
 	public Transform laserHitParticle { get; set; }
+	public AudioSource laserHitSE { get; set; }
+
 
 	Unit lastAttackUnit;
 	PKFxManager.Attribute laserLengthAtt;
@@ -73,6 +75,14 @@ public class BulletLaser : Bullet {
 			ParticleManager.Spawn(GetBulletData<BulletLaserData>().particleNameHit, new Vector3(), transform.rotation, 0).transform;
 			laserHitParticle.SetParent(transform);
 			laserHitParticle.localPosition = new Vector3(0, 0, 0.25f);
+		}
+
+		//SE再生
+		if(!laserHitSE) {
+			laserHitSE = AudioManager.PlaySE(bulletOwner.hitSound, autoDelete: false);
+			laserHitSE.loop = true;
+			laserHitSE.transform.SetParent(transform);
+			laserHitSE.transform.localPosition = new Vector3(0, 0, 0.25f);
 		}
 
 		Attack(other.GetComponent<Unit>());

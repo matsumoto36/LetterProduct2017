@@ -4,16 +4,18 @@ using System.Linq;
 
 public class door : MonoBehaviour
 {
-	GameObject thedoor;
+	public GameObject thedoor;
 
-	void Update()
+
+
+	void Start()
 	{
-		int enemyCount = Unit.unitList
-			.Where(unit => unit.group != UnitGroup.Player)
-			.Count();
-		if (enemyCount <= 0)
-		{
-			thedoor.GetComponent<Animation>().Play("open");
-		}
-	}
+        int enemyCount = Unit.unitList
+                .Where(unit => unit.group != UnitGroup.Player)
+                .Count();
+        if (enemyCount <= 0)
+        {
+            thedoor.GetComponent<Animation>().Play("open");
+        }
+    }
 }

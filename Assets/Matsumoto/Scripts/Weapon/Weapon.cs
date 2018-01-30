@@ -31,6 +31,9 @@ public abstract class Weapon : MonoBehaviour {
 
 	public Sprite icon { get; set; }
 	public Unit unitOwner { get; set; }
+	public string equipSound { get; set; }
+	public string useSound { get; set; }
+	public string hitSound { get; set; }
 	public WeaponType weaponType { get; protected set; }
 	public bool canAction { get; private set; }
 	public int hitMask { get; private set; }
