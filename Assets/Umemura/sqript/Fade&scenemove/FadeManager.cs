@@ -141,7 +141,7 @@ public class FadeManager : MonoBehaviour
             Debug.Log(async.progress * 100 + "%");
             //Slider.value = async.progress;
             yield return null;
-        } while (!async.isDone);
+        } while (async.progress > 1.0f);
 
         async.allowSceneActivation = true;
 
