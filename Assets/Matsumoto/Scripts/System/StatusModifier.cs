@@ -35,10 +35,15 @@ public class StatusModifier{
 
 			//+30% + +50% = +80%
 			// -20% + -50% = -70%
-			par1.mulHP + par2.mulHP - 1,
-			par1.mulMoveSpeed + par2.mulMoveSpeed - 1,
-			par1.mulPow + par2.mulPow - 1,
-			par1.mulAttackSpeed + par2.mulAttackSpeed - 1);
+			//par1.mulHP + par2.mulHP - 1,
+			//par1.mulMoveSpeed + par2.mulMoveSpeed - 1,
+			//par1.mulPow + par2.mulPow - 1,
+			//par1.mulAttackSpeed + par2.mulAttackSpeed - 1);
+
+			par1.mulHP * par2.mulHP,
+			par1.mulMoveSpeed * par2.mulMoveSpeed,
+			par1.mulPow * par2.mulPow,
+			par1.mulAttackSpeed * par2.mulAttackSpeed);
 	}
 
 	public new string ToString() {
