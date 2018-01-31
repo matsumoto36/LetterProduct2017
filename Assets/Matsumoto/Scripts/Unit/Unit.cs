@@ -487,7 +487,7 @@ public abstract class Unit : MonoBehaviour {
 
 		//SEの再生
 		var se = AudioManager.PlaySE(equipWeapon[1].equipSound);
-		se.transform.position = transform.position;
+		if(se) se.transform.position = transform.position;
 	}
 
 	/// <summary>

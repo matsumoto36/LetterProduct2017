@@ -6,7 +6,7 @@ using System.Linq;
 /// <summary>
 /// 近くにいるプレイヤーに攻撃するだけの敵
 /// </summary>
-public class EnemyStructure : denger2 {
+public class EnemyStructure : Enemy {
 
 	const float TARGET_CHECK_INTERVAL = .5f;
 
