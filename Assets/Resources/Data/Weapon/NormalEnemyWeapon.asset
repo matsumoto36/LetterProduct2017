@@ -23,4 +23,4 @@ MonoBehaviour:
   equipSound: 
   useSound: gun_shot
   hitSound: shot-hit
-  bulletData: {fileID: 11400000, guid: 104eea1aa70125f44a3a30279778f772, type: 2}
+  bulletData: {fileID: 11400000, guid: 4a0fcb88f18a92046818c0e06f01d653, type: 2}
