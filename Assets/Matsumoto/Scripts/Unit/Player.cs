@@ -101,7 +101,7 @@ public class Player : Unit {
 
 		if(!equipWeapon[1]) return;
 
-		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.RightTrigger, true) > ratio) {
+		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) > ratio) {
 
 			//攻撃キャンセル
 			if(isAttack) equipWeapon[0].AttackEnd();
@@ -451,12 +451,12 @@ public class Player : Unit {
 	public override void Attack() {
 
 		//攻撃開始
-		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) > ratio && !isAttack) {
+		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.RightTrigger, true) > ratio && !isAttack) {
 			equipWeapon[0].AttackStart();
 			isAttack = true;
 		}
 		//攻撃ループ
-		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) > ratio) {
+		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.RightTrigger, true) > ratio) {
 
 			//攻撃キャンセル復帰用
 			if(!isAttack) {
@@ -468,7 +468,7 @@ public class Player : Unit {
 			}
 		}
 		//攻撃終了
-		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) <= ratio && isAttack) {
+		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.RightTrigger, true) <= ratio && isAttack) {
 			equipWeapon[0].AttackEnd();
 			isAttack = false;
 		}

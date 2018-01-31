@@ -26,7 +26,7 @@ public class BulletNormal : Bullet {
 		//再生中のパーティクルを止める
 		attackParticle.transform.parent = null;
 		attackParticle.TerminateEffect();
-		//Destroy(attackParticle.gameObject, 0.5f);   //少しずらさないと、なぜか進み続けてしまう
+		Destroy(attackParticle.gameObject, 0.5f);   //少しずらさないと、なぜか進み続けてしまう
 
 	}
 

@@ -19,6 +19,8 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	Dictionary<string, AudioClip> SEclips;					//再生用リスト
 	Dictionary<string, AudioClip> BGMclips;					//再生用リスト
 
+	List<AudioSource> playingSEList;						//再生中のSEのリスト
+
 	AudioSource nowPlayingBGM;								//現在再生されているBGM
 	string latestPlayBGM = "";								//再生されているBGMの種類
 
