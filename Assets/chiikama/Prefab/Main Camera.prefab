@@ -137,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveRatio: 0.1
   maxCamLength: 100
-  minCamLength: 15
+  minCamLength: 30
   trackOffset: {x: 0, y: 0, z: 0}
   lengthOffset: 5
 --- !u!124 &124606631786006234

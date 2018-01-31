@@ -23,6 +23,9 @@ public class TestParticleSpawn : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.L)) {
 			ParticleManager.isRenderingParticle = !ParticleManager.isRenderingParticle;
 		}
+		if(Input.GetKeyDown(KeyCode.B)) {
+			Debug.Break();
+		}
 	}
 
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 1633574998664960, guid: 55238d07e4edd084eaaf5e8280e9db4b, type: 2}
   icon: {fileID: 0}
-  interval: 0.5
+  interval: 0.8
   power: 10
   mod:
     mulHP: 1

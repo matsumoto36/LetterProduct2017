@@ -14,7 +14,6 @@ public class BulletNormal : Bullet {
 
 	public override void Init() {
 		base.Init();
-
 		var data = GetBulletData<BulletNormalData>();
 		speed = data.speed;
 		maxLength = data.range;
@@ -26,14 +25,17 @@ public class BulletNormal : Bullet {
 
 		//再生中のパーティクルを止める
 		attackParticle.transform.parent = null;
-		Destroy(attackParticle.gameObject, 0.1f);   //少しずらさないと、なぜか進み続けてしまう
+		attackParticle.TerminateEffect();
+		//Destroy(attackParticle.gameObject, 0.5f);   //少しずらさないと、なぜか進み続けてしまう
 
 	}
 
 	public virtual void FixedUpdate() {
-		transform.position += transform.forward * speed * Time.deltaTime;
 
-		if((length += speed) > maxLength) Destroy(gameObject);
+		var spd = speed * Time.deltaTime;
+		if((length += spd) > maxLength) Destroy(gameObject);
+
+		transform.position += transform.forward * spd;
 	}
 
 	public override void OnHitEnter(Collider other) {
