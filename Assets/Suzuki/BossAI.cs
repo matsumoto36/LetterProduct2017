@@ -139,6 +139,8 @@ public class BossAI : MonoBehaviour
             {
                 //近接用の武器に交換
                 enemySC.SwitchWeapon(1);
+
+                disMode = DistanceMode.MELEE;
             }
 
             //近接攻撃
@@ -152,6 +154,8 @@ public class BossAI : MonoBehaviour
             {
                 //遠距離用の武器に交換
                 enemySC.SwitchWeapon(1);
+
+                disMode = DistanceMode.RANGED;
             }
 
             //遠距離攻撃
