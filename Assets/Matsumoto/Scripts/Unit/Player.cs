@@ -476,6 +476,7 @@ public class Player : Unit {
 
 	public override void Death() {
 		base.Death();
+		GameData.instance.isDeath[playerIndex] = true;
 		Debug.Log("Player" + playerIndex + " is Dead");
 		StopAllCoroutines();
 	}

@@ -90,7 +90,7 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 			var src = new GameObject("[Audio SE - " + SEName + "]").AddComponent<AudioSource>();
 			src.transform.SetParent(instance.transform);
 			src.clip = info.clip;
-			src.volume = vol;
+			src.volume = seInfo.volume * vol;
 			src.outputAudioMixerGroup = instance.mixerGroups[0];
 			src.Play();
 

@@ -7,7 +7,7 @@ using UnityEngine;
 class AudioClipInfo {
 
 	public const int MAX_PLAY_COUNT = 50;
-	const float INIT_VOLUME = 0.7f;
+	const float INIT_VOLUME = 0.2f;
 
 	public AudioClip clip;
 	public SortedList<int, SEInfo> stockList = new SortedList<int, SEInfo>();
