@@ -46,7 +46,7 @@ public class BulletNormal : Bullet {
 
 		//SEの再生
 		var se = AudioManager.PlaySE(bulletOwner.hitSound);
-		se.transform.position = other.ClosestPointOnBounds(transform.position);
+		if(se) se.transform.position = other.ClosestPointOnBounds(transform.position);
 
 		Destroy(gameObject);
 	}
