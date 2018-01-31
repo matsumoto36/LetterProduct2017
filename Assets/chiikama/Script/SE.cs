@@ -15,7 +15,7 @@ public class SE : MonoBehaviour {
 		
 	}
 
-	public float BGMvolume
+	public float SEvolume
 	{
 		set
 		{
