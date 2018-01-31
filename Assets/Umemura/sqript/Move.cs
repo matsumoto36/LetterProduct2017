@@ -35,7 +35,7 @@ public class move : MonoBehaviour
             pos.z = -speed;
         }
         // 変数値をconsoleウィンドウに表示
-        Debug.LogFormat("pos=({0},{1},{2})", pos.x, pos.y, pos.z);
+        //Debug.LogFormat("pos=({0},{1},{2})", pos.x, pos.y, pos.z);
         // 現在の座標に移動量を加算する
         transform.position = transform.position + pos * Time.deltaTime;
     }

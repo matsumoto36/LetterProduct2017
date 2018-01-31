@@ -1,0 +1,932 @@
+<html><head><title>popcorn-engine logfile</title>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<style>body
+{
+	padding-top: 44px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	background: #bbbbbb;
+	margin: 0px;
+	color: #000000;
+	font-family: Consolas, Courier;
+	font-size: 10pt;
+}
+.header2
+{
+	font-size: 72px;
+	left: 5px;
+	color: #8a98b0;
+	position: absolute;
+	top: -22px
+}
+.header
+{
+	left: 0px;
+	overflow: hidden;
+	width: 100%;
+	color: #ffffff;
+	font-family: Verdana, Arial;
+	position: absolute;
+	top: 0px;
+	height: 44px;
+	background-color: #7b8aa6
+}
+.pagetitle
+{
+	font-size: 22px;
+	z-index: 100;
+	left: 5px;
+	color: #ffffff;
+	position: absolute;
+	top: 14px;
+}
+.copyright
+{
+	font-size: 10px;
+	z-index: 60;
+	left: -8px;
+	width: 100%;
+	color: #acb6c8;
+	position: absolute;
+	top: 1px;
+	text-align: right;
+	text-decoration: none;
+}
+.build
+{
+	font-size: 12px;
+	color: #eeeeee;
+	text-decoration: none;
+}
+a.header1:link
+{
+	font-size: 30px;
+	z-index: 50;
+	left: -8px;
+	width: 100%;
+	color: #a0acc0;
+	position: absolute;
+	top: 6px;
+	text-align: right;
+	text-decoration: none;
+}
+a.header1:visited
+{
+	font-size: 30px;
+	z-index: 50;
+	left: -8px;
+	width: 100%;
+	color: #a0acc0;
+	position: absolute;
+	top: 6px;
+	text-align: right;
+	text-decoration: none;
+}
+a.header1:hover
+{
+	font-size: 30px;
+	z-index: 50;
+	left: -8px;
+	width: 100%;
+	color: #acb6c8;
+	position: absolute;
+	top: 6px;
+	text-align: right;
+	text-decoration: none;
+}
+.log_caller { color: #666666; }
+.dll { color: #800070; }
+.M   { color: #000000; background-color: #DDDDDD; white-space: pre; }
+.W   { color: #000000; background-color: #FFAA33; white-space: pre; }
+.E   { color: #FFFFFF; background-color: #DD1100; white-space: pre; }
+.EC  { color: #FFFFFF; background-color: #DD0000; white-space: pre; }
+.EI  { color: #FFFFFF; background-color: #EE0000; white-space: pre; }
+.EF  { color: #FFFFFF; background-color: #FF0000; white-space: pre; }
+</style>
+</head>
+<body>
+<div class=header id=header>
+	<a class=header1 id=header1 href="http://www.popcornfx.com/">www.popcornfx.com</a>
+	<div class=copyright id=copyright>Copyright (c) Persistant Studios 2010-2017</div>
+	<div class=header2 id=header2>PopcornFX</div>
+	<div class=pagetitle id=pagetitle>PopcornFX logfile. <font class=build>build 1.12.2.40725, Fri Nov 17 14:31:24 2017 +0100</font></i></div>
+</div><div class=M><center>... STARTUP ...</center></div>
+<div class=M>[BOOT]> License: "PKSTORE-PERSONAL"</div>
+<div class=M>[BOOT]> PopcornFX SDK build config: ...... RELEASE</div>
+<div class=M>[BOOT]> Has debug asserts: .................... NO</div>
+<div class=M>[BOOT]> Has release asserts: ................. YES</div>
+<div class=M>[BOOT]> Has anonymous asserts: ................ NO</div>
+<div class=M>[BOOT]> Has containers monitoring: ............ NO</div>
+<div class=M>[BOOT]> Has iterators debug checks: ........... NO</div>
+<div class=M>[BOOT]> Mem debug level: ....................... 0</div>
+<div class=M>[BOOT]> Has default mem allocators: .......... YES</div>
+<div class=M>[BOOT]> |</div>
+<div class=M>[BOOT]> | ... BOOTING Kernel ...</div>
+<div class=M>[BOOT]> [Kernel_Callstack         ]:Startup      7330 usec         0 bytes      0 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_PerfMonitor       ]:Startup         2 usec       142 bytes      1 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_Mem               ]:Startup         0 usec       103 bytes      1 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_Containers        ]:Startup         0 usec         0 bytes      1 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_Asserts           ]:Startup         0 usec         0 bytes      1 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_Buffer            ]:Startup         9 usec      8223 bytes      9 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_String            ]:Startup         1 usec      2110 bytes     11 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_RTTI              ]:Startup         0 usec         0 bytes     11 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_Threads           ]:Startup        28 usec         0 bytes     12 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_ThreadPool        ]:Startup         0 usec         0 bytes     12 KbTotal</div>
+<div class=M>[Kernel_CapsCpu]> Multi-Core system, Multi-threaded cores</div>
+<div class=M>[Kernel_CapsCpu]>      Logical processors reported by OS : 4</div>
+<div class=M>[Kernel_CapsCpu]>      Visible logical processors        : 4</div>
+<div class=M>[Kernel_CapsCpu]>      Cores                             : 2</div>
+<div class=M>[Kernel_CapsCpu]>      Physical packages                 : 1</div>
+<div class=M>[Kernel_CapsCpu]> ---- Package 0 -------------------------</div>
+<div class=M>[Kernel_CapsCpu]>      Vendor                            : GenuineIntel</div>
+<div class=M>[Kernel_CapsCpu]>      CPU Name                          : "Intel(R) Core(TM) i5-6200U CPU @ 2.30GHz"</div>
+<div class=M>[Kernel_CapsCpu]>      Frequency                         : 2400.0 MHz (2399.663 measured)</div>
+<div class=M>[Kernel_CapsCpu]>      Microarchitecture                 : Skylake, 64-bits</div>
+<div class=M>[Kernel_CapsCpu]>      Extensions                        : VirMode DBG     PageSz4 RDTSC   MSR     PAE     MCE     CXCHG8  APIC    SEP     MTRR    PGE     </div>
+<div class=M>[Kernel_CapsCpu]>                                          MCA     CMOV    PAT     PSE36   CLFlush DebugSt ACPI    FXSR    SSnoop  HThread ThMon   ThMon2  </div>
+<div class=M>[Kernel_CapsCpu]>                                          IA64Ext PBE     ExecDis DTES64  MONITOR DS_CPL  VMEXT   ESpdStp CXCHG16 XTPR    PDCM    x2APIC  </div>
+<div class=M>[Kernel_CapsCpu]>                                          XSave   OsXSave TSCInv  MOVBE   POPCNT  CLMUL   BMI1    BMI2    F16C    AES     FMA3    RDRAND  </div>
+<div class=M>[Kernel_CapsCpu]>                                          MMX     SSE     SSE2    SSE3    SSSE3   SSE4_1  SSE4_2  AVX     AVX2    </div>
+<div class=M>[Kernel_CapsCpu]>      CPUID Leaves                      : 00000016-00000008</div>
+<div class=M>[Kernel_CapsCpu]>      CACHE TYPE                  SIZE         ASSOCIATIVITY  LINE-SIZE</div>
+<div class=M>[Kernel_CapsCpu]>         L1 Data cache              32 KB             8 ways   64-bytes</div>
+<div class=M>[Kernel_CapsCpu]>         L1 Instruction cache       32 KB             8 ways   64-bytes</div>
+<div class=M>[Kernel_CapsCpu]>         L2 Unified cache          256 KB             4 ways   64-bytes</div>
+<div class=M>[Kernel_CapsCpu]>         L3 Unified cache         3072 KB            12 ways   64-bytes</div>
+<div class=M>[Kernel_CapsCpu]>      PROCESSOR  APIC_ID  PACKAGE     CORE   THREAD    CACHES</div>
+<div class=M>[Kernel_CapsCpu]>              0     0000        0        0        0    L1D[0] L1I[0] L2[0] L3[0]</div>
+<div class=M>[Kernel_CapsCpu]>              1     0001        0        0        1    L1D[0] L1I[0] L2[0] L3[0]</div>
+<div class=M>[Kernel_CapsCpu]>              2     0002        0        1        0    L1D[1] L1I[1] L2[1] L3[0]</div>
+<div class=M>[Kernel_CapsCpu]>              3     0003        0        1        1    L1D[1] L1I[1] L2[1] L3[0]</div>
+<div class=M>[BOOT]> [Kernel_CapsCpu           ]:Startup     11439 usec      1014 bytes     13 KbTotal</div>
+<div class=M>[Kernel_CapsMem]> Detecting memory:</div>
+<div class=M>[Kernel_CapsMem]>      MEMORY        :          USED     AVAILABLE         TOTAL</div>
+<div class=M>[Kernel_CapsMem]>      physical      :     4499.0 Mb     3592.0 Mb     8091.0 Mb</div>
+<div class=M>[Kernel_CapsMem]>      page file     :     5131.0 Mb     4816.0 Mb     9947.0 Mb</div>
+<div class=M>[Kernel_CapsMem]>      virtual       :     2192.0 Mb 134215536.0 Mb 134217728.0 Mb</div>
+<div class=M>[Kernel_CapsMem]>      Address range : 00007FFFFFFEFFFF - 0000000000010000</div>
+<div class=M>[BOOT]> [Kernel_CapsMem           ]:Startup        32 usec       103 bytes     13 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_Profiler          ]:Startup         5 usec      2637 bytes     16 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_Checksum          ]:Startup         0 usec         0 bytes     16 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_Compression       ]:Startup         0 usec         0 bytes     16 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_File              ]:Startup        11 usec        39 bytes     16 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_Plugins           ]:Startup         0 usec        87 bytes     16 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_Scheduler         ]:Startup     22972 usec     18577 bytes     34 KbTotal</div>
+<div class=M>[BOOT]> [Kernel_Resources         ]:Startup         0 usec       111 bytes     35 KbTotal</div>
+<div class=M>[BOOT]> |</div>
+<div class=M>[BOOT]> | ... BOOTING BaseObject ...</div>
+<div class=M>[BOOT]> [BaseObject               ]:Startup        22 usec     30215 bytes     64 KbTotal</div>
+<div class=M>[BOOT]> [BaseObject_HBOScope      ]:Startup        45 usec     99831 bytes    162 KbTotal</div>
+<div class=M>[BOOT]> |</div>
+<div class=M>[BOOT]> | ... BOOTING EngineUtils ...</div>
+<div class=M>[BOOT]> [EngineUtils_Random       ]:Startup         6 usec      5141 bytes    167 KbTotal</div>
+<div class=M>[BOOT]> [EngineUtils_Timeline     ]:Startup         4 usec         0 bytes    167 KbTotal</div>
+<div class=M>[BOOT]> [EngineUtils_Actions      ]:Startup     75243 usec     21724 bytes    188 KbTotal</div>
+<div class=M>[BOOT]> [EngineUtils_Core         ]:Startup     10453 usec     13766 bytes    202 KbTotal</div>
+<div class=M>[BOOT]> [EngineUtils_Samplers     ]:Startup       409 usec      7398 bytes    209 KbTotal</div>
+<div class=M>[BOOT]> [EngineUtils_Skeleton     ]:Startup         6 usec      3539 bytes    213 KbTotal</div>
+<div class=M>[BOOT]> |</div>
+<div class=M>[BOOT]> | ... BOOTING Compiler ...</div>
+<div class=M>[BOOT]> [Compiler                 ]:Startup      2378 usec    152862 bytes    362 KbTotal</div>
+<div class=M>[BOOT]> |</div>
+<div class=M>[BOOT]> | ... BOOTING Geometrics ...</div>
+<div class=M>[BOOT]> [Geometrics_Skeleton      ]:Startup         0 usec         0 bytes    362 KbTotal</div>
+<div class=M>[BOOT]> [Geometrics_Mesh          ]:Startup      2274 usec      8216 bytes    370 KbTotal</div>
+<div class=M>[Geometrics_MeshDeformers]> CPU Dispatch mapped implementation of Skeletal Skinner to 'SIMD'</div>
+<div class=M>[BOOT]> [Geometrics_MeshDeformers ]:Startup       433 usec     44285 bytes    414 KbTotal</div>
+<div class=M>[BOOT]> [Geometrics_MeshResource  ]:Startup         8 usec      4706 bytes    418 KbTotal</div>
+<div class=M>[BOOT]> [Geometrics_MeshKdTree    ]:Startup         0 usec         0 bytes    419 KbTotal</div>
+<div class=M>[BOOT]> [Geometrics_Shapes        ]:Startup       356 usec     11156 bytes    430 KbTotal</div>
+<div class=M>[BOOT]> [Geometrics_Colliders     ]:Startup         0 usec         0 bytes    430 KbTotal</div>
+<div class=M>[BOOT]> [Geometrics_Billboards    ]:Startup         0 usec         0 bytes    430 KbTotal</div>
+<div class=M>[BOOT]> [Geometrics_RectangleList ]:Startup         2 usec      4341 bytes    434 KbTotal</div>
+<div class=M>[BOOT]> |</div>
+<div class=M>[BOOT]> | ... BOOTING Imaging ...</div>
+<div class=M>[Imaging_Images]> CPU Dispatch mapped implementation of ETC1 decompressor to 'SSE4.1'</div>
+<div class=M>[BOOT]> [Imaging_Images           ]:Startup       404 usec      4507 bytes    439 KbTotal</div>
+<div class=M>[BOOT]> |</div>
+<div class=M>[BOOT]> | ... BOOTING Particles ...</div>
+<div class=M>[Particles]> Script bindings setup : 101.57 ms</div>
+<div class=M>[BOOT]> [Particles                ]:Startup    110556 usec    899599 bytes   1317 KbTotal</div>
+<div class=M>[BOOT]> [CompilerBackend_CPU_Emulation]:Startup         7 usec     10327 bytes   1323 KbTotal</div>
+<div class=M>[Kernel_Plugins]> Registering module "CompilerBackend_CPU_Emulation" to handler "hh_compiler".</div>
+<div class=M>[Kernel_Plugins]> Registering module "PopcornFX-Image codec dds" to handler "im_codec".</div>
+<div class=M>[Kernel_Plugins]> Registering module "PopcornFX-Image codec png" to handler "im_codec".</div>
+<div class=M>[Kernel_Plugins]> Registering module "PopcornFX-Image codec targa" to handler "im_codec".</div>
+<div class=M>[Kernel_Plugins]> Registering module "PopcornFX-Image codec jpeg" to handler "im_codec".</div>
+<div class=M>[BOOT]> [UnityPlugin              ]:Startup         0 usec         0 bytes   1324 KbTotal</div>
+<div class=M>[UnityPlugin]> Startup PKFX</div>
+<div class=M>[UnityPlugin]> GraphicsEventD3D11</div>
+<div class=M>[UnityPlugin]> _PopcornFXStartup</div>
+<div class=M>[UnityPlugin]> GraphicsEventD3D11</div>
+<div class=M>[UnityPlugin]> Added Assets/StreamingAssets/PackFx for watching.</div>
+<div class=M>[UnityPlugin]> Exploring pack Assets/StreamingAssets/PackFx...</div>
+<div class=M>[UnityPlugin]>   -> Bullet.pkfx</div>
+<div class=M>[UnityPlugin]>   -> BulletHit.pkfx</div>
+<div class=M>[UnityPlugin]>   -> EmitBuff.pkfx</div>
+<div class=M>[UnityPlugin]>   -> EnemtHit2.pkfx</div>
+<div class=M>[UnityPlugin]>   -> EnemyDeath.pkfx</div>
+<div class=M>[UnityPlugin]>   -> EnemyHit.pkfx</div>
+<div class=M>[UnityPlugin]>   -> LaserHit.pkfx</div>
+<div class=M>[UnityPlugin]>   -> Lazer.pkfx</div>
+<div class=M>[UnityPlugin]>   -> Lazer2.pkfx</div>
+<div class=M>[UnityPlugin]>   -> MeleeAttack.pkfx</div>
+<div class=M>[UnityPlugin]>   -> MuzzleFlash.pkfx</div>
+<div class=M>[UnityPlugin]>   -> TargetMarker.pkfx</div>
+<div class=M>[UnityPlugin]> Preloading OK "MeleeAttack.pkfx"</div>
+<div class=W>[UnityPlugin]> Performance warning: Texture has no mipmaps (Sprites\Line.png)</div>
+<div class=M>[Kernel_Profiler]> Loaded 2D Texture (Sprites/Line.png) : 1.585 ms</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=320, maxind=416 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Performance warning: Texture has no mipmaps (Sprites\Light2Mini.png)</div>
+<div class=M>[Kernel_Profiler]> Loaded 2D Texture (Sprites/Light2Mini.png) : 22.353 ms</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=320, maxind=416 to maxvert=614, maxind=857 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=614, maxind=857 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=614, maxind=857 to maxvert=1016, maxind=1460 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=614, maxind=857 to maxvert=1016, maxind=1460 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1016, maxind=1460 to maxvert=2066, maxind=3035 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1016, maxind=1460 to maxvert=2066, maxind=3035 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=2066, maxind=3035 to maxvert=4214, maxind=6257 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=2066, maxind=3035 to maxvert=4214, maxind=6257 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=4214, maxind=6257 to maxvert=6476, maxind=9650 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=4214, maxind=6257 to maxvert=6476, maxind=9650 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=6476, maxind=9650 to maxvert=10250, maxind=15311 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=6476, maxind=9650 to maxvert=10250, maxind=15311 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=10250, maxind=15311 to maxvert=15614, maxind=23357 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=10250, maxind=15311 to maxvert=15614, maxind=23357 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=15614, maxind=23357 to maxvert=23624, maxind=35372 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=15614, maxind=23357 to maxvert=23624, maxind=35372 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=23624, maxind=35372 to maxvert=37952, maxind=56864 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=23624, maxind=35372 to maxvert=37952, maxind=56864 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Performance warning: Texture has no mipmaps (Sprites\Light2.png)</div>
+<div class=M>[Kernel_Profiler]> Loaded 2D Texture (Sprites/Light2.png) : 16.599 ms</div>
+<div class=M>[UnityPlugin]> Preloading OK "EnemyHit.pkfx"</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=34628, maxind=51878 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=34628, maxind=51878 to maxvert=53528, maxind=80228 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Preloading OK "Lazer.pkfx"</div>
+<div class=W>[UnityPlugin]> Performance warning: Texture has no mipmaps (Sprites\Flash.png)</div>
+<div class=M>[Kernel_Profiler]> Loaded 2D Texture (Sprites/Flash.png) : 8.748 ms</div>
+<div class=M>[UnityPlugin]> Preloading OK "LaserHit.pkfx"</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=164, maxind=182 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=53528, maxind=80228 to maxvert=80546, maxind=120755 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=37952, maxind=56864 to maxvert=66980, maxind=100406 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Preloading OK "Bullet.pkfx"</div>
+<div class=M>[UnityPlugin]> Preloading OK "MuzzleFlash.pkfx"</div>
+<div class=M>[UnityPlugin]> Preloading OK "BulletHit.pkfx"</div>
+<div class=W>[UnityPlugin]> Performance warning: Texture has no mipmaps (Sprites\Light.png)</div>
+<div class=M>[Kernel_Profiler]> Loaded 2D Texture (Sprites/Light.png) : 13.478 ms</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Preloading OK "EnemyDeath.pkfx"</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=80546, maxind=120755 to maxvert=168968, maxind=253388 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=758, maxind=1073 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=758, maxind=1073 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=758, maxind=1073 to maxvert=1736, maxind=2540 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=758, maxind=1073 to maxvert=1736, maxind=2540 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1736, maxind=2540 to maxvert=3086, maxind=4565 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1736, maxind=2540 to maxvert=3086, maxind=4565 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=3086, maxind=4565 to maxvert=5210, maxind=7751 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=3086, maxind=4565 to maxvert=5210, maxind=7751 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=5210, maxind=7751 to maxvert=8996, maxind=13430 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=5210, maxind=7751 to maxvert=8996, maxind=13430 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=8996, maxind=13430 to maxvert=14534, maxind=21737 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=8996, maxind=13430 to maxvert=14534, maxind=21737 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=14534, maxind=21737 to maxvert=22052, maxind=33014 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=14534, maxind=21737 to maxvert=22052, maxind=33014 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=22052, maxind=33014 to maxvert=33590, maxind=50321 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=22052, maxind=33014 to maxvert=33590, maxind=50321 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=992, maxind=1424 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=992, maxind=1424 to maxvert=1688, maxind=2468 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1688, maxind=2468 to maxvert=2894, maxind=4277 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=164, maxind=182 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2894, maxind=4277 to maxvert=4658, maxind=6923 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=4658, maxind=6923 to maxvert=8000, maxind=11936 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=8000, maxind=11936 to maxvert=12458, maxind=18623 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=12458, maxind=18623 to maxvert=19496, maxind=29180 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=19496, maxind=29180 to maxvert=29660, maxind=44426 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=29660, maxind=44426 to maxvert=45590, maxind=68321 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=45590, maxind=68321 to maxvert=68486, maxind=102665 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=68486, maxind=102665 to maxvert=155444, maxind=233102 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=33590, maxind=50321 to maxvert=50504, maxind=75692 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=33590, maxind=50321 to maxvert=51134, maxind=76637 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=50504, maxind=75692 to maxvert=94580, maxind=141806 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=680, maxind=956 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=680, maxind=956 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=680, maxind=956 to maxvert=1274, maxind=1847 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=680, maxind=956 to maxvert=1274, maxind=1847 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1274, maxind=1847 to maxvert=2036, maxind=2990 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1274, maxind=1847 to maxvert=2036, maxind=2990 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=2036, maxind=2990 to maxvert=3212, maxind=4754 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=2036, maxind=2990 to maxvert=3212, maxind=4754 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=3212, maxind=4754 to maxvert=6236, maxind=9290 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=3212, maxind=4754 to maxvert=6236, maxind=9290 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=6236, maxind=9290 to maxvert=9608, maxind=14348 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=6236, maxind=9290 to maxvert=9608, maxind=14348 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=9608, maxind=14348 to maxvert=15380, maxind=23006 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=9608, maxind=14348 to maxvert=15380, maxind=23006 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=15380, maxind=23006 to maxvert=23804, maxind=35642 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=15380, maxind=23006 to maxvert=23804, maxind=35642 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=23804, maxind=35642 to maxvert=53972, maxind=80894 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=23804, maxind=35642 to maxvert=36914, maxind=55307 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=25628, maxind=38378 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=25628, maxind=38378 to maxvert=73928, maxind=110828 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=73928, maxind=110828 to maxvert=111128, maxind=166628 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=602, maxind=839 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=602, maxind=839 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=602, maxind=839 to maxvert=1154, maxind=1667 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=602, maxind=839 to maxvert=1154, maxind=1667 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1154, maxind=1667 to maxvert=1838, maxind=2693 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1154, maxind=1667 to maxvert=1838, maxind=2693 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1838, maxind=2693 to maxvert=3032, maxind=4484 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1838, maxind=2693 to maxvert=3032, maxind=4484 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=3032, maxind=4484 to maxvert=5300, maxind=7886 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=3032, maxind=4484 to maxvert=5300, maxind=7886 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=5300, maxind=7886 to maxvert=8696, maxind=12980 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=5300, maxind=7886 to maxvert=8696, maxind=12980 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=8696, maxind=12980 to maxvert=13808, maxind=20648 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=8696, maxind=12980 to maxvert=13808, maxind=20648 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=13808, maxind=20648 to maxvert=21236, maxind=31790 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=13808, maxind=20648 to maxvert=21236, maxind=31790 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=21236, maxind=31790 to maxvert=74564, maxind=111782 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=21236, maxind=31790 to maxvert=33350, maxind=49961 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=91028, maxind=136478 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=91028, maxind=136478 to maxvert=175628, maxind=263378 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=33350, maxind=49961 to maxvert=50714, maxind=76007 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=614, maxind=857 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=614, maxind=857 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=614, maxind=857 to maxvert=1130, maxind=1631 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=614, maxind=857 to maxvert=1130, maxind=1631 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1130, maxind=1631 to maxvert=1910, maxind=2801 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1130, maxind=1631 to maxvert=1910, maxind=2801 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1910, maxind=2801 to maxvert=4298, maxind=6383 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1910, maxind=2801 to maxvert=4298, maxind=6383 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=4298, maxind=6383 to maxvert=7088, maxind=10568 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=4298, maxind=6383 to maxvert=7088, maxind=10568 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=7088, maxind=10568 to maxvert=11546, maxind=17255 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=7088, maxind=10568 to maxvert=11546, maxind=17255 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=11546, maxind=17255 to maxvert=18164, maxind=27182 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=11546, maxind=17255 to maxvert=18164, maxind=27182 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=18164, maxind=27182 to maxvert=27806, maxind=41645 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=18164, maxind=27182 to maxvert=27806, maxind=41645 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=1136, maxind=1640 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1136, maxind=1640 to maxvert=1904, maxind=2792 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1904, maxind=2792 to maxvert=2984, maxind=4412 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=164, maxind=182 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2984, maxind=4412 to maxvert=4658, maxind=6923 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=4658, maxind=6923 to maxvert=7406, maxind=11045 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=7406, maxind=11045 to maxvert=12284, maxind=18362 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=12284, maxind=18362 to maxvert=18998, maxind=28433 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=18998, maxind=28433 to maxvert=29918, maxind=44813 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=29918, maxind=44813 to maxvert=45620, maxind=68366 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=45620, maxind=68366 to maxvert=68918, maxind=103313 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=770, maxind=1091 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=770, maxind=1091 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=770, maxind=1091 to maxvert=1610, maxind=2351 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=770, maxind=1091 to maxvert=1610, maxind=2351 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1610, maxind=2351 to maxvert=2654, maxind=3917 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1610, maxind=2351 to maxvert=2654, maxind=3917 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=2654, maxind=3917 to maxvert=4052, maxind=6014 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=2654, maxind=3917 to maxvert=4052, maxind=6014 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=4052, maxind=6014 to maxvert=6458, maxind=9623 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=4052, maxind=6014 to maxvert=6458, maxind=9623 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=6458, maxind=9623 to maxvert=10142, maxind=15149 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=6458, maxind=9623 to maxvert=10142, maxind=15149 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=10142, maxind=15149 to maxvert=16058, maxind=24023 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=10142, maxind=15149 to maxvert=16058, maxind=24023 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=16058, maxind=24023 to maxvert=24998, maxind=37433 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=16058, maxind=24023 to maxvert=24998, maxind=37433 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=1034, maxind=1487 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1034, maxind=1487 to maxvert=1694, maxind=2477 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1694, maxind=2477 to maxvert=2732, maxind=4034 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2732, maxind=4034 to maxvert=4604, maxind=6842 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=4604, maxind=6842 to maxvert=7226, maxind=10775 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=7226, maxind=10775 to maxvert=11834, maxind=17687 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=11834, maxind=17687 to maxvert=17948, maxind=26858 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=152, maxind=164 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=17948, maxind=26858 to maxvert=27056, maxind=40520 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=27056, maxind=40520 to maxvert=41246, maxind=61805 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=41246, maxind=61805 to maxvert=61982, maxind=92909 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=61982, maxind=92909 to maxvert=137138, maxind=205643 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=24998, maxind=37433 to maxvert=37574, maxind=56297 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=137138, maxind=205643 to maxvert=206402, maxind=309539 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=24998, maxind=37433 to maxvert=37862, maxind=56729 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=37574, maxind=56297 to maxvert=101312, maxind=151904 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=662, maxind=929 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=662, maxind=929 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=662, maxind=929 to maxvert=1298, maxind=1883 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=662, maxind=929 to maxvert=1298, maxind=1883 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1298, maxind=1883 to maxvert=2024, maxind=2972 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1298, maxind=1883 to maxvert=2024, maxind=2972 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=2024, maxind=2972 to maxvert=3122, maxind=4619 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=2024, maxind=2972 to maxvert=3122, maxind=4619 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=3122, maxind=4619 to maxvert=5942, maxind=8849 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=3122, maxind=4619 to maxvert=5942, maxind=8849 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=5942, maxind=8849 to maxvert=9152, maxind=13664 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=5942, maxind=8849 to maxvert=9152, maxind=13664 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=9152, maxind=13664 to maxvert=14204, maxind=21242 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=9152, maxind=13664 to maxvert=14204, maxind=21242 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=14204, maxind=21242 to maxvert=23108, maxind=34598 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=14204, maxind=21242 to maxvert=23108, maxind=34598 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=23108, maxind=34598 to maxvert=36290, maxind=54371 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=23108, maxind=34598 to maxvert=36290, maxind=54371 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=26228, maxind=39278 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=26228, maxind=39278 to maxvert=52028, maxind=77978 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=36290, maxind=54371 to maxvert=87284, maxind=130862 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=140, maxind=146 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=52028, maxind=77978 to maxvert=97328, maxind=145928 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=596, maxind=830 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=596, maxind=830 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=596, maxind=830 to maxvert=1244, maxind=1802 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=596, maxind=830 to maxvert=1244, maxind=1802 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1244, maxind=1802 to maxvert=2192, maxind=3224 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1244, maxind=1802 to maxvert=2192, maxind=3224 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=2192, maxind=3224 to maxvert=3428, maxind=5078 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=2192, maxind=3224 to maxvert=3428, maxind=5078 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=3428, maxind=5078 to maxvert=7400, maxind=11036 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=3428, maxind=5078 to maxvert=7400, maxind=11036 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=7400, maxind=11036 to maxvert=11972, maxind=17894 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=7400, maxind=11036 to maxvert=11972, maxind=17894 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=11972, maxind=17894 to maxvert=18560, maxind=27776 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=11972, maxind=17894 to maxvert=18560, maxind=27776 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=18560, maxind=27776 to maxvert=28628, maxind=42878 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=18560, maxind=27776 to maxvert=28628, maxind=42878 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=28628, maxind=42878 to maxvert=75974, maxind=113897 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=60728, maxind=91028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=60728, maxind=91028 to maxvert=117128, maxind=175628 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=28628, maxind=42878 to maxvert=44138, maxind=66143 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=662, maxind=929 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=662, maxind=929 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=662, maxind=929 to maxvert=1184, maxind=1712 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=662, maxind=929 to maxvert=1184, maxind=1712 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1184, maxind=1712 to maxvert=1880, maxind=2756 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1184, maxind=1712 to maxvert=1880, maxind=2756 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1880, maxind=2756 to maxvert=3002, maxind=4439 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1880, maxind=2756 to maxvert=3002, maxind=4439 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=3002, maxind=4439 to maxvert=7796, maxind=11630 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=3002, maxind=4439 to maxvert=7796, maxind=11630 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=7796, maxind=11630 to maxvert=12008, maxind=17948 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=7796, maxind=11630 to maxvert=12008, maxind=17948 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=12008, maxind=17948 to maxvert=19922, maxind=29819 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=12008, maxind=17948 to maxvert=19922, maxind=29819 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=19922, maxind=29819 to maxvert=30488, maxind=45668 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=19922, maxind=29819 to maxvert=30488, maxind=45668 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=30488, maxind=45668 to maxvert=76952, maxind=115364 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=53528, maxind=80228 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=53528, maxind=80228 to maxvert=185528, maxind=278228 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=650, maxind=911 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=650, maxind=911 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=650, maxind=911 to maxvert=1256, maxind=1820 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=650, maxind=911 to maxvert=1256, maxind=1820 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1256, maxind=1820 to maxvert=2036, maxind=2990 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1256, maxind=1820 to maxvert=2036, maxind=2990 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=2036, maxind=2990 to maxvert=4112, maxind=6104 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=2036, maxind=2990 to maxvert=4112, maxind=6104 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=4112, maxind=6104 to maxvert=6368, maxind=9488 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=4112, maxind=6104 to maxvert=6368, maxind=9488 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=6368, maxind=9488 to maxvert=9884, maxind=14762 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=6368, maxind=9488 to maxvert=9884, maxind=14762 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=9884, maxind=14762 to maxvert=16094, maxind=24077 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=9884, maxind=14762 to maxvert=16094, maxind=24077 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=16094, maxind=24077 to maxvert=24776, maxind=37100 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=16094, maxind=24077 to maxvert=24776, maxind=37100 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=24776, maxind=37100 to maxvert=61982, maxind=92909 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=314, maxind=407 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=314, maxind=407 to maxvert=800, maxind=1136 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=800, maxind=1136 to maxvert=1364, maxind=1982 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1364, maxind=1982 to maxvert=2276, maxind=3350 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2276, maxind=3350 to maxvert=3602, maxind=5339 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=3602, maxind=5339 to maxvert=5504, maxind=8192 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=5504, maxind=8192 to maxvert=8456, maxind=12620 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=8456, maxind=12620 to maxvert=13058, maxind=19523 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=13058, maxind=19523 to maxvert=19664, maxind=29432 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=19664, maxind=29432 to maxvert=29942, maxind=44849 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=29942, maxind=44849 to maxvert=61532, maxind=92234 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=61532, maxind=92234 to maxvert=95534, maxind=143237 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=24776, maxind=37100 to maxvert=40952, maxind=61364 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=95534, maxind=143237 to maxvert=147164, maxind=220682 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=674, maxind=947 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=674, maxind=947 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=674, maxind=947 to maxvert=1166, maxind=1685 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=674, maxind=947 to maxvert=1166, maxind=1685 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1166, maxind=1685 to maxvert=1940, maxind=2846 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1166, maxind=1685 to maxvert=1940, maxind=2846 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1940, maxind=2846 to maxvert=3524, maxind=5222 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1940, maxind=2846 to maxvert=3524, maxind=5222 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=3524, maxind=5222 to maxvert=6176, maxind=9200 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=3524, maxind=5222 to maxvert=6176, maxind=9200 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=6176, maxind=9200 to maxvert=9350, maxind=13961 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=6176, maxind=9200 to maxvert=9350, maxind=13961 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=9350, maxind=13961 to maxvert=14378, maxind=21503 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=9350, maxind=13961 to maxvert=14378, maxind=21503 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=14378, maxind=21503 to maxvert=21794, maxind=32627 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=14378, maxind=21503 to maxvert=21794, maxind=32627 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=608, maxind=848 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=608, maxind=848 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=608, maxind=848 to maxvert=1100, maxind=1586 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=608, maxind=848 to maxvert=1100, maxind=1586 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1100, maxind=1586 to maxvert=1838, maxind=2693 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1100, maxind=1586 to maxvert=1838, maxind=2693 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1838, maxind=2693 to maxvert=2918, maxind=4313 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1838, maxind=2693 to maxvert=2918, maxind=4313 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=2918, maxind=4313 to maxvert=4784, maxind=7112 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=2918, maxind=4313 to maxvert=4784, maxind=7112 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=4784, maxind=7112 to maxvert=7976, maxind=11900 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=4784, maxind=7112 to maxvert=7976, maxind=11900 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=7976, maxind=11900 to maxvert=12512, maxind=18704 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=7976, maxind=11900 to maxvert=12512, maxind=18704 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=12512, maxind=18704 to maxvert=19946, maxind=29855 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=12512, maxind=18704 to maxvert=19946, maxind=29855 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=19946, maxind=29855 to maxvert=34142, maxind=51149 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=140, maxind=146 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=266, maxind=335 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=266, maxind=335 to maxvert=602, maxind=839 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=602, maxind=839 to maxvert=1046, maxind=1505 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1046, maxind=1505 to maxvert=1796, maxind=2630 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1796, maxind=2630 to maxvert=2864, maxind=4232 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2864, maxind=4232 to maxvert=4382, maxind=6509 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=4382, maxind=6509 to maxvert=6938, maxind=10343 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=34142, maxind=51149 to maxvert=58088, maxind=87068 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=58088, maxind=87068 to maxvert=88148, maxind=132158 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=6938, maxind=10343 to maxvert=10664, maxind=15932 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=10664, maxind=15932 to maxvert=16508, maxind=24698 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=16508, maxind=24698 to maxvert=45062, maxind=67529 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=45062, maxind=67529 to maxvert=76700, maxind=114986 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=19946, maxind=29855 to maxvert=30158, maxind=45173 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=30158, maxind=45173 to maxvert=46514, maxind=69707 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=76700, maxind=114986 to maxvert=154562, maxind=231779 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=88148, maxind=132158 to maxvert=137240, maxind=205796 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=46514, maxind=69707 to maxvert=87890, maxind=131771 (IFORMAT=D3DFMT_INDEX32) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=137240, maxind=205796 to maxvert=213308, maxind=319898 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=154562, maxind=231779 to maxvert=271550, maxind=407261 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=674, maxind=947 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=674, maxind=947 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=674, maxind=947 to maxvert=1142, maxind=1649 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=674, maxind=947 to maxvert=1142, maxind=1649 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1142, maxind=1649 to maxvert=1856, maxind=2720 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1142, maxind=1649 to maxvert=1856, maxind=2720 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1856, maxind=2720 to maxvert=4244, maxind=6302 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=1856, maxind=2720 to maxvert=4244, maxind=6302 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=4244, maxind=6302 to maxvert=6608, maxind=9848 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=4244, maxind=6302 to maxvert=6608, maxind=9848 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=6608, maxind=9848 to maxvert=10202, maxind=15239 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=6608, maxind=9848 to maxvert=10202, maxind=15239 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=10202, maxind=15239 to maxvert=15782, maxind=23609 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=10202, maxind=15239 to maxvert=15782, maxind=23609 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=15782, maxind=23609 to maxvert=24782, maxind=37109 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=15782, maxind=23609 to maxvert=24782, maxind=37109 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=24782, maxind=37109 to maxvert=43586, maxind=65315 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=43586, maxind=65315 to maxvert=88322, maxind=132419 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=308, maxind=398 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=308, maxind=398 to maxvert=686, maxind=965 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=686, maxind=965 to maxvert=1106, maxind=1595 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1106, maxind=1595 to maxvert=31244, maxind=46802 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=24782, maxind=37109 to maxvert=38960, maxind=58376 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=31244, maxind=46802 to maxvert=60524, maxind=90722 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=88322, maxind=132419 to maxvert=134822, maxind=202169 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=60524, maxind=90722 to maxvert=92354, maxind=138467 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=92354, maxind=138467 to maxvert=148502, maxind=222689 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=148502, maxind=222689 to maxvert=354884, maxind=532262 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=134, maxind=137 to maxvert=266, maxind=335 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=15128, maxind=22628 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=15128, maxind=22628 to maxvert=30134, maxind=45137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=266, maxind=335 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=266, maxind=335 to maxvert=638, maxind=893 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=638, maxind=893 to maxvert=1130, maxind=1631 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=30134, maxind=45137 to maxvert=76112, maxind=114104 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=140, maxind=146 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1130, maxind=1631 to maxvert=2102, maxind=3089 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2102, maxind=3089 to maxvert=3362, maxind=4979 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=3362, maxind=4979 to maxvert=5504, maxind=8192 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=5504, maxind=8192 to maxvert=8462, maxind=12629 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=8462, maxind=12629 to maxvert=12884, maxind=19262 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=12884, maxind=19262 to maxvert=19508, maxind=29198 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=19508, maxind=29198 to maxvert=29846, maxind=44705 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=29846, maxind=44705 to maxvert=45080, maxind=67556 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=76112, maxind=114104 to maxvert=138686, maxind=207965 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=15128, maxind=22628 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=15128, maxind=22628 to maxvert=30134, maxind=45137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=260, maxind=326 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=260, maxind=326 to maxvert=482, maxind=659 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=482, maxind=659 to maxvert=896, maxind=1280 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=896, maxind=1280 to maxvert=1430, maxind=2081 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=140, maxind=146 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1430, maxind=2081 to maxvert=2360, maxind=3476 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=30134, maxind=45137 to maxvert=45836, maxind=68690 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2360, maxind=3476 to maxvert=3626, maxind=5375 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=3626, maxind=5375 to maxvert=5768, maxind=8588 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=5768, maxind=8588 to maxvert=8780, maxind=13106 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=8780, maxind=13106 to maxvert=13262, maxind=19829 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=13262, maxind=19829 to maxvert=20132, maxind=30134 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=20132, maxind=30134 to maxvert=30686, maxind=45965 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=30686, maxind=45965 to maxvert=46334, maxind=69437 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=45836, maxind=68690 to maxvert=75380, maxind=113006 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=15128, maxind=22628 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=15128, maxind=22628 to maxvert=30134, maxind=45137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=272, maxind=344 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=272, maxind=344 to maxvert=482, maxind=659 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=482, maxind=659 to maxvert=806, maxind=1145 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=806, maxind=1145 to maxvert=1340, maxind=1946 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=146, maxind=155 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1340, maxind=1946 to maxvert=2186, maxind=3215 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2186, maxind=3215 to maxvert=3692, maxind=5474 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=3692, maxind=5474 to maxvert=5606, maxind=8345 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=5606, maxind=8345 to maxvert=8540, maxind=12746 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=8540, maxind=12746 to maxvert=13208, maxind=19748 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=13208, maxind=19748 to maxvert=20318, maxind=30413 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=20318, maxind=30413 to maxvert=30590, maxind=45821 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=30590, maxind=45821 to maxvert=46568, maxind=69788 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=30134, maxind=45137 to maxvert=75884, maxind=113762 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=134, maxind=137 to maxvert=302, maxind=389 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=75884, maxind=113762 to maxvert=187172, maxind=280694 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=728, maxind=1028 to maxvert=1328, maxind=1928 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=46568, maxind=69788 to maxvert=70394, maxind=105527 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=15128, maxind=22628 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=356, maxind=470 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=15128, maxind=22628 to maxvert=45134, maxind=67637 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=356, maxind=470 to maxvert=752, maxind=1064 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=752, maxind=1064 to maxvert=1322, maxind=1919 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1322, maxind=1919 to maxvert=2066, maxind=3035 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=140, maxind=146 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2066, maxind=3035 to maxvert=3254, maxind=4817 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=3254, maxind=4817 to maxvert=5366, maxind=7985 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=5366, maxind=7985 to maxvert=8168, maxind=12188 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=8168, maxind=12188 to maxvert=12320, maxind=18416 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=12320, maxind=18416 to maxvert=19130, maxind=28631 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=19130, maxind=28631 to maxvert=28844, maxind=43202 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=28844, maxind=43202 to maxvert=43418, maxind=65063 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=45128, maxind=67628 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=140, maxind=146 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=536, maxind=740 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=536, maxind=740 to maxvert=926, maxind=1325 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=926, maxind=1325 to maxvert=1622, maxind=2369 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1622, maxind=2369 to maxvert=2540, maxind=3746 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2540, maxind=3746 to maxvert=3974, maxind=5897 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=3974, maxind=5897 to maxvert=6320, maxind=9416 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=6320, maxind=9416 to maxvert=9878, maxind=14753 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=9878, maxind=14753 to maxvert=15134, maxind=22637 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=15134, maxind=22637 to maxvert=23114, maxind=34607 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=23114, maxind=34607 to maxvert=35444, maxind=53102 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=35444, maxind=53102 to maxvert=53420, maxind=80066 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=45128, maxind=67628 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=140, maxind=146 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=524, maxind=722 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=524, maxind=722 to maxvert=902, maxind=1289 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=902, maxind=1289 to maxvert=1628, maxind=2378 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1628, maxind=2378 to maxvert=2684, maxind=3962 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2684, maxind=3962 to maxvert=4160, maxind=6176 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=4160, maxind=6176 to maxvert=6356, maxind=9470 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=6356, maxind=9470 to maxvert=9908, maxind=14798 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=9908, maxind=14798 to maxvert=15290, maxind=22871 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=15290, maxind=22871 to maxvert=23066, maxind=34535 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=23066, maxind=34535 to maxvert=34880, maxind=52256 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=34880, maxind=52256 to maxvert=52442, maxind=78599 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=45128, maxind=67628 to maxvert=75140, maxind=112646 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=52442, maxind=78599 to maxvert=78968, maxind=118388 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=30128, maxind=45128 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=350, maxind=461 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=350, maxind=461 to maxvert=704, maxind=992 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=704, maxind=992 to maxvert=1142, maxind=1649 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=146, maxind=155 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1142, maxind=1649 to maxvert=1784, maxind=2612 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1784, maxind=2612 to maxvert=2822, maxind=4169 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2822, maxind=4169 to maxvert=4394, maxind=6527 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=4394, maxind=6527 to maxvert=6692, maxind=9974 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=6692, maxind=9974 to maxvert=10376, maxind=15500 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=10376, maxind=15500 to maxvert=15662, maxind=23429 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=15662, maxind=23429 to maxvert=24032, maxind=35984 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=24032, maxind=35984 to maxvert=36578, maxind=54803 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=30128, maxind=45128 to maxvert=60128, maxind=90128 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=36578, maxind=54803 to maxvert=56492, maxind=84674 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=56492, maxind=84674 to maxvert=86144, maxind=129152 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=30128, maxind=45128 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=30128, maxind=45128 to maxvert=60128, maxind=90128 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=30128, maxind=45128 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=30128, maxind=45128 to maxvert=60500, maxind=90686 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=15128, maxind=22628 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=15128, maxind=22628 to maxvert=30134, maxind=45137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=30134, maxind=45137 to maxvert=60350, maxind=90461 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=30128, maxind=45128 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=344, maxind=452 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=344, maxind=452 to maxvert=584, maxind=812 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=584, maxind=812 to maxvert=1070, maxind=1541 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1070, maxind=1541 to maxvert=1748, maxind=2558 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=140, maxind=146 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1748, maxind=2558 to maxvert=2816, maxind=4160 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2816, maxind=4160 to maxvert=4394, maxind=6527 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=4394, maxind=6527 to maxvert=6986, maxind=10415 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=6986, maxind=10415 to maxvert=10604, maxind=15842 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=10604, maxind=15842 to maxvert=16142, maxind=24149 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=16142, maxind=24149 to maxvert=24350, maxind=36461 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=30128, maxind=45128 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=344, maxind=452 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=344, maxind=452 to maxvert=602, maxind=839 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=602, maxind=839 to maxvert=1154, maxind=1667 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=140, maxind=146 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1154, maxind=1667 to maxvert=2012, maxind=2954 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2012, maxind=2954 to maxvert=3116, maxind=4610 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=3116, maxind=4610 to maxvert=5090, maxind=7571 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=5090, maxind=7571 to maxvert=7892, maxind=11774 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=7892, maxind=11774 to maxvert=12470, maxind=18641 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=12470, maxind=18641 to maxvert=19112, maxind=28604 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=19112, maxind=28604 to maxvert=28796, maxind=43130 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=30128, maxind=45128 to maxvert=60128, maxind=90128 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=30128, maxind=45128 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=356, maxind=470 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=356, maxind=470 to maxvert=950, maxind=1361 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=950, maxind=1361 to maxvert=1616, maxind=2360 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=146, maxind=155 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1616, maxind=2360 to maxvert=2822, maxind=4169 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2822, maxind=4169 to maxvert=4454, maxind=6617 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=4454, maxind=6617 to maxvert=6938, maxind=10343 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=6938, maxind=10343 to maxvert=11066, maxind=16535 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=11066, maxind=16535 to maxvert=17096, maxind=25580 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=17096, maxind=25580 to maxvert=26360, maxind=39476 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=15128, maxind=22628 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=15128, maxind=22628 to maxvert=45134, maxind=67637 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=260, maxind=326 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=260, maxind=326 to maxvert=464, maxind=632 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=464, maxind=632 to maxvert=770, maxind=1091 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=770, maxind=1091 to maxvert=1292, maxind=1874 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=140, maxind=146 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1292, maxind=1874 to maxvert=2120, maxind=3116 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2120, maxind=3116 to maxvert=3332, maxind=4934 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=3332, maxind=4934 to maxvert=5096, maxind=7580 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=5096, maxind=7580 to maxvert=7832, maxind=11684 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=7832, maxind=11684 to maxvert=12062, maxind=18029 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=12062, maxind=18029 to maxvert=18242, maxind=27299 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=18242, maxind=27299 to maxvert=27590, maxind=41321 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=60128, maxind=90128 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=308, maxind=398 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=308, maxind=398 to maxvert=740, maxind=1046 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=740, maxind=1046 to maxvert=1250, maxind=1811 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=140, maxind=146 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1250, maxind=1811 to maxvert=2096, maxind=3080 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2096, maxind=3080 to maxvert=3212, maxind=4754 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=3212, maxind=4754 to maxvert=4958, maxind=7373 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=4958, maxind=7373 to maxvert=7712, maxind=11504 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=7712, maxind=11504 to maxvert=11756, maxind=17570 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=11756, maxind=17570 to maxvert=17912, maxind=26804 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=60128, maxind=90128 to maxvert=94850, maxind=142211 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=17912, maxind=26804 to maxvert=27248, maxind=40808 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=27248, maxind=40808 to maxvert=41108, maxind=61598 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=94850, maxind=142211 to maxvert=180128, maxind=270128 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=41108, maxind=61598 to maxvert=61832, maxind=92684 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=374, maxind=497 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=75128, maxind=112628 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=374, maxind=497 to maxvert=770, maxind=1091 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=770, maxind=1091 to maxvert=1220, maxind=1766 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=140, maxind=146 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1220, maxind=1766 to maxvert=2156, maxind=3170 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2156, maxind=3170 to maxvert=3326, maxind=4925 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=3326, maxind=4925 to maxvert=5120, maxind=7616 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=5120, maxind=7616 to maxvert=7778, maxind=11603 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=7778, maxind=11603 to maxvert=12074, maxind=18047 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=12074, maxind=18047 to maxvert=18560, maxind=27776 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=18560, maxind=27776 to maxvert=28010, maxind=41951 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=75128, maxind=112628 to maxvert=157124, maxind=235622 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=157124, maxind=235622 to maxvert=240440, maxind=360596 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=90128, maxind=135128 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=134, maxind=137 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=146, maxind=155 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=686, maxind=965 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=686, maxind=965 to maxvert=1568, maxind=2288 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1568, maxind=2288 to maxvert=2876, maxind=4250 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2876, maxind=4250 to maxvert=4778, maxind=7103 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=4778, maxind=7103 to maxvert=7730, maxind=11531 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=7730, maxind=11531 to maxvert=12062, maxind=18029 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=12062, maxind=18029 to maxvert=18956, maxind=28370 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=18956, maxind=28370 to maxvert=28730, maxind=43031 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=90128, maxind=135128 to maxvert=157004, maxind=235442 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=157004, maxind=235442 to maxvert=247118, maxind=370613 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=134, maxind=137 to maxvert=266, maxind=335 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=28730, maxind=43031 to maxvert=43364, maxind=64982 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=43364, maxind=64982 to maxvert=65468, maxind=98138 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=W>[UnityPlugin]> Pack "Assets/StreamingAssets/PackFx" already loaded.</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=0, maxind=0 to maxvert=60128, maxind=90128 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EDEE38 buffers from maxverts=0, maxind=0 to maxvert=146, maxind=155 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=0, maxind=0 to maxvert=326, maxind=425 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=0, maxind=0 to maxvert=464, maxind=632 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=326, maxind=425 to maxvert=584, maxind=812 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=464, maxind=632 to maxvert=908, maxind=1298 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=584, maxind=812 to maxvert=992, maxind=1424 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=908, maxind=1298 to maxvert=1976, maxind=2900 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=1976, maxind=2900 to maxvert=3302, maxind=4889 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=992, maxind=1424 to maxvert=1598, maxind=2333 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=3302, maxind=4889 to maxvert=5840, maxind=8696 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=5840, maxind=8696 to maxvert=9548, maxind=14258 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=1598, maxind=2333 to maxvert=2510, maxind=3701 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=2510, maxind=3701 to maxvert=4076, maxind=6050 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=9548, maxind=14258 to maxvert=14426, maxind=21575 (IFORMAT=D3DFMT_INDEX16) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=4076, maxind=6050 to maxvert=6338, maxind=9443 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=14426, maxind=21575 to maxvert=89270, maxind=133841 (IFORMAT=D3DFMT_INDEX32) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=6338, maxind=9443 to maxvert=9680, maxind=14456 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=60128, maxind=90128 to maxvert=90266, maxind=135335 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=9680, maxind=14456 to maxvert=14618, maxind=21863 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=14618, maxind=21863 to maxvert=22370, maxind=33491 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=22370, maxind=33491 to maxvert=33650, maxind=50411 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=0, maxind=0 to maxvert=428, maxind=578 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 00000000629ED6D8 buffers from maxverts=428, maxind=578 to maxvert=728, maxind=1028 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=90266, maxind=135335 to maxvert=144908, maxind=217298 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=89270, maxind=133841 to maxvert=211682, maxind=317459 (IFORMAT=D3DFMT_INDEX32) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=144908, maxind=217298 to maxvert=218564, maxind=327782 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=211682, maxind=317459 to maxvert=336602, maxind=504839 (IFORMAT=D3DFMT_INDEX32) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=218564, maxind=327782 to maxvert=342950, maxind=514361 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=336602, maxind=504839 to maxvert=742130, maxind=1113131 (IFORMAT=D3DFMT_INDEX32) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=342950, maxind=514361 to maxvert=747422, maxind=1121069 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing Ribbons 0000000055E3C968 buffers from maxverts=742130, maxind=1113131 to maxvert=1180304, maxind=1770392 (IFORMAT=D3DFMT_INDEX32) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE1988 buffers from maxverts=747422, maxind=1121069 to maxvert=1245884, maxind=1868762 (IFORMAT=DXGI_FORMAT_R32_UINT) (COLORS=FLOAT4)</div>
+<div class=M>[UnityPlugin]> Growing FxMesh 0000000055EE0FE8 buffers from maxverts=33650, maxind=50411 to maxvert=50882, maxind=76259 (IFORMAT=DXGI_FORMAT_R16_UINT) (COLORS=FLOAT4)</div>
