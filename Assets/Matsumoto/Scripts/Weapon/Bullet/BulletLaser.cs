@@ -69,12 +69,14 @@ public class BulletLaser : Bullet {
 
 	public override void OnHitting(Collider other) {
 
+		Debug.Log(other.name);
+
 		//ヒットエフェクト再生
 		if(!laserHitParticle) {
 			laserHitParticle =
 			ParticleManager.Spawn(GetBulletData<BulletLaserData>().particleNameHit, new Vector3(), transform.rotation, 0).transform;
 			laserHitParticle.SetParent(transform);
-			laserHitParticle.localPosition = new Vector3(0, 0, 0.25f);
+			laserHitParticle.localPosition = new Vector3(0, 0, 1);
 		}
 
 		//SE再生

@@ -7,7 +7,7 @@ public class door : MonoBehaviour
 	public GameObject thedoor;
 	public bool isOpen;
 
-	void Update()
+	void Start()
 	{
 		AudioManager.FadeIn(2, "stage_1");
 	}
