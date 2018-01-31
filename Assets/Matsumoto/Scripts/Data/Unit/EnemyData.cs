@@ -32,7 +32,7 @@ public class EnemyData : UnitData {
 
 	public override Unit Spawn(Vector3 position, Quaternion rot) {
 
-		var enemy = SpawnUnit<Enemy>(position, rot);
+		var enemy = SpawnUnit<denger2>(position, rot);
 
 		enemy.attackDuration = attackDuration;
 		enemy.attackRestDuration = attackRestDuration;

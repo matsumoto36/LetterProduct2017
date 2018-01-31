@@ -13,15 +13,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 1633574998664960, guid: 55238d07e4edd084eaaf5e8280e9db4b, type: 2}
   icon: {fileID: 21300000, guid: 2aa9ec37b4580454eacb3d746708aa25, type: 3}
-  interval: 5
-  power: 300
+  interval: 3
+  power: 45
   mod:
-    mulHP: 1
-    mulMoveSpeed: 1
-    mulPow: 1
+    mulHP: 1.5
+    mulMoveSpeed: 0.9
+    mulPow: 1.1
     mulAttackSpeed: 1
   equipSound: gun_ready
   useSound: beam_No1
   hitSound: beam_No3
   bulletData: {fileID: 11400000, guid: 64ed567755c47554bac1a0e04972a5c7, type: 2}
+  shootingMoveMul: 0.3
   chargeSound: beam-gun-charge

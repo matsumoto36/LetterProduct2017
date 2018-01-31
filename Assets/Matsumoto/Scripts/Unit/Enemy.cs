@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// AIで動く敵のキャラクター
 /// </summary>
-public class Enemy : Unit {
+public class denger2 : Unit {
 
 	const string VSPLAYER_ENRICH_MOD = "ENRICH_MOD";
 

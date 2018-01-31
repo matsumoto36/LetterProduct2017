@@ -16,11 +16,11 @@ MonoBehaviour:
   interval: 0.1
   power: 10
   mod:
-    mulHP: 2
+    mulHP: 1
     mulMoveSpeed: 1
-    mulPow: 2
+    mulPow: 1
     mulAttackSpeed: 1
-  equipSound: gun_ready
+  equipSound: 
   useSound: gun_shot
   hitSound: shot-hit
   bulletData: {fileID: 11400000, guid: 104eea1aa70125f44a3a30279778f772, type: 2}

@@ -133,16 +133,20 @@ public class FadeManager : MonoBehaviour
         }
 
         //シーン切替 .
-        yield return async = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
-        while (!async.isDone)
+        async = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
+        async.allowSceneActivation = false;
+
+        do
         {
             Debug.Log(async.progress * 100 + "%");
             //Slider.value = async.progress;
             yield return null;
-        }
+        } while (!async.isDone);
 
-            //だんだん明るく .
-            time = 0;
+        async.allowSceneActivation = true;
+
+        //だんだん明るく .
+        time = 0;
 		while (time <= interval) {
 			this.fadeAlpha = Mathf.Lerp (1f, 0f, time / interval);
 			time += Time.deltaTime;

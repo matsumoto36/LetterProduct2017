@@ -10,6 +10,8 @@ public class door : MonoBehaviour
 
 	void Start()
 	{
+        AudioManager.FadeIn(2, "stage_1");
+
         int enemyCount = Unit.unitList
                 .Where(unit => unit.group != UnitGroup.Player)
                 .Count();
