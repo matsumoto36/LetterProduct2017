@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public class BossAI : MonoBehaviour
 {
+    /// <summary>
+    /// 攻撃モード
+    /// </summary>
+    public enum DistanceMode : int { MELEE, RANGED }    //近接,遠距離
+    public DistanceMode disMode;
+
     //private bool isRendered = false;    //画面内判定
 
     //基本
@@ -91,6 +97,7 @@ public class BossAI : MonoBehaviour
         {
             frameParSecond = 1 / Time.deltaTime;
         }
+        disMode = DistanceMode.MELEE;
 
         //攻撃されたときの通知に登録
         enemySC.OnAttacked += OnAttacked;
@@ -128,7 +135,7 @@ public class BossAI : MonoBehaviour
                 DirctionChange();
             }
 
-            if (enemySC.equipWeapon[0].weaponType != WeaponType.Melee)
+            if (disMode != DistanceMode.MELEE)
             {
                 //近接用の武器に交換
                 enemySC.SwitchWeapon(1);
@@ -141,7 +148,7 @@ public class BossAI : MonoBehaviour
         {
             Move();
 
-            if (enemySC.equipWeapon[0].weaponType != WeaponType.Ranged && distance > Mathf.Pow(attackLine, 2) + 1)
+            if (disMode != DistanceMode.RANGED && distance > Mathf.Pow(attackLine, 2) + 1)
             {
                 //遠距離用の武器に交換
                 enemySC.SwitchWeapon(1);
@@ -160,12 +167,22 @@ public class BossAI : MonoBehaviour
     /// </summary>
     private void DirctionChange()
     {
-        float f = 0.5f;
+        float f1 = 0.5f;
 
+        if (enemySC.isAttack)
+        {
+            //攻撃中は少し遅い
+            f1 /= 2;
+        }
+
+        Vector3 targetPositon = playerList[target].transform.position;
+        targetPositon = new Vector3(targetPositon.x, transform.position.y, targetPositon.z);
+
+        Quaternion targetRotation = Quaternion.LookRotation(targetPositon - transform.position);
         transform.rotation = Quaternion.Slerp(
-                                transform.rotation,
-                                Quaternion.LookRotation(playerList[target].transform.position - transform.position),
-                                Time.deltaTime * speed * f);
+            transform.rotation,
+            targetRotation,
+            Time.deltaTime * speed * f1);
     }
 
     /// <summary>
