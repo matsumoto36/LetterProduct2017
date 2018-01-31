@@ -17,6 +17,7 @@ public class EnemyAI : MonoBehaviour
     public float stepLine = 10;         //ステップ攻撃範囲
     public float attackLine = 3;        //攻撃距離
     public float searchAngle = 7;       //視野(度)
+    public float rangedAttackTime = 5;
 
     // Enemyスクリプト
     private Enemy enemySC;
@@ -176,7 +177,7 @@ public class EnemyAI : MonoBehaviour
                     }
 
                     //遠距離攻撃
-                    enemySC.Attack();
+                    enemySC.Attack(rangedAttackTime);
                 }
             }
 
@@ -190,6 +191,7 @@ public class EnemyAI : MonoBehaviour
                     {
                         //近接用の武器に交換
                         enemySC.SwitchWeapon(1);
+                        Debug.Log("交換");
                     }
 
                     //攻撃
