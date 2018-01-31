@@ -6,7 +6,7 @@ public class nasu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//AudioManager.PlayBGM("Boss_Stage"); 
+		AudioManager.PlayBGM("Boss_Stage"); 
 	}
 	
 	// Update is called once per frame
