@@ -12,20 +12,27 @@ MonoBehaviour:
   m_Name: Enemy2
   m_EditorClassIdentifier: 
   model: {fileID: 1931565862655708, guid: 30161e898d6a66a46b32f9fff47fbb9a, type: 2}
-  hp: 20
-  dropExp: 100
+  hp: 200
+  dropExp: 10
   nextLevelExp: 10
-  moveSpeed: 10
+  moveSpeed: 2
   rotSpeed: 5
   weaponData:
-  - {fileID: 11400000, guid: 3b2f234c55bddca45986162a1d7564d8, type: 2}
-  - {fileID: 11400000, guid: 3b2f234c55bddca45986162a1d7564d8, type: 2}
+  - {fileID: 11400000, guid: d0e8fb6ad32c50e44bcf93dbbbafa7ca, type: 2}
+  - {fileID: 11400000, guid: f5d6d934dc0d7cd4799f2abe2a20e4c6, type: 2}
   isDrawWeapon: 1
-  attackDuration: 0
-  attackRestDuration: 0
+  deathSE: 
+  deathParticle: EnemyDeath
+  attackDuration: 2
+  attackRestDuration: 2
+  isBoss: 0
+  attackLine: 5
+  searchAngle: 40
   enemyAIType: 1
   dashSpeed: 10
   moveLine: 20
   stepLine: 5
-  attackLine: 5
-  searchAngle: 40
+  speed: 10
+  targetChangeTime: 5
+  rollingMax: 2
+  spAttackTime: 2

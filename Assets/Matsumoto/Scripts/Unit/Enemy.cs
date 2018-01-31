@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ using UnityEngine;
 /// AIで動く敵のキャラクター
 /// </summary>
 public class denger2 : Unit {
+
+	const string VSPLAYER_ENRICH_MOD = "ENRICH_MOD";
 
 	[SerializeField]
 	float _attackDuration;						//攻撃する時間
@@ -30,9 +33,17 @@ public class denger2 : Unit {
 		tag = "Enemy";
 		gameObject.layer = LayerMask.NameToLayer("EnemyLayer");
 
+		//プレイヤーの数によって変化するHPをパッシブ効果として実装
+		var playerCount = GameData.instance.isEntryPlayer
+			.Where(item => item)
+			.Count();
+
+		ApplyModifier(new StatusModifier(GameBalance.CalcEnemyHPEnrich(playerCount), 1, 1, 1), VSPLAYER_ENRICH_MOD);
+
 		//勢力のセット
 		group = UnitGroup.Enemy;
 
+		CalcStatus();
 	}
 
 	/// <summary>

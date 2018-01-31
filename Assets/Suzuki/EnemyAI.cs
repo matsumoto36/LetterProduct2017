@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -15,80 +16,133 @@ public class EnemyAI : MonoBehaviour
     public float moveLine = 20;         //検知範囲
     public float stepLine = 10;         //ステップ攻撃範囲
     public float attackLine = 3;        //攻撃距離
-    public float searchAngle = 7;       //視野
+    public float searchAngle = 7;       //視野(度)
 
     // Enemyスクリプト
-    private denger2 enemySC;
+    private Enemy enemySC;
 
     //プレイヤー関連
     [SerializeField]
-    private GameObject[] player;        //Playerオブジェクト
+    private List<GameObject> playerList;//Playerリスト
     private Player[] playerCS;          //Playerスクリプト
     [SerializeField]
     private int target;                 //一番近いプレイヤー
     [SerializeField]
     private float[] distance;           //距離
+    //[SerializeField]
+    //private GameObject[] player;        //Playerオブジェクト
 
     /// <summary>
     /// 初期設定
     /// </summary>
-    void Awake()
+    void Start()
     {
-        //プレイ人数の取得
-        player = GameObject.FindGameObjectsWithTag("Player");
-        playerCS = new Player[player.Length];
-        distance = new float[player.Length];
+        ////プレイ人数の取得
+        //player = GameObject.FindGameObjectsWithTag("Player");
+        //playerCS = new Player[player.Length];
+        //distance = new float[player.Length];
 
-        for (int i = 0; i < player.Length; i++)
+        ////Player参照
+        //for (int i = 0; i < player.Length; i++)
+        //{
+        //    player[i] = Unit.unitList[0].gameObject;
+        //    if (player[i] != null)
+        //    {
+        //        //Playerスクリプトを人数分取得
+        //        playerCS[i] = player[i].GetComponent<Player>();
+        //    }
+        //}
+
+        ////リストからプレイ人数の取得
+        //player = new GameObject[1];
+        //int playerCount = 0;
+        //for (int i = 0; i < Unit.unitList.Count; i++)
+        //{
+        //    Debug.Log("ループ数 : " + i);
+        //    if (Unit.unitList[i].gameObject.tag == "Player")
+        //    {
+        //        //playerを増量し登録
+        //        if (playerCount != 0)
+        //        {
+        //            GameObject[] copyBox = player;
+        //            player = new GameObject[playerCount + 1];
+        //            for (int j = 0; j < copyBox.Length; j++)
+        //            {
+        //                player[j] = copyBox[j];
+        //            }
+        //        }
+        //        Debug.Log(player.Length);
+        //        player[playerCount] = Unit.unitList[i].gameObject;
+        //        playerCount++;
+        //    }
+        //}
+        //playerCS = new Player[player.Length];
+        //distance = new float[player.Length];
+
+        //リストからプレイ人数の取得
+        playerList = new List<GameObject>();
+        int playerCount = 0;
+        for (int i = 0; i < Unit.unitList.Count; i++)
         {
-            if (player[i] != null)
+            if (Unit.unitList[i].gameObject.tag == "Player")
             {
-                //Playerスクリプトを人数分取得
-                playerCS[i] = player[i].GetComponent<Player>();
+                //playerListに登録
+                playerList.Add(Unit.unitList[i].gameObject);
+                playerCount++;
             }
         }
-        //Enemyスクリプトを取得
-        enemySC = GetComponent<denger2>();
-    }
+        playerCS = new Player[playerList.Count];
+        distance = new float[playerList.Count];
 
-    void Update()
+        //Player参照
+        for (int i = 0; i < playerList.Count; i++)
+        {
+            //Playerスクリプトを人数分取得
+            playerCS[i] = playerList[i].GetComponent<Player>();
+        }
+
+        //Enemyスクリプトを取得
+        enemySC = GetComponent<Enemy>();
+	}
+
+	void Update()
     {
-        //画面に映っていたら行動を起こす(廃止)
-        if (true)//isRendered
+		//画面に映っていたら行動を起こす(廃止)
+		if (true)//isRendered
         {
             int passCount = 0;
-            for (int i = 0; i < player.Length; i++)
+            for (int i = 0; i < playerList.Count; i++)
             {
-                //player[i]が居ない,死亡なら処理をパス
-                if (player[i] == null || playerCS[i].isDead)
+                //player[i]が死亡なら処理をパス
+                if (playerCS[i].isDead)
                 {
                     passCount++;
                 }
                 else
                 {
                     //距離を計算(2乗された値)
-                    distance[i] = ((transform.position - player[i].transform.position) * 10000 / 10000).sqrMagnitude;
+                    distance[i] = ((transform.position - playerList[i].transform.position) * 10000 / 10000).sqrMagnitude;
                 }
             }
 
             //全滅したので以下の処理をしない
-            if (passCount == player.Length)
+            if (passCount == playerList.Count)
             {
                 return;
             }
 
             //距離比較
             target = 0;
-            for (int i = 1; i < player.Length; i++)
+            for (int i = 1; i < playerList.Count; i++)
             {
                 //比較対象が存在,生存しているか
-                if (player[target] == null || playerCS[target].isDead)
+                if (playerCS[i].isDead)
+                {
+                    /*ターゲット変更無*/
+                }
+                else if (playerCS[target].isDead)
                 {
                     target = i;
-                }
-                else if (player[i] == null || playerCS[i].isDead)
-                {
-
                 }
 
                 //通常処理
@@ -104,14 +158,14 @@ public class EnemyAI : MonoBehaviour
             //ルート化し正しき値へ
             distance[target] = Mathf.Sqrt(distance[target]);
 
-            if (mode >= Mode.DUAL)
+            if (mode == Mode.DUAL)
             {
                 //方向転換
                 DirctionChange();
 
                 //プレイヤーの見えている正面からの角度(正規化)
-                Vector3 v = (player[target].transform.position - transform.position).normalized;
-                float f = Vector3.Angle(v, transform.forward);
+                Vector3 vec3 = (playerList[target].transform.position - transform.position).normalized;
+                float f = Vector3.Angle(vec3, transform.forward);
 
                 if (enemySC.isAttack == false && f <= searchAngle && distance[target] >= stepLine)
                 {
@@ -119,14 +173,13 @@ public class EnemyAI : MonoBehaviour
                     {
                         //遠距離用の武器に交換
                         enemySC.SwitchWeapon(1);
-                        Debug.Log("武器変更");
                     }
 
                     //遠距離攻撃
                     enemySC.Attack();
-                    Debug.Log("ビーム");
                 }
             }
+
             if (distance[target] < attackLine)
             {
                 DirctionChange();
@@ -137,22 +190,20 @@ public class EnemyAI : MonoBehaviour
                     {
                         //近接用の武器に交換
                         enemySC.SwitchWeapon(1);
-                        Debug.Log("武器変更");
                     }
 
                     //攻撃
                     enemySC.Attack();
-                    Debug.Log("剣");
                 }
             }
             else if (enemySC.isAttack == false)//移動処理
             {
-                if (distance[target] < stepLine && mode >= Mode.APPROACH)
+                if (distance[target] < stepLine && mode != Mode.BASIS)
                 {
                     //急接近
                     Dash();
                 }
-                else if (distance[target] < moveLine && mode >= Mode.BASIS)
+                else if (distance[target] < moveLine)
                 {
                     //移動
                     Move();
@@ -171,12 +222,13 @@ public class EnemyAI : MonoBehaviour
 
         if (enemySC.isAttack)
         {
+            //攻撃中は少し遅い
             f /= 2;
         }
 
         transform.rotation = Quaternion.Slerp(
                                 transform.rotation,
-                                Quaternion.LookRotation(player[target].transform.position - transform.position),
+                                Quaternion.LookRotation(playerList[target].transform.position - transform.position),
                                 Time.deltaTime * speed * f);
     }
 
@@ -200,15 +252,6 @@ public class EnemyAI : MonoBehaviour
         DirctionChange();
 
         transform.position += transform.forward * dashSpeed * Time.deltaTime;
-    }
-
-    /// <summary>
-    /// ターゲット変更時間
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator TargetChange()
-    {
-        yield return new WaitForSeconds(5.0f);
     }
 
     //SkinnedMeshRendererなるものが必要？

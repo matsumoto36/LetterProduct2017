@@ -42,6 +42,7 @@ public class CameraController : MonoBehaviour {
 		var playerList = Unit.unitList
 			.Where((item) => item && item is Player)
 			.ToArray();
+		if(playerList.Length == 0) return;
 
 		//プレイヤー達の中心を求める
 		var trackPos = playerList

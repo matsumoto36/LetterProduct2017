@@ -10,15 +10,23 @@ using UnityEngine;
 /// <typeparam name="T"></typeparam>
 public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour {
 
-	public static T instance { get; private set; }
+	public static T instance {
+		get
+		{
+			if (!_instance) Create();
+			return _instance;
+		}
+	}
+	static T _instance;
 
-	static SingletonMonoBehaviour() {
-		instance = new GameObject(string.Format("[Singleton - {0}]", typeof(T).ToString()))
+	static void Create()
+	{
+		_instance = new GameObject(string.Format("[Singleton - {0}]", typeof(T).ToString()))
 			.AddComponent<T>();
 
-		DontDestroyOnLoad(instance.gameObject);
+		DontDestroyOnLoad(_instance.gameObject);
 
-		instance.GetComponent<SingletonMonoBehaviour<T>>().Init();
+		_instance.GetComponent<SingletonMonoBehaviour<T>>().Init();
 	}
 
 	/// <summary>
@@ -27,6 +35,6 @@ public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBe
 	protected virtual void Init() { }
 
 	void Awake() {
-		if(instance) Destroy(gameObject);
+		if(_instance) Destroy(gameObject);
 	}
 }

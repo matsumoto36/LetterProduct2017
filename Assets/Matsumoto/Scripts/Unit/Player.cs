@@ -10,9 +10,8 @@ using GamepadInput;
 /// </summary>
 public class Player : Unit {
 
+	const string ANIM_HAND_R = "[AnimHandR]";
 	const string COMBO_STATUS_MOD = "COMBO_MOD";
-
-	const string WEAPON_SWITCH_ANIM = "TestPlayerAnimationSwitch";
 	const string DURA_EGG_PREFAB_PATH = "System/DuraEgg";
 
 	public int playerIndex;
@@ -20,13 +19,24 @@ public class Player : Unit {
 	int combo = 0;
 	float comboDuration = 0;
 
+	Transform animHandR;
+
 	StatusModifier comboStatus;
 	bool isInDuraEgg = false;
 	bool isWeak = false;
 	GameObject duraEggPrefab;
 	GameObject duraEgg;
-	float ratio = 0.5f;	//レバーの入力閾値
+	float ratio = 0.5f; //レバーの入力閾値
 
+
+	public override void InitFirst() {
+		base.InitFirst();
+
+		//アニメーション用の右手を取得
+		animHandR = transform.GetComponentsInChildren<Transform>()
+			.Where((item) => item.name == ANIM_HAND_R)
+			.ToArray()[0];
+	}
 
 	public override void InitFinal() {
 		base.InitFinal();
@@ -45,8 +55,17 @@ public class Player : Unit {
 		duraEggPrefab = Resources.Load<GameObject>(DURA_EGG_PREFAB_PATH);
 		if(!duraEggPrefab) Debug.LogError("Failed load DuraEgg.");
 
-		//ヒット通知でコンボ加算
-		OnAttackHit += (_) => AddCombo();
+		//ヒット通知
+		OnAttackHit += (other) => {
+			//総ダメージ加算
+			GameData.instance.sumDamage[playerIndex] += other.attackedUnitList[other.attackedUnitList.Count - 1].damage;
+			//コンボ加算
+			AddCombo();
+			};
+
+
+		//アニメーションの初期状態をセット
+		anim.SetBool("IsRanged", equipWeapon[0].weaponType == WeaponType.Ranged);
 	}
 
 	void Update() {
@@ -86,7 +105,26 @@ public class Player : Unit {
 
 			//攻撃キャンセル
 			if(isAttack) equipWeapon[0].AttackEnd();
-			SwitchWeapon(WEAPON_SWITCH_ANIM, 1, () => { });
+			if(SwitchWeapon(1.1f, 0.5f, 1, () => {
+				//アニメーション用のHandから戻す
+				foreach(var item in equipWeapon) {
+					if(item.weaponType == WeaponType.Ranged) {
+						item.transform.SetParent(handAnchor);
+						item.transform.SetPositionAndRotation(handAnchor.position, handAnchor.rotation);
+					}
+				}
+			})) {
+				//アニメーション用のHandに移す
+				foreach(var item in equipWeapon) {
+					if(item.weaponType == WeaponType.Ranged) {
+						item.transform.SetParent(animHandR);
+						item.transform.SetPositionAndRotation(animHandR.position, animHandR.rotation);
+					}
+				}
+
+				Debug.Log(equipWeapon[1].weaponType);
+				anim.SetBool("IsRanged", equipWeapon[1].weaponType == WeaponType.Ranged);
+			}
 		}
 	}
 
@@ -102,7 +140,8 @@ public class Player : Unit {
 			StartCoroutine(SkillWait(
 				GameBalance.instance.data.duraEggChargeTime,
 				() => InputManager.GetButton(playerIndex, GamePad.Button.A),
-				InDuraEgg));
+				InDuraEgg,
+				() => { }));
 		}
 
 		//耐久卵から出る
@@ -112,7 +151,8 @@ public class Player : Unit {
 			StartCoroutine(SkillWait(
 				GameBalance.instance.data.duraEggExitTime,
 				() => InputManager.GetButton(playerIndex, GamePad.Button.A),
-				OutDuraEgg));
+				OutDuraEgg,
+				() => { }));
 		}
 	}
 	/// <summary>
@@ -196,10 +236,16 @@ public class Player : Unit {
 
 			if(InputManager.GetButtonDown(playerIndex, GamePad.Button.B)) {
 
+				//SE再生
+				var se = AudioManager.PlaySE("Revive_Motion", autoDelete:false);
+				se.loop = true;
+				se.transform.position = transform.position;
+
 				StartCoroutine(SkillWait(
-					GameBalance.instance.data.duraEggExitTime,
+					GameBalance.instance.data.reviveTime,
 					() => InputManager.GetButton(playerIndex, GamePad.Button.B),
-					() => RivivePlayer(rivaivablePlayer)));
+					() => { RivivePlayer(rivaivablePlayer); Destroy(se.gameObject); },
+					() => Destroy(se.gameObject)));
 			}
 
 		}
@@ -215,9 +261,15 @@ public class Player : Unit {
 
 		target.isDead = false;
 		var healPoint = nowHP / 2;
+
 		//回復してダメージ
 		Heal(this, target, healPoint);
 		ApplyDamage(healPoint);
+
+		//SE再生
+		var se = AudioManager.PlaySE("Revive");
+		se.transform.position = transform.position;
+
 	}
 	/// <summary>
 	/// 復活可能なプレイヤーを取得する
@@ -248,6 +300,20 @@ public class Player : Unit {
 		return nearestPlayer;
 	}
 
+	void OnAttackAnimStart() {
+
+		var weapon = ((WeaponMelee)equipWeapon[0]);
+		anim.speed = weapon.motionSpeed;
+
+		//振るSEの再生
+		var se = AudioManager.PlaySE(weapon.useSound);
+		se.transform.position = transform.position;
+	}
+
+	void OnAttackAnimComplete() {
+		anim.speed = 1;
+	}
+
 	/// <summary>
 	/// 一定時間待つ
 	/// </summary>
@@ -255,7 +321,7 @@ public class Player : Unit {
 	/// <param name="predicate">判断条件</param>
 	/// <param name="onComplete">成功時に実行される</param>
 	/// <returns>時間</returns>
-	IEnumerator SkillWait(float waitTime, Func<bool> predicate, Action onComplete) {
+	IEnumerator SkillWait(float waitTime, Func<bool> predicate, Action onComplete, Action onFailed) {
 
 		if(!predicate()) yield break;
 
@@ -269,6 +335,9 @@ public class Player : Unit {
 			//続けないとキャンセル
 			if(!predicate()) {
 				canMove = canAttack = buff;
+
+				//失敗時に実行
+				onFailed();
 				yield break;
 			}
 
@@ -276,6 +345,8 @@ public class Player : Unit {
 		}
 
 		canMove = canAttack = true;
+
+		//
 
 		//成功時に実行
 		onComplete();
@@ -296,41 +367,6 @@ public class Player : Unit {
 		}
 
 		isWeak = false;
-	}
-
-	/// <summary>
-	/// 攻撃するかどうかも含め、各攻撃状態時の処理
-	/// </summary>
-	public override void Attack() {
-
-		//攻撃開始
-		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) > ratio && !isAttack) {
-			equipWeapon[0].AttackStart();
-			isAttack = true;
-		}
-		//攻撃ループ
-		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) > ratio) {
-
-			//攻撃キャンセル復帰用
-			if(!isAttack) {
-				equipWeapon[0].AttackStart();
-				isAttack = true;
-			}
-			else {
-				equipWeapon[0].Attack();
-			}
-		}
-		//攻撃終了
-		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) <= ratio && isAttack) {
-			equipWeapon[0].AttackEnd();
-			isAttack = false;
-		}
-	}
-
-	public override void Death() {
-		base.Death();
-		Debug.Log("Player" + playerIndex + " is Dead");
-		StopAllCoroutines();
 	}
 
 	public override void Move() {
@@ -407,6 +443,52 @@ public class Player : Unit {
 		//走るモーションをセット
 		anim.SetInteger("State", state);
 
+	}
+
+	/// <summary>
+	/// 攻撃するかどうかも含め、各攻撃状態時の処理
+	/// </summary>
+	public override void Attack() {
+
+		//攻撃開始
+		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) > ratio && !isAttack) {
+			equipWeapon[0].AttackStart();
+			isAttack = true;
+		}
+		//攻撃ループ
+		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) > ratio) {
+
+			//攻撃キャンセル復帰用
+			if(!isAttack) {
+				equipWeapon[0].AttackStart();
+				isAttack = true;
+			}
+			else {
+				equipWeapon[0].Attack();
+			}
+		}
+		//攻撃終了
+		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) <= ratio && isAttack) {
+			equipWeapon[0].AttackEnd();
+			isAttack = false;
+		}
+	}
+
+	public override void Death() {
+		base.Death();
+		Debug.Log("Player" + playerIndex + " is Dead");
+		StopAllCoroutines();
+	}
+
+	public override void EquipWeapon(Weapon weapon, int slot) {
+		base.EquipWeapon(weapon, slot);
+
+		//近接武器の場合は手の位置に移動
+		if(weapon.weaponType == WeaponType.Melee) {
+			weapon.transform.SetParent(animHandR);
+			weapon.transform.localPosition = new Vector3();
+			weapon.transform.localRotation = Quaternion.identity;
+		}
 	}
 
 	protected override bool ApplyDamage(int damage) {

@@ -19,26 +19,34 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: {x: 0.004476888, y: 0.041779045, z: -0.00027579188}
-        inSlope: {x: 0, y: 0.00928279, z: 0}
-        outSlope: {x: 0, y: 0.00928279, z: 0}
-        tangentMode: 178123588
+        value: {x: 0, y: 0, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
       - serializedVersion: 2
+<<<<<<< HEAD
+        time: 0.48333332
+=======
         time: 0.33333334
-        value: {x: 0.004476888, y: 0.04487331, z: -0.00027579188}
-        inSlope: {x: 0, y: 0.0000000055879354, z: 0}
-        outSlope: {x: 0, y: 0.0000000055879354, z: 0}
-        tangentMode: 1073741925
+>>>>>>> d9053b00fed5b0b8c2775fb5e563ac4149e2ac23
+        value: {x: 0, y: 0.00309426, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
       - serializedVersion: 2
+<<<<<<< HEAD
+        time: 1
+=======
         time: 0.6666667
-        value: {x: 0.004476888, y: 0.04177905, z: -0.00027579188}
-        inSlope: {x: 0, y: -0.009282779, z: 0}
-        outSlope: {x: 0, y: -0.009282779, z: 0}
-        tangentMode: 320
+>>>>>>> d9053b00fed5b0b8c2775fb5e563ac4149e2ac23
+        value: {x: 0, y: 0, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: 
+    path: attackBot
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves: []
@@ -50,7 +58,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 0
+      path: 2854408344
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -62,7 +70,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6666667
+    m_StopTime: 1
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -83,27 +91,25 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0.004476888
+        value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 34
+        tangentMode: 136
       - serializedVersion: 2
-        time: 0.33333334
-        value: 0.004476888
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-      - serializedVersion: 2
+<<<<<<< HEAD
+        time: 1
+=======
         time: 0.6666667
-        value: 0.004476888
+>>>>>>> d9053b00fed5b0b8c2775fb5e563ac4149e2ac23
+        value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 34
+        tangentMode: 136
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: 
+    path: attackBot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -111,27 +117,35 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0.041779045
-        inSlope: 0.00928279
-        outSlope: 0.00928279
-        tangentMode: 34
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
       - serializedVersion: 2
+<<<<<<< HEAD
+        time: 0.48333332
+=======
         time: 0.33333334
-        value: 0.04487331
-        inSlope: 0.0000000055879354
-        outSlope: 0.0000000055879354
-        tangentMode: 34
+>>>>>>> d9053b00fed5b0b8c2775fb5e563ac4149e2ac23
+        value: 0.00309426
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
       - serializedVersion: 2
+<<<<<<< HEAD
+        time: 1
+=======
         time: 0.6666667
-        value: 0.04177905
-        inSlope: -0.009282779
-        outSlope: -0.009282779
-        tangentMode: 34
+>>>>>>> d9053b00fed5b0b8c2775fb5e563ac4149e2ac23
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: 
+    path: attackBot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -139,31 +153,29 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: -0.00027579188
+        value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 34
+        tangentMode: 136
       - serializedVersion: 2
-        time: 0.33333334
-        value: -0.00027579188
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-      - serializedVersion: 2
+<<<<<<< HEAD
+        time: 1
+=======
         time: 0.6666667
-        value: -0.00027579188
+>>>>>>> d9053b00fed5b0b8c2775fb5e563ac4149e2ac23
+        value: 0
         inSlope: 0
         outSlope: 0
-        tangentMode: 34
+        tangentMode: 136
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: 
+    path: attackBot
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves: []
-  m_HasGenericRootTransform: 1
+  m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events: []

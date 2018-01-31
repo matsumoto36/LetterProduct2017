@@ -18,6 +18,9 @@ public abstract class UnitData : ScriptableObjectBase {
 	public WeaponData[] weaponData;
 	public bool isDrawWeapon = true;
 
+	public string deathSE;
+	public string deathParticle;
+
 	public UnitData() {
 		weaponData = new WeaponData[2];
 	}
@@ -46,9 +49,12 @@ public abstract class UnitData : ScriptableObjectBase {
 
 		//データをセット
 		unit.SetInitData(hp, dropExp, nextLevelExp, moveSpeed, rotSpeed);
+		unit.deathSE = deathSE;
+		unit.deathParticle = deathParticle;
 
 		//武器を装備
 		if(weaponData[0]) {
+
 			var weapon = weaponData[0].Create();
 
 			//表示しない場合は描画を無効化
@@ -57,9 +63,12 @@ public abstract class UnitData : ScriptableObjectBase {
 					item.enabled = false;
 			}
 
+			weapon.Init();
 			unit.EquipWeapon(weapon, 0);
+
 		}
 		if(weaponData[1]) {
+
 			var weapon = weaponData[1].Create();
 
 			//表示しない場合は描画を無効化
@@ -68,6 +77,7 @@ public abstract class UnitData : ScriptableObjectBase {
 					item.enabled = false;
 				}
 
+			weapon.Init();
 			unit.EquipWeapon(weapon, 1);
 		}
 

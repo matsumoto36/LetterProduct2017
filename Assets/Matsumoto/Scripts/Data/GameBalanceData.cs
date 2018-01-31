@@ -4,6 +4,7 @@ public class GameBalanceData : ScriptableObject {
 
 	public const string ASSET_PATH = "Data/GameBalance";
 
+	public float enemyHPMul = 2;				//プレイヤー4人のときの敵の体力の倍率
 	public float nextExpMagnification = 1.1f;	//次のレベルの必要経験値倍率
 	public float levelUpMulHP = 1.01f;			//レベルアップ時のHP増加倍率
 	public float levelUpMulPower = 1.10f;		//レベルアップ時の攻撃力増加倍率
