@@ -37,5 +37,5 @@ MonoBehaviour:
   rollingMax: 2
   spAttackTime: 2
   detectAngle: 360
-  detectRadius: 20
+  detectRadius: 10
   isDetectAttacked: 1
