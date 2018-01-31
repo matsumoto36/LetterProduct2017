@@ -14,7 +14,10 @@ public class GameBalanceDataInspector : Editor {
 	SerializedProperty duraEggExitTime;
 	SerializedProperty duraEggExitWeakTime;
 	SerializedProperty duraEggExitDamageMag;
+	SerializedProperty revivableRadius;
 	SerializedProperty reviveTime;
+	SerializedProperty comboStartDuration;
+	SerializedProperty comboMulPower;
 
 	void OnEnable() {
 		enemyHPMul = serializedObject.FindProperty("enemyHPMul");
@@ -27,7 +30,10 @@ public class GameBalanceDataInspector : Editor {
 		duraEggExitTime = serializedObject.FindProperty("duraEggExitTime");
 		duraEggExitWeakTime = serializedObject.FindProperty("duraEggExitWeakTime");
 		duraEggExitDamageMag = serializedObject.FindProperty("duraEggExitDamageMag");
+		revivableRadius = serializedObject.FindProperty("revivableRadius");
 		reviveTime = serializedObject.FindProperty("reviveTime");
+		comboStartDuration = serializedObject.FindProperty("comboStartDuration");
+		comboMulPower = serializedObject.FindProperty("comboMulPower");
 	}
 
 	public override void OnInspectorGUI() {
@@ -47,7 +53,11 @@ public class GameBalanceDataInspector : Editor {
 		EditorGUILayout.PropertyField(duraEggExitWeakTime, new GUIContent("耐久卵から出た時の弱くなる時間"));
 		EditorGUILayout.PropertyField(duraEggExitDamageMag, new GUIContent("耐久卵で弱くなった時のダメージ倍率"));
 		EditorGUILayout.Separator();
+		EditorGUILayout.PropertyField(revivableRadius, new GUIContent("復活に必要な距離"));
 		EditorGUILayout.PropertyField(reviveTime, new GUIContent("復活に必要な時間"));
+		EditorGUILayout.Separator();
+		EditorGUILayout.PropertyField(comboStartDuration, new GUIContent("最初のコンボ継続時間"));
+		EditorGUILayout.PropertyField(comboMulPower, new GUIContent("10コンボで増える攻撃"));
 
 		serializedObject.ApplyModifiedProperties();
 	}

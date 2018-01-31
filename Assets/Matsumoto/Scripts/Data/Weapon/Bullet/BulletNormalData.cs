@@ -7,6 +7,7 @@ using UnityEngine;
 public class BulletNormalData : BulletData {
 
 	public float speed;
+	public float range;
 
 	public override Bullet Create(Weapon owner, Vector3 position, Quaternion quaternion) {
 		return CreateBullet<BulletNormal>(this, owner, position, quaternion);

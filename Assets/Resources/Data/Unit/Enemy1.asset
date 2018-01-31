@@ -19,14 +19,14 @@ MonoBehaviour:
   rotSpeed: 10
   weaponData:
   - {fileID: 11400000, guid: d0e8fb6ad32c50e44bcf93dbbbafa7ca, type: 2}
-  - {fileID: 11400000, guid: d0e8fb6ad32c50e44bcf93dbbbafa7ca, type: 2}
+  - {fileID: 11400000, guid: 3b2f234c55bddca45986162a1d7564d8, type: 2}
   isDrawWeapon: 1
   deathSE: 
   deathParticle: EnemyDeath
-  attackDuration: 0
-  attackRestDuration: 0
+  attackDuration: 10
+  attackRestDuration: 2
   isBoss: 0
-  attackLine: 5
+  attackLine: 40
   searchAngle: 40
   enemyAIType: 2
   dashSpeed: 10

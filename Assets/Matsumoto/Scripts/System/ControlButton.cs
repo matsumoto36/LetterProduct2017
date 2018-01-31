@@ -8,6 +8,7 @@ public delegate void ExecMethod();
 public enum ButtonName {
 	Title_Start,
 	Option,
+	Exit,
 
 	Pl1Weapon1,
 	Pl1Weapon2,

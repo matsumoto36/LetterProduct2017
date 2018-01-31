@@ -36,6 +36,18 @@ public class StartSelect : MonoBehaviour {
 		selectButton.onSelect += () => {
 			AudioManager.PlaySE("Button_select");
 			//オプション画面を表示
+			//UIManager.instance.OptionSwich(true);
+			return;
+		};
+
+		var exitButton = ControlButton.GetButton(ButtonName.Exit);
+		exitButton.onFocus += () => {
+			AudioManager.PlaySE("button");
+		};
+		exitButton.onSelect += () => {
+			AudioManager.PlaySE("Button_select");
+			//終了
+			Application.Quit();
 			return;
 		};
 

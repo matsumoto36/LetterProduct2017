@@ -10,6 +10,8 @@ using System.Linq;
 [ExecuteInEditMode]
 public class EnemySpawner : MonoBehaviour {
 
+	public static List<EnemySpawner> spawnerList { get; private set; }
+
 	[Header("スポーンする敵のデータを入力して下さい")]
 	public EnemyData enemyData;
 
@@ -25,6 +27,11 @@ public class EnemySpawner : MonoBehaviour {
 	GameObject arrow;
 	GameObject model;
 
+	static EnemySpawner()
+	{
+		spawnerList = new List<EnemySpawner>();
+	}
+
 	void Awake() {
 		foreach(Transform item in transform) {
 			if(Application.isPlaying) {
@@ -34,6 +41,8 @@ public class EnemySpawner : MonoBehaviour {
 				DestroyImmediate(item.gameObject);
 			}
 		}
+
+		spawnerList.Add(this);
 	}
 
 	void Update() {
@@ -126,5 +135,6 @@ public class EnemySpawner : MonoBehaviour {
 	/// <returns></returns>
 	public void SpawnEnemy() {
 		enemyData.Spawn(transform.position, transform.rotation);
+		spawnerList.Remove(this);
 	}
 }
