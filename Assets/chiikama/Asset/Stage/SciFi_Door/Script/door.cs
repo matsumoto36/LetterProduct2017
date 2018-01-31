@@ -8,7 +8,7 @@ public class door : MonoBehaviour
 
 
 
-	void Start()
+	void Update()
 	{
         AudioManager.FadeIn(2, "stage_1");
 

@@ -7,37 +7,45 @@ using UnityEngine;
 /// </summary>
 public class BulletNormal : Bullet {
 
-	const float LIFETIME = 5.0f;
-
+	float length = 0;
+	float maxLength;
 	float speed;
 	string hitParticleName;
 
 	public override void Init() {
 		base.Init();
-		Destroy(gameObject, LIFETIME);
 
 		var data = GetBulletData<BulletNormalData>();
 		speed = data.speed;
+		maxLength = data.range;
 		hitParticleName = data.particleNameHit;
+
+	}
+
+	void OnDestroy() {
+
+		//再生中のパーティクルを止める
+		attackParticle.transform.parent = null;
+		Destroy(attackParticle.gameObject, 0.1f);   //少しずらさないと、なぜか進み続けてしまう
+
 	}
 
 	public virtual void FixedUpdate() {
 		transform.position += transform.forward * speed * Time.deltaTime;
+
+		if((length += speed) > maxLength) Destroy(gameObject);
 	}
 
 	public override void OnHitEnter(Collider other) {
 		Attack(other.GetComponent<Unit>());
 
-		//再生中のパーティクルを止める
-		attackParticle.transform.parent = null;
-		Destroy(attackParticle.gameObject, 0.1f);	//少しずらさないと、なぜか進み続けてしまう
-
 		//ヒットパーティクルの再生
 		ParticleManager.Spawn(hitParticleName, transform.position, Quaternion.identity);
-		Destroy(gameObject);
 
 		//SEの再生
 		var se = AudioManager.PlaySE(bulletOwner.hitSound);
 		se.transform.position = other.ClosestPointOnBounds(transform.position);
+
+		Destroy(gameObject);
 	}
 }
