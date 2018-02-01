@@ -33,8 +33,10 @@ public class WeaponLaser : WeaponRanged {
 
 		//SE再生
 		laserSE = AudioManager.PlaySE(chargeSound, autoDelete:false);
-		laserSE.loop = true;
-		laserSE.transform.SetParent(transform);
+		if(laserSE) {
+			laserSE.loop = true;
+			laserSE.transform.SetParent(transform);
+		}
 
 		//発射準備
 		laser = (BulletLaser)bulletData.Create(this, shotAnchor.position, shotAnchor.rotation);
@@ -57,12 +59,14 @@ public class WeaponLaser : WeaponRanged {
 				if((chargeTime += Time.deltaTime) > interval) {
 
 					//チャージSE終了
-					Destroy(laserSE.gameObject);
+					if(laserSE) Destroy(laserSE.gameObject);
 
 					//SE再生
 					laserSE = AudioManager.PlaySE(useSound, autoDelete: false);
-					laserSE.loop = true;
-					laserSE.transform.SetParent(transform);
+					if(laserSE) {
+						laserSE.loop = true;
+						laserSE.transform.SetParent(transform);
+					}
 
 					//照射ステートに変更
 					state = LaserState.Shot;
@@ -121,7 +125,7 @@ public class WeaponLaser : WeaponRanged {
 		laser = null;
 
 		//SE終了
-		Destroy(laserSE.gameObject);
+		if(laserSE) Destroy(laserSE.gameObject);
 
 		//移動速度を変更する処理を解除
 		unitOwner.RemoveModifier(MOVE_MOD);

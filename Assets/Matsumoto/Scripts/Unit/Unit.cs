@@ -88,6 +88,7 @@ public abstract class Unit : MonoBehaviour {
 	public bool canMove { get; protected set; }
 
 	public float HPRatio { get { return (float)nowHP / maxHP; } }
+	public float EXPRatio { get { return (float)nextLevelEXP / expSave; } }
 
 	public Animator anim { get; private set; }
 
@@ -101,6 +102,7 @@ public abstract class Unit : MonoBehaviour {
 	protected int switchingWeaponNum = 0;
 
 	//計算用
+	int expSave;
 	int baseNextLevel;
 	int baseHP;
 	float baseMoveSpeed;
@@ -148,7 +150,7 @@ public abstract class Unit : MonoBehaviour {
 	public virtual void SetInitData(int baseHP, int dropExp, int baseNextLevel, float baseMoveSpeed, float baseRotSpeed) {
 		this.baseHP = maxHP = baseHP;
 		this.dropExp = dropExp;
-		this.baseNextLevel = nextLevelEXP = baseNextLevel;
+		this.baseNextLevel = expSave = nextLevelEXP = baseNextLevel;
 		this.baseMoveSpeed = moveSpeed = baseMoveSpeed;
 		this.baseRotSpeed = rotSpeed = baseRotSpeed;
 	}
@@ -257,7 +259,7 @@ public abstract class Unit : MonoBehaviour {
 			Debug.Log("Level UP! : " + level);
 
 			//次のレベルに必要な経験値をセット
-			nextLevelEXP = GameBalance.CalcNextLevelExp(baseNextLevel, level);
+			nextLevelEXP = expSave = GameBalance.CalcNextLevelExp(baseNextLevel, level);
 		}
 
 		if(isLevelUp) {

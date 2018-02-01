@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Audio;
+using System;
 
 /// <summary>
 /// 音の管理をする
@@ -12,12 +13,14 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	const string BGM_PATH = "Sounds/BGM/";					//BGMのフォルダーパス
 	const string SE_PATH = "Sounds/SE/";                    //SEのフォルダーパス
 
+	const int MAX_PLAYING_SE_COUNT = 10;					//同時再生できるSEの数
+
 	public AudioMixer mixer { get; private set; }			//ミキサー
 
 	AudioMixerGroup[] mixerGroups = new AudioMixerGroup[2];	//ミキサーのグループ [0]SE [1]BGM
 
-	Dictionary<string, AudioClip> SEclips;					//再生用リスト
-	Dictionary<string, AudioClip> BGMclips;					//再生用リスト
+	Dictionary<string, AudioClipInfo> SEclips;				//SE再生用リスト
+	Dictionary<string, AudioClip> BGMclips;					//BGM再生用リスト
 
 	AudioSource nowPlayingBGM;								//現在再生されているBGM
 	string latestPlayBGM = "";								//再生されているBGMの種類
@@ -54,9 +57,9 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 		}
 
 		//SE読み込み
-		instance.SEclips = new Dictionary<string, AudioClip>();
+		instance.SEclips = new Dictionary<string, AudioClipInfo>();
 		foreach(var item in Resources.LoadAll<AudioClip>(SE_PATH)) {
-			instance.SEclips.Add(item.name, item);
+			instance.SEclips.Add(item.name, new AudioClipInfo(item));
 		}
 
 	}
@@ -71,21 +74,38 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	public static AudioSource PlaySE(string SEName, float vol = 1.0f, bool autoDelete = true) {
 
 		//SE取得
-		var clip = GetSE(SEName);
-		if(!clip) return null;
+		var info = GetSEInfo(SEName);
+		if(info == null) return null;
 
-		var src = new GameObject("[Audio SE - " + SEName + "]").AddComponent<AudioSource>();
-		src.transform.SetParent(instance.transform);
-		src.clip = clip;
-		src.volume = vol;
-		src.outputAudioMixerGroup = instance.mixerGroups[0];
-		src.Play();
+		if(info.stockList.Count > 0) {
+			//stockListから空で且つ番号が一番若いSEInfoを受け取る
+			var seInfo = info.stockList.Values[0];
 
-		if(autoDelete)
-			Destroy(src.gameObject, src.clip.length + 0.1f);
+			Debug.Log(SEName + " " + seInfo.index);
 
-		return src;
+			//ストックを削除
+			info.stockList.Remove(seInfo.index);
 
+			//情報を取り付ける
+			var src = new GameObject("[Audio SE - " + SEName + "]").AddComponent<AudioSource>();
+			src.transform.SetParent(instance.transform);
+			src.clip = info.clip;
+			src.volume = seInfo.volume * vol;
+			src.outputAudioMixerGroup = instance.mixerGroups[0];
+			src.Play();
+
+			//管理用情報を付加
+			var playSE = src.gameObject.AddComponent<PlayingSE>();
+			playSE.onDestroy += () => { info.stockList.Add(seInfo.index, seInfo); Debug.Log("add"); };
+
+			//自動削除の場合は遅延で削除を実行する
+			if(autoDelete)
+				Destroy(src.gameObject, src.clip.length + 0.1f);
+
+			return src;
+		}
+
+		return null;
 	}
 
 	/// <summary>
@@ -158,7 +178,7 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	/// </summary>
 	/// <param name="SEName">SEの名前</param>
 	/// <returns>SE</returns>
-	static AudioClip GetSE(string SEName) {
+	static AudioClipInfo GetSEInfo(string SEName) {
 
 		if(!instance.SEclips.ContainsKey(SEName)) {
 			Debug.LogError("SEName:" + SEName + " is not found.");

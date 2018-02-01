@@ -16,6 +16,8 @@ public class HPbar : MonoBehaviour
 
 	public void Init()
 	{
+		playerArray = new Player[4];
+
 		GetPlayerArray();
 
 		for (int i = 0; i < 4; i++)
@@ -41,8 +43,9 @@ public class HPbar : MonoBehaviour
 	{
 		for (int i = 0; i < 4; i++)
 		{
+			if (playerArray[i] == false) continue;
 			HPBarArray[i].fillAmount = playerArray[i].HPRatio;
-		//	ExpBarArray[i].fillAmount = playerArray[i].;
+			ExpBarArray[i].fillAmount = playerArray[i].EXPRatio;
 			LevelText[i].text = playerArray[i].level.ToString();
 		}
 	}

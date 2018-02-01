@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public sealed class GameData : SingletonMonoBehaviour<GameData> {
 
 	public bool[] isEntryPlayer { get; set; }
+	public bool[] isDeath { get; set; }
 
 	public int[] sumDamage { get; set; }
 
@@ -24,6 +25,7 @@ public sealed class GameData : SingletonMonoBehaviour<GameData> {
 	public static void InitData() {
 
 		instance.isEntryPlayer = new bool[InputManager.MAX_PAYER_NUM];
+		instance.isDeath = new bool[InputManager.MAX_PAYER_NUM];
 		instance.sumDamage = new int[4];
 	}
 

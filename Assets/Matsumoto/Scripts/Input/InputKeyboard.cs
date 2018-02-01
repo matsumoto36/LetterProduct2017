@@ -79,9 +79,9 @@ public static class InputKeyboard {
 
 		switch(trigger) {
 			case GamePad.Trigger.LeftTrigger:
-				return "FireLeft";
-			case GamePad.Trigger.RightTrigger:
 				return "FireRight";
+			case GamePad.Trigger.RightTrigger:
+				return "FireLeft";
 			default:
 				return "ERR";
 		}

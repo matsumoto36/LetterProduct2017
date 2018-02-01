@@ -21,7 +21,7 @@ public class WeaponGun : WeaponRanged {
 		bulletData.Create(this, shotAnchor.position, shotAnchor.rotation);
 		//SE再生
 		var se = AudioManager.PlaySE(useSound);
-		se.transform.position = transform.position;
+		if(se) se.transform.position = transform.position;
 
 		//intervalの設定(最後に呼ぶこと)
 		base.Attack();
