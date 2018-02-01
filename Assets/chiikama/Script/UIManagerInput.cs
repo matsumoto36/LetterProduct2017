@@ -6,6 +6,7 @@ public class UIManagerInput : MonoBehaviour
 {
 	bool OptionFlg;
 	bool HPFlg;
+	bool ResultFlg;
 
 	public void Awake()
 	{
@@ -16,6 +17,7 @@ public class UIManagerInput : MonoBehaviour
 	{
 		OptionFlg = false;
 		HPFlg = false;
+		ResultFlg = false;
 
 	}
 
@@ -30,6 +32,11 @@ public class UIManagerInput : MonoBehaviour
 		{
 			HPFlg = !HPFlg;
 			UIManager.instance.HPvarSwich(HPFlg);
+		}
+		if(Input.GetKeyDown(KeyCode.K))
+		{
+			ResultFlg = !ResultFlg;
+			UIManager.instance.ResultSwich(ResultFlg);
 		}
 	}
 }

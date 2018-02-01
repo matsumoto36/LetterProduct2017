@@ -22,21 +22,6 @@ public class Death : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update()
-	{
-		bool checkFlag = false;
-		foreach (var item in player)
-		{
-			if (!item.isDead)
-			{
-				checkFlag = true;
-			}
-			if (checkFlag == false)
-			{
-				Debug.Log("GameOver");
-			}
-		}
-
-	}
+	
 }
 

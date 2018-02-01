@@ -15,3 +15,4 @@ MonoBehaviour:
   particleNameAttack: BossBulletNormal
   particleNameHit: BossBulletHit
   speed: 5
+  range: 30

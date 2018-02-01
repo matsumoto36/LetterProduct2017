@@ -8,6 +8,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 	[SerializeField, Header("OptionRoot")]
 	GameObject OptionRoot;
 	HPbar HPbarRoot;
+	GameObject ResultRoot;
+	GameObject GameOver;
+	
 
 	Player[] player;
 	protected override void Init()
@@ -17,11 +20,17 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
 		OptionRoot = Instantiate(Resources.Load<GameObject>("System/OptionCanvas"));
 		HPbarRoot = Instantiate(Resources.Load<HPbar>("System/HP"));
+		ResultRoot = Instantiate(Resources.Load<GameObject>("System/Result"));
+		GameOver = Instantiate(Resources.Load<GameObject>("System/gameover"));
 		DontDestroyOnLoad(OptionRoot);
 		DontDestroyOnLoad(HPbarRoot);
+		DontDestroyOnLoad(ResultRoot);
+		DontDestroyOnLoad(GameOver);
 
 		OptionSwich(false);
 		HPvarSwich(false);
+		ResultSwich(false);
+		GameOverSwich(false);
 	}
 
 	// Use this for initialization
@@ -56,5 +65,18 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 		if (HPFlg){
 			HPbarRoot.Init();
 		}
+	}
+	public void ResultSwich(bool ResultFlg)
+	{
+		ResultRoot.gameObject.SetActive(ResultFlg);
+		if (ResultFlg)
+		{
+
+		}
+	}
+
+	public void GameOverSwich(bool goFlg)
+	{
+		GameOver.gameObject.SetActive(goFlg);
 	}
 }

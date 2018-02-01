@@ -15,4 +15,4 @@ MonoBehaviour:
   particleNameAttack: EnemyBulletNormal
   particleNameHit: EnemyBulletHit
   speed: 10
-  range: 0
+  range: 30
