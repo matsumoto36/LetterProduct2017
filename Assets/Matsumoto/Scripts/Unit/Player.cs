@@ -24,6 +24,10 @@ public class Player : Unit {
 	StatusModifier comboStatus;
 	bool isInDuraEgg = false;
 	bool isWeak = false;
+
+	Renderer[] rendererArray;
+	Color headEmission;
+
 	PKFxFX duraEgg;
 	PKFxFX linkEffect;
 	PKFxFX circleEffect;
@@ -32,6 +36,13 @@ public class Player : Unit {
 
 	public override void InitFirst() {
 		base.InitFirst();
+
+		//描画を取得
+		rendererArray = GetComponentsInChildren<Renderer>();
+		foreach(var item in rendererArray) {
+			item.material.EnableKeyword("_EMISSION");
+		}
+		headEmission = rendererArray[0].material.GetColor("_EmissionColor");
 
 		//アニメーション用の右手を取得
 		animHandR = transform.GetComponentsInChildren<Transform>()
@@ -178,6 +189,9 @@ public class Player : Unit {
 		//エフェクトを再生
 		ParticleManager.Spawn("InDuraEgg", transform.position, Quaternion.identity);
 
+		//アニメーションを止める
+		anim.speed = 0;
+
 		isInDuraEgg = true;
 	}
 	/// <summary>
@@ -193,6 +207,9 @@ public class Player : Unit {
 
 		//エフェクトを再生
 		ParticleManager.Spawn("OutDuraEgg", transform.position, Quaternion.identity);
+
+		//アニメーションを再開
+		anim.speed = 1;
 
 		isInDuraEgg = false;
 
@@ -249,7 +266,6 @@ public class Player : Unit {
 			if(!linkEffect) linkEffect = ParticleManager.Spawn("RevivalLine", new Vector3(), Quaternion.identity, 0);
 			linkEffect.GetAttribute("Position1").ValueFloat3 = transform.position;
 			linkEffect.GetAttribute("Position2").ValueFloat3 = rivaivablePlayer.transform.position;
-			linkEffect.GetAttribute("ExtraDuration").ValueFloat += Time.deltaTime;
 
 			//円のエフェクトを再生
 			if(!circleEffect) {
@@ -278,7 +294,10 @@ public class Player : Unit {
 		else {
 
 			//削除
-			if(linkEffect) Destroy(linkEffect.gameObject, 0.1f);
+			if(linkEffect) {
+				linkEffect.GetAttribute("State").ValueInt = 1;
+				Destroy(linkEffect.gameObject, linkEffect.GetAttribute("FadeDuration").ValueFloat + 0.1f);
+			}
 			if(circleEffect) Destroy(circleEffect.gameObject, 0.1f);
 		}
 	}
@@ -304,6 +323,9 @@ public class Player : Unit {
 		//SE再生
 		var se = AudioManager.PlaySE("Revive");
 		se.transform.position = target.transform.position;
+
+		//頭の光を点ける
+		target.StartCoroutine(target.HeadLightSwitchAnim(true, 1));
 
 	}
 	/// <summary>
@@ -404,6 +426,33 @@ public class Player : Unit {
 		}
 
 		isWeak = false;
+	}
+
+	/// <summary>
+	/// 頭の明かりをつけたり消したりする
+	/// </summary>
+	/// <param name="enable"></param>
+	/// <param name="lightingTime"></param>
+	/// <returns></returns>
+	IEnumerator HeadLightSwitchAnim(bool enable, float lightingTime) {
+
+		var startValue = enable ? 0.0f : 1.0f;
+		var endValue   = enable ? 1.0f : 0.0f;
+
+		var t = 0.0f;
+		while((t += Time.deltaTime / lightingTime) < 1.0f) {
+
+			for(int i = 0;i < rendererArray.Length;i++) {
+				var color = headEmission * Mathf.Lerp(startValue, endValue, t);
+				rendererArray[i].material.SetColor("_EmissionColor", color);
+			}
+
+			yield return null;
+		}
+
+		foreach(var item in rendererArray) {
+			item.material.SetColor("_EmissionColor", headEmission * endValue);
+		}
 	}
 
 	public override void Move() {
@@ -516,6 +565,9 @@ public class Player : Unit {
 		GameData.instance.isDeath[playerIndex] = true;
 		Debug.Log("Player" + playerIndex + " is Dead");
 		StopAllCoroutines();
+
+		//死亡時は頭の光を消す
+		StartCoroutine(HeadLightSwitchAnim(false, 2));
 	}
 
 	public override void EquipWeapon(Weapon weapon, int slot) {

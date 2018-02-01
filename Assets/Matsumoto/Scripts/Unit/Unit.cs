@@ -85,7 +85,13 @@ public abstract class Unit : MonoBehaviour {
 	public bool isDead { get; protected set; }
 
 	public bool canAttack { get; protected set; }
-	public bool canMove { get; protected set; }
+
+	bool _canMove = true;
+	public bool canMove {
+		get { return _canMove; }
+		protected set {
+			unitRig.isKinematic = !(_canMove = value);
+		} }
 
 	public float HPRatio { get { return (float)nowHP / maxHP; } }
 	public float EXPRatio { get { return 1 - ((float)nextLevelEXP / expSave); } }
@@ -126,7 +132,6 @@ public abstract class Unit : MonoBehaviour {
 		attackedUnitList = new List<DamageLog>();
 		statusModStack = new Dictionary<string, StatusModifier>();
 		canAttack = true;
-		canMove = true;
 
 		anim = GetComponent<Animator>();
 		unitRig = GetComponent<Rigidbody>();
@@ -292,6 +297,9 @@ public abstract class Unit : MonoBehaviour {
 
 		nowHP = 0;
 		isDead = true;
+
+		//攻撃していたら止める
+		if(isAttack) equipWeapon[0].AttackEnd();
 
 		//死亡時のパーティクル再生
 		ParticleManager.Spawn(deathParticle, transform.position, transform.rotation);
