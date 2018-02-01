@@ -88,7 +88,7 @@ public abstract class Unit : MonoBehaviour {
 	public bool canMove { get; protected set; }
 
 	public float HPRatio { get { return (float)nowHP / maxHP; } }
-	public float EXPRatio { get { return (float)nextLevelEXP / expSave; } }
+	public float EXPRatio { get { return 1 - ((float)nextLevelEXP / expSave); } }
 
 	public Animator anim { get; private set; }
 

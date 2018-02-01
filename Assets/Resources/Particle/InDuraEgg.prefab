@@ -9,30 +9,30 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1204070446973690}
+  m_RootGameObject: {fileID: 1586876871612468}
   m_IsPrefabParent: 1
---- !u!1 &1204070446973690
+--- !u!1 &1586876871612468
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4377593428404216}
-  - component: {fileID: 114521006148835020}
+  - component: {fileID: 4041202333268422}
+  - component: {fileID: 114484157987243650}
   m_Layer: 0
-  m_Name: BossBulletHit
+  m_Name: InDuraEgg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4377593428404216
+--- !u!4 &4041202333268422
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1204070446973690}
+  m_GameObject: {fileID: 1586876871612468}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.19, y: 0.92, z: -14.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -40,12 +40,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114521006148835020
+--- !u!114 &114484157987243650
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1204070446973690}
+  m_GameObject: {fileID: 1586876871612468}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a5c02dd42880460b914f6e0206b8c28, type: 3}
@@ -53,96 +53,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FxAttributesList:
   - m_Descriptor:
-      Type: 30
-      MinMaxFlag: 0
-      Name: Position1
-      Description: 
-      DefaultValue0: 0
-      DefaultValue1: 0
-      DefaultValue2: 0
-      DefaultValue3: 0
-      MinValue0: 0
-      MinValue1: 0
-      MinValue2: 0
-      MinValue3: 0
-      MaxValue0: 0
-      MaxValue1: 0
-      MaxValue2: 0
-      MaxValue3: 0
-    m_Value0: 5
-    m_Value1: 1
-    m_Value2: 0
-    m_Value3: 0
-  - m_Descriptor:
-      Type: 30
-      MinMaxFlag: 0
-      Name: Position2
-      Description: 
-      DefaultValue0: 0
-      DefaultValue1: 1
-      DefaultValue2: 0
-      DefaultValue3: 0
-      MinValue0: 0
-      MinValue1: 0
-      MinValue2: 0
-      MinValue3: 0
-      MaxValue0: 0
-      MaxValue1: 0
-      MaxValue2: 0
-      MaxValue3: 0
-    m_Value0: 0
-    m_Value1: 1
-    m_Value2: 0
-    m_Value3: 0
-  - m_Descriptor:
-      Type: 28
-      MinMaxFlag: 1
-      Name: ExtraDuration
-      Description: 
-      DefaultValue0: 1
-      DefaultValue1: 0
-      DefaultValue2: 0
-      DefaultValue3: 0
-      MinValue0: 0
-      MinValue1: 0
-      MinValue2: 0
-      MinValue3: 0
-      MaxValue0: 0
-      MaxValue1: 0
-      MaxValue2: 0
-      MaxValue3: 0
-    m_Value0: 2
-    m_Value1: 0
-    m_Value2: 0
-    m_Value3: 0
-  - m_Descriptor:
-      Type: 28
-      MinMaxFlag: 1
-      Name: Count
-      Description: 
-      DefaultValue0: 100
-      DefaultValue1: 0
-      DefaultValue2: 0
-      DefaultValue3: 0
-      MinValue0: 0
-      MinValue1: 0
-      MinValue2: 0
-      MinValue3: 0
-      MaxValue0: 0
-      MaxValue1: 0
-      MaxValue2: 0
-      MaxValue3: 0
-    m_Value0: 100
-    m_Value1: 0
-    m_Value2: 0
-    m_Value3: 0
-  - m_Descriptor:
       Type: 31
       MinMaxFlag: 3
       Name: ColorMain
       Description: 
-      DefaultValue0: 0
-      DefaultValue1: 0.8242574
+      DefaultValue0: 0.0247525
+      DefaultValue1: 0.8316832
       DefaultValue2: 1
       DefaultValue3: 1
       MinValue0: 0
@@ -153,8 +69,8 @@ MonoBehaviour:
       MaxValue1: 1
       MaxValue2: 1
       MaxValue3: 1
-    m_Value0: 0
-    m_Value1: 0.8242574
+    m_Value0: 0.0247525
+    m_Value1: 0.8316832
     m_Value2: 1
     m_Value3: 1
   - m_Descriptor:
@@ -162,7 +78,7 @@ MonoBehaviour:
       MinMaxFlag: 1
       Name: Intensity
       Description: 
-      DefaultValue0: 4
+      DefaultValue0: 6.0891094
       DefaultValue1: 0
       DefaultValue2: 0
       DefaultValue3: 0
@@ -174,16 +90,58 @@ MonoBehaviour:
       MaxValue1: 0
       MaxValue2: 0
       MaxValue3: 0
-    m_Value0: 2
+    m_Value0: 4
     m_Value1: 0
     m_Value2: 0
     m_Value3: 0
   - m_Descriptor:
       Type: 28
       MinMaxFlag: 1
+      Name: Count
+      Description: 
+      DefaultValue0: 500
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 0
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 400
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 3
       Name: SizeMain
       Description: 
-      DefaultValue0: 0.02
+      DefaultValue0: 0.0544554
+      DefaultValue1: 0
+      DefaultValue2: 0
+      DefaultValue3: 0
+      MinValue0: 0
+      MinValue1: 0
+      MinValue2: 0
+      MinValue3: 0
+      MaxValue0: 1
+      MaxValue1: 0
+      MaxValue2: 0
+      MaxValue3: 0
+    m_Value0: 0.0544554
+    m_Value1: 0
+    m_Value2: 0
+    m_Value3: 0
+  - m_Descriptor:
+      Type: 28
+      MinMaxFlag: 1
+      Name: StartLength
+      Description: 
+      DefaultValue0: 3
       DefaultValue1: 0
       DefaultValue2: 0
       DefaultValue3: 0
@@ -195,14 +153,14 @@ MonoBehaviour:
       MaxValue1: 0
       MaxValue2: 0
       MaxValue3: 0
-    m_Value0: 0.09
+    m_Value0: 3
     m_Value1: 0
     m_Value2: 0
     m_Value3: 0
   - m_Descriptor:
       Type: 28
       MinMaxFlag: 1
-      Name: FadeDuration
+      Name: EndLength
       Description: 
       DefaultValue0: 1
       DefaultValue1: 0
@@ -223,5 +181,5 @@ MonoBehaviour:
   m_FxSamplersList: []
   m_PlayOnStart: 1
   m_IsPlaying: 0
-  m_BoundFx: {fileID: 102900000, guid: 4be634a85d27ee4458f7283d8050c249, type: 3}
-  m_FxName: Link.pkfx
+  m_BoundFx: {fileID: 102900000, guid: e44f4730d5beaf0439a8fe415a8126b5, type: 3}
+  m_FxName: InDuraEgg.pkfx

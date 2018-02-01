@@ -24,8 +24,9 @@ public class Player : Unit {
 	StatusModifier comboStatus;
 	bool isInDuraEgg = false;
 	bool isWeak = false;
-	GameObject duraEggPrefab;
-	GameObject duraEgg;
+	PKFxFX duraEgg;
+	PKFxFX linkEffect;
+	PKFxFX circleEffect;
 	float ratio = 0.5f; //レバーの入力閾値
 
 
@@ -50,10 +51,6 @@ public class Player : Unit {
 
 		//勢力のセット
 		group = UnitGroup.Player;
-
-		//耐久卵オブジェクトを取得
-		duraEggPrefab = Resources.Load<GameObject>(DURA_EGG_PREFAB_PATH);
-		if(!duraEggPrefab) Debug.LogError("Failed load DuraEgg.");
 
 		//ヒット通知
 		OnAttackHit += (other) => {
@@ -134,23 +131,38 @@ public class Player : Unit {
 	void DurationEggUpdate() {
 
 		//HPが一定以下になったら耐久卵が使える
-		if(HPRatio < GameBalance.instance.data.duraEggCanUseRatio
+		if(!isInDuraEgg
+			&& HPRatio < GameBalance.instance.data.duraEggCanUseRatio
 			&& InputManager.GetButtonDown(playerIndex, GamePad.Button.A)) {
 
+			duraEgg = ParticleManager.Spawn("DuraEgg", transform.position, Quaternion.identity, 0);
+
+			var intensity = duraEgg.GetAttribute("Intensity");
+			var endIntensity = intensity.ValueFloat;
+	
 			StartCoroutine(SkillWait(
 				GameBalance.instance.data.duraEggChargeTime,
 				() => InputManager.GetButton(playerIndex, GamePad.Button.A),
+				(ratio) => {
+					intensity.ValueFloat = endIntensity * ratio;
+				},
 				InDuraEgg,
-				() => { }));
+				() => { Destroy(duraEgg.gameObject); }));
 		}
 
 		//耐久卵から出る
 		if(isInDuraEgg
 			&& InputManager.GetButtonDown(playerIndex, GamePad.Button.A)) {
 
+			var intensity = duraEgg.GetAttribute("Intensity");
+			var startIntensity = intensity.ValueFloat;
+
 			StartCoroutine(SkillWait(
 				GameBalance.instance.data.duraEggExitTime,
 				() => InputManager.GetButton(playerIndex, GamePad.Button.A),
+				(ratio) => {
+					intensity.ValueFloat = startIntensity * (1 - ratio);
+				},
 				OutDuraEgg,
 				() => { }));
 		}
@@ -160,14 +172,11 @@ public class Player : Unit {
 	/// </summary>
 	void InDuraEgg() {
 
-		//卵を生成
-		if(duraEgg) Destroy(duraEgg);
-		duraEgg = Instantiate(duraEggPrefab);
-		duraEgg.transform.position = transform.position;
-		duraEgg.transform.parent = transform;
-
 		//攻撃と移動を無効化
 		canMove = canAttack = false;
+
+		//エフェクトを再生
+		ParticleManager.Spawn("InDuraEgg", transform.position, Quaternion.identity);
 
 		isInDuraEgg = true;
 	}
@@ -176,11 +185,14 @@ public class Player : Unit {
 	/// </summary>
 	void OutDuraEgg() {
 
-		//卵を破壊
-		Destroy(duraEgg);
-
 		//攻撃と移動を有効化
 		canMove = canAttack = true;
+
+		//こもっているときのエフェクトを消す
+		Destroy(duraEgg.gameObject);
+
+		//エフェクトを再生
+		ParticleManager.Spawn("OutDuraEgg", transform.position, Quaternion.identity);
 
 		isInDuraEgg = false;
 
@@ -232,7 +244,20 @@ public class Player : Unit {
 		//近くに死んだ味方がいたら回復できる
 		var rivaivablePlayer = GetRivaivablePlayer();
 		if(rivaivablePlayer) {
-			Debug.DrawLine(transform.position, rivaivablePlayer.transform.position, Color.red);
+
+			//つなぐ線のエフェクトを再生
+			if(!linkEffect) linkEffect = ParticleManager.Spawn("RevivalLine", new Vector3(), Quaternion.identity, 0);
+			linkEffect.GetAttribute("Position1").ValueFloat3 = transform.position;
+			linkEffect.GetAttribute("Position2").ValueFloat3 = rivaivablePlayer.transform.position;
+			linkEffect.GetAttribute("ExtraDuration").ValueFloat += Time.deltaTime;
+
+			//円のエフェクトを再生
+			if(!circleEffect) {
+				circleEffect = ParticleManager.Spawn("RevivalCircle", rivaivablePlayer.transform.position, Quaternion.identity, 0);
+				circleEffect.transform.SetParent(rivaivablePlayer.transform);
+			}
+			var intensity = linkEffect.GetAttribute("Intensity");
+			var startIntensity = intensity.ValueFloat;
 
 			if(InputManager.GetButtonDown(playerIndex, GamePad.Button.B)) {
 
@@ -244,10 +269,17 @@ public class Player : Unit {
 				StartCoroutine(SkillWait(
 					GameBalance.instance.data.reviveTime,
 					() => InputManager.GetButton(playerIndex, GamePad.Button.B),
+					(ratio) => { intensity.ValueFloat = startIntensity + Mathf.Sin(Time.time) * 2; },
 					() => { RivivePlayer(rivaivablePlayer); Destroy(se.gameObject); },
 					() => Destroy(se.gameObject)));
 			}
 
+		}
+		else {
+
+			//削除
+			if(linkEffect) Destroy(linkEffect.gameObject, 0.1f);
+			if(circleEffect) Destroy(circleEffect.gameObject, 0.1f);
 		}
 	}
 	/// <summary>
@@ -266,9 +298,12 @@ public class Player : Unit {
 		Heal(this, target, healPoint);
 		ApplyDamage(healPoint);
 
+		//エフェクトの再生
+		ParticleManager.Spawn("Revaive", target.transform.position, Quaternion.identity);
+
 		//SE再生
 		var se = AudioManager.PlaySE("Revive");
-		se.transform.position = transform.position;
+		se.transform.position = target.transform.position;
 
 	}
 	/// <summary>
@@ -321,7 +356,7 @@ public class Player : Unit {
 	/// <param name="predicate">判断条件</param>
 	/// <param name="onComplete">成功時に実行される</param>
 	/// <returns>時間</returns>
-	IEnumerator SkillWait(float waitTime, Func<bool> predicate, Action onComplete, Action onFailed) {
+	IEnumerator SkillWait(float waitTime, Func<bool> predicate, Action<float> execute, Action onComplete, Action onFailed) {
 
 		if(!predicate()) yield break;
 
@@ -331,6 +366,8 @@ public class Player : Unit {
 
 		float t = 0;
 		while((t += Time.deltaTime) < waitTime) {
+
+			execute(t / waitTime);
 
 			//続けないとキャンセル
 			if(!predicate()) {
@@ -495,7 +532,14 @@ public class Player : Unit {
 	protected override bool ApplyDamage(int damage) {
 
 		//耐久卵の状態で変化
-		if(isInDuraEgg) return false;
+		if(isInDuraEgg) {
+
+			//エフェクトを再生
+			ParticleManager.Spawn("DuraEggHit", transform.position, Quaternion.identity);
+
+			return false;
+		}
+
 		if(isWeak) damage = (int)(damage * GameBalance.instance.data.duraEggExitDamageMag);
 
 		return base.ApplyDamage(damage);
