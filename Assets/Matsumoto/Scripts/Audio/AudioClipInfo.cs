@@ -16,7 +16,7 @@ class AudioClipInfo {
 
 	public AudioClipInfo(AudioClip clip) {
 		this.clip = clip;
-		attenuate = calcAttenuateRate();
+		attenuate = CalcAttenuateRate();
 		// create stock list
 		for(int i = 0;i < MAX_PLAY_COUNT;i++) {
 			SEInfo seInfo = new SEInfo(i, 0.0f, Mathf.Pow(attenuate, i));
@@ -24,7 +24,7 @@ class AudioClipInfo {
 		}
 	}
 
-	float calcAttenuateRate() {
+	float CalcAttenuateRate() {
 		return NewtonMethod((p) => {
 				return (1.0f - Mathf.Pow(p, MAX_PLAY_COUNT)) / (1.0f - p) - 1.0f / INIT_VOLUME;
 			},
