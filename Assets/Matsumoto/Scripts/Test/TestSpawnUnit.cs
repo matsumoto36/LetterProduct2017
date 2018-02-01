@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 /// <summary>
 /// プレイヤーをスポーンするクラス。GameManagerに移行する予定。
@@ -18,6 +19,6 @@ public class TestSpawnUnit : MonoBehaviour {
 		for(int i = 0;i < InputManager.MAX_PAYER_NUM;i++) {
 			if(GameData.instance.isEntryPlayer[i]) spawner.SpawnPlayer(i);
 		}
-
+		GameData.instance.isSpawnedPlayer = true;
 	}
 }

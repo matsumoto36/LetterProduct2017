@@ -12,6 +12,8 @@ public sealed class GameData : SingletonMonoBehaviour<GameData> {
 
 	public int[] sumDamage { get; set; }
 
+	public bool isSpawnedPlayer;
+
 	//new禁止
 	private GameData() { }
 
@@ -27,6 +29,8 @@ public sealed class GameData : SingletonMonoBehaviour<GameData> {
 		instance.isEntryPlayer = new bool[InputManager.MAX_PAYER_NUM];
 		instance.isDeath = new bool[InputManager.MAX_PAYER_NUM];
 		instance.sumDamage = new int[4];
+
+		instance.isSpawnedPlayer = false;
 	}
 
 	// Update is called once per frame

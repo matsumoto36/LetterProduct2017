@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 [ExecuteInEditMode]
 public class PlayerSpawner : MonoBehaviour {
@@ -75,7 +76,32 @@ public class PlayerSpawner : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	public void SpawnPlayer(int playerNum) {
+
+		if(GameData.instance.isSpawnedPlayer) return;
+
 		var player = playerData[playerNum].Spawn(spawnPoint[playerNum].position, spawnPoint[playerNum].rotation);
 		((Player)player).playerIndex = playerNum;
+
+	}
+
+	public void SpawnPlayer() {
+		if(GameData.instance.isSpawnedPlayer) {
+			//参照して持ってくる
+			var playerList = Unit.unitList
+				.Where(item => item)
+				.Where(item => item is Player)
+				.Select(item => (Player)item)
+				.ToList();
+
+			foreach(var item in playerList) {
+				item.transform.position = spawnPoint[item.playerIndex].position;
+				item.transform.rotation = spawnPoint[item.playerIndex].rotation;
+			}
+		}
+		else {
+			for(int i = 0;i < InputManager.MAX_PAYER_NUM;i++) {
+				if(GameData.instance.isEntryPlayer[i]) SpawnPlayer(i);
+			}
+		}
 	}
 }

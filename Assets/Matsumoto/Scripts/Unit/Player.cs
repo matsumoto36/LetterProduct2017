@@ -37,6 +37,8 @@ public class Player : Unit {
 	public override void InitFirst() {
 		base.InitFirst();
 
+		DontDestroyOnLoad(gameObject);
+
 		//描画を取得
 		rendererArray = GetComponentsInChildren<Renderer>();
 		foreach(var item in rendererArray) {

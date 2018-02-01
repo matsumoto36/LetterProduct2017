@@ -25,7 +25,7 @@ public class StartSelect : MonoBehaviour {
 			AudioManager.FadeOut(1);
 
 			//シーン移動
-			FadeManager.Instance.LoadScene(NEXT_SCENE_NAME, 1);
+			FadeManager.instance.LoadScene(NEXT_SCENE_NAME, 1);
 			ControlButtonController.DestroyController(-1);
 		};
 

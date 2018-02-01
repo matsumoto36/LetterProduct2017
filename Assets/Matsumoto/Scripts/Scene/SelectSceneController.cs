@@ -105,7 +105,7 @@ public class SelectSceneController : MonoBehaviour {
 		AudioManager.FadeOut(2);
 		
 		//シーン移動
-		FadeManager.Instance.LoadScene(NEXT_SCENE_NAME, 2);
+		FadeManager.instance.LoadScene(NEXT_SCENE_NAME, 2);
 	}
 
 	public void Exit(int playerID) {

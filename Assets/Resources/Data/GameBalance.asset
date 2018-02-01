@@ -21,7 +21,7 @@ MonoBehaviour:
   duraEggExitTime: 0.1
   duraEggExitWeakTime: 2
   duraEggExitDamageMag: 2
-  revivableRadius: 2
+  revivableRadius: 10
   reviveTime: 4
   comboStartDuration: 2
   comboMulPower: 1.001
