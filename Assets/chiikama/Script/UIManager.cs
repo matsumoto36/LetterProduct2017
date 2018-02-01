@@ -1,20 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
 	[SerializeField, Header("OptionRoot")]
 	GameObject OptionRoot;
+	HPbar HPbarRoot;
 
+	Player[] player;
 	protected override void Init()
 	{
+		player = new Player[4];
 		base.Init();
 
 		OptionRoot = Instantiate(Resources.Load<GameObject>("System/OptionCanvas"));
+		HPbarRoot = Instantiate(Resources.Load<HPbar>("System/HP"));
 		DontDestroyOnLoad(OptionRoot);
+		DontDestroyOnLoad(HPbarRoot);
 
+		OptionSwich(false);
+		HPvarSwich(false);
 	}
 
 	// Use this for initialization
@@ -41,6 +48,13 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
 	}
 
+	public void HPvarSwich(bool HPFlg)
+	{
 
-	
+		HPbarRoot.gameObject.SetActive(HPFlg);
+
+		if (HPFlg){
+			HPbarRoot.Init();
+		}
+	}
 }

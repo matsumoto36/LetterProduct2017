@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManagerInput : MonoBehaviour
 {
 	bool OptionFlg;
+	bool HPFlg;
 
 	public void Awake()
 	{
@@ -14,6 +15,8 @@ public class UIManagerInput : MonoBehaviour
 	void Start()
 	{
 		OptionFlg = false;
+		HPFlg = false;
+
 	}
 
 	void Update()
@@ -22,6 +25,11 @@ public class UIManagerInput : MonoBehaviour
 		{
 			OptionFlg = !OptionFlg;
 			UIManager.instance.OptionSwich(OptionFlg);
+		}
+		if(Input.GetKeyDown(KeyCode.P))
+		{
+			HPFlg = !HPFlg;
+			UIManager.instance.HPvarSwich(HPFlg);
 		}
 	}
 }
