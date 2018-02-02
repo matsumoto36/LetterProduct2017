@@ -271,6 +271,10 @@ public abstract class Unit : MonoBehaviour {
 			//ステータスの強化
 			GameBalance.ApplyNextLevelStatus(levelUpStatus, level);
 			CalcStatus();
+
+			//回復
+			nowHP = maxHP;
+
 		}
 
 		//保存
