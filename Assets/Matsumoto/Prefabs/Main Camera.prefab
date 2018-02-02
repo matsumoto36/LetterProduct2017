@@ -22,7 +22,9 @@ GameObject:
   - component: {fileID: 20081882076005810}
   - component: {fileID: 124959476855296578}
   - component: {fileID: 81016208303016216}
+  - component: {fileID: 114888747977205018}
   - component: {fileID: 114809793142725814}
+  - component: {fileID: 114224940717177956}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -85,6 +87,18 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1313886333080698}
   m_Enabled: 1
+--- !u!114 &114224940717177956
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1313886333080698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 3ba7c870ed33fcf41b0a9cec8f019cb2, type: 2}
 --- !u!114 &114809793142725814
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -110,6 +124,22 @@ MonoBehaviour:
   m_UseSceneMesh: 0
   m_SceneMeshPkmmPath: Meshes/UnityScene.pkmm
   m_BoundShaders: []
+--- !u!114 &114888747977205018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1313886333080698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ddf91f50fe78c242b48df723c374790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveRatio: 0.1
+  maxCamLength: 100
+  minCamLength: 30
+  trackOffset: {x: 0, y: 0, z: 0}
+  lengthOffset: 5
 --- !u!124 &124959476855296578
 Behaviour:
   m_ObjectHideFlags: 1

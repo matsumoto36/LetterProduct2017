@@ -7,13 +7,18 @@ public class GameManager : MonoBehaviour
 	public bool checkFlag;
 	public PlayerSpawner spawner;
 
-	// Use this for initialization
-	void Start ()
+    public bool useCustomSpawn;
+    public bool[] customSpawnFlg;
+
+    // Use this for initialization
+    void Start ()
 	{
-		for (int i = 0; i < InputManager.MAX_PAYER_NUM; i++)
-		{
-			if (GameData.instance.isEntryPlayer[i]) spawner.SpawnPlayer(i);
-		}
+
+        if (useCustomSpawn) GameData.instance.isEntryPlayer = customSpawnFlg;
+        spawner.SpawnPlayer();
+
+        GameData.instance.isSpawnedPlayer = true;
+
 		checkFlag = false;
 		UIManager.instance.HPvarSwich(true);//HP表示
 	}
