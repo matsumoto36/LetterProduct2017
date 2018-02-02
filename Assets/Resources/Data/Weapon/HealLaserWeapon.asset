@@ -17,7 +17,7 @@ MonoBehaviour:
   power: 10
   mod:
     mulHP: 0.9
-    mulMoveSpeed: 0.9
+    mulMoveSpeed: 1
     mulPow: 1
     mulAttackSpeed: 1
   equipSound: gun_ready

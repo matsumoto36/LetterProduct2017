@@ -23,7 +23,7 @@ MonoBehaviour:
   isDrawWeapon: 1
   deathSE: 
   deathParticle: EnemyDeath
-  attackDuration: 1
+  attackDuration: 5
   attackRestDuration: 2
   isBoss: 0
   attackLine: 40
