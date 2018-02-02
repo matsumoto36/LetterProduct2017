@@ -265,6 +265,9 @@ public abstract class Unit : MonoBehaviour {
 
 			//次のレベルに必要な経験値をセット
 			nextLevelEXP = expSave = GameBalance.CalcNextLevelExp(baseNextLevel, level);
+
+			//エフェクト再生
+			ParticleManager.Spawn("LevelUp", transform.position, Quaternion.identity);
 		}
 
 		if(isLevelUp) {
