@@ -9,6 +9,7 @@ public class SelectSceneController : MonoBehaviour {
 	const string NEXT_SCENE_NAME = "Stage1";
 
 	public GamePad.Button entryButton;
+	public GamePad.Button exitButton;
 
 	public UnitData playerBase;
 	public CustomizeCharactor[] custom;
@@ -43,7 +44,9 @@ public class SelectSceneController : MonoBehaviour {
 			Entry(joystickNum);
 		}
 
-
+		if(InputManager.GetButtonDownAny(exitButton)) {
+			FadeManager.instance.LoadScene("Main_Title", 1);
+		}
 	}
 
 	void Entry(int joystickNum) {

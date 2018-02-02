@@ -67,9 +67,9 @@ public static class InputKeyboard {
 			case GamePad.Axis.LeftStick:
 				return new string[] { "Horizontal", "Vertical" };
 			case GamePad.Axis.RightStick:
-				return new string[] { "Mouse X", "Mouse Y" };
+				return new string[] { "Horizontal", "Vertical" };
 			case GamePad.Axis.Dpad:
-				return new string[] { "Mouse X", "Mouse Y" };
+				return new string[] { "Horizontal", "Vertical" };
 			default:
 				return new string[] { "ERR", "ERR" };
 		}

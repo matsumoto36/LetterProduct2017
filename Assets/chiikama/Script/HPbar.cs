@@ -8,15 +8,18 @@ public class HPbar : MonoBehaviour
 {
 
 	public GameObject[] PlayerUI;
+	public Image[] warningImage;
 	public Image[] HPBarArray;
 	public Image[] ExpBarArray;
 	public Text[] LevelText;
 
 	Player[] playerArray;
+	Coroutine[] warningAnim;
 
 	public void Init()
 	{
 		playerArray = new Player[4];
+		warningAnim = new Coroutine[4];
 
 		GetPlayerArray();
 
@@ -44,9 +47,36 @@ public class HPbar : MonoBehaviour
 		for (int i = 0; i < 4; i++)
 		{
 			if (playerArray[i] == false) continue;
+
+			//var ratio = playerArray[i].HPRatio;
+			//if(ratio < GameBalance.instance.data.duraEggCanUseRatio) {
+			//	if(warningAnim[i] == null) warningAnim[i] = StartCoroutine(WarningAnim(warningImage[i]));
+			//}
+			//else {
+			//	if(warningAnim[i] != null) {
+			//		StopCoroutine(warningAnim[i]);
+			//		warningImage[i].color = new Color(1, 1, 1);
+			//	}
+			//}
+
 			HPBarArray[i].fillAmount = playerArray[i].HPRatio;
 			ExpBarArray[i].fillAmount = playerArray[i].EXPRatio;
 			LevelText[i].text = playerArray[i].level.ToString();
 		}
+	}
+
+	IEnumerator WarningAnim(Image image) {
+
+		var t = 0.0f;
+		while(true) {
+
+			t += Time.deltaTime;
+			var col = image.color;
+			col.a = Mathf.Abs(Mathf.Sin(t * 4));
+			image.color = col;
+
+			yield return null;
+		}
+
 	}
 }

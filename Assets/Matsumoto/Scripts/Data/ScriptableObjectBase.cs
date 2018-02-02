@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 /// <summary>
 /// ScriptableObjectでほしい機能を盛り込んだクラス
 /// </summary>
 public abstract class ScriptableObjectBase : ScriptableObject {
 
+	#if UNITY_EDITOR
 
 	/// <summary>
 	/// アセットを新規作成する
@@ -30,4 +34,6 @@ public abstract class ScriptableObjectBase : ScriptableObject {
 		if(!assetData) Debug.LogError("Asset : " + path + ".asset is not found!");
 		return assetData;
 	}
+
+	#endif
 }

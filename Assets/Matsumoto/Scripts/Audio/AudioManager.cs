@@ -81,8 +81,6 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 			//stockListから空で且つ番号が一番若いSEInfoを受け取る
 			var seInfo = info.stockList.Values[0];
 
-			Debug.Log(SEName + " " + seInfo.index);
-
 			//ストックを削除
 			info.stockList.Remove(seInfo.index);
 
@@ -96,7 +94,7 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 
 			//管理用情報を付加
 			var playSE = src.gameObject.AddComponent<PlayingSE>();
-			playSE.onDestroy += () => { info.stockList.Add(seInfo.index, seInfo); Debug.Log("add"); };
+			playSE.onDestroy += () => { info.stockList.Add(seInfo.index, seInfo); };
 
 			//自動削除の場合は遅延で削除を実行する
 			if(autoDelete)

@@ -6,17 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/MainGameScene/Main_Select.unity
-    guid: 59b182a184a261a48a4773694cc3d865
-  - enabled: 1
     path: Assets/MainGameScene/Main_Title.unity
     guid: 930d38dd375f88744a0c3b33ea6d1965
   - enabled: 1
-    path: Assets/Matsumoto/TestScene/TestPlayerSpawn.unity
-    guid: 81b433b8dd0cc844c8c3eee02af9218d
+    path: Assets/MainGameScene/Main_Select.unity
+    guid: 59b182a184a261a48a4773694cc3d865
   - enabled: 1
     path: Assets/MainGameScene/Stage1.unity
     guid: 148c137bc342c784d825052c555d8683
-  - enabled: 1
-    path: Assets/Matsumoto/TestScene/TestPlayerTrans.unity
-    guid: 986759c4687b83746ad03fd077225e5c

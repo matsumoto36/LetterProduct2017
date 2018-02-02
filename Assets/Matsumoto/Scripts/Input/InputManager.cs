@@ -19,11 +19,11 @@ public enum ControlType {
 /// </summary>
 public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 
-	public const int MAX_PAYER_NUM = 4;     //最大のプレイヤー人数
+	public const int MAX_PAYER_NUM = 4;		//最大のプレイヤー人数
 
 	public static bool canControlButton { get; set; }
 
-	ControllerData[] controllerData;    //各プレイヤーのコントローラのデータ
+	ControllerData[] controllerData;		//各プレイヤーのコントローラのデータ
 
 	// new禁止
 	private InputManager() { }
@@ -92,8 +92,13 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 			}
 
 			if(vec != new Vector2()) {
+
 				joyStickNum = i;
-				return vec;
+
+				//コントローラ推測
+				var type = ConvertToControlType(Input.GetJoystickNames()[i - 1]);
+				
+				return GetAxis(type, axis, (GamePad.Index)(i - 1), isRaw);
 			}
 		}
 
@@ -489,5 +494,17 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 		}
 
 		return code;
+	}
+
+	/// <summary>
+	/// 名前からコントローラーを推測する
+	/// </summary>
+	/// <param name="joystickName"></param>
+	/// <returns></returns>
+	static ControlType ConvertToControlType(string joystickName) {
+		if(joystickName.Contains("Xbox")) return ControlType.GamePadXBOX;
+		if(joystickName.Contains("XBOX")) return ControlType.GamePadXBOX;
+		if(joystickName.Contains("Wireless Controller")) return ControlType.GamePadPS4;
+		return ControlType.OtherGamePad;
 	}
 }
