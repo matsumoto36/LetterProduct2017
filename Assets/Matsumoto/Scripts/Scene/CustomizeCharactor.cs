@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using GamepadInput;
 using System.Linq;
+using System;
 
 enum PanelName { Enrty, Weapon, Ready}
 enum SelectState { Entry, FirstWeapon, SecondWeapon, Ready}
@@ -26,6 +27,8 @@ public class CustomizeCharactor : MonoBehaviour {
 
 	public Image[] inventory;
 
+	public Text[] passiveText;
+
 	public Transform viewModelAnchor;
 
 	public bool isFreeze { get; set; }
@@ -37,10 +40,20 @@ public class CustomizeCharactor : MonoBehaviour {
 	int playerNum;
 
 	ControlButtonController controller;
+
+	StatusModifier tempMod;
+	StatusModifier viewMod;
+	StatusModifier firstMod;
+	
+
 	GameObject viewModel;
 
 	// Use this for initialization
 	public void Init () {
+
+		tempMod = new StatusModifier();
+		viewMod = new StatusModifier();
+		firstMod = new StatusModifier();
 
 		selectedButton = new SelectWeaponButton[2];
 
@@ -56,6 +69,9 @@ public class CustomizeCharactor : MonoBehaviour {
 				if(viewModel) Destroy(viewModel);
 				viewModel = Instantiate(item.viewData.model, viewModelAnchor.position, viewModelAnchor.rotation);
 				viewModel.transform.SetParent(viewModelAnchor);
+
+				//カーソルにあっている武器のパッシブ効果を計算して表示
+				viewMod = firstMod + item.viewData.mod;
 			};
 			//クリックされたとき
 			item.button.onSelect += () => {
@@ -77,6 +93,7 @@ public class CustomizeCharactor : MonoBehaviour {
 
 		viewModelAnchor.rotation *= Quaternion.AngleAxis(MODEL_ROTATE_SPEED * Time.deltaTime, Vector3.up);
 
+		PassiveUpdate();
 	}
 
 	void Back() {
@@ -95,6 +112,9 @@ public class CustomizeCharactor : MonoBehaviour {
 				AudioManager.PlaySE("back_button");
 
 				controller.Focus(selectedButton[0].button);
+
+				firstMod = new StatusModifier();
+				viewMod = selectedButton[0].viewData.mod;
 				RemoveWeapon(0);
 				break;
 			case SelectState.Ready:
@@ -126,6 +146,10 @@ public class CustomizeCharactor : MonoBehaviour {
 				AudioManager.PlaySE("Weapon_select");
 
 				SetWeapon(0, button);
+
+				firstMod = button.viewData.mod;
+				viewMod = firstMod + button.viewData.mod;
+
 				button.button.Flash();
 				break;
 			case SelectState.SecondWeapon:
@@ -177,7 +201,7 @@ public class CustomizeCharactor : MonoBehaviour {
 
 		inventory[weaponNum].sprite = button.viewData.icon;
 		inventory[weaponNum].color = new Color(1, 1, 1, 1);
-		selectedButton[weaponNum] = button;
+		selectedButton[weaponNum] = button;		
 	}
 
 	/// <summary>
@@ -186,6 +210,24 @@ public class CustomizeCharactor : MonoBehaviour {
 	/// <param name="weaponNum"></param>
 	void RemoveWeapon(int weaponNum) {
 		inventory[weaponNum].color = new Color(1, 1, 1, 0);
+	}
+
+	/// <summary>
+	/// パッシブ効果を表示
+	/// </summary>
+	void PassiveUpdate() {
+
+		var speed = 2f * Time.deltaTime;
+
+		tempMod.mulHP = Mathf.MoveTowards(tempMod.mulHP, viewMod.mulHP, speed);
+		tempMod.mulMoveSpeed = Mathf.MoveTowards(tempMod.mulMoveSpeed, viewMod.mulMoveSpeed, speed);
+		tempMod.mulPow = Mathf.MoveTowards(tempMod.mulPow, viewMod.mulPow, speed);
+		tempMod.mulAttackSpeed = Mathf.MoveTowards(tempMod.mulAttackSpeed, viewMod.mulAttackSpeed, speed);
+
+		passiveText[0].text = tempMod.mulHP.ToString("f1");
+		passiveText[1].text = tempMod.mulMoveSpeed.ToString("f1");
+		passiveText[2].text = tempMod.mulPow.ToString("f1");
+		passiveText[3].text = tempMod.mulAttackSpeed.ToString("f1");
 	}
 
 	/// <summary>
@@ -245,4 +287,24 @@ public class CustomizeCharactor : MonoBehaviour {
 			.ToArray();
 
 	}
+
+	/// <summary>
+	/// ババっと上がる
+	/// </summary>
+	/// <param name="Duration"></param>
+	/// <param name="start"></param>
+	/// <param name="end"></param>
+	/// <returns></returns>
+	IEnumerator NumberMoveAnim(float Duration, float start, float end, Action<float> execute) {
+
+		float t = 0.0f;
+		while((t += Time.deltaTime / Duration) < 1.0f) {
+			execute(Mathf.Lerp(start, end, t));
+			yield return null;
+		}
+
+		execute(end);
+	}
+
+
 }
