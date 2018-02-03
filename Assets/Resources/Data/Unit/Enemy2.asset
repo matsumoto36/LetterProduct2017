@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Enemy2
   m_EditorClassIdentifier: 
   model: {fileID: 1931565862655708, guid: 30161e898d6a66a46b32f9fff47fbb9a, type: 2}
-  hp: 200
+  hp: 180
   dropExp: 10
   nextLevelExp: 10
   moveSpeed: 2

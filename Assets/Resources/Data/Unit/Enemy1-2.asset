@@ -9,11 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a4544952da89274c8e26a8fe4bc4e98, type: 3}
-  m_Name: Enemy1
+  m_Name: Enemy1-2
   m_EditorClassIdentifier: 
   model: {fileID: 1684041354851596, guid: 5d0890b6b9d293d4eaa0e0fc1753edb5, type: 2}
-  hp: 180
-  dropExp: 10
+  hp: 500
+  dropExp: 50
   nextLevelExp: 10
   moveSpeed: 6
   rotSpeed: 10
