@@ -39,20 +39,20 @@ public class SelectSceneController : MonoBehaviour {
 
 	void Update() {
 
-		int joystickNum;
-		if(InputManager.GetButtonDownAny(entryButton, out joystickNum)) {
-			Entry(joystickNum);
+		ControllerInfo info;
+		if(InputManager.GetButtonDownAny(entryButton, out info)) {
+			Entry(info);
 		}
 
-		if(InputManager.GetButtonDownAny(exitButton)) {
+		if(InputManager.GetButtonDownAny(exitButton) && playerCount == 0) {
 			FadeManager.instance.LoadScene("Main_Title", 1);
 		}
 	}
 
-	void Entry(int joystickNum) {
+	void Entry(ControllerInfo info) {
 
 		if(entryControllerID
-			.Where(item => item == joystickNum)
+			.Where(item => item == info.joystickNum)
 			.Count() > 0) return;
 
 		var playerID = -1;
@@ -66,15 +66,17 @@ public class SelectSceneController : MonoBehaviour {
 		if(playerID == -1) return;
 
 		//コントローラを登録
-		entryControllerID[playerID] = joystickNum;
+		entryControllerID[playerID] = info.joystickNum;
 
 		//プレイヤーと紐づけ
-		if(joystickNum == 0) {
-			InputManager.SetControllerData(playerID, ControlType.Keyboard, (GamePad.Index)3);
-		}
-		else {
-			InputManager.SetControllerData(playerID, ControlType.GamePadXBOX, (GamePad.Index)(joystickNum - 1));
-		}
+		var num = info.type == ControlType.Keyboard ? 0 : info.joystickNum - 1;
+		InputManager.SetControllerData(playerID, info.type, (GamePad.Index)num);
+		//if(joystickNum == 0) {
+		//	InputManager.SetControllerData(playerID, ControlType.Keyboard, (GamePad.Index)3);
+		//}
+		//else {
+		//	InputManager.SetControllerData(playerID, ControlType.GamePadXBOX, (GamePad.Index)(joystickNum - 1));
+		//}
 
 		//カスタムのエントリー処理
 		custom[playerID].Entry(playerID);

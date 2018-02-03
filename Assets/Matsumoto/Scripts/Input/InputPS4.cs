@@ -24,8 +24,8 @@ public static class InputPS4 {
 				yName = "L_JoyStick" + (int)controlIndex + "_YAxis";
 				break;
 			case GamePad.Axis.RightStick:
-				xName = "L_JoyStick" + (int)controlIndex + "_Trigger";
-				yName = "R_JoyStick" + (int)controlIndex + "_Trigger";
+				xName = "R_PS4" + (int)controlIndex + "_XAxis";
+				yName = "R_PS4" + (int)controlIndex + "_YAxis";
 				break;
 		}
 

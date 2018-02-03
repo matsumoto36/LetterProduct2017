@@ -286,7 +286,7 @@ public class Player : Unit {
 
 				StartCoroutine(SkillWait(
 					GameBalance.instance.data.reviveTime,
-					() => InputManager.GetButton(playerIndex, GamePad.Button.B),
+					() => InputManager.GetButton(playerIndex, GamePad.Button.B) && rivaivablePlayer.isDead,
 					(ratio) => { intensity.ValueFloat = startIntensity + Mathf.Abs(Mathf.Sin(Time.time * 4) * 2); },
 					() => { RivivePlayer(rivaivablePlayer); Destroy(se.gameObject); },
 					() => {

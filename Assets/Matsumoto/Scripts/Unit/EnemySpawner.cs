@@ -35,10 +35,10 @@ public class EnemySpawner : MonoBehaviour {
 	void Awake() {
 		foreach(Transform item in transform) {
 			if(Application.isPlaying) {
-				Destroy(item.gameObject);
+				if(item) Destroy(item.gameObject);
 			}
 			else {
-				DestroyImmediate(item.gameObject);
+				if(item) DestroyImmediate(item.gameObject);
 			}
 		}
 
