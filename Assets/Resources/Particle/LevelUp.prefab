@@ -70,7 +70,7 @@ MonoBehaviour:
       MaxValue2: 1
       MaxValue3: 1
     m_Value0: 1
-    m_Value1: 0.0693069
+    m_Value1: 0.848
     m_Value2: 0.0173267
     m_Value3: 1
   - m_Descriptor:
@@ -132,7 +132,7 @@ MonoBehaviour:
       MaxValue1: 0
       MaxValue2: 0
       MaxValue3: 0
-    m_Value0: 0.1
+    m_Value0: 0.05
     m_Value1: 0
     m_Value2: 0
     m_Value3: 0

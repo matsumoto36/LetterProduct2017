@@ -111,7 +111,7 @@ MonoBehaviour:
       MaxValue1: 0
       MaxValue2: 0
       MaxValue3: 0
-    m_Value0: 0.1509901
+    m_Value0: 0.268
     m_Value1: 0
     m_Value2: 0
     m_Value3: 0
@@ -132,7 +132,7 @@ MonoBehaviour:
       MaxValue1: 0
       MaxValue2: 0
       MaxValue3: 0
-    m_Value0: 0.3316832
+    m_Value0: 0.242
     m_Value1: 0
     m_Value2: 0
     m_Value3: 0
@@ -153,9 +153,9 @@ MonoBehaviour:
       MaxValue1: 1
       MaxValue2: 1
       MaxValue3: 1
-    m_Value0: 0.1633663
-    m_Value1: 0.7846535
-    m_Value2: 0.1089109
+    m_Value0: 0.127
+    m_Value1: 0.839
+    m_Value2: 0.904
     m_Value3: 1
   - m_Descriptor:
       Type: 31
@@ -174,9 +174,9 @@ MonoBehaviour:
       MaxValue1: 1
       MaxValue2: 1
       MaxValue3: 1
-    m_Value0: 0.1509901
-    m_Value1: 0.8316832
-    m_Value2: 0.1633663
+    m_Value0: 0.033
+    m_Value1: 0.668
+    m_Value2: 0.994
     m_Value3: 1
   - m_Descriptor:
       Type: 28
@@ -195,7 +195,7 @@ MonoBehaviour:
       MaxValue1: 0
       MaxValue2: 0
       MaxValue3: 0
-    m_Value0: 2
+    m_Value0: 3
     m_Value1: 0
     m_Value2: 0
     m_Value3: 0
