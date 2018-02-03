@@ -33,6 +33,9 @@ public class SelectSceneController : MonoBehaviour {
 		}
 
 		AudioManager.FadeIn(1, "Menu");
+
+		//カーソルを隠す
+		Cursor.visible = false;
 	}
 
 	void Update() {
@@ -44,6 +47,10 @@ public class SelectSceneController : MonoBehaviour {
 
 		if(InputManager.GetButtonDownAny(exitButton) && playerCount == 0) {
 			FadeManager.instance.LoadScene("Main_Title", 1);
+		}
+
+		foreach(var item in custom) {
+			item.SelectUpdate();
 		}
 	}
 
@@ -76,6 +83,9 @@ public class SelectSceneController : MonoBehaviour {
 		//SEの再生
 		AudioManager.PlaySE("Player_Entry");
 
+		//キーボードであればカーソルを出す
+		if(info.type == ControlType.Keyboard) Cursor.visible = true;
+
 		playerCount++;
 	}
 
@@ -107,7 +117,11 @@ public class SelectSceneController : MonoBehaviour {
 
 	public void Exit(int playerID) {
 
+		//キーボードであればカーソルを消す
+		if(playerID == entryControllerID[playerID]) Cursor.visible = false;
+
 		entryControllerID[playerID] = -1;
+
 		playerCount--;
 
 	}

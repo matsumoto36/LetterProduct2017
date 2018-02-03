@@ -75,32 +75,29 @@ public class PlayerSpawner : MonoBehaviour {
 	/// プレイヤーをスポーンする
 	/// </summary>
 	/// <returns></returns>
-	public void SpawnPlayer(int playerNum) {
+	public Player SpawnPlayer(int playerNum) {
 
-		if(GameData.instance.isSpawnedPlayer) return;
+		if(GameData.instance.isSpawnedPlayer) return GameData.instance.spawnedPlayer[playerNum];
 
-		var player = playerData[playerNum].Spawn(spawnPoint[playerNum].position, spawnPoint[playerNum].rotation);
-		((Player)player).playerIndex = playerNum;
-
+		var player = (Player)playerData[playerNum].Spawn(spawnPoint[playerNum].position, spawnPoint[playerNum].rotation);
+		player.playerIndex = playerNum;
+		return player;
 	}
 
 	public void SpawnPlayer() {
 		if(GameData.instance.isSpawnedPlayer) {
-			//参照して持ってくる
-			var playerList = Unit.unitList
-				.Where(item => item)
-				.Where(item => item is Player)
-				.Select(item => (Player)item)
-				.ToList();
-
-			foreach(var item in playerList) {
+		//参照して持ってくる
+		foreach(var item in GameData.instance.spawnedPlayer) {
+				if(!item) continue;
 				item.transform.position = spawnPoint[item.playerIndex].position;
 				item.transform.rotation = spawnPoint[item.playerIndex].rotation;
 			}
 		}
 		else {
 			for(int i = 0;i < GameData.MAX_PLAYER_NUM;i++) {
-				if(GameData.instance.isEntryPlayer[i]) SpawnPlayer(i);
+				if(GameData.instance.isEntryPlayer[i]) {
+					GameData.instance.spawnedPlayer[i] = SpawnPlayer(i);
+				}
 			}
 		}
 	}

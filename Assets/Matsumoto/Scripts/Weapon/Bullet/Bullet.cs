@@ -26,6 +26,9 @@ public abstract class Bullet : MonoBehaviour {
 		maskList.Add("IgnoreHit");
 
 		bulletOwner.SetHitMask(maskList.ToArray());
+
+		//ポーズ用処理追加
+		gameObject.AddComponent<Pause>();
 	}
 
 	/// <summary>

@@ -48,16 +48,16 @@ public class HPbar : MonoBehaviour
 		{
 			if (playerArray[i] == false) continue;
 
-			//var ratio = playerArray[i].HPRatio;
-			//if(ratio < GameBalance.instance.data.duraEggCanUseRatio) {
-			//	if(warningAnim[i] == null) warningAnim[i] = StartCoroutine(WarningAnim(warningImage[i]));
-			//}
-			//else {
-			//	if(warningAnim[i] != null) {
-			//		StopCoroutine(warningAnim[i]);
-			//		warningImage[i].color = new Color(1, 1, 1);
-			//	}
-			//}
+			var ratio = playerArray[i].HPRatio;
+			if(ratio < GameBalance.instance.data.duraEggCanUseRatio) {
+				if(warningAnim[i] == null) warningAnim[i] = StartCoroutine(WarningAnim(warningImage[i]));
+			}
+			else {
+				if(warningAnim[i] != null) {
+					StopCoroutine(warningAnim[i]);
+					warningImage[i].color = new Color(1, 1, 1, 0);
+				}
+			}
 
 			HPBarArray[i].fillAmount = playerArray[i].HPRatio;
 			ExpBarArray[i].fillAmount = playerArray[i].EXPRatio;
@@ -72,7 +72,7 @@ public class HPbar : MonoBehaviour
 
 			t += Time.deltaTime;
 			var col = image.color;
-			col.a = Mathf.Abs(Mathf.Sin(t * 4));
+			col.a = Mathf.Abs(Mathf.Sin(t * 8));
 			image.color = col;
 
 			yield return null;

@@ -13,7 +13,13 @@ public sealed class GameData : SingletonMonoBehaviour<GameData> {
 	public bool[] isEntryPlayer { get; set; }
 	public bool[] isDeath { get; set; }
 
+	public Player[] spawnedPlayer;
 	public int[] sumDamage { get; set; }
+
+	public int maxCombo { get; set; }
+	public float startTime { get; set; }
+	public float bossStartTime { get; set; }
+	public float clearTime { get; set; }
 
 	public bool isSpawnedPlayer;
 
@@ -31,7 +37,13 @@ public sealed class GameData : SingletonMonoBehaviour<GameData> {
 
 		instance.isEntryPlayer = new bool[MAX_PLAYER_NUM];
 		instance.isDeath = new bool[MAX_PLAYER_NUM];
+		instance.spawnedPlayer = new Player[MAX_PLAYER_NUM];
 		instance.sumDamage = new int[4];
+
+		instance.maxCombo = 0;
+		instance.startTime = 0;
+		instance.bossStartTime = 0;
+		instance.clearTime = 0;
 
 		instance.isSpawnedPlayer = false;
 	}

@@ -32,6 +32,15 @@ public class EnemySpawner : MonoBehaviour {
 		spawnerList = new List<EnemySpawner>();
 	}
 
+	public static void Clear() {
+
+		for(int i = 0;i < spawnerList.Count;i++) {
+			Destroy(spawnerList[i].gameObject);
+		}
+
+		spawnerList = new List<EnemySpawner>();
+	}
+
 	void Awake() {
 		foreach(Transform item in transform) {
 			if(Application.isPlaying) {

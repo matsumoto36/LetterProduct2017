@@ -244,6 +244,8 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 			//フェードイン処理停止
 			instance.StopCoroutine(fadeInCol);
 			src = fadeInAudio;
+
+			if(!src) yield break;
 		}
 
 		src.name = "[Audio BGM - " + latestPlayBGM + " - FadeOut ]";

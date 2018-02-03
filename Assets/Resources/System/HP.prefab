@@ -1681,7 +1681,11 @@ MonoBehaviour:
   - {fileID: 1914541453753696}
   - {fileID: 1149056129980280}
   - {fileID: 1213314061173250}
-  warningImage: []
+  warningImage:
+  - {fileID: 114031821080729268}
+  - {fileID: 114026319034092010}
+  - {fileID: 114684056739802258}
+  - {fileID: 114829875344915912}
   HPBarArray:
   - {fileID: 114922708993695572}
   - {fileID: 114853243130454250}

@@ -21,7 +21,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dbbaca53273c8f748b5b5cafab211fd1, type: 2}
   - {fileID: 11400000, guid: 3b2f234c55bddca45986162a1d7564d8, type: 2}
   isDrawWeapon: 1
-  deathSE: 
+  deathSE: grenade_Launcher_explosion
   deathParticle: EnemyDeath
   attackDuration: 5
   attackRestDuration: 3

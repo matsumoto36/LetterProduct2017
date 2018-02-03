@@ -119,6 +119,10 @@ public abstract class Unit : MonoBehaviour {
 	Dictionary<string, StatusModifier> statusModStack;
 
 	static Unit() {
+		Init();
+	}
+
+	public static void Init() {
 		unitList = new List<Unit>();
 	}
 
@@ -141,8 +145,6 @@ public abstract class Unit : MonoBehaviour {
 		handAnchor = transform.GetComponentsInChildren<Transform>()
 			.Where((item) => item.name == HAND_ANCHOR)
 			.ToArray()[0];
-
-		Debug.Log(handAnchor);
 	}
 
 	/// <summary>
@@ -177,6 +179,9 @@ public abstract class Unit : MonoBehaviour {
 
 		//リストに追加
 		unitList.Add(this);
+
+		//ポーズ用処理追加
+		gameObject.AddComponent<Pause>();
 	}
 
 	/// <summary>
@@ -428,6 +433,9 @@ public abstract class Unit : MonoBehaviour {
 		if(!from || !to) return false;
 		if(from.isDead || to.isDead) return false;
 
+		//マイナスに行かないよう調整
+		damage = to.nowHP - damage < 0 ? to.nowHP : damage;
+
 		//経験値分配用
 		bool findFromUnit = to.attackedUnitList
 			.Where((item) => item.attackUnit == from)
@@ -478,6 +486,22 @@ public abstract class Unit : MonoBehaviour {
 
 		return true;
 	}
+	public static void Clear() {
+		for(int i = 0;i < unitList.Count;i++) {
+			Destroy(unitList[i].gameObject);
+		}
+
+		unitList = new List<Unit>();
+	}
+	/// <summary>
+	/// GameDataにあるプレイヤーをリストに加える
+	/// </summary>
+	public static void CollectPlayer() {
+		unitList.AddRange(GameData.instance.spawnedPlayer
+			.Where(item => item)
+			.ToArray());
+	}
+
 
 	/// <summary>
 	/// ダメージを与える
