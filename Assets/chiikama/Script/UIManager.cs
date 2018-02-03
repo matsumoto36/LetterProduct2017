@@ -6,7 +6,8 @@ using System.Linq;
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
 	[SerializeField, Header("OptionRoot")]
-	GameObject OptionRoot;
+	Option OptionRootInGame;
+	Option OptionRootOutGame;
 	HPbar HPbarRoot;
 	GameObject ResultRoot;
 	GameObject GameOver;
@@ -18,18 +19,23 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 		player = new Player[4];
 		base.Init();
 
-		OptionRoot = Instantiate(Resources.Load<GameObject>("System/OptionCanvas"));
-		HPbarRoot = Instantiate(Resources.Load<HPbar>("System/HP"));
-		ResultRoot = Instantiate(Resources.Load<GameObject>("System/Result"));
-		GameOver = Instantiate(Resources.Load<GameObject>("System/gameover"));
-		DontDestroyOnLoad(OptionRoot);
-		DontDestroyOnLoad(HPbarRoot);
-		DontDestroyOnLoad(ResultRoot);
-		DontDestroyOnLoad(GameOver);
+		OptionRootInGame = Instantiate(Resources.Load<Option>("System/OptionCanvasInGame"));
+		OptionRootOutGame = Instantiate(Resources.Load<Option>("System/OptionCanvasOutGame"));
+		DontDestroyOnLoad(OptionRootInGame);
+		DontDestroyOnLoad(OptionRootOutGame);
+		OptionRootInGame.gameObject.SetActive(false);
+		OptionRootOutGame.gameObject.SetActive(false);
 
-		OptionSwich(false);
+		HPbarRoot = Instantiate(Resources.Load<HPbar>("System/HP"));
+		DontDestroyOnLoad(HPbarRoot);
 		HPvarSwich(false);
+
+		ResultRoot = Instantiate(Resources.Load<GameObject>("System/Result"));
+		DontDestroyOnLoad(ResultRoot);
 		ResultSwich(false);
+
+		GameOver = Instantiate(Resources.Load<GameObject>("System/gameover"));
+		DontDestroyOnLoad(GameOver);
 		GameOverSwich(false);
 	}
 
@@ -39,20 +45,33 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 		
 	}
 	
-	// Update is called once per frame
-	
 
 	public void OptionSwich(bool OptionFlg)
 	{
-		
-		OptionRoot.SetActive(OptionFlg);
+
 		if (OptionFlg == true)
 		{
+			if(GameManager.instance.nowGamePlay) {
+				OptionRootInGame.gameObject.SetActive(true);
+				OptionRootInGame.OnActive();
+			}
+			else {
+				OptionRootOutGame.gameObject.SetActive(true);
+				OptionRootOutGame.OnActive();
+			}
 			Pause.Pauser();
 		}
 		else
 		{
 			Pause.Resume();
+			if(GameManager.instance.nowGamePlay) {
+				OptionRootInGame.OnHide();
+				OptionRootInGame.gameObject.SetActive(false);
+			}
+			else {
+				OptionRootOutGame.OnHide();
+				OptionRootOutGame.gameObject.SetActive(false);
+			}
 		}
 
 	}

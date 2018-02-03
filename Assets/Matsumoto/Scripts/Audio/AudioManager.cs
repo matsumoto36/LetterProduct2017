@@ -40,10 +40,10 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	public static void Load() {
 
 		//LoadMixer
-		var mixer = Resources.Load<AudioMixer>(MIXER_PATH);
-		if(mixer) {
-			instance.mixerGroups[0] = mixer.FindMatchingGroups("SE")[0];
-			instance.mixerGroups[1] = mixer.FindMatchingGroups("BGM")[0];
+		instance.mixer = Resources.Load<AudioMixer>(MIXER_PATH);
+		if(instance.mixer) {
+			instance.mixerGroups[0] = instance.mixer.FindMatchingGroups("SE")[0];
+			instance.mixerGroups[1] = instance.mixer.FindMatchingGroups("BGM")[0];
 		}
 		else {
 			Debug.LogError("Failed Load AudioMixer! Path=" + MIXER_PATH);

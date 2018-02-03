@@ -10,8 +10,8 @@ public class PlayerSpawner : MonoBehaviour {
 
 	void Awake() {
 
-		if(playerData.Length == 0) playerData = new PlayerData[InputManager.MAX_PAYER_NUM];
-		if(spawnPoint.Length == 0) spawnPoint = new Transform[InputManager.MAX_PAYER_NUM];
+		if(playerData.Length == 0) playerData = new PlayerData[GameData.MAX_PLAYER_NUM];
+		if(spawnPoint.Length == 0) spawnPoint = new Transform[GameData.MAX_PLAYER_NUM];
 
 		foreach(Transform item in spawnPoint) {
 
@@ -31,7 +31,7 @@ public class PlayerSpawner : MonoBehaviour {
 
 		if(Application.isPlaying) return;
 
-		for(int i = 0;i < InputManager.MAX_PAYER_NUM;i++) {
+		for(int i = 0;i < GameData.MAX_PLAYER_NUM;i++) {
 			if(!spawnPoint[i]) continue;
 			if(spawnPoint[i].childCount > 1) Awake();
 			if(playerData[i]) ModelUpdate(i);
@@ -99,7 +99,7 @@ public class PlayerSpawner : MonoBehaviour {
 			}
 		}
 		else {
-			for(int i = 0;i < InputManager.MAX_PAYER_NUM;i++) {
+			for(int i = 0;i < GameData.MAX_PLAYER_NUM;i++) {
 				if(GameData.instance.isEntryPlayer[i]) SpawnPlayer(i);
 			}
 		}

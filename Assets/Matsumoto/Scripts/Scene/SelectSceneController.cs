@@ -6,15 +6,13 @@ using GamepadInput;
 
 public class SelectSceneController : MonoBehaviour {
 
-	const string NEXT_SCENE_NAME = "Stage1";
-
 	public GamePad.Button entryButton;
 	public GamePad.Button exitButton;
 
 	public UnitData playerBase;
 	public CustomizeCharactor[] custom;
 
-	int[] entryControllerID = new int[InputManager.MAX_PAYER_NUM];
+	int[] entryControllerID = new int[GameData.MAX_PLAYER_NUM];
 	int playerCount = 0;
 	int readyCount = 0;
 
@@ -104,7 +102,7 @@ public class SelectSceneController : MonoBehaviour {
 		AudioManager.FadeOut(2);
 		
 		//シーン移動
-		FadeManager.instance.LoadScene(NEXT_SCENE_NAME, 2);
+		FadeManager.instance.LoadScene(GameData.START_STAGE, 2);
 	}
 
 	public void Exit(int playerID) {

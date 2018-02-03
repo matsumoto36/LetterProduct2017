@@ -105,14 +105,12 @@ public class ControlButtonController : MonoBehaviour {
 	/// </summary>
 	/// <param name="axis"></param>
 	/// <returns></returns>
-	int CalcMoveAngle(Vector2 axis) {
+	public static int CalcMoveAngle(Vector2 axis) {
 		//[0] 左  [1] 下  [2] 右  [3] 上
 		var vec = Vector2.SignedAngle(new Vector2(1, 0), axis);
 		int angle = (int)((vec + 180) / 90 + 0.5f);
 		return angle % 4;
 	}
-
-
 
 	/// <summary>
 	/// コントローラーで操作するボタンシステムを生成
@@ -132,6 +130,20 @@ public class ControlButtonController : MonoBehaviour {
 		DontDestroyOnLoad(ctrl);
 		controls.Add(ctrl);
 		return ctrl;
+	}
+
+	/// <summary>
+	/// コントローラーで操作するボタンシステムを取得
+	/// </summary>
+	/// <param name="controlID">取得したいID</param>
+	/// <returns></returns>
+	public static ControlButtonController GetController(int controlID) {
+
+		foreach(var item in controls) {
+			if(item.id == controlID) return item;
+		}
+
+		return null;
 	}
 
 	/// <summary>

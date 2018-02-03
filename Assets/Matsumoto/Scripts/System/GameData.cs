@@ -7,6 +7,9 @@ using System.Collections.Generic;
 /// </summary>
 public sealed class GameData : SingletonMonoBehaviour<GameData> {
 
+	public const int MAX_PLAYER_NUM = 4;
+	public const string START_STAGE = "Stage1";
+
 	public bool[] isEntryPlayer { get; set; }
 	public bool[] isDeath { get; set; }
 
@@ -26,8 +29,8 @@ public sealed class GameData : SingletonMonoBehaviour<GameData> {
 	//ゲームデータの初期化
 	public static void InitData() {
 
-		instance.isEntryPlayer = new bool[InputManager.MAX_PAYER_NUM];
-		instance.isDeath = new bool[InputManager.MAX_PAYER_NUM];
+		instance.isEntryPlayer = new bool[MAX_PLAYER_NUM];
+		instance.isDeath = new bool[MAX_PLAYER_NUM];
 		instance.sumDamage = new int[4];
 
 		instance.isSpawnedPlayer = false;

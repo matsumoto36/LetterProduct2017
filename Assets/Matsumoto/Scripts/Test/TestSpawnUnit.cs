@@ -16,7 +16,7 @@ public class TestSpawnUnit : MonoBehaviour {
 	void Start() {
 
 		if(useCustomSpawn) GameData.instance.isEntryPlayer = customSpawnFlg;
-		for(int i = 0;i < InputManager.MAX_PAYER_NUM;i++) {
+		for(int i = 0;i < GameData.MAX_PLAYER_NUM;i++) {
 			if(GameData.instance.isEntryPlayer[i]) spawner.SpawnPlayer(i);
 		}
 		GameData.instance.isSpawnedPlayer = true;

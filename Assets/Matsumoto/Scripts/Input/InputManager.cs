@@ -23,7 +23,7 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 
 	public static bool canControlButton { get; set; }
 
-	static string[] controllerNames;
+	string[] controllerNames;
 
 	ControllerData[] controllerData;		//各プレイヤーのコントローラのデータ
 
@@ -32,6 +32,8 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 
 	protected override void Init() {
 		base.Init();
+
+		Debug.Log("Init");
 
 		controllerNames = Input.GetJoystickNames();
 		controllerData = new ControllerData[MAX_PAYER_NUM];
@@ -61,10 +63,10 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 	/// <returns></returns>
 	public static Vector2 GetAxisAny(GamePad.Axis axis, bool isRaw, out ControllerInfo info) {
 
-		for(int i = 0;i < controllerNames.Length;i++) {
+		for(int i = 0;i < instance.controllerNames.Length;i++) {
 
 			//コントローラ推測
-			var type = ConvertToControlType(controllerNames[i]);
+			var type = ConvertToControlType(instance.controllerNames[i]);
 			var vec = GetAxis(type, axis, (GamePad.Index)i, isRaw);
 
 			if(vec != new Vector2()) {
@@ -173,10 +175,10 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 	/// <returns></returns>
 	public static bool GetButtonDownAny(GamePad.Button button, out ControllerInfo info) {
 
-		for(int i = 0;i < controllerNames.Length;i++) {
+		for(int i = 0;i < instance.controllerNames.Length;i++) {
 
 			//コントローラ推測
-			var type = ConvertToControlType(controllerNames[i]);
+			var type = ConvertToControlType(instance.controllerNames[i]);
 
 			if(GetButtonDown(type, button, (GamePad.Index)i)) {
 				info = new ControllerInfo(type, i + 1);
@@ -242,10 +244,10 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 	/// <returns></returns>
 	public static bool GetButtonAny(GamePad.Button button, out ControllerInfo info) {
 
-		for(int i = 0;i < controllerNames.Length;i++) {
+		for(int i = 0;i < instance.controllerNames.Length;i++) {
 
 			//コントローラ推測
-			var type = ConvertToControlType(controllerNames[i]);
+			var type = ConvertToControlType(instance.controllerNames[i]);
 
 			if(GetButton(type, button, (GamePad.Index)i)) {
 				info = new ControllerInfo(type, i + 1);
@@ -310,10 +312,10 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 	/// <returns></returns>
 	public static bool GetButtonUpAny(GamePad.Button button, out ControllerInfo info) {
 
-		for(int i = 0;i < controllerNames.Length;i++) {
+		for(int i = 0;i < instance.controllerNames.Length;i++) {
 
 			//コントローラ推測
-			var type = ConvertToControlType(controllerNames[i]);
+			var type = ConvertToControlType(instance.controllerNames[i]);
 
 			if(GetButtonUp(type, button, (GamePad.Index)i)) {
 				info = new ControllerInfo(type, i + 1);

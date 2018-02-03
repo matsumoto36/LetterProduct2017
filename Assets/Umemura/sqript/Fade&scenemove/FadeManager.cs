@@ -103,16 +103,13 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager>
 
         //シーン切替 .
         async = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
-        async.allowSceneActivation = false;
 
         do
         {
             Debug.Log(async.progress * 100 + "%");
             //Slider.value = async.progress;
             yield return null;
-        } while (async.progress > 1.0f);
-
-        async.allowSceneActivation = true;
+        } while (!async.isDone);
 
         //だんだん明るく .
         time = 0;
