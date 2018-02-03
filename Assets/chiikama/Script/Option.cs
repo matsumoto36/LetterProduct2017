@@ -22,12 +22,20 @@ public class Option : MonoBehaviour {
 		BGMSlider.Init();
 		SESlider.Init();
 
+		retryButton.onFocus += () => {
+			AudioManager.PlaySE("button");
+		};
 		retryButton.onSelect += () => {
-			GameManager.instance.Retry();
+			GameManager.Retry();
+			AudioManager.PlaySE("Button_select");
 		};
 
+		retryButton.onFocus += () => {
+			AudioManager.PlaySE("button");
+		};
 		backButton.onSelect += () => {
 			UIManager.instance.OptionSwich(false);
+			AudioManager.PlaySE("Button_select");
 		};
 
 	}
@@ -36,7 +44,7 @@ public class Option : MonoBehaviour {
 	public void OnActive () {
 
 		//ゲーム中でないときのオプション表示はリトライを表示しない
-		retryButton.gameObject.SetActive(GameManager.instance.nowGamePlay);
+		retryButton.gameObject.SetActive(GameManager.nowPlayingGame);
 
 		var controller = ControlButtonController.CreateController(-1);
 

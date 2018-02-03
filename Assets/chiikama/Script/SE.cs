@@ -28,6 +28,7 @@ public class SE : MonoBehaviour {
 
 		button.onFocus += () => {
 			isFocus = true;
+			AudioManager.PlaySE("button");
 		};
 
 		button.onFocusChanged += () => {
@@ -64,8 +65,15 @@ public class SE : MonoBehaviour {
 			//[0] 左  [1] 下  [2] 右  [3] 上
 			var angle = ControlButtonController.CalcMoveAngle(axis);
 
-			if(angle == 0) SEvolume = Mathf.Clamp(volume - VOLUME_CHANGE_VALUE, -70, 10);
-			if(angle == 2) SEvolume = Mathf.Clamp(volume + VOLUME_CHANGE_VALUE, -70, 10);
+			if(angle == 0) {
+				SEvolume = Mathf.Clamp(volume - VOLUME_CHANGE_VALUE, -70, 10);
+				AudioManager.PlaySE("Button_select");
+			}
+			if(angle == 2) {
+				SEvolume = Mathf.Clamp(volume + VOLUME_CHANGE_VALUE, -70, 10);
+				AudioManager.PlaySE("Button_select");
+			}
+
 
 			canChangeVolume = false;
 			StartCoroutine(WaitVolumeChangeTime());

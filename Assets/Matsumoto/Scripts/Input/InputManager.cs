@@ -33,8 +33,6 @@ public sealed class InputManager : SingletonMonoBehaviour<InputManager> {
 	protected override void Init() {
 		base.Init();
 
-		Debug.Log("Init");
-
 		controllerNames = Input.GetJoystickNames();
 		controllerData = new ControllerData[MAX_PAYER_NUM];
 

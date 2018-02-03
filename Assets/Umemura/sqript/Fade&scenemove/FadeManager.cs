@@ -78,10 +78,10 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager>
 	/// </summary>
 	/// <param name='scene'>シーン名</param>
 	/// <param name='interval'>暗転にかかる時間(秒)</param>
-	public void LoadScene (string scene, float interval)
+	public void LoadScene(string scene, float interval, Action onCompleted = null)
 	{
         //LoadingUi.SetActive(true);
-        StartCoroutine (TransScene (scene, interval));
+        StartCoroutine (TransScene (scene, interval, onCompleted));
 	}
 
     /// <summary>
@@ -89,7 +89,7 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager>
     /// </summary>
     /// <param name='scene'>シーン名</param>
     /// <param name='interval'>暗転にかかる時間(秒)</param>
-    private IEnumerator TransScene(string scene, float interval)
+    private IEnumerator TransScene(string scene, float interval, Action onCompleted)
     {
 
         //だんだん暗く .
@@ -104,15 +104,20 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager>
         //シーン切替 .
         async = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
 
-        do
+		//遷移直後の実行
+		if(onCompleted != null) onCompleted();
+
+		do
         {
             Debug.Log(async.progress * 100 + "%");
             //Slider.value = async.progress;
             yield return null;
         } while (!async.isDone);
 
-        //だんだん明るく .
-        time = 0;
+		PKFxManager.Reset();
+
+		//だんだん明るく .
+		time = 0;
 		while (time <= interval) {
 			this.fadeAlpha = Mathf.Lerp (1f, 0f, time / interval);
 			time += Time.deltaTime;

@@ -119,6 +119,10 @@ public abstract class Unit : MonoBehaviour {
 	Dictionary<string, StatusModifier> statusModStack;
 
 	static Unit() {
+		Init();
+	}
+
+	public static void Init() {
 		unitList = new List<Unit>();
 	}
 
@@ -478,6 +482,22 @@ public abstract class Unit : MonoBehaviour {
 
 		return true;
 	}
+	public static void Clear() {
+		for(int i = 0;i < unitList.Count;i++) {
+			Destroy(unitList[i].gameObject);
+		}
+
+		unitList = new List<Unit>();
+	}
+	/// <summary>
+	/// GameDataにあるプレイヤーをリストに加える
+	/// </summary>
+	public static void CollectPlayer() {
+		unitList.AddRange(GameData.instance.spawnedPlayer
+			.Where(item => item)
+			.ToArray());
+	}
+
 
 	/// <summary>
 	/// ダメージを与える

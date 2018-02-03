@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class ResultRoot : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+
+
+	void Awake() {
+
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	public void OnActive() {
 		
+
+	}
+
+	public void OnHide() {
+
 	}
 }

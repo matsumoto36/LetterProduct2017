@@ -9,8 +9,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 	Option OptionRootInGame;
 	Option OptionRootOutGame;
 	HPbar HPbarRoot;
-	GameObject ResultRoot;
-	GameObject GameOver;
+	ResultRoot ResultRoot;
+	GameOverUI GameOver;
 	
 
 	Player[] player;
@@ -30,11 +30,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 		DontDestroyOnLoad(HPbarRoot);
 		HPvarSwich(false);
 
-		ResultRoot = Instantiate(Resources.Load<GameObject>("System/Result"));
+		ResultRoot = Instantiate(Resources.Load<ResultRoot>("System/Result"));
 		DontDestroyOnLoad(ResultRoot);
 		ResultSwich(false);
 
-		GameOver = Instantiate(Resources.Load<GameObject>("System/gameover"));
+		GameOver = Instantiate(Resources.Load<GameOverUI>("System/gameover"));
 		DontDestroyOnLoad(GameOver);
 		GameOverSwich(false);
 	}
@@ -51,7 +51,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
 		if (OptionFlg == true)
 		{
-			if(GameManager.instance.nowGamePlay) {
+			if(GameManager.nowPlayingGame) {
 				OptionRootInGame.gameObject.SetActive(true);
 				OptionRootInGame.OnActive();
 			}
@@ -64,7 +64,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 		else
 		{
 			Pause.Resume();
-			if(GameManager.instance.nowGamePlay) {
+			if(GameManager.nowPlayingGame) {
 				OptionRootInGame.OnHide();
 				OptionRootInGame.gameObject.SetActive(false);
 			}
@@ -87,15 +87,30 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 	}
 	public void ResultSwich(bool ResultFlg)
 	{
-		ResultRoot.gameObject.SetActive(ResultFlg);
-		if (ResultFlg)
-		{
+		if(ResultFlg) {
 
+			ResultRoot.gameObject.SetActive(true);
+			ResultRoot.OnActive();
+		}
+		else {
+
+			ResultRoot.OnHide();
+			ResultRoot.gameObject.SetActive(false);
 		}
 	}
 
 	public void GameOverSwich(bool goFlg)
 	{
-		GameOver.gameObject.SetActive(goFlg);
+		if(goFlg) {
+			
+			GameOver.gameObject.SetActive(true);
+			GameOver.OnActive();
+		}
+		else {
+			
+			GameOver.OnHide();
+			GameOver.gameObject.SetActive(false);
+		}
+
 	}
 }
