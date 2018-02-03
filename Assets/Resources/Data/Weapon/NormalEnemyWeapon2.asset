@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e227d707ae449284a823890a1ce7f38c, type: 3}
-  m_Name: NormalEnemyWeapon
+  m_Name: NormalEnemyWeapon2
   m_EditorClassIdentifier: 
   model: {fileID: 1729854461742384, guid: 084e35fefebd0754ca40fd8ca8cbedc4, type: 2}
   icon: {fileID: 0}
-  interval: 1
-  power: 10
+  interval: 0.3
+  power: 20
   mod:
     mulHP: 1
     mulMoveSpeed: 1
