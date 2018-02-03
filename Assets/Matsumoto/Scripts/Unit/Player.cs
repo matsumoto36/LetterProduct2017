@@ -25,6 +25,7 @@ public class Player : Unit {
 	bool isInDuraEgg = false;
 	bool isWeak = false;
 
+	Coroutine flashAnimCoroutine;
 	Renderer[] rendererArray;
 	Color headEmission;
 
@@ -329,10 +330,11 @@ public class Player : Unit {
 		var se = AudioManager.PlaySE("Revive");
 		se.transform.position = target.transform.position;
 
-		//頭の光を点ける
-		target.StartCoroutine(target.HeadLightSwitchAnim(true, 1));
+		//頭の光の点滅を終了
+		target.FlashHeadLight(false);
 
 	}
+
 	/// <summary>
 	/// 復活可能なプレイヤーを取得する
 	/// </summary>
@@ -360,6 +362,18 @@ public class Player : Unit {
 		}
 
 		return nearestPlayer;
+	}
+
+	void FlashHeadLight(bool enable) {
+		if(enable) {
+			flashAnimCoroutine = StartCoroutine(HeadLightFlashAnim());
+		}
+		else {
+			StopCoroutine(flashAnimCoroutine);
+			foreach(var item in rendererArray) {
+				item.material.SetColor("_EmissionColor", headEmission);
+			}
+		}
 	}
 
 	void OnAttackAnimStart() {
@@ -434,29 +448,23 @@ public class Player : Unit {
 	}
 
 	/// <summary>
-	/// 頭の明かりをつけたり消したりする
+	/// 頭の明かりを点滅する
 	/// </summary>
 	/// <param name="enable"></param>
 	/// <param name="lightingTime"></param>
 	/// <returns></returns>
-	IEnumerator HeadLightSwitchAnim(bool enable, float lightingTime) {
-
-		var startValue = enable ? 0.0f : 1.0f;
-		var endValue   = enable ? 1.0f : 0.0f;
+	IEnumerator HeadLightFlashAnim() {
 
 		var t = 0.0f;
-		while((t += Time.deltaTime / lightingTime) < 1.0f) {
+		while(true) {
+			t += Time.deltaTime;
 
-			for(int i = 0;i < rendererArray.Length;i++) {
-				var color = headEmission * Mathf.Lerp(startValue, endValue, t);
-				rendererArray[i].material.SetColor("_EmissionColor", color);
+			foreach(var item in rendererArray) {
+				var color = headEmission * Mathf.Abs(Mathf.Sin(t * 8));
+				item.material.SetColor("_EmissionColor", color);
 			}
 
 			yield return null;
-		}
-
-		foreach(var item in rendererArray) {
-			item.material.SetColor("_EmissionColor", headEmission * endValue);
 		}
 	}
 
@@ -571,8 +579,8 @@ public class Player : Unit {
 		Debug.Log("Player" + playerIndex + " is Dead");
 		StopAllCoroutines();
 
-		//死亡時は頭の光を消す
-		StartCoroutine(HeadLightSwitchAnim(false, 2));
+		//死亡時は頭の光を点滅させる
+		FlashHeadLight(true);
 	}
 
 	public override void EquipWeapon(Weapon weapon, int slot) {

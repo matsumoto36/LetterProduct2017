@@ -71,12 +71,6 @@ public class SelectSceneController : MonoBehaviour {
 		//プレイヤーと紐づけ
 		var num = info.type == ControlType.Keyboard ? 0 : info.joystickNum - 1;
 		InputManager.SetControllerData(playerID, info.type, (GamePad.Index)num);
-		//if(joystickNum == 0) {
-		//	InputManager.SetControllerData(playerID, ControlType.Keyboard, (GamePad.Index)3);
-		//}
-		//else {
-		//	InputManager.SetControllerData(playerID, ControlType.GamePadXBOX, (GamePad.Index)(joystickNum - 1));
-		//}
 
 		//カスタムのエントリー処理
 		custom[playerID].Entry(playerID);
