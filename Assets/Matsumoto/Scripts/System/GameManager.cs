@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using GamepadInput;
 
 public class GameManager : MonoBehaviour
 {
@@ -49,10 +50,14 @@ public class GameManager : MonoBehaviour
 	void Update()
 	{
 		if(!nowPlayingGame) return;
-	
+
 		if(!isGameOver) CheckGameOverUpdate();
-	
 		if(spawnedBoss) CheckBossDeathUpdate();
+
+		//一時的につける
+		if(Input.GetKeyDown(KeyCode.Escape)) {
+			UIManager.instance.OptionSwich(!UIManager.instance.isOpenOption);
+		}
 	}
 	
 	void CheckBossDeathUpdate() {

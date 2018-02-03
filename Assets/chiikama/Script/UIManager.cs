@@ -5,14 +5,16 @@ using System.Linq;
 
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
-	[SerializeField, Header("OptionRoot")]
+
+	public bool isOpenOption { get; private set; }
 	Option OptionRootInGame;
 	Option OptionRootOutGame;
+
+
 	HPbar HPbarRoot;
 	ResultRoot ResultRoot;
 	GameOverUI GameOver;
 	
-
 	Player[] player;
 	protected override void Init()
 	{
@@ -48,6 +50,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
 	public void OptionSwich(bool OptionFlg)
 	{
+		isOpenOption = OptionFlg;
 
 		if (OptionFlg == true)
 		{

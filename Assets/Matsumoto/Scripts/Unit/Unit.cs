@@ -145,8 +145,6 @@ public abstract class Unit : MonoBehaviour {
 		handAnchor = transform.GetComponentsInChildren<Transform>()
 			.Where((item) => item.name == HAND_ANCHOR)
 			.ToArray()[0];
-
-		Debug.Log(handAnchor);
 	}
 
 	/// <summary>
@@ -181,6 +179,9 @@ public abstract class Unit : MonoBehaviour {
 
 		//リストに追加
 		unitList.Add(this);
+
+		//ポーズ用処理追加
+		gameObject.AddComponent<Pause>();
 	}
 
 	/// <summary>
