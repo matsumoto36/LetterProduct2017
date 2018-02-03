@@ -14,7 +14,7 @@ MonoBehaviour:
   model: {fileID: 1729854461742384, guid: 084e35fefebd0754ca40fd8ca8cbedc4, type: 2}
   icon: {fileID: 21300000, guid: 5bb5dd91602970e499905e7ef442325e, type: 3}
   interval: 0.1
-  power: 10
+  power: 1000
   mod:
     mulHP: 2
     mulMoveSpeed: 1.5
