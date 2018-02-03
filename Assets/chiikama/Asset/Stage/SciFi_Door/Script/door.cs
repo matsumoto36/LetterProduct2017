@@ -7,19 +7,18 @@ public class door : MonoBehaviour
 	public GameObject thedoor;
 	public bool isOpen;
 
-	void Start()
-	{
-		AudioManager.FadeIn(2, "stage_1");
-	}
+	public int enemyCountView;
+	public int enemySpawnCountView;
+
 	void Update()
 	{
 		if (isOpen) return;
 
-        int enemyCount = Unit.unitList
+        int enemyCount = enemyCountView = Unit.unitList
                 .Where(unit => unit.group != UnitGroup.Player)
                 .Count();
 
-		int enemySpawnCount = EnemySpawner.spawnerList
+		int enemySpawnCount = enemySpawnCountView = EnemySpawner.spawnerList
 			.Count();
 
         if (enemyCount + enemySpawnCount <= 0)

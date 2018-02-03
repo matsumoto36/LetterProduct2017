@@ -38,6 +38,8 @@ public class NextSceneArea : MonoBehaviour {
 
 			enteringPlayer[player.playerIndex] = true;
 			if(CheckSceneMovable()) {
+				AudioManager.FadeOut(1);
+				EnemySpawner.Clear();
 				FadeManager.instance.LoadScene(manager.nextSceneName, 1);
 			}
 		}

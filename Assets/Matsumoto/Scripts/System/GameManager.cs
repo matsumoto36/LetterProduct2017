@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 	public PlayerSpawner spawner;
 	public string nextSceneName;
 
+	public string playBGMName;
+
     public bool useCustomSpawn;
     public bool[] customSpawnFlg;
 
@@ -15,6 +17,7 @@ public class GameManager : MonoBehaviour
 
 	public static bool nowPlayingGame { get; private set; }
 	static bool isGameOver = false;
+	static bool isGameClear = false;
 
 	public bool spawnedBoss { get; private set; }
 
@@ -23,6 +26,7 @@ public class GameManager : MonoBehaviour
 		if(!nowPlayingGame) InitGameManager();
 
 		isGameOver = false;
+		isGameClear = false;
 
 		Unit.Init();
 		if(GameData.instance.isSpawnedPlayer)
@@ -33,7 +37,12 @@ public class GameManager : MonoBehaviour
 		
 		GameData.instance.isSpawnedPlayer = true;
 		UIManager.instance.HPvarSwich(true);//HP表示
-	
+
+		if(GameData.instance.startTime == 0)
+			GameData.instance.startTime = Time.time;
+
+		//BGMの再生
+		AudioManager.FadeIn(2, playBGMName);
 	}
 	
 	// Update is called once per frame
@@ -65,8 +74,14 @@ public class GameManager : MonoBehaviour
 	}
 	
 	public void SetSpawnedBoss(Enemy boss) {
+
 		spawnedBoss = true;
 		this.boss = boss;
+
+		GameData.instance.bossStartTime = Time.time;
+
+		AudioManager.FadeOut(1);
+		AudioManager.PlayBGM("Boss_Stage");
 	}
 
 	public void InitGameManager() {
@@ -87,6 +102,7 @@ public class GameManager : MonoBehaviour
 		FadeManager.instance.LoadScene(GameData.START_STAGE, 2, () => {
 
 			if(isGameOver) UIManager.instance.GameOverSwich(false);
+			if(isGameClear) UIManager.instance.ResultSwich(false);
 
 			//エントリー情報を取っておく
 			bool[] entryBff = new bool[GameData.MAX_PLAYER_NUM];
@@ -94,6 +110,8 @@ public class GameManager : MonoBehaviour
 				entryBff[i] = GameData.instance.isEntryPlayer[i];
 			}
 			Unit.Clear();
+			EnemySpawner.Clear();
+
 			//ゲームデータ初期化
 			GameData.InitData();
 			//エントリー情報復元
@@ -115,28 +133,72 @@ public class GameManager : MonoBehaviour
 		FadeManager.instance.LoadScene("Main_Select", 2, () => {
 
 			if(isGameOver) UIManager.instance.GameOverSwich(false);
+			if(isGameClear) UIManager.instance.ResultSwich(false);
 
 			UIManager.instance.HPvarSwich(false);
 
 			Unit.Clear();
+			EnemySpawner.Clear();
+		});
+	}
+
+	/// <summary>
+	/// タイトルシーンへ行く
+	/// </summary>
+	public static void GoToTitleScene() {
+
+		Debug.Log("Title");
+
+		AudioManager.FadeOut(2);
+
+		//シーン移動
+		FadeManager.instance.LoadScene("Main_Title", 2, () => {
+
+			if(isGameOver) UIManager.instance.GameOverSwich(false);
+			if(isGameClear) UIManager.instance.ResultSwich(false);
+
+			UIManager.instance.HPvarSwich(false);
+
+			Unit.Clear();
+			EnemySpawner.Clear();
 		});
 	}
 
 	void GameClear() {
-		Debug.Log("GameClear");
-		UIManager.instance.ResultSwich(true);
-	
+
+		isGameClear = true;
 		nowPlayingGame = false;
+
+		Debug.Log("GameClear");
+
+		AudioManager.FadeOut(2);
+
+		StartCoroutine(GameClearAnim());
+	}
+	IEnumerator GameClearAnim() {
+		yield return new WaitForSeconds(2);
+
+		UIManager.instance.ResultSwich(true);
+
+		AudioManager.PlayBGM("Result");
 	}
 
 	void GameOver() {
 
 		isGameOver = true;
+		nowPlayingGame = false;
 
 		Debug.Log("GameOver");
+
+		AudioManager.FadeOut(2);
+
+		StartCoroutine(GameOverAnim());
+	}
+	IEnumerator GameOverAnim() {
+		yield return new WaitForSeconds(2);
+
 		UIManager.instance.GameOverSwich(true);
-	
-		nowPlayingGame = false;
+
 	}
 }
 

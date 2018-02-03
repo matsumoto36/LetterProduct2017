@@ -252,6 +252,10 @@ public class Player : Unit {
 	/// コンボをリセットする
 	/// </summary>
 	void ResetCombo() {
+
+		//最高記録を記録
+		GameData.instance.maxCombo = Math.Max(combo, GameData.instance.maxCombo);
+
 		combo = 0;
 		comboStatus = new StatusModifier();
 	}

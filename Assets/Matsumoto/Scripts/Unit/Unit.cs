@@ -432,6 +432,9 @@ public abstract class Unit : MonoBehaviour {
 		if(!from || !to) return false;
 		if(from.isDead || to.isDead) return false;
 
+		//マイナスに行かないよう調整
+		damage = to.nowHP - damage < 0 ? to.nowHP : damage;
+
 		//経験値分配用
 		bool findFromUnit = to.attackedUnitList
 			.Where((item) => item.attackUnit == from)

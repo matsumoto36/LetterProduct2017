@@ -488,6 +488,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de006df3516dbad4c9a5220396cc6e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreText: {fileID: 114002615281568028}
+  playerIconText:
+  - {fileID: 224811175298234300}
+  - {fileID: 224582587802361908}
+  - {fileID: 224252641230914034}
+  - {fileID: 224704182139929456}
+  totalDamage:
+  - {fileID: 114574898885805464}
+  - {fileID: 114929053321529842}
+  - {fileID: 114745005021272250}
+  - {fileID: 114608012290166958}
+  retryButton: {fileID: 114574571122352932}
+  titleButton: {fileID: 114260176985303172}
 --- !u!114 &114181596132623844
 MonoBehaviour:
   m_ObjectHideFlags: 1

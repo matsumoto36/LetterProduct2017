@@ -375,9 +375,16 @@ public class BossAI : MonoBehaviour
                 }
                 //乱数でターゲット変更
                 int j = Random.Range(0, maxDamage.Count);
+
 				//Index out of range
-                target = maxDamage[j];
-            }
+				try {
+					target = maxDamage[j];
+				}
+				catch {
+
+				}
+
+			}
             //攻撃を受けなかった
             else
             {
