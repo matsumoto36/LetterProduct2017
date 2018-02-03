@@ -67,7 +67,7 @@ public class CustomizeCharactor : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	public void SelectUpdate () {
 
 		if(isFreeze) return;
 
