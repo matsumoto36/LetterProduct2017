@@ -85,9 +85,9 @@ public abstract class Bullet : MonoBehaviour {
 		//ヒットしない定義のものだったらスキップ
 		if(bulletOwner.CheckHit(other.gameObject)) OnHitEnter(other);
 	}
-	void OnTriggerStay(Collider other) {
-		if(bulletOwner.CheckHit(other.gameObject)) OnHitting(other);
-	}
+	//void OnTriggerStay(Collider other) {
+	//	if(bulletOwner.CheckHit(other.gameObject)) OnHitting(other);
+	//}
 	void OnTriggerExit(Collider other) {
 		if(bulletOwner.CheckHit(other.gameObject)) OnHitExit(other);
 	}
