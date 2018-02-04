@@ -17,9 +17,9 @@ MonoBehaviour:
   power: 10
   mod:
     mulHP: 0.9
-    mulMoveSpeed: 1
-    mulPow: 1
-    mulAttackSpeed: 1
+    mulMoveSpeed: 0.9
+    mulPow: 0.9
+    mulAttackSpeed: 0.9
   equipSound: gun_ready
   useSound: curebeams
   hitSound: HP_recovery
