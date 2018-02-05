@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 		if(GameData.instance.isSpawnedPlayer)
 			Unit.CollectPlayer();
 
-		var flg = useCustomSpawn ? customSpawnFlg : GameData.instance.isEntryPlayer;
+		if(useCustomSpawn) GameData.instance.isEntryPlayer = customSpawnFlg;
 		spawner.SpawnPlayer();
 		
 		GameData.instance.isSpawnedPlayer = true;

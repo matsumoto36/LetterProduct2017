@@ -65,6 +65,15 @@ public class HPbar : MonoBehaviour
 		}
 	}
 
+	public void OnHide() {
+
+		StopAllCoroutines();
+
+		foreach(var item in warningImage) {
+			item.color = new Color(1, 1, 1, 0);
+		}
+	}
+
 	IEnumerator WarningAnim(Image image) {
 
 		var t = 0.0f;

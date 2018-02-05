@@ -30,15 +30,15 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
 		HPbarRoot = Instantiate(Resources.Load<HPbar>("System/HP"));
 		DontDestroyOnLoad(HPbarRoot);
-		HPvarSwich(false);
+		HPbarRoot.gameObject.SetActive(false);
 
 		ResultRoot = Instantiate(Resources.Load<ResultRoot>("System/Result"));
 		DontDestroyOnLoad(ResultRoot);
-		ResultSwich(false);
+		ResultRoot.gameObject.SetActive(false);
 
 		GameOver = Instantiate(Resources.Load<GameOverUI>("System/gameover"));
 		DontDestroyOnLoad(GameOver);
-		GameOverSwich(false);
+		GameOver.gameObject.SetActive(false);
 	}
 
 	// Use this for initialization
@@ -86,6 +86,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
 		if (HPFlg){
 			HPbarRoot.Init();
+		}
+		else {
+			HPbarRoot.OnHide();
 		}
 	}
 	public void ResultSwich(bool ResultFlg)

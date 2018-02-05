@@ -81,8 +81,6 @@ public class Player : Unit {
 
 	void Update() {
 
-		if(isDead) return;
-
 		//攻撃
 		if(CheckCanAttack()) Attack();
 
@@ -110,6 +108,7 @@ public class Player : Unit {
 	/// </summary>
 	void CheckSwitchWeapon() {
 
+		if(isDead) return;
 		if(!equipWeapon[1]) return;
 
 		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) > ratio) {
@@ -144,6 +143,8 @@ public class Player : Unit {
 	/// </summary>
 	void DurationEggUpdate() {
 
+		if(isDead) return;
+
 		//HPが一定以下になったら耐久卵が使える
 		if(!isInDuraEgg
 			&& HPRatio < GameBalance.instance.data.duraEggCanUseRatio
@@ -156,7 +157,7 @@ public class Player : Unit {
 	
 			StartCoroutine(SkillWait(
 				GameBalance.instance.data.duraEggChargeTime,
-				() => InputManager.GetButton(playerIndex, GamePad.Button.A),
+				() => InputManager.GetButton(playerIndex, GamePad.Button.A) && !isDead,
 				(ratio) => {
 					intensity.ValueFloat = endIntensity * ratio;
 				},
@@ -267,7 +268,7 @@ public class Player : Unit {
 
 		//近くに死んだ味方がいたら回復できる
 		var rivaivablePlayer = GetRivaivablePlayer();
-		if(rivaivablePlayer) {
+		if(rivaivablePlayer && !isDead) {
 
 			//つなぐ線のエフェクトを再生
 			if(!linkEffect) linkEffect = ParticleManager.Spawn("RevivalLine", new Vector3(), Quaternion.identity, 0);
@@ -277,8 +278,9 @@ public class Player : Unit {
 			//円のエフェクトを再生
 			if(!circleEffect) {
 				circleEffect = ParticleManager.Spawn("RevivalCircle", rivaivablePlayer.transform.position, Quaternion.identity, 0);
-				circleEffect.transform.SetParent(rivaivablePlayer.transform);
 			}
+			circleEffect.transform.position = rivaivablePlayer.transform.position;
+
 			var intensity = linkEffect.GetAttribute("Intensity");
 			var startIntensity = intensity.ValueFloat;
 
@@ -291,7 +293,7 @@ public class Player : Unit {
 
 				StartCoroutine(SkillWait(
 					GameBalance.instance.data.reviveTime,
-					() => InputManager.GetButton(playerIndex, GamePad.Button.B) && rivaivablePlayer.isDead,
+					() => InputManager.GetButton(playerIndex, GamePad.Button.B) && rivaivablePlayer.isDead && !isDead,
 					(ratio) => { intensity.ValueFloat = startIntensity + Mathf.Abs(Mathf.Sin(Time.time * 4) * 2); },
 					() => { RivivePlayer(rivaivablePlayer); Destroy(se.gameObject); },
 					() => {
@@ -321,6 +323,8 @@ public class Player : Unit {
 		Debug.Log(target + "is Rivive.");
 
 		target.isDead = false;
+		GameData.instance.isDeath[target.playerIndex] = false;
+
 		var healPoint = nowHP / 2;
 
 		//回復してダメージ

@@ -253,6 +253,8 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="exp"></param>
 	public void GainEXP(float exp) {
 
+		if(isDead) return;
+
 		//バッファに貯めた経験値を取り出す
 		exp += buffEXP;
 
@@ -311,7 +313,10 @@ public abstract class Unit : MonoBehaviour {
 		isDead = true;
 
 		//攻撃していたら止める
-		if(isAttack) equipWeapon[0].AttackEnd();
+		if(isAttack) {
+			isAttack = false;
+			equipWeapon[0].AttackEnd();
+		}
 
 		//死亡時のパーティクル再生
 		ParticleManager.Spawn(deathParticle, transform.position, transform.rotation);
@@ -368,6 +373,7 @@ public abstract class Unit : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	public bool CheckCanAttack() {
+		if(isDead) return false;
 		if(!equipWeapon[0]) return false;
 		if(!canAttack) return false;
 		if(isPlayMeleeAnim) return false;

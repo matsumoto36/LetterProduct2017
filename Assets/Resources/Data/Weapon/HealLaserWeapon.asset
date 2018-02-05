@@ -14,7 +14,7 @@ MonoBehaviour:
   model: {fileID: 1368071919355132, guid: 4ca2a5448b26d364fb7a70d4e33b8527, type: 2}
   icon: {fileID: 21300000, guid: a019a8c9a7c408a4eb988f70be445cb7, type: 3}
   interval: 1
-  power: 10
+  power: 50
   mod:
     mulHP: 0.9
     mulMoveSpeed: 0.9
@@ -24,5 +24,5 @@ MonoBehaviour:
   useSound: curebeams
   hitSound: HP_recovery
   bulletData: {fileID: 11400000, guid: daa6a0da107578048ae4c11874e174c6, type: 2}
-  shootingMoveMul: 0
+  shootingMoveMul: 0.5
   chargeSound: beam-gun-charge
