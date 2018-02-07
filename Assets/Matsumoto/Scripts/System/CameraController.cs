@@ -38,19 +38,19 @@ public class CameraController : MonoBehaviour {
 
 		if(Unit.unitList.Count == 0) return;
 
-		//プレイヤーを抽出
-		var playerList = Unit.unitList
-			.Where((item) => item && item is Player)
+		//収めるUnitを抽出
+		var unitList = Unit.unitList
+			.Where((item) => item)
 			.ToArray();
-		if(playerList.Length == 0) return;
+		if(unitList.Length == 0) return;
 
-		//プレイヤー達の中心を求める
-		var trackPos = playerList
+		//Unit達の中心を求める
+		var trackPos = unitList
 			.Select((item) => item.transform.position)
-			.Aggregate((from, to) => from + to) / playerList.Length;
+			.Aggregate((from, to) => from + to) / unitList.Length;
 
-		//一番遠いプレイヤーを抽出
-		var diffMax = playerList
+		//一番遠いUnitを抽出
+		var diffMax = unitList
 			.Select((item) => {
 				var diff = item.transform.position - trackPos;
 				return Mathf.Max(
