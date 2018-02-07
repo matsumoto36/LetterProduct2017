@@ -309,6 +309,7 @@ public class Player : Unit {
 			if(linkEffect) {
 				linkEffect.GetAttribute("State").ValueInt = 1;
 				Destroy(linkEffect.gameObject, linkEffect.GetAttribute("FadeDuration").ValueFloat + 0.1f);
+				linkEffect = null;
 			}
 			if(circleEffect) Destroy(circleEffect.gameObject, 0.1f);
 		}
@@ -413,14 +414,21 @@ public class Player : Unit {
 		//発動待機中は攻撃と移動ができない
 		canMove = canAttack = false;
 
+		var gauge = UIManager.instance.CreateGauge(transform.position);
+
 		float t = 0;
 		while((t += Time.deltaTime) < waitTime) {
 
-			execute(t / waitTime);
+			var ratio = t / waitTime;
+			execute(ratio);
+			gauge.SetRatio(ratio);
 
 			//続けないとキャンセル
 			if(!predicate()) {
 				canMove = canAttack = buff;
+
+				//ゲージ削除
+				Destroy(gauge.gameObject);
 
 				//失敗時に実行
 				onFailed();
@@ -432,7 +440,8 @@ public class Player : Unit {
 
 		canMove = canAttack = true;
 
-		//
+		//ゲージ削除
+		Destroy(gauge.gameObject);
 
 		//成功時に実行
 		onComplete();

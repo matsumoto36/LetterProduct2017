@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 
 public class UIManager : SingletonMonoBehaviour<UIManager>
@@ -14,8 +15,12 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 	HPbar HPbarRoot;
 	ResultRoot ResultRoot;
 	GameOverUI GameOver;
-	
+
+	RectTransform gaugeCanvas;
+	Gauge gaugePre;
+
 	Player[] player;
+
 	protected override void Init()
 	{
 		player = new Player[4];
@@ -39,6 +44,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 		GameOver = Instantiate(Resources.Load<GameOverUI>("System/gameover"));
 		DontDestroyOnLoad(GameOver);
 		GameOver.gameObject.SetActive(false);
+
+		gaugeCanvas = Instantiate(Resources.Load<RectTransform>("System/GaugeCanvas"));
+		gaugePre = Resources.Load<Gauge>("System/Gauge");
 	}
 
 	// Use this for initialization
@@ -82,13 +90,15 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 	public void HPvarSwich(bool HPFlg)
 	{
 
-		HPbarRoot.gameObject.SetActive(HPFlg);
+		
 
 		if (HPFlg){
+			HPbarRoot.gameObject.SetActive(true);
 			HPbarRoot.Init();
 		}
 		else {
 			HPbarRoot.OnHide();
+			HPbarRoot.gameObject.SetActive(false);
 		}
 	}
 	public void ResultSwich(bool ResultFlg)
@@ -118,5 +128,16 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 			GameOver.gameObject.SetActive(false);
 		}
 
+	}
+
+	/// <summary>
+	/// ゲージを出す
+	/// </summary>
+	/// <returns></returns>
+	public Gauge CreateGauge(Vector3 position) {
+		var instance = Instantiate(gaugePre, gaugeCanvas);
+		instance.transform.SetParent(gaugeCanvas);
+		instance.SetPosition(position);
+		return instance;
 	}
 }

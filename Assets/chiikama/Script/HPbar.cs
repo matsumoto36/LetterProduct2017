@@ -10,7 +10,6 @@ public class HPbar : MonoBehaviour {
 	Player[] playerArray;
 
 	public void Init() {
-		playerArray = new Player[4];
 
 		GetPlayerArray();
 
@@ -20,6 +19,9 @@ public class HPbar : MonoBehaviour {
 	}
 
 	void GetPlayerArray() {
+
+		playerArray = new Player[4];
+
 		var playerList = Unit.unitList
 			.Where(item => item)
 			.Where(item => item is Player)
