@@ -18,12 +18,12 @@ MonoBehaviour:
   moveSpeed: 6
   rotSpeed: 10
   weaponData:
-  - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
-  - {fileID: 11400000, guid: ca1cadd95c8f34b4a85826b2f7da8930, type: 2}
+  - {fileID: 11400000, guid: 184a419939bb6ce429ae8c88184a2006, type: 2}
+  - {fileID: 11400000, guid: dbbaca53273c8f748b5b5cafab211fd1, type: 2}
   isDrawWeapon: 1
   deathSE: grenade_Launcher_explosion
   deathParticle: EnemyDeath
-  attackDuration: 1
+  attackDuration: 2
   attackRestDuration: 1
   isBoss: 1
   attackLine: 5

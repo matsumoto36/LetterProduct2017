@@ -23,8 +23,8 @@ MonoBehaviour:
   isDrawWeapon: 1
   deathSE: grenade_Launcher_explosion
   deathParticle: EnemyDeath
-  attackDuration: 5
-  attackRestDuration: 2
+  attackDuration: 3
+  attackRestDuration: 1
   isBoss: 0
   attackLine: 40
   searchAngle: 40
