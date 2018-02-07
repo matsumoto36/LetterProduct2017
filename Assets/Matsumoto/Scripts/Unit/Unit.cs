@@ -485,10 +485,12 @@ public abstract class Unit : MonoBehaviour {
 		Debug.Log("Heal " + from.name + " -> " + to.name);
 
 		int healPoint = Mathf.Min(heal, to.maxHP - to.nowHP);
-		//回復した分だけ経験値を得る
-		from.GainEXP(GameBalance.CalcHealExp(healPoint));
+
 		//回復する
-		to.ApplyDamage(-healPoint);
+		if(to.ApplyDamage(-healPoint)) {
+			//回復した分だけ経験値を得る
+			from.GainEXP(GameBalance.CalcHealExp(healPoint));
+		}
 
 		return true;
 	}

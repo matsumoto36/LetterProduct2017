@@ -179,7 +179,7 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	static AudioClipInfo GetSEInfo(string SEName) {
 
 		if(!instance.SEclips.ContainsKey(SEName)) {
-			Debug.LogError("SEName:" + SEName + " is not found.");
+			Debug.LogWarning("SEName:" + SEName + " is not found.");
 			return null;
 		}
 		return instance.SEclips[SEName];

@@ -323,6 +323,9 @@ public class Player : Unit {
 
 		Debug.Log(target + "is Rivive.");
 
+		target.canAttack = true;
+		target.canMove = true;
+
 		target.isDead = false;
 		GameData.instance.isDeath[target.playerIndex] = false;
 
@@ -422,6 +425,7 @@ public class Player : Unit {
 			var ratio = t / waitTime;
 			execute(ratio);
 			gauge.SetRatio(ratio);
+			gauge.SetPosition(transform.position);
 
 			//続けないとキャンセル
 			if(!predicate()) {
@@ -594,7 +598,6 @@ public class Player : Unit {
 		base.Death();
 		GameData.instance.isDeath[playerIndex] = true;
 		Debug.Log("Player" + playerIndex + " is Dead");
-		StopAllCoroutines();
 
 		//死亡時は頭の光を点滅させる
 		FlashHeadLight(true);

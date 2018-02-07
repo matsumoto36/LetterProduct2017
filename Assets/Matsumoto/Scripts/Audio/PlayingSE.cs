@@ -10,6 +10,6 @@ public class PlayingSE : MonoBehaviour {
 	public event Action onDestroy;
 
 	void OnDestroy() {
-		onDestroy();
+		if(onDestroy != null) onDestroy();
 	}
 }

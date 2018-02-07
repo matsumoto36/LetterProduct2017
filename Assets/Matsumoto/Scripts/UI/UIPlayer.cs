@@ -15,7 +15,37 @@ public class UIPlayer : MonoBehaviour {
 
 	[SerializeField] Image warningImage;
 
+	[SerializeField] RectTransform[] anchors;
+
+	CanvasGroup rendererGroup;
 	Coroutine warningAnim = null;
+
+	Rect playerUIArea;
+
+	public float Alpha {
+		get { return rendererGroup.alpha; }
+		set { rendererGroup.alpha = value; }
+	}
+
+	/// <summary>
+	/// 点がUIに重なっているか
+	/// </summary>
+	/// <param name="screenPos"></param>
+	/// <returns></returns>
+	public bool CheckInsidePosition(Vector2 screenPos) {
+		return playerUIArea.Contains(screenPos);
+	}
+
+	public void Init() {
+
+		var pos1 = anchors[0].position;
+		var pos2 = anchors[1].position;
+		var diff = pos1 - pos2;
+		var position = new Vector2(Mathf.Min(pos1.x, pos2.x), Mathf.Min(pos1.y, pos2.y));
+		playerUIArea = new Rect(position, new Vector2(Mathf.Abs(diff.x), Mathf.Abs(diff.y)));
+
+		rendererGroup = GetComponent<CanvasGroup>();
+	}
 
 	public void SetLevel(int level) {
 		levelText.text = level.ToString();
