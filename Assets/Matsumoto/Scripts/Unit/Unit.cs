@@ -142,9 +142,11 @@ public abstract class Unit : MonoBehaviour {
 
 		//アンカーを取得
 		body = transform.GetChild(0);
-		handAnchor = transform.GetComponentsInChildren<Transform>()
+		var anchorList = transform.GetComponentsInChildren<Transform>()
 			.Where((item) => item.name == HAND_ANCHOR)
-			.ToArray()[0];
+			.ToArray();
+
+		if(anchorList.Length > 0) handAnchor = anchorList[0];
 	}
 
 	/// <summary>
@@ -346,6 +348,8 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="weapon"></param>
 	/// <param name="slot"></param>
 	public virtual void EquipWeapon(Weapon weapon, int slot) {
+
+		if(!weapon) return;
 
 		//すでに装備してたら外す
 		if(equipWeapon[slot]) {
