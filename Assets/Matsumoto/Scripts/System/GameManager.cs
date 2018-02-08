@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 	void Update()
 	{
 		
-		foreach (var item in GameData.instance.isDeath)
+		foreach (var item in GameData.instance.isDeath)//ゲームオーバー
 		{
 			if (item == false)
 			{
@@ -34,5 +34,7 @@ public class GameManager : MonoBehaviour
 			UIManager.instance.GameOverSwich(true);
 		}
 	}
+
+
 }
 
