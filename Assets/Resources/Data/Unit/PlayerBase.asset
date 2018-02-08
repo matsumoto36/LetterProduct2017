@@ -21,5 +21,5 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 11400000, guid: c8d587155205ac143810ee4022b55a1c, type: 2}
   isDrawWeapon: 1
-  deathSE: 
-  deathParticle: EnemyDeath
+  deathSE: grenade_Launcher_explosion
+  deathParticle: PlayerDeath

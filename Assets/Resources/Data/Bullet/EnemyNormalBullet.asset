@@ -11,12 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83a88368723dbdc42af19962fa134623, type: 3}
   m_Name: EnemyNormalBullet
   m_EditorClassIdentifier: 
-  model: {fileID: 1252001322391814, guid: 5be1327275cf86c46b45f2dbe690dec5, type: 2}
+  model: {fileID: 1254738165508082, guid: 188e6bd28edd85f4986ea9506bfe6ab4, type: 2}
   particleNameAttack: EnemyBulletNormal
   particleNameHit: EnemyBulletHit
   speed: 10
-<<<<<<< HEAD
   range: 30
-=======
-  range: 100
->>>>>>> 9b09bb6b6b915fc5e2585469f0d72fa5bbda18c5

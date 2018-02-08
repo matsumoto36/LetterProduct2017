@@ -14,5 +14,5 @@ MonoBehaviour:
   model: {fileID: 1551192208105922, guid: 5420b8ad4b7bc83418d1742dbd9d3113, type: 2}
   particleNameAttack: Laser
   particleNameHit: LaserHit
-  maxLength: 20
+  maxLength: 35
   isHeal: 0

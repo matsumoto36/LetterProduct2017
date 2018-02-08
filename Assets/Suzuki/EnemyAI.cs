@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -30,8 +31,7 @@ public class EnemyAI : MonoBehaviour
 
     //プレイヤー関連
     [SerializeField]
-    private List<GameObject> playerList;//Playerリスト
-    private Player[] playerCS;          //Playerスクリプト
+    private List<Player> playerList;//Playerリスト
     [SerializeField]
     private int target;                 //一番近いプレイヤー
     [SerializeField]
@@ -45,69 +45,16 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     void Start()
     {
-        ////プレイ人数の取得
-        //player = GameObject.FindGameObjectsWithTag("Player");
-        //playerCS = new Player[player.Length];
-        //distance = new float[player.Length];
+		Debug.Log("Start");
 
-        ////Player参照
-        //for (int i = 0; i < player.Length; i++)
-        //{
-        //    player[i] = Unit.unitList[0].gameObject;
-        //    if (player[i] != null)
-        //    {
-        //        //Playerスクリプトを人数分取得
-        //        playerCS[i] = player[i].GetComponent<Player>();
-        //    }
-        //}
+		//リストからプレイ人数の取得
+		playerList = Unit.unitList
+			.Where(item => item)
+			.Where(item => item is Player)
+			.Select(item => (Player)item)
+			.ToList();
 
-        ////リストからプレイ人数の取得
-        //player = new GameObject[1];
-        //int playerCount = 0;
-        //for (int i = 0; i < Unit.unitList.Count; i++)
-        //{
-        //    Debug.Log("ループ数 : " + i);
-        //    if (Unit.unitList[i].gameObject.tag == "Player")
-        //    {
-        //        //playerを増量し登録
-        //        if (playerCount != 0)
-        //        {
-        //            GameObject[] copyBox = player;
-        //            player = new GameObject[playerCount + 1];
-        //            for (int j = 0; j < copyBox.Length; j++)
-        //            {
-        //                player[j] = copyBox[j];
-        //            }
-        //        }
-        //        Debug.Log(player.Length);
-        //        player[playerCount] = Unit.unitList[i].gameObject;
-        //        playerCount++;
-        //    }
-        //}
-        //playerCS = new Player[player.Length];
-        //distance = new float[player.Length];
-
-        //リストからプレイ人数の取得
-        playerList = new List<GameObject>();
-        int playerCount = 0;
-        for (int i = 0; i < Unit.unitList.Count; i++)
-        {
-            if (Unit.unitList[i].gameObject.tag == "Player")
-            {
-                //playerListに登録
-                playerList.Add(Unit.unitList[i].gameObject);
-                playerCount++;
-            }
-        }
-        playerCS = new Player[playerList.Count];
-        distance = new float[playerList.Count];
-
-        //Player参照
-        for (int i = 0; i < playerList.Count; i++)
-        {
-            //Playerスクリプトを人数分取得
-            playerCS[i] = playerList[i].GetComponent<Player>();
-        }
+		distance = new float[playerList.Count];
 
         //Enemyスクリプトを取得
         enemySC = GetComponent<Enemy>();
@@ -216,8 +163,10 @@ public class EnemyAI : MonoBehaviour
     {
         for (int i = 0; i < playerList.Count; i++)
         {
+			if(!playerList[i]) continue;
+
             //player[i]が死亡なら処理をパス
-            if (playerCS[i].isDead)
+            if (playerList[i].isDead)
             {
                 passCount++;
             }
@@ -239,11 +188,11 @@ public class EnemyAI : MonoBehaviour
         for (int i = 1; i < playerList.Count; i++)
         {
             //比較対象が存在,生存しているか
-            if (playerCS[i].isDead)
+            if (playerList[i].isDead)
             {
                 /*ターゲット変更無*/
             }
-            else if (playerCS[target].isDead)
+            else if (playerList[target].isDead)
             {
                 target = i;
             }
@@ -277,6 +226,7 @@ public class EnemyAI : MonoBehaviour
         //                        Quaternion.LookRotation(playerList[target].transform.position - transform.position),
         //                        Time.deltaTime * speed * f1);
 
+		
         Vector3 targetPositon = playerList[target].transform.position;
         //高さを統一
         if (transform.position.y != targetPositon.y)

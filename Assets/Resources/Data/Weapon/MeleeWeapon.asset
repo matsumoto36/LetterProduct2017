@@ -17,8 +17,8 @@ MonoBehaviour:
   power: 150
   mod:
     mulHP: 1.3
-    mulMoveSpeed: 2
-    mulPow: 2.2
+    mulMoveSpeed: 1.6
+    mulPow: 1.4
     mulAttackSpeed: 1
   equipSound: sword-ready
   useSound: sword-gesture

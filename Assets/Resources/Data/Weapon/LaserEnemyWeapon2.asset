@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c314df90f050746b1ab815129d8340, type: 3}
+  m_Name: LaserEnemyWeapon2
+  m_EditorClassIdentifier: 
+  model: {fileID: 1633574998664960, guid: 55238d07e4edd084eaaf5e8280e9db4b, type: 2}
+  icon: {fileID: 0}
+  interval: 0.8
+  power: 30
+  mod:
+    mulHP: 1
+    mulMoveSpeed: 1
+    mulPow: 1
+    mulAttackSpeed: 1
+  equipSound: gun_ready
+  useSound: beam_No1
+  hitSound: beam_No3
+  bulletData: {fileID: 11400000, guid: 730a15274f15c9e428a3680594cc7161, type: 2}
+  shootingMoveMul: 0
+  chargeSound: beam-gun-charge

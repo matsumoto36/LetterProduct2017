@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Name: Enemy3
   m_EditorClassIdentifier: 
   model: {fileID: 1158953667820146, guid: 04b145cc9f8467244a39a9c06406791f, type: 2}
-  hp: 1000
-  dropExp: 100
+  hp: 10000
+  dropExp: 5000
   nextLevelExp: 10
   moveSpeed: 6
   rotSpeed: 10
   weaponData:
-  - {fileID: 11400000, guid: 7af6e5ff59885c74ea6ba5e0de639d90, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 184a419939bb6ce429ae8c88184a2006, type: 2}
+  - {fileID: 11400000, guid: dbbaca53273c8f748b5b5cafab211fd1, type: 2}
   isDrawWeapon: 1
-  deathSE: 
+  deathSE: grenade_Launcher_explosion
   deathParticle: EnemyDeath
-  attackDuration: 1
+  attackDuration: 2
   attackRestDuration: 1
   isBoss: 1
   attackLine: 5

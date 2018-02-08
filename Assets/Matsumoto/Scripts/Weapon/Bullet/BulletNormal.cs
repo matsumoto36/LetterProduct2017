@@ -21,19 +21,20 @@ public class BulletNormal : Bullet {
 
 	}
 
-	void OnDestroy() {
+	public void Death() {
 
 		//再生中のパーティクルを止める
 		attackParticle.transform.parent = null;
 		attackParticle.TerminateEffect();
 		Destroy(attackParticle.gameObject, 0.5f);   //少しずらさないと、なぜか進み続けてしまう
 
+		Destroy(gameObject);
 	}
 
 	public virtual void FixedUpdate() {
 
 		var spd = speed * Time.deltaTime;
-		if((length += spd) > maxLength) Destroy(gameObject);
+		if((length += spd) > maxLength) Death();
 
 		transform.position += transform.forward * spd;
 	}
@@ -48,6 +49,6 @@ public class BulletNormal : Bullet {
 		var se = AudioManager.PlaySE(bulletOwner.hitSound);
 		if(se) se.transform.position = other.ClosestPointOnBounds(transform.position);
 
-		Destroy(gameObject);
+		Death();
 	}
 }

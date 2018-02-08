@@ -24,6 +24,11 @@ public class Player : Unit {
 	StatusModifier comboStatus;
 	bool isInDuraEgg = false;
 	bool isWeak = false;
+
+	Coroutine flashAnimCoroutine;
+	Renderer[] rendererArray;
+	Color headEmission;
+
 	PKFxFX duraEgg;
 	PKFxFX linkEffect;
 	PKFxFX circleEffect;
@@ -32,6 +37,15 @@ public class Player : Unit {
 
 	public override void InitFirst() {
 		base.InitFirst();
+
+		DontDestroyOnLoad(gameObject);
+
+		//描画を取得
+		rendererArray = GetComponentsInChildren<Renderer>();
+		foreach(var item in rendererArray) {
+			item.material.EnableKeyword("_EMISSION");
+		}
+		headEmission = rendererArray[0].material.GetColor("_EmissionColor");
 
 		//アニメーション用の右手を取得
 		animHandR = transform.GetComponentsInChildren<Transform>()
@@ -67,8 +81,6 @@ public class Player : Unit {
 
 	void Update() {
 
-		if(isDead) return;
-
 		//攻撃
 		if(CheckCanAttack()) Attack();
 
@@ -96,6 +108,7 @@ public class Player : Unit {
 	/// </summary>
 	void CheckSwitchWeapon() {
 
+		if(isDead) return;
 		if(!equipWeapon[1]) return;
 
 		if(InputManager.GetTrigger(playerIndex, GamePad.Trigger.LeftTrigger, true) > ratio) {
@@ -130,6 +143,8 @@ public class Player : Unit {
 	/// </summary>
 	void DurationEggUpdate() {
 
+		if(isDead) return;
+
 		//HPが一定以下になったら耐久卵が使える
 		if(!isInDuraEgg
 			&& HPRatio < GameBalance.instance.data.duraEggCanUseRatio
@@ -142,7 +157,7 @@ public class Player : Unit {
 	
 			StartCoroutine(SkillWait(
 				GameBalance.instance.data.duraEggChargeTime,
-				() => InputManager.GetButton(playerIndex, GamePad.Button.A),
+				() => InputManager.GetButton(playerIndex, GamePad.Button.A) && !isDead,
 				(ratio) => {
 					intensity.ValueFloat = endIntensity * ratio;
 				},
@@ -178,6 +193,9 @@ public class Player : Unit {
 		//エフェクトを再生
 		ParticleManager.Spawn("InDuraEgg", transform.position, Quaternion.identity);
 
+		//アニメーションを止める
+		anim.speed = 0;
+
 		isInDuraEgg = true;
 	}
 	/// <summary>
@@ -193,6 +211,9 @@ public class Player : Unit {
 
 		//エフェクトを再生
 		ParticleManager.Spawn("OutDuraEgg", transform.position, Quaternion.identity);
+
+		//アニメーションを再開
+		anim.speed = 1;
 
 		isInDuraEgg = false;
 
@@ -232,6 +253,10 @@ public class Player : Unit {
 	/// コンボをリセットする
 	/// </summary>
 	void ResetCombo() {
+
+		//最高記録を記録
+		GameData.instance.maxCombo = Math.Max(combo, GameData.instance.maxCombo);
+
 		combo = 0;
 		comboStatus = new StatusModifier();
 	}
@@ -243,19 +268,19 @@ public class Player : Unit {
 
 		//近くに死んだ味方がいたら回復できる
 		var rivaivablePlayer = GetRivaivablePlayer();
-		if(rivaivablePlayer) {
+		if(rivaivablePlayer && !isDead) {
 
 			//つなぐ線のエフェクトを再生
 			if(!linkEffect) linkEffect = ParticleManager.Spawn("RevivalLine", new Vector3(), Quaternion.identity, 0);
 			linkEffect.GetAttribute("Position1").ValueFloat3 = transform.position;
 			linkEffect.GetAttribute("Position2").ValueFloat3 = rivaivablePlayer.transform.position;
-			linkEffect.GetAttribute("ExtraDuration").ValueFloat += Time.deltaTime;
 
 			//円のエフェクトを再生
 			if(!circleEffect) {
 				circleEffect = ParticleManager.Spawn("RevivalCircle", rivaivablePlayer.transform.position, Quaternion.identity, 0);
-				circleEffect.transform.SetParent(rivaivablePlayer.transform);
 			}
+			circleEffect.transform.position = rivaivablePlayer.transform.position;
+
 			var intensity = linkEffect.GetAttribute("Intensity");
 			var startIntensity = intensity.ValueFloat;
 
@@ -268,17 +293,24 @@ public class Player : Unit {
 
 				StartCoroutine(SkillWait(
 					GameBalance.instance.data.reviveTime,
-					() => InputManager.GetButton(playerIndex, GamePad.Button.B),
-					(ratio) => { intensity.ValueFloat = startIntensity + Mathf.Sin(Time.time) * 2; },
+					() => InputManager.GetButton(playerIndex, GamePad.Button.B) && rivaivablePlayer.isDead && !isDead,
+					(ratio) => { intensity.ValueFloat = startIntensity + Mathf.Abs(Mathf.Sin(Time.time * 4) * 2); },
 					() => { RivivePlayer(rivaivablePlayer); Destroy(se.gameObject); },
-					() => Destroy(se.gameObject)));
+					() => {
+						intensity.ValueFloat = startIntensity;
+						Destroy(se.gameObject);
+					}));
 			}
 
 		}
 		else {
 
 			//削除
-			if(linkEffect) Destroy(linkEffect.gameObject, 0.1f);
+			if(linkEffect) {
+				linkEffect.GetAttribute("State").ValueInt = 1;
+				Destroy(linkEffect.gameObject, linkEffect.GetAttribute("FadeDuration").ValueFloat + 0.1f);
+				linkEffect = null;
+			}
 			if(circleEffect) Destroy(circleEffect.gameObject, 0.1f);
 		}
 	}
@@ -291,7 +323,12 @@ public class Player : Unit {
 
 		Debug.Log(target + "is Rivive.");
 
+		target.canAttack = true;
+		target.canMove = true;
+
 		target.isDead = false;
+		GameData.instance.isDeath[target.playerIndex] = false;
+
 		var healPoint = nowHP / 2;
 
 		//回復してダメージ
@@ -305,7 +342,11 @@ public class Player : Unit {
 		var se = AudioManager.PlaySE("Revive");
 		se.transform.position = target.transform.position;
 
+		//頭の光の点滅を終了
+		target.FlashHeadLight(false);
+
 	}
+
 	/// <summary>
 	/// 復活可能なプレイヤーを取得する
 	/// </summary>
@@ -333,6 +374,18 @@ public class Player : Unit {
 		}
 
 		return nearestPlayer;
+	}
+
+	void FlashHeadLight(bool enable) {
+		if(enable) {
+			flashAnimCoroutine = StartCoroutine(HeadLightFlashAnim());
+		}
+		else {
+			StopCoroutine(flashAnimCoroutine);
+			foreach(var item in rendererArray) {
+				item.material.SetColor("_EmissionColor", headEmission);
+			}
+		}
 	}
 
 	void OnAttackAnimStart() {
@@ -364,14 +417,22 @@ public class Player : Unit {
 		//発動待機中は攻撃と移動ができない
 		canMove = canAttack = false;
 
+		var gauge = UIManager.instance.CreateGauge(transform.position);
+
 		float t = 0;
 		while((t += Time.deltaTime) < waitTime) {
 
-			execute(t / waitTime);
+			var ratio = t / waitTime;
+			execute(ratio);
+			gauge.SetRatio(ratio);
+			gauge.SetPosition(transform.position + Camera.main.transform.forward * 4);
 
 			//続けないとキャンセル
 			if(!predicate()) {
 				canMove = canAttack = buff;
+
+				//ゲージ削除
+				Destroy(gauge.gameObject);
 
 				//失敗時に実行
 				onFailed();
@@ -383,7 +444,8 @@ public class Player : Unit {
 
 		canMove = canAttack = true;
 
-		//
+		//ゲージ削除
+		Destroy(gauge.gameObject);
 
 		//成功時に実行
 		onComplete();
@@ -404,6 +466,27 @@ public class Player : Unit {
 		}
 
 		isWeak = false;
+	}
+
+	/// <summary>
+	/// 頭の明かりを点滅する
+	/// </summary>
+	/// <param name="enable"></param>
+	/// <param name="lightingTime"></param>
+	/// <returns></returns>
+	IEnumerator HeadLightFlashAnim() {
+
+		var t = 0.0f;
+		while(true) {
+			t += Time.deltaTime;
+
+			foreach(var item in rendererArray) {
+				var color = headEmission * Mathf.Abs(Mathf.Sin(t * 8));
+				item.material.SetColor("_EmissionColor", color);
+			}
+
+			yield return null;
+		}
 	}
 
 	public override void Move() {
@@ -515,7 +598,9 @@ public class Player : Unit {
 		base.Death();
 		GameData.instance.isDeath[playerIndex] = true;
 		Debug.Log("Player" + playerIndex + " is Dead");
-		StopAllCoroutines();
+
+		//死亡時は頭の光を点滅させる
+		FlashHeadLight(true);
 	}
 
 	public override void EquipWeapon(Weapon weapon, int slot) {

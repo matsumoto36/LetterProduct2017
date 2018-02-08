@@ -35,6 +35,12 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 	//外部からのnew禁止
 	private ParticleManager() { }
 
+	protected override void Init() {
+		base.Init();
+
+		Load();
+	}
+
 	/// <summary>
 	/// エフェクトをすべてロード
 	/// </summary>

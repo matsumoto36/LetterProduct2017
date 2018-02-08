@@ -16,12 +16,10 @@ public class BulletGrenade : BulletNormal {
 
 	Rigidbody rig;
 	bool isWallCol = false;
+	float time = EXPLOSION_TIME;
 
 	public override void Init() {
 		base.Init();
-
-		//消滅までの時間を上書き
-		Destroy(gameObject, EXPLOSION_TIME);
 
 		//当たり判定を追加
 		Invoke("AddCollision", NON_COL_TIME);
@@ -32,6 +30,14 @@ public class BulletGrenade : BulletNormal {
 		rig.isKinematic = false;
 		rig.useGravity = true;
 		rig.AddForce(transform.forward * SPEED_MAG * bulletData.speed);
+	}
+
+	void Update() {
+
+		if((time -= Time.deltaTime) < 0) {
+			Exp();
+			Destroy(gameObject);
+		}
 	}
 
 	/// <summary>
@@ -63,11 +69,12 @@ public class BulletGrenade : BulletNormal {
 		//攻撃
 		Unit.Attack(bulletOwner.unitOwner, other.GetComponent<Unit>(), bulletOwner.power);
 
-		//爆発の処理
+		Exp();
+
 		Destroy(gameObject);
 	}
 
-	void OnDestroy() {
+	void Exp() {
 
 		var data = GetBulletData<BulletGrenadeData>();
 
@@ -81,5 +88,6 @@ public class BulletGrenade : BulletNormal {
 
 		//爆発
 		Explosion.Create(bulletOwner, transform.position, data.expPow, data.expRadius);
+
 	}
 }

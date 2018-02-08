@@ -23,7 +23,7 @@ public class FadeMoveScene : MonoBehaviour
     {
         if (c.gameObject.CompareTag("Player1"))
         {
-            FadeManager.Instance.LoadScene(sceneName, 2.0f);
+            FadeManager.instance.LoadScene(sceneName, 2.0f);
         }
     }
 }

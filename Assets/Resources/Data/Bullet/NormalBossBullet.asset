@@ -12,11 +12,7 @@ MonoBehaviour:
   m_Name: NormalBossBullet
   m_EditorClassIdentifier: 
   model: {fileID: 1991796183843564, guid: 88a2ea2bdceff51468354ec7115916af, type: 2}
-  particleNameAttack: BossBulletNormal
-  particleNameHit: BossBulletHit
-  speed: 5
-<<<<<<< HEAD
+  particleNameAttack: EnemyBulletNormal
+  particleNameHit: EnemyBulletHit
+  speed: 10
   range: 30
-=======
-  range: 100
->>>>>>> 9b09bb6b6b915fc5e2585469f0d72fa5bbda18c5

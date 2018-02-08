@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 [ExecuteInEditMode]
 public class PlayerSpawner : MonoBehaviour {
@@ -9,8 +10,8 @@ public class PlayerSpawner : MonoBehaviour {
 
 	void Awake() {
 
-		if(playerData.Length == 0) playerData = new PlayerData[InputManager.MAX_PAYER_NUM];
-		if(spawnPoint.Length == 0) spawnPoint = new Transform[InputManager.MAX_PAYER_NUM];
+		if(playerData.Length == 0) playerData = new PlayerData[GameData.MAX_PLAYER_NUM];
+		if(spawnPoint.Length == 0) spawnPoint = new Transform[GameData.MAX_PLAYER_NUM];
 
 		foreach(Transform item in spawnPoint) {
 
@@ -30,7 +31,7 @@ public class PlayerSpawner : MonoBehaviour {
 
 		if(Application.isPlaying) return;
 
-		for(int i = 0;i < InputManager.MAX_PAYER_NUM;i++) {
+		for(int i = 0;i < GameData.MAX_PLAYER_NUM;i++) {
 			if(!spawnPoint[i]) continue;
 			if(spawnPoint[i].childCount > 1) Awake();
 			if(playerData[i]) ModelUpdate(i);
@@ -74,8 +75,30 @@ public class PlayerSpawner : MonoBehaviour {
 	/// プレイヤーをスポーンする
 	/// </summary>
 	/// <returns></returns>
-	public void SpawnPlayer(int playerNum) {
-		var player = playerData[playerNum].Spawn(spawnPoint[playerNum].position, spawnPoint[playerNum].rotation);
-		((Player)player).playerIndex = playerNum;
+	public Player SpawnPlayer(int playerNum) {
+
+		if(GameData.instance.isSpawnedPlayer) return GameData.instance.spawnedPlayer[playerNum];
+
+		var player = (Player)playerData[playerNum].Spawn(spawnPoint[playerNum].position, spawnPoint[playerNum].rotation);
+		player.playerIndex = playerNum;
+		return player;
+	}
+
+	public void SpawnPlayer() {
+		if(GameData.instance.isSpawnedPlayer) {
+		//参照して持ってくる
+		foreach(var item in GameData.instance.spawnedPlayer) {
+				if(!item) continue;
+				item.transform.position = spawnPoint[item.playerIndex].position;
+				item.transform.rotation = spawnPoint[item.playerIndex].rotation;
+			}
+		}
+		else {
+			for(int i = 0;i < GameData.MAX_PLAYER_NUM;i++) {
+				if(GameData.instance.isEntryPlayer[i]) {
+					GameData.instance.spawnedPlayer[i] = SpawnPlayer(i);
+				}
+			}
+		}
 	}
 }

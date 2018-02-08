@@ -40,10 +40,10 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	public static void Load() {
 
 		//LoadMixer
-		var mixer = Resources.Load<AudioMixer>(MIXER_PATH);
-		if(mixer) {
-			instance.mixerGroups[0] = mixer.FindMatchingGroups("SE")[0];
-			instance.mixerGroups[1] = mixer.FindMatchingGroups("BGM")[0];
+		instance.mixer = Resources.Load<AudioMixer>(MIXER_PATH);
+		if(instance.mixer) {
+			instance.mixerGroups[0] = instance.mixer.FindMatchingGroups("SE")[0];
+			instance.mixerGroups[1] = instance.mixer.FindMatchingGroups("BGM")[0];
 		}
 		else {
 			Debug.LogError("Failed Load AudioMixer! Path=" + MIXER_PATH);
@@ -81,8 +81,6 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 			//stockListから空で且つ番号が一番若いSEInfoを受け取る
 			var seInfo = info.stockList.Values[0];
 
-			Debug.Log(SEName + " " + seInfo.index);
-
 			//ストックを削除
 			info.stockList.Remove(seInfo.index);
 
@@ -96,7 +94,7 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 
 			//管理用情報を付加
 			var playSE = src.gameObject.AddComponent<PlayingSE>();
-			playSE.onDestroy += () => { info.stockList.Add(seInfo.index, seInfo); Debug.Log("add"); };
+			playSE.onDestroy += () => { info.stockList.Add(seInfo.index, seInfo); };
 
 			//自動削除の場合は遅延で削除を実行する
 			if(autoDelete)
@@ -181,7 +179,7 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 	static AudioClipInfo GetSEInfo(string SEName) {
 
 		if(!instance.SEclips.ContainsKey(SEName)) {
-			Debug.LogError("SEName:" + SEName + " is not found.");
+			Debug.LogWarning("SEName:" + SEName + " is not found.");
 			return null;
 		}
 		return instance.SEclips[SEName];
@@ -246,6 +244,8 @@ public sealed class AudioManager : SingletonMonoBehaviour<AudioManager> {
 			//フェードイン処理停止
 			instance.StopCoroutine(fadeInCol);
 			src = fadeInAudio;
+
+			if(!src) yield break;
 		}
 
 		src.name = "[Audio BGM - " + latestPlayBGM + " - FadeOut ]";

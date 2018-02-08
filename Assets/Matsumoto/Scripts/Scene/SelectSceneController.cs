@@ -6,14 +6,13 @@ using GamepadInput;
 
 public class SelectSceneController : MonoBehaviour {
 
-	const string NEXT_SCENE_NAME = "Stage1";
-
 	public GamePad.Button entryButton;
+	public GamePad.Button exitButton;
 
 	public UnitData playerBase;
 	public CustomizeCharactor[] custom;
 
-	int[] entryControllerID = new int[InputManager.MAX_PAYER_NUM];
+	int[] entryControllerID = new int[GameData.MAX_PLAYER_NUM];
 	int playerCount = 0;
 	int readyCount = 0;
 
@@ -34,22 +33,31 @@ public class SelectSceneController : MonoBehaviour {
 		}
 
 		AudioManager.FadeIn(1, "Menu");
+
+		//カーソルを隠す
+		Cursor.visible = false;
 	}
 
 	void Update() {
 
-		int joystickNum;
-		if(InputManager.GetButtonDownAny(entryButton, out joystickNum)) {
-			Entry(joystickNum);
+		ControllerInfo info;
+		if(InputManager.GetButtonDownAny(entryButton, out info)) {
+			Entry(info);
 		}
 
+		if(InputManager.GetButtonDownAny(exitButton) && playerCount == 0) {
+			FadeManager.instance.LoadScene("Main_Title", 1);
+		}
 
+		foreach(var item in custom) {
+			item.SelectUpdate();
+		}
 	}
 
-	void Entry(int joystickNum) {
+	void Entry(ControllerInfo info) {
 
 		if(entryControllerID
-			.Where(item => item == joystickNum)
+			.Where(item => item == info.joystickNum)
 			.Count() > 0) return;
 
 		var playerID = -1;
@@ -63,21 +71,20 @@ public class SelectSceneController : MonoBehaviour {
 		if(playerID == -1) return;
 
 		//コントローラを登録
-		entryControllerID[playerID] = joystickNum;
+		entryControllerID[playerID] = info.joystickNum;
 
 		//プレイヤーと紐づけ
-		if(joystickNum == 0) {
-			InputManager.SetControllerData(playerID, ControlType.Keyboard, (GamePad.Index)3);
-		}
-		else {
-			InputManager.SetControllerData(playerID, ControlType.GamePadXBOX, (GamePad.Index)(joystickNum - 1));
-		}
+		var num = info.type == ControlType.Keyboard ? 0 : info.joystickNum - 1;
+		InputManager.SetControllerData(playerID, info.type, (GamePad.Index)num);
 
 		//カスタムのエントリー処理
 		custom[playerID].Entry(playerID);
 
 		//SEの再生
 		AudioManager.PlaySE("Player_Entry");
+
+		//キーボードであればカーソルを出す
+		if(info.type == ControlType.Keyboard) Cursor.visible = true;
 
 		playerCount++;
 	}
@@ -105,12 +112,16 @@ public class SelectSceneController : MonoBehaviour {
 		AudioManager.FadeOut(2);
 		
 		//シーン移動
-		FadeManager.Instance.LoadScene(NEXT_SCENE_NAME, 2);
+		FadeManager.instance.LoadScene(GameData.START_STAGE, 2);
 	}
 
 	public void Exit(int playerID) {
 
+		//キーボードであればカーソルを消す
+		if(playerID == entryControllerID[playerID]) Cursor.visible = false;
+
 		entryControllerID[playerID] = -1;
+
 		playerCount--;
 
 	}

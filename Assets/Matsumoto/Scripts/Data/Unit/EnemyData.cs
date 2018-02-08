@@ -45,6 +45,9 @@ public class EnemyData : UnitData {
 			ai.targetChangeTime = targetChangeTime;
 			ai.rollingMax = rollingMax;
 			ai.spAttackTime = spAttackTime;
+
+			//GameManagerに登録
+			FindObjectOfType<GameManager>().SetSpawnedBoss(enemy);
 		}
 		else {
 			var ai = enemy.gameObject.AddComponent<EnemyAI>();

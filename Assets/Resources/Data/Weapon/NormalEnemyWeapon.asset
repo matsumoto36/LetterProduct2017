@@ -13,14 +13,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 1729854461742384, guid: 084e35fefebd0754ca40fd8ca8cbedc4, type: 2}
   icon: {fileID: 0}
-  interval: 0.1
+  interval: 0.3
   power: 10
   mod:
     mulHP: 1
     mulMoveSpeed: 1
     mulPow: 1
     mulAttackSpeed: 1
-  equipSound: 
+  equipSound: gun_ready
   useSound: gun_shot
   hitSound: shot-hit
   bulletData: {fileID: 11400000, guid: 4a0fcb88f18a92046818c0e06f01d653, type: 2}

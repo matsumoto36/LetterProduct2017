@@ -9,53 +9,22 @@ using System.Collections.Generic;
 /// <summary>
 /// シーン遷移時のフェードイン・アウトを制御するためのクラス .
 /// </summary>
-public class FadeManager : MonoBehaviour
+public class FadeManager : SingletonMonoBehaviour<FadeManager>
 {
 	private AsyncOperation async;
 	//public GameObject LoadingUi;
 	//public Slider Slider;
 
-    #region Singleton
-
-    private static FadeManager instance;
-
-	public static FadeManager Instance {
-		get {
-			if (instance == null) {
-				instance = (FadeManager)FindObjectOfType (typeof(FadeManager));
-
-				if (instance == null) {
-					Debug.LogError (typeof(FadeManager) + "is nothing");
-				}
-			}
-
-			return instance;
-		}
-	}
-
-	#endregion Singleton
-
 	/// <summary>
 	/// デバッグモード .
 	/// </summary>
-	public bool DebugMode = true;
+	public bool DebugMode = false;
 	/// <summary>フェード中の透明度</summary>
 	private float fadeAlpha = 0;
 	/// <summary>フェード中かどうか</summary>
 	private bool isFading = false;
 	/// <summary>フェード色</summary>
 	public Color fadeColor = Color.black;
-
-    public void Awake()
-    {
-        if (this != Instance)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-
-        DontDestroyOnLoad(this.gameObject);
-    }
 
     public void OnGUI ()
 	{
@@ -109,10 +78,10 @@ public class FadeManager : MonoBehaviour
 	/// </summary>
 	/// <param name='scene'>シーン名</param>
 	/// <param name='interval'>暗転にかかる時間(秒)</param>
-	public void LoadScene (string scene, float interval)
+	public void LoadScene(string scene, float interval, Action onCompleted = null)
 	{
         //LoadingUi.SetActive(true);
-        StartCoroutine (TransScene (scene, interval));
+        StartCoroutine (TransScene (scene, interval, onCompleted));
 	}
 
     /// <summary>
@@ -120,7 +89,7 @@ public class FadeManager : MonoBehaviour
     /// </summary>
     /// <param name='scene'>シーン名</param>
     /// <param name='interval'>暗転にかかる時間(秒)</param>
-    private IEnumerator TransScene(string scene, float interval)
+    private IEnumerator TransScene(string scene, float interval, Action onCompleted)
     {
 
         //だんだん暗く .
@@ -134,19 +103,21 @@ public class FadeManager : MonoBehaviour
 
         //シーン切替 .
         async = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
-        async.allowSceneActivation = false;
 
-        do
+		//遷移直後の実行
+		if(onCompleted != null) onCompleted();
+
+		do
         {
             Debug.Log(async.progress * 100 + "%");
             //Slider.value = async.progress;
             yield return null;
-        } while (async.progress > 1.0f);
+        } while (!async.isDone);
 
-        async.allowSceneActivation = true;
+		PKFxManager.Reset();
 
-        //だんだん明るく .
-        time = 0;
+		//だんだん明るく .
+		time = 0;
 		while (time <= interval) {
 			this.fadeAlpha = Mathf.Lerp (1f, 0f, time / interval);
 			time += Time.deltaTime;

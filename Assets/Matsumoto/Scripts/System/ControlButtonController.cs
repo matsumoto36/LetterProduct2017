@@ -8,6 +8,9 @@ using GamepadInput;
 public class ControlButtonController : MonoBehaviour {
 
 	const GamePad.Axis MOVE_KEY = GamePad.Axis.LeftStick;
+	const GamePad.Axis MOVE_KEY2 = GamePad.Axis.RightStick;
+	const GamePad.Axis MOVE_KEY3 = GamePad.Axis.Dpad;
+
 	const GamePad.Button EXEC_KEY = GamePad.Button.A;
 
 	const float MAX_SPEED = 10f;
@@ -45,16 +48,26 @@ public class ControlButtonController : MonoBehaviour {
 		if(controlID != -1) axis = InputManager.GetAxis(controlID, MOVE_KEY, true);
 		else axis = InputManager.GetAxisAny(MOVE_KEY, true);
 
+		if(axis == new Vector2()) {
+			if(controlID != -1) axis = InputManager.GetAxis(controlID, MOVE_KEY2, true);
+			else axis = InputManager.GetAxisAny(MOVE_KEY2, true);
+		}
+
+		if(axis == new Vector2()) {
+			if(controlID != -1) axis = InputManager.GetAxis(controlID, MOVE_KEY3, true);
+			else axis = InputManager.GetAxisAny(MOVE_KEY3, true);
+		}
+
 		if(axis != new Vector2()) {
 
 			accSpeed = Mathf.Min(accSpeed + ACCEL, MAX_SPEED);
 			speed += accSpeed * Time.deltaTime;
-
+		
 			var moveAngle = CalcMoveAngle(axis);
 			var nextButton = focusButton.moveButtonNum[moveAngle];
 			if(nextButton && speed >= 1) {
 				speed = 0;
-
+		
 				Focus(nextButton);
 			}
 		}
@@ -92,14 +105,12 @@ public class ControlButtonController : MonoBehaviour {
 	/// </summary>
 	/// <param name="axis"></param>
 	/// <returns></returns>
-	int CalcMoveAngle(Vector2 axis) {
+	public static int CalcMoveAngle(Vector2 axis) {
 		//[0] 左  [1] 下  [2] 右  [3] 上
 		var vec = Vector2.SignedAngle(new Vector2(1, 0), axis);
 		int angle = (int)((vec + 180) / 90 + 0.5f);
 		return angle % 4;
 	}
-
-
 
 	/// <summary>
 	/// コントローラーで操作するボタンシステムを生成
@@ -119,6 +130,20 @@ public class ControlButtonController : MonoBehaviour {
 		DontDestroyOnLoad(ctrl);
 		controls.Add(ctrl);
 		return ctrl;
+	}
+
+	/// <summary>
+	/// コントローラーで操作するボタンシステムを取得
+	/// </summary>
+	/// <param name="controlID">取得したいID</param>
+	/// <returns></returns>
+	public static ControlButtonController GetController(int controlID) {
+
+		foreach(var item in controls) {
+			if(item.id == controlID) return item;
+		}
+
+		return null;
 	}
 
 	/// <summary>

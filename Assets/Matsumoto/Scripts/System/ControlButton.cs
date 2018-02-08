@@ -7,8 +7,19 @@ public delegate void ExecMethod();
 
 public enum ButtonName {
 	Title_Start,
-	Option,
-	Exit,
+	Title_Option,
+	Title_Exit,
+
+	Option_BGM,
+	Option_SE,
+	Option_Retry,
+	Option_Back,
+
+	Result_Retry,
+	Result_Title,
+
+	GameOver_Retry,
+	GameOver_Select,
 
 	Pl1Weapon1,
 	Pl1Weapon2,
@@ -38,7 +49,6 @@ public enum ButtonName {
 /// <summary>
 /// コントローラー操作に対応したボタン
 /// </summary>
-[RequireComponent(typeof(Button))]
 public class ControlButton : MonoBehaviour {
 
 	const int MAX_BUTTONS = 100;                        //ゲームで登場するボタンの総数
@@ -47,30 +57,38 @@ public class ControlButton : MonoBehaviour {
 
 	static ControlButton[] buttons = new ControlButton[MAX_BUTTONS];
 
+	public bool executeSelect = true;					//ボタンのOnSelectが発動するか
 	public ButtonName buttonName;						//ボタンの管理番号(重複しないでください)
 	[Header("移動時にフォーカスするボタン [0] 左  [1] 下  [2] 右  [3] 上")]
-	public ControlButton[] moveButtonNum;				//コントローラー入力で移動したときの次のボタン(nullで移動不可)
+	public ControlButton[] moveButtonNum;               //コントローラー入力で移動したときの次のボタン(nullで移動不可)
 														//[0] 左  [1] 下  [2] 右  [3] 上
+	public Sprite mainSprite;
+	public Sprite highlightedSprite;
+	public Sprite selectedSprite;
+
 	public event ExecMethod onFocus;
+	public event ExecMethod onFocusChanged;
 	public event ExecMethod onSelect;
 
 	public Shader buttonShader;
 
 	bool isSelecting = false;
 	Coroutine flashCoroutine;
-	Button button;
-	Image buttonImage;
+	public Image buttonImage;
 
 	void Awake() {
 
 		buttons[(int)buttonName] = this;
 
 		//マテリアル回り
-		button = GetComponent<Button>();
-		buttonImage = GetComponent<Image>();
+		if(!buttonImage) buttonImage = GetComponent<Image>();
 		buttonImage.material = new Material(buttonShader);
-		buttonImage.material.SetTexture("_Texture1", button.targetGraphic.mainTexture);
-		buttonImage.material.SetTexture("_Texture2", button.spriteState.highlightedSprite.texture);
+		buttonImage.material.SetTexture("_Texture1", mainSprite.texture);
+		buttonImage.material.SetTexture("_Texture2", highlightedSprite.texture);
+	}
+
+	void OnDisable() {
+		AnimCancel();
 	}
 
 	IEnumerator Flashing() {
@@ -92,14 +110,14 @@ public class ControlButton : MonoBehaviour {
 
 		isSelecting = true;
 
-		buttonImage.material.SetTexture("_Texture1", button.spriteState.pressedSprite.texture);
+		buttonImage.material.SetTexture("_Texture1", selectedSprite.texture);
 		buttonImage.materialForRendering.SetFloat("_Blend", 0);
 
 		yield return new WaitForSeconds(SELECT_IMAGE_TIME);
 
 		isSelecting = false;
 
-		buttonImage.material.SetTexture("_Texture1", button.targetGraphic.mainTexture);
+		buttonImage.material.SetTexture("_Texture1", mainSprite.texture);
 	}
 
 	public void Flash() {
@@ -123,6 +141,8 @@ public class ControlButton : MonoBehaviour {
 			StopCoroutine(flashCoroutine);
 			buttonImage.materialForRendering.SetFloat("_Blend", 0);
 		}
+
+		if(onFocusChanged != null) onFocusChanged();
 	}
 
 	/// <summary>
@@ -130,6 +150,7 @@ public class ControlButton : MonoBehaviour {
 	/// </summary>
 	public void OnSelect() {
 
+		if(!executeSelect) return;
 		if(isSelecting) return;
 
 		if(flashCoroutine != null) StopCoroutine(flashCoroutine);
@@ -144,7 +165,7 @@ public class ControlButton : MonoBehaviour {
 		StopCoroutine(SelectAnim());
 
 		isSelecting = false;
-		buttonImage.material.SetTexture("_Texture1", button.targetGraphic.mainTexture);
+		buttonImage.material.SetTexture("_Texture1", mainSprite.texture);
 		buttonImage.materialForRendering.SetFloat("_Blend", 0);
 
 	}

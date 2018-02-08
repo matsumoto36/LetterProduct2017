@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a4544952da89274c8e26a8fe4bc4e98, type: 3}
+  m_Name: Enemy1-2
+  m_EditorClassIdentifier: 
+  model: {fileID: 1684041354851596, guid: 5d0890b6b9d293d4eaa0e0fc1753edb5, type: 2}
+  hp: 500
+  dropExp: 50
+  nextLevelExp: 10
+  moveSpeed: 6
+  rotSpeed: 10
+  weaponData:
+  - {fileID: 11400000, guid: cdc49a9f703ce98499fcc98e2d46878d, type: 2}
+  - {fileID: 11400000, guid: 3b2f234c55bddca45986162a1d7564d8, type: 2}
+  isDrawWeapon: 1
+  deathSE: grenade_Launcher_explosion
+  deathParticle: EnemyDeath
+  attackDuration: 3
+  attackRestDuration: 1
+  isBoss: 0
+  attackLine: 40
+  searchAngle: 40
+  enemyAIType: 2
+  dashSpeed: 10
+  moveLine: 20
+  stepLine: 5
+  speed: 10
+  targetChangeTime: 5
+  rollingMax: 2
+  spAttackTime: 2

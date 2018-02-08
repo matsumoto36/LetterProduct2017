@@ -85,7 +85,13 @@ public abstract class Unit : MonoBehaviour {
 	public bool isDead { get; protected set; }
 
 	public bool canAttack { get; protected set; }
-	public bool canMove { get; protected set; }
+
+	bool _canMove = true;
+	public bool canMove {
+		get { return _canMove; }
+		protected set {
+			unitRig.isKinematic = !(_canMove = value);
+		} }
 
 	public float HPRatio { get { return (float)nowHP / maxHP; } }
 	public float EXPRatio { get { return 1 - ((float)nextLevelEXP / expSave); } }
@@ -113,6 +119,10 @@ public abstract class Unit : MonoBehaviour {
 	Dictionary<string, StatusModifier> statusModStack;
 
 	static Unit() {
+		Init();
+	}
+
+	public static void Init() {
 		unitList = new List<Unit>();
 	}
 
@@ -126,7 +136,6 @@ public abstract class Unit : MonoBehaviour {
 		attackedUnitList = new List<DamageLog>();
 		statusModStack = new Dictionary<string, StatusModifier>();
 		canAttack = true;
-		canMove = true;
 
 		anim = GetComponent<Animator>();
 		unitRig = GetComponent<Rigidbody>();
@@ -136,8 +145,6 @@ public abstract class Unit : MonoBehaviour {
 		handAnchor = transform.GetComponentsInChildren<Transform>()
 			.Where((item) => item.name == HAND_ANCHOR)
 			.ToArray()[0];
-
-		Debug.Log(handAnchor);
 	}
 
 	/// <summary>
@@ -172,6 +179,9 @@ public abstract class Unit : MonoBehaviour {
 
 		//リストに追加
 		unitList.Add(this);
+
+		//ポーズ用処理追加
+		gameObject.AddComponent<Pause>();
 	}
 
 	/// <summary>
@@ -243,6 +253,8 @@ public abstract class Unit : MonoBehaviour {
 	/// <param name="exp"></param>
 	public void GainEXP(float exp) {
 
+		if(isDead) return;
+
 		//バッファに貯めた経験値を取り出す
 		exp += buffEXP;
 
@@ -260,12 +272,19 @@ public abstract class Unit : MonoBehaviour {
 
 			//次のレベルに必要な経験値をセット
 			nextLevelEXP = expSave = GameBalance.CalcNextLevelExp(baseNextLevel, level);
+
+			//エフェクト再生
+			ParticleManager.Spawn("LevelUp", transform.position, Quaternion.identity);
 		}
 
 		if(isLevelUp) {
 			//ステータスの強化
 			GameBalance.ApplyNextLevelStatus(levelUpStatus, level);
 			CalcStatus();
+
+			//回復
+			nowHP = maxHP;
+
 		}
 
 		//保存
@@ -292,6 +311,12 @@ public abstract class Unit : MonoBehaviour {
 
 		nowHP = 0;
 		isDead = true;
+
+		//攻撃していたら止める
+		if(isAttack) {
+			isAttack = false;
+			equipWeapon[0].AttackEnd();
+		}
 
 		//死亡時のパーティクル再生
 		ParticleManager.Spawn(deathParticle, transform.position, transform.rotation);
@@ -348,6 +373,7 @@ public abstract class Unit : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
 	public bool CheckCanAttack() {
+		if(isDead) return false;
 		if(!equipWeapon[0]) return false;
 		if(!canAttack) return false;
 		if(isPlayMeleeAnim) return false;
@@ -413,6 +439,9 @@ public abstract class Unit : MonoBehaviour {
 		if(!from || !to) return false;
 		if(from.isDead || to.isDead) return false;
 
+		//マイナスに行かないよう調整
+		damage = to.nowHP - damage < 0 ? to.nowHP : damage;
+
 		//経験値分配用
 		bool findFromUnit = to.attackedUnitList
 			.Where((item) => item.attackUnit == from)
@@ -456,13 +485,31 @@ public abstract class Unit : MonoBehaviour {
 		Debug.Log("Heal " + from.name + " -> " + to.name);
 
 		int healPoint = Mathf.Min(heal, to.maxHP - to.nowHP);
-		//回復した分だけ経験値を得る
-		from.GainEXP(GameBalance.CalcHealExp(healPoint));
+
 		//回復する
-		to.ApplyDamage(-healPoint);
+		if(to.ApplyDamage(-healPoint)) {
+			//回復した分だけ経験値を得る
+			from.GainEXP(GameBalance.CalcHealExp(healPoint));
+		}
 
 		return true;
 	}
+	public static void Clear() {
+		for(int i = 0;i < unitList.Count;i++) {
+			Destroy(unitList[i].gameObject);
+		}
+
+		unitList = new List<Unit>();
+	}
+	/// <summary>
+	/// GameDataにあるプレイヤーをリストに加える
+	/// </summary>
+	public static void CollectPlayer() {
+		unitList.AddRange(GameData.instance.spawnedPlayer
+			.Where(item => item)
+			.ToArray());
+	}
+
 
 	/// <summary>
 	/// ダメージを与える

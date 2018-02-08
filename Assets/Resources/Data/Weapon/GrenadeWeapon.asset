@@ -19,7 +19,7 @@ MonoBehaviour:
     mulHP: 1
     mulMoveSpeed: 1
     mulPow: 2
-    mulAttackSpeed: 0.75
+    mulAttackSpeed: 0.8
   equipSound: gun_ready
   useSound: grenade
   hitSound: grenade_Launcher_explosion

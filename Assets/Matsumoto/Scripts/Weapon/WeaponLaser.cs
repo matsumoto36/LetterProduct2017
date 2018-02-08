@@ -110,13 +110,13 @@ public class WeaponLaser : WeaponRanged {
 
 	public override void AttackEnd() {
 
-		//ヒットエフェクトがあれば消す
-		if(laser.laserHitParticle) Destroy(laser.laserHitParticle.gameObject);
-		//ヒットSEがあれば消す
-		if(laser.laserHitSE) Destroy(laser.laserHitSE.gameObject);
-
 		//照射終了
 		if(laser) {
+			//ヒットエフェクトがあれば消す
+			if(laser.laserHitParticle) Destroy(laser.laserHitParticle.gameObject);
+			//ヒットSEがあれば消す
+			if(laser.laserHitSE) Destroy(laser.laserHitSE.gameObject);
+
 			laser.GetComponent<Collider>().enabled = false;
 			laser.length = 0;
 			Destroy(laser.gameObject, 4);
