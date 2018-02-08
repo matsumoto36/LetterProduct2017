@@ -141,7 +141,7 @@ public abstract class Unit : MonoBehaviour {
 		unitRig = GetComponent<Rigidbody>();
 
 		//アンカーを取得
-		body = transform.GetChild(0);
+		body = transform.childCount != 0 ? transform.GetChild(0) : null;
 		var anchorList = transform.GetComponentsInChildren<Transform>()
 			.Where((item) => item.name == HAND_ANCHOR)
 			.ToArray();

@@ -17,8 +17,8 @@ public class EnemySpawnerInspector : Editor {
 
 	SerializedProperty deathSE;
 	SerializedProperty deathParticle;
-
-	protected virtual void OnEnable() {
+	
+	void OnEnable() {
 
 		hp = serializedObject.FindProperty("hp");
 		dropExp = serializedObject.FindProperty("dropExp");
@@ -37,6 +37,8 @@ public class EnemySpawnerInspector : Editor {
 
 	public override void OnInspectorGUI() {
 
+		serializedObject.Update();
+
 		EditorGUILayout.PropertyField(hp, new GUIContent("体力"));
 		EditorGUILayout.PropertyField(dropExp, new GUIContent("落とす経験値"));
 		EditorGUILayout.Separator();
@@ -50,5 +52,7 @@ public class EnemySpawnerInspector : Editor {
 		EditorGUILayout.Separator();
 		EditorGUILayout.PropertyField(deathSE, new GUIContent("死んだときのSE"));
 		EditorGUILayout.PropertyField(deathParticle, new GUIContent("死んだときのパーティクル"));
+
+		serializedObject.ApplyModifiedProperties();
 	}
 }

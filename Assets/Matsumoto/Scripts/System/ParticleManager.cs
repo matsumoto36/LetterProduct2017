@@ -77,13 +77,12 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 	/// <returns></returns>
 	public static PKFxFX Spawn(string particleName, Vector3 position, Quaternion rotation, float deleteTime) {
 
-		var pData = instance.particleTable[particleName];
-
-		if(pData == null) {
-			Debug.LogError("particle is not found.");
+		if(!instance.particleTable.ContainsKey(particleName)) {
+			Debug.LogWarning(particleName + " is not found.");
 			return null;
 		}
 
+		var pData = instance.particleTable[particleName];
 		var pObj = Instantiate(pData, position, rotation);
 		pObj.StartEffect();
 

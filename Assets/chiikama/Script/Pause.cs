@@ -13,7 +13,6 @@ public class Pause : MonoBehaviour {
 		targets.Clear();
 	}
 	void Start() {
-		Debug.Log("name:" + name);
 		targets.Add(this);
 	}
 
