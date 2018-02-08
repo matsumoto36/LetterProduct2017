@@ -45,12 +45,11 @@ public class HPbar : MonoBehaviour {
 			image.rectTransform.position = vec;
 		}
 
-
-		List<Vector2> screenPos = new List<Vector2>();
-		foreach(var item in Unit.unitList) {
-			if(item == false) continue;
-			screenPos.Add(RectTransformUtility.WorldToScreenPoint(Camera.main, item.transform.position));
-		}
+		//UIに重なっているか調べるためにあらかじめ計算しておく
+		var screenPos = Unit.unitList
+			.Where(item => item)
+			.Select(item => RectTransformUtility.WorldToScreenPoint(Camera.main, item.transform.position))
+			.ToList();
 
 		for(int i = 0;i < 4;i++) {
 			if(playerArray[i] == false) continue;
@@ -67,7 +66,7 @@ public class HPbar : MonoBehaviour {
 			var weaponList = playerArray[i].equipWeapon;
 			PlayerUI[i].SetWeaponIcon(weaponList[0].icon, weaponList[1].icon);
 
-			//プレイヤーが重なりそうだったら半透明になる
+			//重なりそうだったら半透明になる
 			float alpha = 1;
 			foreach(var item in screenPos) {
 				if(PlayerUI[i].CheckInsidePosition(item)) {

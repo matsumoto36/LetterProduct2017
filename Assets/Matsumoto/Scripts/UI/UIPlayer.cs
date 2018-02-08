@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UIPlayer : MonoBehaviour {
 
+	const float FADE_SPEED = 2;
+
 	[SerializeField] Text levelText;
 
 	[SerializeField] Image hpBar;
@@ -22,10 +24,7 @@ public class UIPlayer : MonoBehaviour {
 
 	Rect playerUIArea;
 
-	public float Alpha {
-		get { return rendererGroup.alpha; }
-		set { rendererGroup.alpha = value; }
-	}
+	public float Alpha { get; set; }
 
 	/// <summary>
 	/// 点がUIに重なっているか
@@ -76,6 +75,12 @@ public class UIPlayer : MonoBehaviour {
 			warningAnim = null;
 			warningImage.color = new Color(1, 1, 1, 0);
 		}
+	}
+
+	void Update() {
+
+		rendererGroup.alpha = Mathf.MoveTowards(rendererGroup.alpha, Alpha, FADE_SPEED * Time.deltaTime);
+
 	}
 
 	IEnumerator WarningAnim() {

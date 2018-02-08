@@ -425,7 +425,7 @@ public class Player : Unit {
 			var ratio = t / waitTime;
 			execute(ratio);
 			gauge.SetRatio(ratio);
-			gauge.SetPosition(transform.position);
+			gauge.SetPosition(transform.position + Camera.main.transform.forward * 4);
 
 			//続けないとキャンセル
 			if(!predicate()) {
