@@ -20,7 +20,9 @@ public class EnemyActiveSpawner : Enemy {
 	public float spawnRange;			//湧く範囲
 
 	public string _deathSE;				//死んだときのSE
-	public string _deathParticle;       //死んだときのパーティクル
+	public string _deathParticle;		//死んだときのパーティクル
+
+	public Transform modelParent;		//プレビュー機能で表示するオブジェクトの親
 
 	float activeTime = 0;
 	public override void InitFinal() {
@@ -35,12 +37,14 @@ public class EnemyActiveSpawner : Enemy {
 	public override void Move() { }
 
 	void Awake() {
-		foreach(Transform item in transform) {
+
+		foreach(Transform item in modelParent) {
+
 			if(Application.isPlaying) {
-				if(item) Destroy(item.gameObject);
+				Destroy(item.gameObject);
 			}
 			else {
-				if(item) DestroyImmediate(item.gameObject);
+				DestroyImmediate(item.gameObject);
 			}
 		}
 	}
@@ -67,14 +71,14 @@ public class EnemyActiveSpawner : Enemy {
 			Spawn();
 		}
 		else {
-
+			if(!modelParent) return;
 			ViewModelUpdate();
 		}
 	}
 
 	void ViewModelUpdate() {
 
-		if(transform.childCount > 1) {
+		if(modelParent.childCount != 1) {
 			Awake();
 		}
 
@@ -94,10 +98,8 @@ public class EnemyActiveSpawner : Enemy {
 		var count = Mathf.Min(spawnCount.RandomValue, spawnMax - insideEnemyCount);
 
 		for(int i = 0;i < count;i++) {
-
-			var rad = Random.Range(0, Mathf.PI * 2);
-			var position = new Vector3(Mathf.Cos(rad), 0, Mathf.Sin(rad)) * spawnRange;
-
+			var randCircle = Random.insideUnitCircle * spawnRange;
+			var position = new Vector3(randCircle.x, 0, randCircle.y);
 			spawnEnemy.Spawn(transform.position + position, transform.rotation);
 		}
 	}
@@ -107,13 +109,13 @@ public class EnemyActiveSpawner : Enemy {
 	/// </summary>
 	bool GetModel() {
 
-		if(transform.childCount != 0) DestroyImmediate(transform.GetChild(0));
+		if(modelParent.childCount != 0) Awake();
 		if(!spawnEnemy) return false;
 		if(!spawnEnemy.model) return false;
-
+		
 		var model = Instantiate(spawnEnemy.model);
 		model.name = spawnEnemy.model.name + "(Preview)";
-		model.transform.SetParent(transform);
+		model.transform.SetParent(modelParent);
 
 		return true;
 	}
@@ -123,16 +125,14 @@ public class EnemyActiveSpawner : Enemy {
 	/// </summary>
 	void ModelUpdate() {
 
-		if(transform.childCount == 0) {
+		if(modelParent.childCount == 0) {
 			if(!GetModel()) return;
 		}
 
-		var model = transform.GetChild(0).gameObject;
+		var model = modelParent.GetChild(0).gameObject;
 		if(model.name != spawnEnemy.model.name + "(Preview)") {
 			if(!GetModel()) return;
 		}
-
-		model.transform.SetPositionAndRotation(transform.position, transform.rotation);
 	}
 
 	/// <summary>
