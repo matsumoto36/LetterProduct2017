@@ -69,7 +69,7 @@ public class BulletLaser : Bullet {
 
 	public override void OnHitting(Collider other) {
 
-		Debug.Log(other.name);
+		// Debug.Log(other.name);
 
 		//ヒットエフェクト再生
 		if(!laserHitParticle) {
