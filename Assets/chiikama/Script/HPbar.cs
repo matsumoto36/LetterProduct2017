@@ -40,6 +40,13 @@ public class HPbar : MonoBehaviour {
 
 	void Update() {
 
+		//重いので呼ぶタイミングを制限する
+		if(Time.frameCount % 2 == 0) UpdateUI();
+
+	}
+
+	void UpdateUI() {
+
 		if(target) {
 			vec = RectTransformUtility.WorldToScreenPoint(Camera.main, target.transform.position);
 			image.rectTransform.position = vec;

@@ -5,13 +5,13 @@ using System.Linq;
 /// <summary>
 /// 継続的に敵をスポーンさせる
 /// </summary>
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class EnemyActiveSpawner : Enemy {
 
 	public int hp;
 	public int dropEXP;
 
-	public EnemyData spawnEnemy;		//湧かせるキャラクター
+	//public EnemyData spawnEnemy;		//湧かせるキャラクター
 	public float interval;				//湧き頻度(秒)
 	public RangeInteger spawnCount;		//湧く数の範囲
 	public int spawnMax;				//湧く範囲に居れるキャラクターの最大数
@@ -22,31 +22,30 @@ public class EnemyActiveSpawner : Enemy {
 	public string _deathSE;				//死んだときのSE
 	public string _deathParticle;		//死んだときのパーティクル
 
-	public Transform modelParent;		//プレビュー機能で表示するオブジェクトの親
+	public Transform modelParent;       //プレビュー機能で表示するオブジェクトの親
 
+	EnemySpawner spawner;
 	float activeTime = 0;
+
 	public override void InitFinal() {
 		base.InitFinal();
 
 		//勢力のセット
 		group = UnitGroup.Enemy;
+
+		spawner = GetComponentInChildren<EnemySpawner>();
 	}
 
 	public override void Attack() { }
 
 	public override void Move() { }
 
-	void Awake() {
+	public override void Death() {
 
-		foreach(Transform item in modelParent) {
+		//消される前にスポナーを消す
+		spawner.Destroy();
 
-			if(Application.isPlaying) {
-				Destroy(item.gameObject);
-			}
-			else {
-				DestroyImmediate(item.gameObject);
-			}
-		}
+		base.Death();
 	}
 
 	void Start() {
@@ -58,31 +57,19 @@ public class EnemyActiveSpawner : Enemy {
 		deathParticle = _deathParticle;
 		SetInitData(hp, dropEXP, 0, 0, 0);
 		InitFinal();
+
+		//for(int i = 0;i < 10;i++) {
+		//	Spawn();
+		//}
 	}
 
 	void Update() {
 
-		if(Application.isPlaying) {
+		if(!CheckActive()) return;
+		if(!((activeTime += Time.deltaTime) > interval)) return;
 
-			if(!CheckActive()) return;
-			if(!((activeTime += Time.deltaTime) > interval)) return;
-
-			activeTime = 0;
-			Spawn();
-		}
-		else {
-			if(!modelParent) return;
-			ViewModelUpdate();
-		}
-	}
-
-	void ViewModelUpdate() {
-
-		if(modelParent.childCount != 1) {
-			Awake();
-		}
-
-		if(spawnEnemy) ModelUpdate();
+		activeTime = 0;
+		Spawn();
 	}
 
 	/// <summary>
@@ -100,38 +87,7 @@ public class EnemyActiveSpawner : Enemy {
 		for(int i = 0;i < count;i++) {
 			var randCircle = Random.insideUnitCircle * spawnRange;
 			var position = new Vector3(randCircle.x, 0, randCircle.y);
-			spawnEnemy.Spawn(transform.position + position, transform.rotation);
-		}
-	}
-
-	/// <summary>
-	/// 表示用モデルを取得する
-	/// </summary>
-	bool GetModel() {
-
-		if(modelParent.childCount != 0) Awake();
-		if(!spawnEnemy) return false;
-		if(!spawnEnemy.model) return false;
-		
-		var model = Instantiate(spawnEnemy.model);
-		model.name = spawnEnemy.model.name + "(Preview)";
-		model.transform.SetParent(modelParent);
-
-		return true;
-	}
-
-	/// <summary>
-	/// 表示用モデルの位置を更新する
-	/// </summary>
-	void ModelUpdate() {
-
-		if(modelParent.childCount == 0) {
-			if(!GetModel()) return;
-		}
-
-		var model = modelParent.GetChild(0).gameObject;
-		if(model.name != spawnEnemy.model.name + "(Preview)") {
-			if(!GetModel()) return;
+			spawner.SpawnEnemy(transform.position + position, transform.rotation, false);
 		}
 	}
 

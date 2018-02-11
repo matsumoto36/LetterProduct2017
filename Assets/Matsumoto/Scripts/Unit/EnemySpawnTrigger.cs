@@ -19,9 +19,8 @@ public class EnemySpawnTrigger : MonoBehaviour {
 
 			//子オブジェクトすべてのスポーナーを発動させる
 			foreach(var item in spawnerArray) {
-				item.SpawnEnemy();
+				item.SpawnEnemy(true);
 			}
-
 			Destroy(gameObject);
 		}
 	}

@@ -45,7 +45,7 @@ public class EnemyAI : MonoBehaviour
     /// </summary>
     void Start()
     {
-		Debug.Log("Start");
+		//Debug.Log("Start");
 
 		//リストからプレイ人数の取得
 		playerList = Unit.unitList
@@ -110,7 +110,7 @@ public class EnemyAI : MonoBehaviour
                     {
                         //遠距離用の武器に交換
                         enemySC.SwitchWeapon(1);
-                        Debug.Log("交換");
+                        //Debug.Log("交換");
 
                         disMode = DistanceMode.RANGED;
                     }
@@ -133,7 +133,7 @@ public class EnemyAI : MonoBehaviour
                     {
                         //近接用の武器に交換
                         enemySC.SwitchWeapon(1);
-                        Debug.Log("交換");
+                        //Debug.Log("交換");
 
                         disMode = DistanceMode.MELEE;
                     }

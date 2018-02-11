@@ -113,16 +113,17 @@ public class WeaponLaser : WeaponRanged {
 		//照射終了
 		if(laser) {
 			//ヒットエフェクトがあれば消す
-			if(laser.laserHitParticle) Destroy(laser.laserHitParticle.gameObject);
+			if(laser.laserHitParticle) ParticleManager.StopParticle(laser.laserHitParticle.GetComponent<PKFxFX>());
 			//ヒットSEがあれば消す
 			if(laser.laserHitSE) Destroy(laser.laserHitSE.gameObject);
 
+			ParticleManager.StopParticle(laser.attackParticle);
 			laser.GetComponent<Collider>().enabled = false;
 			laser.length = 0;
-			Destroy(laser.gameObject, 4);
-			laser.GetComponentInChildren<PKFxFX>().StopEffect();
+
+			BulletData.DestroyBullet(laser);
+			//Destroy(laser.gameObject, 4);
 		}
-		laser = null;
 
 		//SE終了
 		if(laserSE) Destroy(laserSE.gameObject);

@@ -21,6 +21,8 @@ public class WeaponMelee : Weapon {
 	string motionName;
 	Collider meleeCol;
 	PKFxFX effect;
+	PKFxManager.Attribute pos1;
+	PKFxManager.Attribute pos2;
 	float effectSize;
 
 	public override void Init() {
@@ -37,14 +39,11 @@ public class WeaponMelee : Weapon {
 		//エフェクトを設置
 		effect = ParticleManager.Spawn(attackParticleName, new Vector3(), Quaternion.identity, 0);
 		var model = transform.GetChild(0);
-		effect.transform.SetParent(transform);
 		effect.transform.localPosition = new Vector3();
 		effect.transform.localRotation = Quaternion.identity;
 
-		var pos1 = effect.GetAttribute("Pos1");
-		pos1.ValueFloat3 = effectPos1.position - model.position;
-		var pos2 = effect.GetAttribute("Pos2");
-		pos2.ValueFloat3 = effectPos2.position - model.position;
+		pos1 = effect.GetAttribute("Pos1");
+		pos2 = effect.GetAttribute("Pos2");
 
 		effectSize = effect.GetAttribute("SizeMax").ValueFloat;
 		SetEffectEnable(false);
@@ -54,6 +53,15 @@ public class WeaponMelee : Weapon {
 		//あらかじめ当たり判定を無効にしておく
 		meleeCol.enabled = false;
 
+	}
+
+	void Update() {
+
+		if(!isInit) return;
+		if(!(effectSize <= 0)) return;
+
+		pos1.ValueFloat3 = effectPos1.position;
+		pos2.ValueFloat3 = effectPos2.position;
 	}
 
 	public override void Attack() {

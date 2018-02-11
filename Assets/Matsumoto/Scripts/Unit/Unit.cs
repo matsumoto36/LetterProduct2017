@@ -309,8 +309,6 @@ public abstract class Unit : MonoBehaviour {
 	/// </summary>
 	public virtual void Death() {
 
-		Debug.Log("Death");
-
 		nowHP = 0;
 		isDead = true;
 
@@ -455,14 +453,14 @@ public abstract class Unit : MonoBehaviour {
 			to.attackedUnitList
 			.Where((item) => item.attackUnit == from)
 			.Select((item) => {
-				Debug.Log("AttackUnit : " + item.attackUnit.name + ", Damage : " + item.damage + ", Time : " + item.time);
+				//Debug.Log("AttackUnit : " + item.attackUnit.name + ", Damage : " + item.damage + ", Time : " + item.time);
 				item.damage += damage;
 				return 0;
 			});
 
 		}
 		else {
-			Debug.Log("AttackUnit : " + from.name + ", Damage : " + damage + ", Time : " + Time.time);
+			//Debug.Log("AttackUnit : " + from.name + ", Damage : " + damage + ", Time : " + Time.time);
 			to.attackedUnitList.Add(new DamageLog(from, damage, Time.time));
 		}
 

@@ -18,8 +18,6 @@ public class Enemy : Unit {
 		set { _attackDuration = value; }
 	}
 
-	[SerializeField]
-	float _attackRestDuration;					//攻撃の待ち時間
 	public float attackRestDuration {
 		get { return _attackDuration; }
 		set { _attackDuration = value; }
@@ -42,6 +40,8 @@ public class Enemy : Unit {
 
 		//勢力のセット
 		group = UnitGroup.Enemy;
+
+		UnitManager.AddParent(this);
 
 		CalcStatus();
 	}
@@ -92,6 +92,7 @@ public class Enemy : Unit {
 	/// </summary>
 	/// <param name="duration"></param>
 	public void Attack(float duration) {
+		if(!CheckCanAttack() || isAttack || isRest) return;
 		StartCoroutine(Attacking(duration));
 	}
 
@@ -99,6 +100,7 @@ public class Enemy : Unit {
 	/// attackDurationで設定されている時間の間攻撃する
 	/// </summary>
 	public override void Attack() {
+		if(!CheckCanAttack() || isAttack || isRest) return;
 		StartCoroutine(Attacking(attackDuration));
 	}
 
@@ -114,9 +116,6 @@ public class Enemy : Unit {
 	/// </summary>
 	/// <returns></returns>
 	IEnumerator Attacking(float duration) {
-
-		//攻撃してよいか調べる
-		if(!CheckCanAttack() || isAttack || isRest) yield break;
 
 		isAttack = true;
 		equipWeapon[0].AttackStart();

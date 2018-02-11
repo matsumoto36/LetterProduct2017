@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4318886554300674}
   - component: {fileID: 114632042805734042}
+  - component: {fileID: 114704733644941582}
   m_Layer: 0
   m_Name: HealLaser
   m_TagString: Untagged
@@ -222,5 +223,16 @@ MonoBehaviour:
     m_Text: 
   m_PlayOnStart: 1
   m_IsPlaying: 1
-  m_BoundFx: {fileID: 102900000, guid: f0f57a565d97fa94f889ada7d642c600, type: 3}
+  m_BoundFx: {fileID: 102900000, guid: ba94a16c149ffc541b11cfe19ee21c25, type: 3}
   m_FxName: Lazer2.pkfx
+--- !u!114 &114704733644941582
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1226218762915234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ce8a2513397004d823cf4c389dd08f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

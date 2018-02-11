@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4292104211075320}
   - component: {fileID: 114694773376333300}
+  - component: {fileID: 114340299010514716}
   m_Layer: 0
   m_Name: EnemyBulletNormal
   m_TagString: Untagged
@@ -40,6 +41,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114340299010514716
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1619557415926056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ce8a2513397004d823cf4c389dd08f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114694773376333300
 MonoBehaviour:
   m_ObjectHideFlags: 1

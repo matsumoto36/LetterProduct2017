@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4124815938540782}
   - component: {fileID: 114648377255265224}
+  - component: {fileID: 114309009868366450}
   m_Layer: 0
   m_Name: OutDuraEgg
   m_TagString: Untagged
@@ -40,6 +41,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114309009868366450
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1313163077619038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ce8a2513397004d823cf4c389dd08f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114648377255265224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -181,5 +193,5 @@ MonoBehaviour:
   m_FxSamplersList: []
   m_PlayOnStart: 1
   m_IsPlaying: 0
-  m_BoundFx: {fileID: 102900000, guid: 2a6b8427f18f34d4dbd4802c4d9eb7aa, type: 3}
+  m_BoundFx: {fileID: 102900000, guid: ba94a16c149ffc541b11cfe19ee21c25, type: 3}
   m_FxName: OutDuraEgg.pkfx

@@ -19,20 +19,28 @@ public abstract class BulletData : ScriptableObjectBase {
 	protected static T CreateBullet<T>(BulletData data, Weapon owner, Vector3 position, Quaternion quaternion)
 		where T : Bullet {
 
-		var bulletObj = Instantiate(data.model, position, quaternion).AddComponent<T>();
+		var bulletObj = BulletObjectPool.GetInstance(data.model.name).AddComponent<T>();
+		bulletObj.name = data.name;
+		bulletObj.transform.SetPositionAndRotation(position, quaternion);
 		bulletObj.SetBulletData(data);
 		bulletObj.tag = "Bullet";
 		bulletObj.bulletOwner = owner;
 
 		//エフェクトの生成
 		if(data.particleNameAttack != "") {
-			var bulletParticle = ParticleManager.Spawn(data.particleNameAttack, bulletObj.transform.position, bulletObj.transform.rotation, 0);
-			bulletObj.attackParticle = bulletParticle;
-			bulletParticle.transform.SetParent(bulletObj.transform);
+			bulletObj.attackParticle = ParticleManager.Spawn(data.particleNameAttack, bulletObj.transform.position, bulletObj.transform.rotation, 0);
 		}
 
 		bulletObj.Init();
 
 		return bulletObj;
+	}
+
+	public static void DestroyBullet<T>(T bullet) where T : Bullet {
+
+		var g = bullet.gameObject;
+		Destroy(bullet);
+
+		ObjectPooler.ReleaseInstance(g);
 	}
 }

@@ -39,6 +39,15 @@ public abstract class Bullet : MonoBehaviour {
 		bulletData = data;
 	}
 
+	public void Death() {
+
+		//再生中のパーティクルを止める
+		ParticleManager.StopParticle(attackParticle);
+
+		//削除
+		BulletData.DestroyBullet(this);
+	}
+
 	/// <summary>
 	/// 弾のデータを取得する
 	/// </summary>
@@ -71,22 +80,18 @@ public abstract class Bullet : MonoBehaviour {
 	/// <param name="other"></param>
 	public virtual void OnHitEnter(Collider other) { }
 	/// <summary>
-	/// 弾が当たっているとき
-	/// </summary>
-	/// <param name="other"></param>
-	public virtual void OnHitting(Collider other) { }
-	/// <summary>
 	/// 弾が当たった後の瞬間
 	/// </summary>
 	/// <param name="other"></param>
 	public virtual void OnHitExit(Collider other) { }
 
+	public virtual void Update() {
+		if(attackParticle) attackParticle.transform.SetPositionAndRotation(transform.position, transform.rotation);
+	}
+
 	void OnTriggerEnter(Collider other) {
 		//ヒットしない定義のものだったらスキップ
 		if(bulletOwner.CheckHit(other.gameObject)) OnHitEnter(other);
-	}
-	void OnTriggerStay(Collider other) {
-		if(bulletOwner.CheckHit(other.gameObject)) OnHitting(other);
 	}
 	void OnTriggerExit(Collider other) {
 		if(bulletOwner.CheckHit(other.gameObject)) OnHitExit(other);
