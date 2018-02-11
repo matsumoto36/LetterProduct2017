@@ -14,5 +14,5 @@ MonoBehaviour:
   model: {fileID: 1254738165508082, guid: 188e6bd28edd85f4986ea9506bfe6ab4, type: 2}
   particleNameAttack: EnemyBulletNormal
   particleNameHit: EnemyBulletHit
-  speed: 10
-  range: 30
+  speed: 9
+  range: 20
