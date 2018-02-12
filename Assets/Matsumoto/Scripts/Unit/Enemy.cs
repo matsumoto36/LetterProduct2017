@@ -117,6 +117,8 @@ public class Enemy : Unit {
 	/// <returns></returns>
 	IEnumerator Attacking(float duration) {
 
+		Debug.Log("StartAttack");
+
 		isAttack = true;
 		equipWeapon[0].AttackStart();
 
@@ -129,16 +131,9 @@ public class Enemy : Unit {
 		isAttack = false;
 		equipWeapon[0].AttackEnd();
 
-		yield return StartCoroutine(AttackRest());
-	}
-
-	IEnumerator AttackRest() {
-
-		if(isRest) yield break;
-
+		//攻撃休止
 		isRest = true;
 		yield return new WaitForSeconds(attackRestDuration);
-
 		isRest = false;
 	}
 }

@@ -321,7 +321,7 @@ public class Player : Unit {
 
 				var effect = linkEffect;
 				effect.GetAttribute("State").ValueInt = 1;
-				UtilityMethod.DelayExecution(() => ParticleManager.StopParticle(effect), linkEffect.GetAttribute("FadeDuration").ValueFloat + 0.1f);
+				//UtilityMethod.DelayExecution(() => ParticleManager.StopParticle(effect), linkEffect.GetAttribute("FadeDuration").ValueFloat + 0.1f);
 				linkEffect = null;
 			}
 			if(circleEffect) {

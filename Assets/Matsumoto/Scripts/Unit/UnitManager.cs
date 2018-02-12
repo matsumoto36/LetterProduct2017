@@ -15,7 +15,7 @@ public sealed class UnitManager : SingletonMonoBehaviour<UnitManager> {
 	private UnitManager() { }
 
 	public static void AddParent (Unit unit) {
-		var parent = instance.unitParent ? instance.unitParent : GameObject.Find(UNIT_PARENT).transform;
+		var parent = instance.unitParent ? instance.unitParent : instance.unitParent = new GameObject(UNIT_PARENT).transform;
 
 		unit.transform.SetParent(parent);
 
