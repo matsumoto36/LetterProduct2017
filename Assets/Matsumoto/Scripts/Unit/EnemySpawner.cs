@@ -15,6 +15,9 @@ public class EnemySpawner : MonoBehaviour {
 	[Header("スポーンする敵のデータを入力して下さい")]
 	public EnemyData enemyData;
 
+	[Header("ステージを始めてすぐスポーンするか")]
+	public bool spawnAwake = true;
+
 	[Header("ここから見やすくするためのガイド")]
 	public bool guide = true;
 	public Color arrowColor = Color.red;
@@ -51,7 +54,13 @@ public class EnemySpawner : MonoBehaviour {
 			}
 		}
 
+	}
+
+	void Start() {
+		if(!Application.isPlaying) return;
+
 		spawnerList.Add(this);
+		if(spawnAwake) SpawnEnemy(true);
 	}
 
 	void Update() {
@@ -79,6 +88,7 @@ public class EnemySpawner : MonoBehaviour {
 		model = Instantiate(enemyData.model);
 		model.name = enemyData.model.name + "(Preview)";
 		model.transform.SetParent(transform);
+		model.GetComponent<Collider>().enabled = false;
 
 		return true;
 	}

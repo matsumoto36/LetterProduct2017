@@ -23,6 +23,8 @@ public class EnemyActiveSpawner : Enemy {
 
 	public Transform modelParent;       //プレビュー機能で表示するオブジェクトの親
 
+	Player activatePlayer;
+
 	EnemySpawner spawner;
 	float activeTime = 0;
 
@@ -81,8 +83,10 @@ public class EnemyActiveSpawner : Enemy {
 
 		for(int i = 0;i < count;i++) {
 			var randCircle = Random.insideUnitCircle * spawnRange;
-			var position = new Vector3(randCircle.x, 0, randCircle.y);
-			spawner.SpawnEnemy(transform.position + position, transform.rotation, false);
+			var position = new Vector3(randCircle.x, 0, randCircle.y) + transform.position;
+			var diff = activatePlayer.transform.position - position;
+			diff.y = 0;
+			spawner.SpawnEnemy(position, Quaternion.LookRotation(diff, Vector3.up), false);
 		}
 	}
 
@@ -94,8 +98,10 @@ public class EnemyActiveSpawner : Enemy {
 
 		foreach(var item in GameData.instance.spawnedPlayer) {
 			if(!item) continue;
-			if((transform.position - item.transform.position).magnitude < activeRange)
+			if((transform.position - item.transform.position).magnitude < activeRange) {
+				activatePlayer = item;
 				return true;
+			}
 		}
 
 		return false;
