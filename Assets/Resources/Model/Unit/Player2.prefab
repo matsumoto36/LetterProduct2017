@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 4679457185421598}
   - component: {fileID: 212928778163453832}
   m_Layer: 0
-  m_Name: DirectionHighLight
+  m_Name: '[HeadLight]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

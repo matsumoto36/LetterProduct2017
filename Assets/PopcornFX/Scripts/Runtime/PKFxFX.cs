@@ -127,6 +127,7 @@ public class PKFxFX : PKFxPackDependent
 
 	void OnDestroy()
 	{
+
 		this.KillEffect();
 		this.StopEffect();
 		for (int i = 0; i < m_FxSamplersList.Count; i++)

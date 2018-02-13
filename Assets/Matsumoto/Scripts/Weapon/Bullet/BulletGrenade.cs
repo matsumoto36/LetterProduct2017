@@ -36,7 +36,6 @@ public class BulletGrenade : BulletNormal {
 
 		if((time -= Time.deltaTime) < 0) {
 			Exp();
-			Destroy(gameObject);
 		}
 	}
 
@@ -71,7 +70,6 @@ public class BulletGrenade : BulletNormal {
 
 		Exp();
 
-		Destroy(gameObject);
 	}
 
 	void Exp() {
@@ -89,5 +87,6 @@ public class BulletGrenade : BulletNormal {
 		//爆発
 		Explosion.Create(bulletOwner, transform.position, data.expPow, data.expRadius);
 
+		Death();
 	}
 }

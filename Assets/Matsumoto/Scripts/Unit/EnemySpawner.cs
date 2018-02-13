@@ -142,8 +142,26 @@ public class EnemySpawner : MonoBehaviour {
 	/// 敵をスポーンする
 	/// </summary>
 	/// <returns></returns>
-	public void SpawnEnemy() {
-		enemyData.Spawn(transform.position, transform.rotation);
+	public void SpawnEnemy(bool removeSpawner) {
+		SpawnEnemy(transform.position, transform.rotation, removeSpawner);
+	}
+
+	/// <summary>
+	/// 敵をスポーンする
+	/// </summary>
+	/// <param name="position"></param>
+	/// <param name="rotation"></param>
+	/// <param name="removeSpawner"></param>
+	public void SpawnEnemy(Vector3 position, Quaternion rotation, bool removeSpawner) {
+		enemyData.Spawn(position, rotation);
+		if(removeSpawner) Destroy();
+	}
+
+	/// <summary>
+	/// スポナーを削除する
+	/// </summary>
+	public void Destroy() {
 		spawnerList.Remove(this);
+		Destroy(gameObject);
 	}
 }

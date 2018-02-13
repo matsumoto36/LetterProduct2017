@@ -10,6 +10,7 @@ using GamepadInput;
 /// </summary>
 public class Player : Unit {
 
+	const string HEAD_LIGHT = "[HeadLight]";
 	const string ANIM_HAND_R = "[AnimHandR]";
 	const string COMBO_STATUS_MOD = "COMBO_MOD";
 	const string DURA_EGG_PREFAB_PATH = "System/DuraEgg";
@@ -25,9 +26,11 @@ public class Player : Unit {
 	bool isInDuraEgg = false;
 	bool isWeak = false;
 
+	SpriteRenderer headLightRenderer;
 	Coroutine flashAnimCoroutine;
 	Renderer[] rendererArray;
 	Color headEmission;
+	Color headSpriteColor;
 
 	PKFxFX duraEgg;
 	PKFxFX linkEffect;
@@ -51,6 +54,14 @@ public class Player : Unit {
 		animHandR = transform.GetComponentsInChildren<Transform>()
 			.Where((item) => item.name == ANIM_HAND_R)
 			.ToArray()[0];
+
+		//ヘッドライトとして表示されているスプライトのレンダラーを取得
+		foreach(Transform item in body) {
+			if(item.name == HEAD_LIGHT) {
+				headLightRenderer = item.GetComponent<SpriteRenderer>();
+				headSpriteColor = headLightRenderer.color;
+			}
+		}
 	}
 
 	public override void InitFinal() {
@@ -132,7 +143,7 @@ public class Player : Unit {
 					}
 				}
 
-				Debug.Log(equipWeapon[1].weaponType);
+				//Debug.Log(equipWeapon[1].weaponType);
 				anim.SetBool("IsRanged", equipWeapon[1].weaponType == WeaponType.Ranged);
 			}
 		}
@@ -162,7 +173,7 @@ public class Player : Unit {
 					intensity.ValueFloat = endIntensity * ratio;
 				},
 				InDuraEgg,
-				() => { Destroy(duraEgg.gameObject); }));
+				() => ParticleManager.StopParticle(duraEgg)));
 		}
 
 		//耐久卵から出る
@@ -207,7 +218,7 @@ public class Player : Unit {
 		canMove = canAttack = true;
 
 		//こもっているときのエフェクトを消す
-		Destroy(duraEgg.gameObject);
+		ParticleManager.StopParticle(duraEgg);
 
 		//エフェクトを再生
 		ParticleManager.Spawn("OutDuraEgg", transform.position, Quaternion.identity);
@@ -307,11 +318,16 @@ public class Player : Unit {
 
 			//削除
 			if(linkEffect) {
-				linkEffect.GetAttribute("State").ValueInt = 1;
-				Destroy(linkEffect.gameObject, linkEffect.GetAttribute("FadeDuration").ValueFloat + 0.1f);
+
+				var effect = linkEffect;
+				effect.GetAttribute("State").ValueInt = 1;
+				//UtilityMethod.DelayExecution(() => ParticleManager.StopParticle(effect), linkEffect.GetAttribute("FadeDuration").ValueFloat + 0.1f);
 				linkEffect = null;
 			}
-			if(circleEffect) Destroy(circleEffect.gameObject, 0.1f);
+			if(circleEffect) {
+				ParticleManager.StopParticle(circleEffect);
+				circleEffect = null;
+			}
 		}
 	}
 	/// <summary>
@@ -384,6 +400,7 @@ public class Player : Unit {
 			StopCoroutine(flashAnimCoroutine);
 			foreach(var item in rendererArray) {
 				item.material.SetColor("_EmissionColor", headEmission);
+				headLightRenderer.color = headSpriteColor;
 			}
 		}
 	}
@@ -481,7 +498,9 @@ public class Player : Unit {
 			t += Time.deltaTime;
 
 			foreach(var item in rendererArray) {
-				var color = headEmission * Mathf.Abs(Mathf.Sin(t * 8));
+				var ratio = Mathf.Abs(Mathf.Sin(t * 8));
+				var color = headEmission * ratio;
+				headLightRenderer.color = headSpriteColor * ratio;
 				item.material.SetColor("_EmissionColor", color);
 			}
 

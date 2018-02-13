@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public sealed class GameData : SingletonMonoBehaviour<GameData> {
 
 	public const int MAX_PLAYER_NUM = 4;
-	public const string START_STAGE = "Stage1";
+	public const string START_STAGE = "NewStage";
 
 	public bool[] isEntryPlayer { get; set; }
 	public bool[] isDeath { get; set; }

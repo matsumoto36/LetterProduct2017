@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// PopcornFXのパーティクルを出したり消したりする
 /// </summary>
 public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 
+	const string PARTICLE_BASE_PATH = "System/ParticleBase";
 	const string PARTICLE_DATA_PATH = "Particle";
 
 	public static bool isRenderingParticle {
@@ -30,6 +32,7 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 	}
 
 	PKFxRenderingPlugin _renderer;
+	Dictionary<string, ObjectPooler> poolTable;
 	Dictionary<string, PKFxFX> particleTable;
 
 	//外部からのnew禁止
@@ -37,7 +40,6 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 
 	protected override void Init() {
 		base.Init();
-
 		Load();
 	}
 
@@ -47,11 +49,21 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 	public static void Load() {
 
 		instance.particleTable = new Dictionary<string, PKFxFX>();
+		instance.poolTable = new Dictionary<string, ObjectPooler>();
 
 		var data = Resources.LoadAll<PKFxFX>(PARTICLE_DATA_PATH);
 
 		foreach(var item in data) {
+
+			PKFxManager.PreLoadFxIFN(PARTICLE_DATA_PATH + "/" + item.name + ".pkfx");
+
 			instance.particleTable.Add(item.name, item);
+
+			var pool = ObjectPooler.GetObjectPool(item.gameObject);
+			pool.maxCount = 200;
+			pool.prepareCount = 100;
+			pool.Generate(instance.transform);
+			instance.poolTable.Add(item.name, pool);
 		}
 	}
 
@@ -83,14 +95,26 @@ public sealed class ParticleManager : SingletonMonoBehaviour<ParticleManager> {
 		}
 
 		var pData = instance.particleTable[particleName];
-		var pObj = Instantiate(pData, position, rotation);
+		var pObj = instance.poolTable[particleName].GetInstance().GetComponent<PKFxFX>();
+		pObj.transform.SetPositionAndRotation(position, rotation);
 		pObj.StartEffect();
 
 		//自動削除の時間が設定されている場合
 		if(deleteTime > 0) {
-			Destroy(pObj.gameObject, deleteTime);
+			UtilityMethod.DelayExecution(() => StopParticle(pObj), deleteTime);
+			//Destroy(pObj.gameObject, deleteTime);
 		}
 
 		return pObj;
+	}
+
+	/// <summary>
+	/// エフェクトの再生を止めてプールに返す
+	/// </summary>
+	/// <param name="particle"></param>
+	public static void StopParticle(PKFxFX particle) {
+		//particle.m_IsPlaying = false;
+		particle.TerminateEffect();
+		ObjectPooler.ReleaseInstance(particle.gameObject);
 	}
 }

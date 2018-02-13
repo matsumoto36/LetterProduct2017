@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour {
 	void FixedUpdate() {
 		
 		//カメラの目標位置を計算
-		CalcCameraPosition();
+		if(Time.frameCount % 2 == 0) CalcCameraPosition();
 		//移動
 		Move();
 	}

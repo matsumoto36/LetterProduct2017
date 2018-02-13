@@ -11,6 +11,8 @@ using System.Collections.Generic;
 /// </summary>
 public class FadeManager : SingletonMonoBehaviour<FadeManager>
 {
+	public static event Action onSceneChanged;
+
 	private AsyncOperation async;
 	//public GameObject LoadingUi;
 	//public Slider Slider;
@@ -101,8 +103,8 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager>
             yield return 0;
         }
 
-        //シーン切替 .
-        async = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
+		 //シーン切替 .
+		 async = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
 
 		//遷移直後の実行
 		if(onCompleted != null) onCompleted();
@@ -116,6 +118,9 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager>
 
 		PKFxManager.Reset();
 
+		//シーン遷移中に発動する処理
+		if(onSceneChanged != null) onSceneChanged();
+
 		//だんだん明るく .
 		time = 0;
 		while (time <= interval) {
@@ -126,4 +131,5 @@ public class FadeManager : SingletonMonoBehaviour<FadeManager>
 
 		this.isFading = false;
 	}
+
 }
