@@ -8,11 +8,9 @@ using UnityEngine;
 /// </summary>
 public class BulletLaser : Bullet {
 
-	public Transform laserHitParticle { get; set; }
+	public PKFxFX laserHitParticle { get; set; }
 	public AudioSource laserHitSE { get; set; }
-
-	protected bool isHit;
-	protected Unit currentAttackUnit;
+	public GameObject currentAttackTarget { get; set; }
 
 	PKFxManager.Attribute laserLengthAtt;
 	Unit lastAttackUnit;
@@ -67,27 +65,27 @@ public class BulletLaser : Bullet {
 		});
 	}
 
-	public override void OnHitEnter(Collider other) {
-		isHit = true;
-		currentAttackUnit = other.GetComponent<Unit>();
-	}
+	//public override void OnHitEnter(Collider other) {
+	//	isHit = true;
+	//	currentAttackUnit = other.GetComponent<Unit>();
+	//	if(currentAttackUnit) Debug.Log(currentAttackUnit.name);
+	//}
 
-	public override void OnHitExit(Collider other) {
-		isHit = false;
-	}
+	//public override void OnHitExit(Collider other) {
+	//	isHit = false;
+	//}
 
 	public override void Update() {
 		base.Update();
 
-		if(!isHit) return;
+		if(!currentAttackTarget) return;
 
 		//ヒットエフェクト再生
 		if(!laserHitParticle) {
 			laserHitParticle =
-			ParticleManager.Spawn(GetBulletData<BulletLaserData>().particleNameHit, new Vector3(), transform.rotation, 0).transform;
-			laserHitParticle.localPosition = new Vector3(0, 0, 1);
+			ParticleManager.Spawn(GetBulletData<BulletLaserData>().particleNameHit, new Vector3(), Quaternion.identity, 0);
 		}
-		laserHitParticle.SetPositionAndRotation(transform.position, transform.rotation);
+		laserHitParticle.transform.SetPositionAndRotation(transform.position + transform.forward * length, transform.rotation);
 
 		//SE再生
 		if(!laserHitSE) {
@@ -97,6 +95,6 @@ public class BulletLaser : Bullet {
 			laserHitSE.transform.localPosition = new Vector3(0, 0, 0.25f);
 		}
 
-		Attack(currentAttackUnit);
+		if(currentAttackTarget) Attack(currentAttackTarget.GetComponent<Unit>());
 	}
 }

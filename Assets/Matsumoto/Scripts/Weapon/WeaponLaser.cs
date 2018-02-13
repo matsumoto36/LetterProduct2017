@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 enum LaserState {
 	Idle,
@@ -77,22 +78,40 @@ public class WeaponLaser : WeaponRanged {
 				//当たった場所もしくは最大の長さにする
 				float length = maxLength;
 
-				RaycastHit[] hitAll = Physics.RaycastAll(shotAnchor.position, shotAnchor.forward, length, hitMask);
+				var hitAll = Physics.RaycastAll(shotAnchor.position, shotAnchor.forward, maxLength, hitMask)
+					.Where(item => item.collider.gameObject != unitOwner.gameObject)
+					.ToList();
 
-				foreach(var hit in hitAll) {
-					//自分のデータは除外
-					if(ReferenceEquals(hit.collider.gameObject, unitOwner.gameObject)) continue;
-					//当たったものの中で一番近い奴
-					if(hit.distance < length) length = hit.distance;
+				if(hitAll.Count != 0) {
+
+					var nearestHit = hitAll
+						.Aggregate((item, item2) => item.distance < item2.distance ? item : item2);
+
+					length = nearestHit.distance;
+
+					//当たった相手を伝える
+					laser.currentAttackTarget = nearestHit.collider.gameObject;
 				}
+
+
+				//foreach(var hit in hitAll) {
+				//	//自分のデータは除外
+				//	if(ReferenceEquals(hit.collider.gameObject, unitOwner.gameObject)) continue;
+				//	//当たったものの中で一番近い奴
+				//	if(hit.distance < length) length = hit.distance;
+				//}
 
 				//照射距離の設定
 				laser.length = length;
 
 				if(length == maxLength) {
+
+					//登録していたターゲットを解除
+					laser.currentAttackTarget = null;
+
 					//当たらなかった場合はヒットエフェクトの再生を止める
 					if(laser.laserHitParticle) {
-						Destroy(laser.laserHitParticle.gameObject);
+						ParticleManager.StopParticle(laser.laserHitParticle);
 						laser.laserHitParticle = null;
 					}
 					//ヒットSEも止める
@@ -113,7 +132,7 @@ public class WeaponLaser : WeaponRanged {
 		//照射終了
 		if(laser) {
 			//ヒットエフェクトがあれば消す
-			if(laser.laserHitParticle) ParticleManager.StopParticle(laser.laserHitParticle.GetComponent<PKFxFX>());
+			if(laser.laserHitParticle) ParticleManager.StopParticle(laser.laserHitParticle);
 			//ヒットSEがあれば消す
 			if(laser.laserHitSE) Destroy(laser.laserHitSE.gameObject);
 

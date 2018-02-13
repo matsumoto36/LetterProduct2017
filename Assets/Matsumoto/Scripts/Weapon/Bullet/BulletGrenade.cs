@@ -32,7 +32,8 @@ public class BulletGrenade : BulletNormal {
 		rig.AddForce(transform.forward * SPEED_MAG * bulletData.speed);
 	}
 
-	void Update() {
+	public override void Update() {
+		base.Update();
 
 		if((time -= Time.deltaTime) < 0) {
 			Exp();

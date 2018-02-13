@@ -15,8 +15,8 @@ public class ObjectPooler : MonoBehaviour {
 	private static GameObject poolAttachedObject = null;
 
 	void OnEnable() {
-		if(interval > 0)
-			StartCoroutine(RemoveObjectCheck());
+		//if(interval > 0)
+			//StartCoroutine(RemoveObjectCheck());
 	}
 
 	void OnDisable() {
@@ -61,8 +61,8 @@ public class ObjectPooler : MonoBehaviour {
 				interval = value;
 
 				StopAllCoroutines();
-				if(interval > 0)
-					StartCoroutine(RemoveObjectCheck());
+				//if(interval > 0)
+					//StartCoroutine(RemoveObjectCheck());
 			}
 		}
 	}

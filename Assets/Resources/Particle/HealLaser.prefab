@@ -222,5 +222,5 @@ MonoBehaviour:
     m_Text: 
   m_PlayOnStart: 1
   m_IsPlaying: 1
-  m_BoundFx: {fileID: 102900000, guid: f0f57a565d97fa94f889ada7d642c600, type: 3}
+  m_BoundFx: {fileID: 102900000, guid: ba94a16c149ffc541b11cfe19ee21c25, type: 3}
   m_FxName: Lazer2.pkfx
