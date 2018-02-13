@@ -9,14 +9,23 @@ public class EnemyAI : MonoBehaviour
     public float searchDistance;
     public float attackRange;
 
+    bool lookPlayer = false;
+
+    Quaternion lookRotation;
+
     Enemy enemy;
 
     private void Awake()
     {
         enemy = GetComponent<Enemy>();
 
-        //攻撃の実行(攻撃状態時に毎フレーム呼んでok)
-        enemy.Attack();
+        enemy.OnAttacked += (unit) =>
+        {
+            lookRotation = Quaternion.LookRotation
+                (new Vector3(unit.transform.position.x - transform.position.x, 0, unit.transform.position.z - transform.position.z));
+        };
+
+        lookRotation = transform.rotation;
     }
 
     private void Update()
@@ -32,13 +41,16 @@ public class EnemyAI : MonoBehaviour
             {
                 RaycastHit hit;
                 //PlayerとAIの間に障害物がないか判断
-                if (Physics.Linecast(transform.position,nearestPlayer.transform.position,out hit))
+                if (Physics.Raycast(transform.position,(nearestPlayer.transform.position - transform.position).normalized,out hit))
                 {
                     if (hit.collider.gameObject.tag == "Player")
                     {
-                        //Playerの方向に回転
-                        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation
-                            (new Vector3(nearestPlayer.transform.position.x - transform.position.x, 0, nearestPlayer.transform.position.z - transform.position.z)), enemy.rotSpeed * Time.deltaTime);
+                        lookPlayer = true;
+
+                        lookRotation = Quaternion.LookRotation
+                            (new Vector3(nearestPlayer.transform.position.x - transform.position.x, 0, nearestPlayer.transform.position.z - transform.position.z));
+
+
                         //攻撃範囲かどうか
                         if (Vector3.Distance(nearestPlayer.transform.position, transform.position) <= attackRange)
                         {
@@ -50,9 +62,15 @@ public class EnemyAI : MonoBehaviour
                             transform.position += (transform.forward * enemy.moveSpeed) * Time.deltaTime;
                         }
                     }
+                    else
+                    {
+                        lookPlayer = false;
+                    }
                 }
             }
         }
+
+        EnemyRotation();
     }
 
 
@@ -93,5 +111,16 @@ public class EnemyAI : MonoBehaviour
         {
             return null;
         }
+    }
+
+    private void EnemyRotation()
+    {
+        //Playerの方向に回転
+        transform.rotation = Quaternion.Slerp(transform.rotation,lookRotation, enemy.rotSpeed * Time.deltaTime);
+    }
+
+    public bool LookPlayer()
+    {
+        return lookPlayer;
     }
 }
