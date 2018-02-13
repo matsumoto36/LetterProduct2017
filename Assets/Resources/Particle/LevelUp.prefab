@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4010746339085690}
   - component: {fileID: 114576746060924816}
-  - component: {fileID: 114229138375718998}
   m_Layer: 0
   m_Name: LevelUp
   m_TagString: Untagged
@@ -41,17 +40,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114229138375718998
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1140469396084564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6ce8a2513397004d823cf4c389dd08f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114576746060924816
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,5 +181,5 @@ MonoBehaviour:
   m_FxSamplersList: []
   m_PlayOnStart: 1
   m_IsPlaying: 0
-  m_BoundFx: {fileID: 102900000, guid: ba94a16c149ffc541b11cfe19ee21c25, type: 3}
+  m_BoundFx: {fileID: 102900000, guid: c0a803e9913556245a7fa848b467aa55, type: 3}
   m_FxName: LevelUp.pkfx

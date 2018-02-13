@@ -11,7 +11,6 @@ public class EnemyActiveSpawner : Enemy {
 	public int hp;
 	public int dropEXP;
 
-	//public EnemyData spawnEnemy;		//湧かせるキャラクター
 	public float interval;				//湧き頻度(秒)
 	public RangeInteger spawnCount;		//湧く数の範囲
 	public int spawnMax;				//湧く範囲に居れるキャラクターの最大数
@@ -57,10 +56,6 @@ public class EnemyActiveSpawner : Enemy {
 		deathParticle = _deathParticle;
 		SetInitData(hp, dropEXP, 0, 0, 0);
 		InitFinal();
-
-		//for(int i = 0;i < 10;i++) {
-		//	Spawn();
-		//}
 	}
 
 	void Update() {

@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4443114534659264}
   - component: {fileID: 114221635657179014}
-  - component: {fileID: 114232038382886946}
   m_Layer: 0
   m_Name: Heal
   m_TagString: Untagged
@@ -161,16 +160,5 @@ MonoBehaviour:
   m_FxSamplersList: []
   m_PlayOnStart: 1
   m_IsPlaying: 1
-  m_BoundFx: {fileID: 102900000, guid: ba94a16c149ffc541b11cfe19ee21c25, type: 3}
+  m_BoundFx: {fileID: 102900000, guid: 8e1de99245815ef419cbfffd3149e23f, type: 3}
   m_FxName: EmitBuff.pkfx
---- !u!114 &114232038382886946
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1892492293686052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6ce8a2513397004d823cf4c389dd08f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

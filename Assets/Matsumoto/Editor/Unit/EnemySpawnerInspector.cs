@@ -23,7 +23,6 @@ public class EnemySpawnerInspector : Editor {
 		hp = serializedObject.FindProperty("hp");
 		dropExp = serializedObject.FindProperty("dropExp");
 
-		//spawnEnemy = serializedObject.FindProperty("spawnEnemy");
 		interval = serializedObject.FindProperty("interval");
 		spawnCount = serializedObject.FindProperty("spawnCount");
 		spawnMax = serializedObject.FindProperty("spawnMax");
@@ -42,7 +41,7 @@ public class EnemySpawnerInspector : Editor {
 		EditorGUILayout.PropertyField(hp, new GUIContent("体力"));
 		EditorGUILayout.PropertyField(dropExp, new GUIContent("落とす経験値"));
 		EditorGUILayout.Separator();
-		//EditorGUILayout.PropertyField(spawnEnemy, new GUIContent("スポーンする敵のデータ"));
+		EditorGUILayout.HelpBox("スポーンする敵のデータは子要素に入れてください。", MessageType.Info);
 		EditorGUILayout.PropertyField(interval, new GUIContent("スポーンするインターバル"));
 		EditorGUILayout.PropertyField(spawnCount, new GUIContent("一回にスポーンする数"));
 		EditorGUILayout.PropertyField(spawnMax, new GUIContent("湧き範囲にいる最大の敵数"));
