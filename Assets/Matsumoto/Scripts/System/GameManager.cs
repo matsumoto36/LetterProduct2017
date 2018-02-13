@@ -45,6 +45,9 @@ public class GameManager : MonoBehaviour
 
         //BGMの再生
         AudioManager.FadeIn(2, playBGMName);
+
+		//マネージャー系を起動しておく
+		var manager = ParticleManager.instance;
     }
 
     // Update is called once per frame
