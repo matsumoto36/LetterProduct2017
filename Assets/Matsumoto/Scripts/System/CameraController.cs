@@ -40,18 +40,19 @@ public class CameraController : MonoBehaviour {
 
 		//収めるUnitを抽出
 		var unitList = Unit.unitList
-			.Where((item) => item)
+			.Where(item => item)
+			.Where(item => item is Player || (item.GetComponent<EnemyAI>() && item.GetComponent<EnemyAI>().LookPlayer()))
 			.ToArray();
 		if(unitList.Length == 0) return;
 
 		//Unit達の中心を求める
 		var trackPos = unitList
-			.Select((item) => item.transform.position)
+			.Select(item => item.transform.position)
 			.Aggregate((from, to) => from + to) / unitList.Length;
 
 		//一番遠いUnitを抽出
 		var diffMax = unitList
-			.Select((item) => {
+			.Select(item => {
 				var diff = item.transform.position - trackPos;
 				return Mathf.Max(
 					//スクリーンの比で合わせる

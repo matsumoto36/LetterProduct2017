@@ -149,8 +149,14 @@ public class ObjectPooler : MonoBehaviour {
 		var newPool = poolAttachedObject.AddComponent<ObjectPooler>();
 		newPool.prefab = obj;
 
-		//シーン移動時に削除されたオブジェクトを補てんする
 		FadeManager.onSceneChanged += () => {
+
+			//使っているものがあればしまう
+			foreach(var item in newPool.pooledObjectList) {
+				if(item && item.activeSelf) item.SetActive(false);
+			}
+
+			//シーン移動時に削除されたオブジェクトを補てんする
 			newPool.Generate(newPool.parent);
 		};
 		return newPool;
