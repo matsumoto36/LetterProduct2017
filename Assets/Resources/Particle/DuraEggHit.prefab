@@ -181,5 +181,5 @@ MonoBehaviour:
   m_FxSamplersList: []
   m_PlayOnStart: 1
   m_IsPlaying: 0
-  m_BoundFx: {fileID: 102900000, guid: 28e161b01d3dcf84db52a8261f5d65de, type: 3}
+  m_BoundFx: {fileID: 102900000, guid: ba94a16c149ffc541b11cfe19ee21c25, type: 3}
   m_FxName: DuraEggHit.pkfx

@@ -139,5 +139,5 @@ MonoBehaviour:
   m_FxSamplersList: []
   m_PlayOnStart: 1
   m_IsPlaying: 0
-  m_BoundFx: {fileID: 102900000, guid: 87b034ce418fc6047a288f440f982f63, type: 3}
+  m_BoundFx: {fileID: 102900000, guid: ba94a16c149ffc541b11cfe19ee21c25, type: 3}
   m_FxName: EnemtHit2.pkfx

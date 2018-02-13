@@ -114,15 +114,5 @@ public abstract class Weapon : MonoBehaviour {
 	public void OnSwitchActive() {
 		canAction = false;
 		UtilityMethod.DelayExecution(() => canAction = true, interval);
-		//StartCoroutine(WaitInterval());
 	}
-
-	///// <summary>
-	///// 次の発射まで待つ
-	///// </summary>
-	///// <returns></returns>
-	//IEnumerator WaitInterval() {
-	//	yield return new WaitForSeconds(interval);
-	//	canAction = true;
-	//}
 }

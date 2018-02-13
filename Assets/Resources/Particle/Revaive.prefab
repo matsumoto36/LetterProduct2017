@@ -202,5 +202,5 @@ MonoBehaviour:
   m_FxSamplersList: []
   m_PlayOnStart: 1
   m_IsPlaying: 0
-  m_BoundFx: {fileID: 102900000, guid: bff9b0e9c529c1844b12d69f55450918, type: 3}
+  m_BoundFx: {fileID: 102900000, guid: ba94a16c149ffc541b11cfe19ee21c25, type: 3}
   m_FxName: Revival.pkfx

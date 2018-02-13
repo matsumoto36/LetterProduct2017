@@ -202,5 +202,5 @@ MonoBehaviour:
   m_FxSamplersList: []
   m_PlayOnStart: 1
   m_IsPlaying: 0
-  m_BoundFx: {fileID: 102900000, guid: 9f9f4bb5df34eb7469c35d8a2e4e7b32, type: 3}
+  m_BoundFx: {fileID: 102900000, guid: ba94a16c149ffc541b11cfe19ee21c25, type: 3}
   m_FxName: EnemyDeath.pkfx

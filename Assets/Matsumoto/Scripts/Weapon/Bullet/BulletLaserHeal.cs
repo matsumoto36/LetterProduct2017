@@ -27,24 +27,26 @@ public class BulletLaserHeal : BulletLaser {
 		bulletOwner.SetHitMask(maskList.ToArray());
 	}
 
-	public override void Update() {
-		base.Update();
-
-
-		if(!isHit) return;
-
-		Irradiation(currentAttackUnit, (unit, heal) => {
+	protected override void Attack(Unit target) {
+		//照射系ダメージ
+		Irradiation(target, (unit, heal) => {
 
 			//ヒットエフェクト再生
 			if(!laserHitParticle) {
 				laserHitParticle =
-				ParticleManager.Spawn(GetBulletData<BulletLaserData>().particleNameHit, unit.transform.position, unit.transform.rotation, 0).transform;
+				ParticleManager.Spawn(GetBulletData<BulletLaserData>().particleNameHit, unit.transform.position, unit.transform.rotation, 0);
 			}
 
-			laserHitParticle.SetPositionAndRotation(unit.transform.position, unit.transform.rotation);
+			laserHitParticle.transform.SetPositionAndRotation(unit.transform.position, unit.transform.rotation);
 
 
 			Unit.Heal(bulletOwner.unitOwner, unit, heal);
 		});
+	}
+
+	public override void Update() {
+
+		if(attackParticle) attackParticle.transform.SetPositionAndRotation(transform.position, transform.rotation);
+		if(currentAttackTarget) Attack(currentAttackTarget.GetComponent<Unit>());
 	}
 }
