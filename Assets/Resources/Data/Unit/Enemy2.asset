@@ -25,14 +25,6 @@ MonoBehaviour:
   deathParticle: EnemyDeath
   attackDuration: 3
   attackRestDuration: 2
-  isBoss: 0
-  attackLine: 40
-  searchAngle: 40
-  enemyAIType: 2
-  dashSpeed: 10
-  moveLine: 20
-  stepLine: 5
-  speed: 10
-  targetChangeTime: 5
-  rollingMax: 2
-  spAttackTime: 2
+  searchDegree: 130
+  searchDistance: 60
+  attackRange: 30

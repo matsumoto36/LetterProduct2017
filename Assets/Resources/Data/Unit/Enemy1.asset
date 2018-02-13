@@ -23,8 +23,8 @@ MonoBehaviour:
   isDrawWeapon: 1
   deathSE: grenade_Launcher_explosion
   deathParticle: EnemyDeath
-  attackDuration: 3
-  attackRestDuration: 2
-  searchDegree: 60
-  searchDistance: 10
-  attackRange: 5
+  attackDuration: 2
+  attackRestDuration: 4
+  searchDegree: 130
+  searchDistance: 20
+  attackRange: 10
