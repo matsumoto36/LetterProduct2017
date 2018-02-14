@@ -89,7 +89,7 @@ public abstract class Unit : MonoBehaviour {
 	bool _canMove = true;
 	public bool canMove {
 		get { return _canMove; }
-		protected set {
+		set {
 			unitRig.isKinematic = !(_canMove = value);
 		} }
 
