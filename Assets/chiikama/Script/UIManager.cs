@@ -46,6 +46,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 		GameOver.gameObject.SetActive(false);
 
 		gaugeCanvas = Instantiate(Resources.Load<RectTransform>("System/GaugeCanvas"));
+		DontDestroyOnLoad(gaugeCanvas);
 		gaugePre = Resources.Load<Gauge>("System/Gauge");
 	}
 

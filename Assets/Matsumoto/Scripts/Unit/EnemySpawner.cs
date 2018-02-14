@@ -163,7 +163,10 @@ public class EnemySpawner : MonoBehaviour {
 	/// <param name="rotation"></param>
 	/// <param name="removeSpawner"></param>
 	public void SpawnEnemy(Vector3 position, Quaternion rotation, bool removeSpawner) {
-		enemyData.Spawn(position, rotation);
+
+		var enemy = enemyData.Spawn(position, rotation);
+		enemy.StartCoroutine(SpawnAnim(enemy));
+
 		if(removeSpawner) Destroy();
 	}
 
@@ -173,5 +176,29 @@ public class EnemySpawner : MonoBehaviour {
 	public void Destroy() {
 		spawnerList.Remove(this);
 		Destroy(gameObject);
+	}
+
+
+	IEnumerator SpawnAnim(Unit enemy) {
+
+		var _renderer = enemy.GetComponentsInChildren<Renderer>();
+		foreach(var item in _renderer) {
+			item.enabled = false;
+		}
+
+		enemy.GetComponent<EnemyAI>().enabled = false;
+
+		yield return null;
+
+		ParticleManager.Spawn("EnemySpawn", enemy.transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity, 2);
+
+		yield return new WaitForSeconds(0.5f);
+
+		foreach(var item in _renderer) {
+			item.enabled = true;
+		}
+
+		enemy.GetComponent<EnemyAI>().enabled = true;
+
 	}
 }

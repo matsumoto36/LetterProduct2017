@@ -81,24 +81,51 @@ public class PlayerSpawner : MonoBehaviour {
 
 		var player = (Player)playerData[playerNum].Spawn(spawnPoint[playerNum].position, spawnPoint[playerNum].rotation);
 		player.playerIndex = playerNum;
+
 		return player;
 	}
 
 	public void SpawnPlayer() {
 		if(GameData.instance.isSpawnedPlayer) {
-		//参照して持ってくる
-		foreach(var item in GameData.instance.spawnedPlayer) {
+			//参照して持ってくる
+			foreach(var item in GameData.instance.spawnedPlayer) {
 				if(!item) continue;
+
 				item.transform.position = spawnPoint[item.playerIndex].position;
 				item.transform.rotation = spawnPoint[item.playerIndex].rotation;
+
+				StartCoroutine(SpawnAnim(item));
 			}
 		}
 		else {
 			for(int i = 0;i < GameData.MAX_PLAYER_NUM;i++) {
-				if(GameData.instance.isEntryPlayer[i]) {
-					GameData.instance.spawnedPlayer[i] = SpawnPlayer(i);
-				}
+				if(!GameData.instance.isEntryPlayer[i]) continue;
+
+				StartCoroutine(SpawnAnim(GameData.instance.spawnedPlayer[i] = SpawnPlayer(i)));
 			}
 		}
+	}
+
+	IEnumerator SpawnAnim(Player player) {
+
+		var _renderer = player.GetComponentsInChildren<Renderer>();
+		foreach(var item in _renderer) {
+			item.enabled = false;
+		}
+
+		player.canMove = false;
+
+		//フェード待ち
+		yield return new WaitForSeconds(1);
+
+		ParticleManager.Spawn("PlayerSpawn", player.transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity, 2);
+
+		yield return new WaitForSeconds(0.5f);
+
+		foreach(var item in _renderer) {
+			item.enabled = true;
+		}
+
+		player.canMove = true;
 	}
 }
