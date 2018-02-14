@@ -55,6 +55,7 @@ public class HPbar : MonoBehaviour {
 		//UIに重なっているか調べるためにあらかじめ計算しておく
 		var screenPos = Unit.unitList
 			.Where(item => item)
+			.Where(item => item is Player || (item.GetComponent<EnemyAI>() && item.GetComponent<EnemyAI>().LookPlayer()))
 			.Select(item => RectTransformUtility.WorldToScreenPoint(Camera.main, item.transform.position))
 			.ToList();
 

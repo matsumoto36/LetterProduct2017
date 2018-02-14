@@ -283,6 +283,7 @@ public class Player : Unit {
 
 			//つなぐ線のエフェクトを再生
 			if(!linkEffect) linkEffect = ParticleManager.Spawn("RevivalLine", new Vector3(), Quaternion.identity, 0);
+			linkEffect.GetAttribute("State").ValueInt = 0;
 			linkEffect.GetAttribute("Position1").ValueFloat3 = transform.position;
 			linkEffect.GetAttribute("Position2").ValueFloat3 = rivaivablePlayer.transform.position;
 
@@ -321,7 +322,7 @@ public class Player : Unit {
 
 				var effect = linkEffect;
 				effect.GetAttribute("State").ValueInt = 1;
-				//UtilityMethod.DelayExecution(() => ParticleManager.StopParticle(effect), linkEffect.GetAttribute("FadeDuration").ValueFloat + 0.1f);
+				UtilityMethod.DelayExecution(() => ParticleManager.StopParticle(effect), linkEffect.GetAttribute("FadeDuration").ValueFloat + 0.1f);
 				linkEffect = null;
 			}
 			if(circleEffect) {
