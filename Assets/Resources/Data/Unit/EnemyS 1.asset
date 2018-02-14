@@ -12,30 +12,22 @@ MonoBehaviour:
   m_Name: EnemyS 1
   m_EditorClassIdentifier: 
   model: {fileID: 1794379494665480, guid: 0d1aac9bca4be2c46a3ae53628236402, type: 2}
-  hp: 300
-  dropExp: 100
+  hp: 750
+  dropExp: 150
   nextLevelExp: 10
   moveSpeed: 0
   rotSpeed: 20
   weaponData:
-  - {fileID: 11400000, guid: d0e8fb6ad32c50e44bcf93dbbbafa7ca, type: 2}
+  - {fileID: 11400000, guid: 464148ad5e06a8149b4115b51aa84d32, type: 2}
   - {fileID: 0}
   isDrawWeapon: 1
   deathSE: grenade_Launcher_explosion
   deathParticle: EnemyDeath
-  attackDuration: 5
-  attackRestDuration: 1
-  isBoss: 0
-  attackLine: 0
-  searchAngle: 0
-  enemyAIType: 0
-  dashSpeed: 0
-  moveLine: 0
-  stepLine: 0
-  speed: 10
-  targetChangeTime: 5
-  rollingMax: 2
-  spAttackTime: 2
-  detectAngle: 360
-  detectRadius: 3
+  attackDuration: 1
+  attackRestDuration: 0
+  searchDegree: 0
+  searchDistance: 0
+  attackRange: 0
+  detectAngle: 90
+  detectRadius: 20
   isDetectAttacked: 1
