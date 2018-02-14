@@ -15,7 +15,7 @@ MonoBehaviour:
   hp: 500
   dropExp: 50
   nextLevelExp: 10
-  moveSpeed: 2
+  moveSpeed: 3.5
   rotSpeed: 5
   weaponData:
   - {fileID: 11400000, guid: dbbaca53273c8f748b5b5cafab211fd1, type: 2}
@@ -26,5 +26,5 @@ MonoBehaviour:
   attackDuration: 3
   attackRestDuration: 2
   searchDegree: 160
-  searchDistance: 15
-  attackRange: 30
+  searchDistance: 25
+  attackRange: 10
