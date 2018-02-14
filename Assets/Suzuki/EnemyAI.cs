@@ -11,6 +11,9 @@ public class EnemyAI : MonoBehaviour
 
     bool lookPlayer = false;
 
+    bool moveFlg = true;
+
+    //AIが向く方向を入れる
     Quaternion lookRotation;
 
     Enemy enemy;
@@ -59,7 +62,11 @@ public class EnemyAI : MonoBehaviour
                         //攻撃範囲外
                         else
                         {
-                            transform.position += (transform.forward * enemy.moveSpeed) * Time.deltaTime;
+                            //transform.position += (transform.forward * enemy.moveSpeed) * Time.deltaTime;
+                            if (moveFlg)
+                            {
+                                StartCoroutine(EnemyMoveDirection());
+                            }
                         }
                     }
                     else
@@ -94,7 +101,7 @@ public class EnemyAI : MonoBehaviour
             if (!player) continue;
 
             float dis = Vector3.Distance(transform.position, player.transform.position);
-            if (dis <= nearestDis)
+            if (dis <= nearestDis && !player.isDead)
             {
                 nearestPlayer = player.gameObject;
                 nearestDis = dis;
@@ -111,6 +118,26 @@ public class EnemyAI : MonoBehaviour
         {
             return null;
         }
+    }
+
+    IEnumerator EnemyMoveDirection()
+    {
+        moveFlg = false;
+
+        float timeInterval = 2.0f;
+
+        float moveTimer = 0.0f;
+
+        while (timeInterval > moveTimer)
+        {
+            transform.position += (transform.forward * enemy.moveSpeed) * Time.deltaTime;
+
+            moveTimer += Time.deltaTime;
+
+            yield return null;
+        }
+
+        moveFlg = true;
     }
 
     private void EnemyRotation()
