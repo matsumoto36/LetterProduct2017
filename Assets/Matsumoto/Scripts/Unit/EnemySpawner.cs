@@ -186,7 +186,9 @@ public class EnemySpawner : MonoBehaviour {
 			item.enabled = false;
 		}
 
-		enemy.GetComponent<EnemyAI>().enabled = false;
+		var ai = enemy.GetComponent<EnemyAI>();
+		if(ai) ai.enabled = false;
+		else if(enemy is EnemyStructure) ((EnemyStructure)enemy).enabled = false;
 
 		yield return null;
 
@@ -198,7 +200,8 @@ public class EnemySpawner : MonoBehaviour {
 			item.enabled = true;
 		}
 
-		enemy.GetComponent<EnemyAI>().enabled = true;
+		if(ai) ai.enabled = true;
+		else if(enemy is EnemyStructure) ((EnemyStructure)enemy).enabled = true;
 
 	}
 }
