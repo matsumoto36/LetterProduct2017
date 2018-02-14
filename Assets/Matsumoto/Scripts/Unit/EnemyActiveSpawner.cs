@@ -25,7 +25,7 @@ public class EnemyActiveSpawner : Enemy {
 
 	Player activatePlayer;
 
-	EnemySpawner spawner;
+	EnemySpawner[] spawnerArray;
 	float activeTime = 0;
 
 	public override void InitFinal() {
@@ -34,7 +34,7 @@ public class EnemyActiveSpawner : Enemy {
 		//勢力のセット
 		group = UnitGroup.Enemy;
 
-		spawner = GetComponentInChildren<EnemySpawner>();
+		spawnerArray = GetComponentsInChildren<EnemySpawner>();
 	}
 
 	public override void Attack() { }
@@ -44,7 +44,9 @@ public class EnemyActiveSpawner : Enemy {
 	public override void Death() {
 
 		//消される前にスポナーを消す
-		spawner.Destroy();
+		foreach(var item in spawnerArray) {
+			item.Destroy();
+		}
 
 		base.Death();
 	}
@@ -89,7 +91,7 @@ public class EnemyActiveSpawner : Enemy {
 			var position = new Vector3(s * Mathf.Cos(r), 0, s * Mathf.Sin(r)) + transform.position;
 			var diff = activatePlayer.transform.position - position;
 			diff.y = 0;
-			spawner.SpawnEnemy(position, Quaternion.LookRotation(diff, Vector3.up), false);
+			spawnerArray[Random.Range(0, spawnerArray.Length)].SpawnEnemy(position, Quaternion.LookRotation(diff, Vector3.up), false);
 		}
 	}
 
