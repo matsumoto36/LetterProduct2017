@@ -14,7 +14,7 @@ MonoBehaviour:
   model: {fileID: 1889450129166138, guid: faa523662ffd07a42b4d5f6481b7676f, type: 2}
   hp: 100
   dropExp: 0
-  nextLevelExp: 100
+  nextLevelExp: 30
   moveSpeed: 6
   rotSpeed: 10
   weaponData:
