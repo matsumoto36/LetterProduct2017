@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using GamepadInput;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,6 +20,8 @@ public class GameManager : MonoBehaviour
     public static bool nowPlayingGame { get; private set; }
     static bool isGameOver = false;
     static bool isGameClear = false;
+
+	public Text objectiveMessage;
 
     void Start()
     {
@@ -60,7 +60,22 @@ public class GameManager : MonoBehaviour
 			if(!item) continue;
 			item.isInvincible = false;
 		}
+
+		//目的表示アニメーション
+		StartCoroutine(GameStartAnim());
     }
+
+	IEnumerator GameStartAnim() {
+
+		//点滅
+		float t = 0;
+		while((t += Time.deltaTime) < 4.0f) {
+			objectiveMessage.color = new Color(1, 1, 1, Mathf.Abs(Mathf.Sin(t * 12)));
+			yield return null;
+		}
+
+		objectiveMessage.color = new Color(1, 1, 1, 0);
+	}
 
     // Update is called once per frame
     void Update()
