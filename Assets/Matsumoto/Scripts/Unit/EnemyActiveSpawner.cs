@@ -16,7 +16,7 @@ public class EnemyActiveSpawner : Enemy {
 	public int spawnMax;				//湧く範囲に居れるキャラクターの最大数
 
 	public float activeRange;			//稼働範囲
-	public float spawnRange;			//湧く範囲
+	public RangeFloat spawnRange;		//湧く範囲
 
 	public string _deathSE;				//死んだときのSE
 	public string _deathParticle;		//死んだときのパーティクル
@@ -76,14 +76,17 @@ public class EnemyActiveSpawner : Enemy {
 
 		var insideEnemyCount = unitList
 			.Where(item => item)
-			.Where(item => (item.transform.position - transform.position).magnitude < spawnRange)
+			.Where(item => (item.transform.position - transform.position).magnitude < spawnRange.Max)
 			.Count();
 
 		var count = Mathf.Min(spawnCount.RandomValue, spawnMax - insideEnemyCount);
 
 		for(int i = 0;i < count;i++) {
-			var randCircle = Random.insideUnitCircle * spawnRange;
-			var position = new Vector3(randCircle.x, 0, randCircle.y) + transform.position;
+
+			var r = Random.Range(0, 2 * Mathf.PI);
+			var s = spawnRange.RandomValue * Mathf.Sqrt(Random.Range(0.0f, 1.0f));
+
+			var position = new Vector3(s * Mathf.Cos(r), 0, s * Mathf.Sin(r)) + transform.position;
 			var diff = activatePlayer.transform.position - position;
 			diff.y = 0;
 			spawner.SpawnEnemy(position, Quaternion.LookRotation(diff, Vector3.up), false);
@@ -113,7 +116,10 @@ public class EnemyActiveSpawner : Enemy {
 		Gizmos.DrawWireSphere(transform.position, activeRange);
 
 		Gizmos.color = Color.red;
-		Gizmos.DrawWireSphere(transform.position, spawnRange);
+		Gizmos.DrawWireSphere(transform.position, spawnRange.Max);
+
+		Gizmos.color = Color.black;
+		Gizmos.DrawWireSphere(transform.position, spawnRange.Min);
 
 	}
 

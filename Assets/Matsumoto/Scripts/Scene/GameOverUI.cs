@@ -15,6 +15,7 @@ public class GameOverUI : MonoBehaviour {
 			AudioManager.PlaySE("Button_select");
 
 			GameManager.Retry();
+			ControlButtonController.DestroyController(-1);
 		};
 
 		selectButton.onFocus += () => {
@@ -25,6 +26,7 @@ public class GameOverUI : MonoBehaviour {
 
 			//シーン移動
 			GameManager.GoToSelectScene();
+			ControlButtonController.DestroyController(-1);
 		};
 	}
 

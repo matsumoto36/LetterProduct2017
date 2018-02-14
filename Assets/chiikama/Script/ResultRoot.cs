@@ -24,6 +24,7 @@ public class ResultRoot : MonoBehaviour {
 			AudioManager.PlaySE("Button_select");
 
 			GameManager.Retry();
+			ControlButtonController.DestroyController(-1);
 		};
 
 		titleButton.onFocus += () => {
@@ -34,6 +35,7 @@ public class ResultRoot : MonoBehaviour {
 
 			//シーン移動
 			GameManager.GoToTitleScene();
+			ControlButtonController.DestroyController(-1);
 		};
 
 

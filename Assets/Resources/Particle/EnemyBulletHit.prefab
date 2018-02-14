@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4405613583923278}
   - component: {fileID: 114064042671748914}
+  - component: {fileID: 114704286568120356}
   m_Layer: 0
   m_Name: EnemyBulletHit
   m_TagString: Untagged
@@ -225,3 +226,14 @@ MonoBehaviour:
   m_IsPlaying: 0
   m_BoundFx: {fileID: 102900000, guid: ba94a16c149ffc541b11cfe19ee21c25, type: 3}
   m_FxName: BulletHit.pkfx
+--- !u!114 &114704286568120356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1383143221804460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ce8a2513397004d823cf4c389dd08f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

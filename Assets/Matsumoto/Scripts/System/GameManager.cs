@@ -14,13 +14,11 @@ public class GameManager : MonoBehaviour
     public bool useCustomSpawn;
     public bool[] customSpawnFlg;
 
-    Enemy boss;
+    public EnemyActiveSpawner enemySpawner;
 
     public static bool nowPlayingGame { get; private set; }
     static bool isGameOver = false;
     static bool isGameClear = false;
-
-    public bool spawnedBoss { get; private set; }
 
     void Start()
     {
@@ -56,7 +54,7 @@ public class GameManager : MonoBehaviour
         if (!nowPlayingGame) return;
 
         if (!isGameOver) CheckGameOverUpdate();
-        if (spawnedBoss) CheckBossDeathUpdate();
+		CheckSpawnerDeathUpdate();
 
         //一時的につける
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -65,9 +63,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void CheckBossDeathUpdate()
+    void CheckSpawnerDeathUpdate()
     {
-        if (!boss) GameClear();
+        if (!enemySpawner) GameClear();
     }
 
     void CheckGameOverUpdate()
@@ -86,18 +84,6 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
-    }
-
-    public void SetSpawnedBoss(Enemy boss)
-    {
-
-        spawnedBoss = true;
-        this.boss = boss;
-
-        GameData.instance.bossStartTime = Time.time;
-
-        AudioManager.FadeOut(1);
-        AudioManager.PlayBGM("Boss_Stage");
     }
 
     public void InitGameManager()

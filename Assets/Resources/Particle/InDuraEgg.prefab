@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4041202333268422}
   - component: {fileID: 114484157987243650}
+  - component: {fileID: 114833200527834272}
   m_Layer: 0
   m_Name: InDuraEgg
   m_TagString: Untagged
@@ -183,3 +184,14 @@ MonoBehaviour:
   m_IsPlaying: 0
   m_BoundFx: {fileID: 102900000, guid: ba94a16c149ffc541b11cfe19ee21c25, type: 3}
   m_FxName: InDuraEgg.pkfx
+--- !u!114 &114833200527834272
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1586876871612468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ce8a2513397004d823cf4c389dd08f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
