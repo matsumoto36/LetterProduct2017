@@ -101,7 +101,7 @@ public class EnemyAI : MonoBehaviour
             if (!player) continue;
 
             float dis = Vector3.Distance(transform.position, player.transform.position);
-            if (dis <= nearestDis)
+            if (dis <= nearestDis && !player.isDead)
             {
                 nearestPlayer = player.gameObject;
                 nearestDis = dis;
