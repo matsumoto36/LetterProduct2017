@@ -25,6 +25,6 @@ MonoBehaviour:
   deathParticle: EnemyDeath
   attackDuration: 2
   attackRestDuration: 4
-  searchDegree: 130
-  searchDistance: 30
-  attackRange: 20
+  searchDegree: 160
+  searchDistance: 25
+  attackRange: 30
