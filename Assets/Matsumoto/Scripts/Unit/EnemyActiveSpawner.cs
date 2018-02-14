@@ -81,7 +81,7 @@ public class EnemyActiveSpawner : Enemy {
 			.Where(item => (item.transform.position - transform.position).magnitude < spawnRange.Max)
 			.Count();
 
-		var count = Mathf.Min(spawnCount.RandomValue, spawnMax - insideEnemyCount);
+		var count = Mathf.Min(spawnCount.RandomValue, (spawnMax + 1) - insideEnemyCount);
 
 		for(int i = 0;i < count;i++) {
 

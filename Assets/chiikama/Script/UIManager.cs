@@ -136,7 +136,17 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 	/// </summary>
 	/// <returns></returns>
 	public Gauge CreateGauge(Vector3 position) {
-		var instance = Instantiate(gaugePre, gaugeCanvas);
+		return CreateGauge(position, gaugePre);
+	}
+
+	/// <summary>
+	/// ゲージを出す(プレハブをオーバーライド)
+	/// </summary>
+	/// <param name="position"></param>
+	/// <param name="prefab"></param>
+	/// <returns></returns>
+	public Gauge CreateGauge(Vector3 position, Gauge prefab) {
+		var instance = Instantiate(prefab, gaugeCanvas);
 		instance.transform.SetParent(gaugeCanvas);
 		instance.SetPosition(position);
 		return instance;

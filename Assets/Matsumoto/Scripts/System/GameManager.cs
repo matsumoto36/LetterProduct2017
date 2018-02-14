@@ -6,6 +6,8 @@ using GamepadInput;
 
 public class GameManager : MonoBehaviour
 {
+	const string SPAWNER_GAUGE = "System/GaugeEnemy";
+
     public PlayerSpawner spawner;
     public string nextSceneName;
 
@@ -15,6 +17,7 @@ public class GameManager : MonoBehaviour
     public bool[] customSpawnFlg;
 
     public EnemyActiveSpawner enemySpawner;
+	Gauge spawnerHP;
 
     public static bool nowPlayingGame { get; private set; }
     static bool isGameOver = false;
@@ -46,6 +49,11 @@ public class GameManager : MonoBehaviour
 
 		//マネージャー系を起動しておく
 		var manager = ParticleManager.instance;
+
+		if(enemySpawner) {
+			var gaugePre = Resources.Load<Gauge>(SPAWNER_GAUGE);
+			spawnerHP = UIManager.instance.CreateGauge(new Vector3(), gaugePre);
+		}
     }
 
     // Update is called once per frame
@@ -54,7 +62,7 @@ public class GameManager : MonoBehaviour
         if (!nowPlayingGame) return;
 
         if (!isGameOver) CheckGameOverUpdate();
-		CheckSpawnerDeathUpdate();
+		CheckSpawnerUpdate();
 
         //一時的につける
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -63,9 +71,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void CheckSpawnerDeathUpdate()
+    void CheckSpawnerUpdate()
     {
-        if (!enemySpawner) GameClear();
+		if(!enemySpawner) {
+			GameClear();
+		}
+		else {
+			if(spawnerHP) {
+				spawnerHP.SetPosition(enemySpawner.transform.position + new Vector3(0, 0, 2));
+				spawnerHP.SetRatio(enemySpawner.HPRatio);
+			}
+		}
     }
 
     void CheckGameOverUpdate()
@@ -105,7 +121,7 @@ public class GameManager : MonoBehaviour
         //シーン移動
         FadeManager.instance.LoadScene(GameData.START_STAGE, 2, () => {
 
-            if (isGameOver) UIManager.instance.GameOverSwich(false);
+			if (isGameOver) UIManager.instance.GameOverSwich(false);
             if (isGameClear) UIManager.instance.ResultSwich(false);
 
             //エントリー情報を取っておく
@@ -173,8 +189,10 @@ public class GameManager : MonoBehaviour
 
     void GameClear()
     {
+		//HPゲージがあれば削除
+		if(spawnerHP) Destroy(spawnerHP.gameObject);
 
-        isGameClear = true;
+		isGameClear = true;
         nowPlayingGame = false;
 
         Debug.Log("GameClear");
@@ -195,7 +213,7 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
 
-        isGameOver = true;
+		isGameOver = true;
         nowPlayingGame = false;
 
         Debug.Log("GameOver");
@@ -208,7 +226,10 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
 
-        UIManager.instance.GameOverSwich(true);
+		//HPゲージがあれば削除
+		if(spawnerHP) Destroy(spawnerHP.gameObject);
+
+		UIManager.instance.GameOverSwich(true);
 
     }
 }
