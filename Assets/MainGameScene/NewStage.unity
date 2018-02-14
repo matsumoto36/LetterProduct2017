@@ -13782,7 +13782,7 @@ MonoBehaviour:
   spawner: {fileID: 402736660}
   nextSceneName: Stage2
   playBGMName: stage_1
-  useCustomSpawn: 1
+  useCustomSpawn: 0
   customSpawnFlg: 01000000
   enemySpawner: {fileID: 1676974995}
   objectiveMessage: {fileID: 772606877}
