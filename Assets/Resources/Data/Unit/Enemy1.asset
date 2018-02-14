@@ -26,5 +26,5 @@ MonoBehaviour:
   attackDuration: 3
   attackRestDuration: 2
   searchDegree: 120
-  searchDistance: 10
-  attackRange: 5
+  searchDistance: 20
+  attackRange: 10
