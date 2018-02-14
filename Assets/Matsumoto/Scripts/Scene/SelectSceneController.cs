@@ -16,6 +16,8 @@ public class SelectSceneController : MonoBehaviour {
 	int playerCount = 0;
 	int readyCount = 0;
 
+	bool isBackTitle;
+
 	// Use this for initialization
 	void Awake () {
 		Init();
@@ -40,12 +42,15 @@ public class SelectSceneController : MonoBehaviour {
 
 	void Update() {
 
+		if(isBackTitle) return;
+
 		ControllerInfo info;
 		if(InputManager.GetButtonDownAny(entryButton, out info)) {
 			Entry(info);
 		}
 
 		if(InputManager.GetButtonDownAny(exitButton) && playerCount == 0) {
+			isBackTitle = true;
 			FadeManager.instance.LoadScene("Main_Title", 1);
 		}
 

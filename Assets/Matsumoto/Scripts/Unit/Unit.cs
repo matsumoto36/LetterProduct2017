@@ -14,7 +14,7 @@ public enum UnitGroup {
 }
 
 //Unit通知系デリゲート
-public delegate void UnitMessage(Unit unit);
+public delegate void UnitMessage(Unit unit, int point);
 
 /// <summary>
 /// マップに存在するキャラクターの親クラス
@@ -40,6 +40,15 @@ public abstract class Unit : MonoBehaviour {
 	/// 攻撃がヒットしたことを通知
 	/// </summary>
 	public event UnitMessage OnAttackHit;
+
+	/// <summary>
+	/// 回復した相手を通知
+	/// </summary>
+	public event UnitMessage OnHealed;
+	/// <summary>
+	/// 回復がヒットしたことを通知
+	/// </summary>
+	public event UnitMessage OnHealHit;
 
 	//表示用パラメータ
 	[SerializeField]
@@ -465,10 +474,10 @@ public abstract class Unit : MonoBehaviour {
 		}
 
 		//攻撃がヒットしたことを伝える
-		if(from.OnAttackHit != null) from.OnAttackHit(to);
+		if(from.OnAttackHit != null) from.OnAttackHit(to, damage);
 
 		//攻撃してきた敵を伝える
-		if(to.OnAttacked != null) to.OnAttacked(from);
+		if(to.OnAttacked != null) to.OnAttacked(from, damage);
 
 		//ダメージを与える
 		to.ApplyDamage(damage);
@@ -487,6 +496,12 @@ public abstract class Unit : MonoBehaviour {
 		Debug.Log("Heal " + from.name + " -> " + to.name);
 
 		int healPoint = Mathf.Min(heal, to.maxHP - to.nowHP);
+
+		//回復がヒットしたことを伝える
+		if(from.OnHealHit != null) from.OnHealHit(to, healPoint);
+
+		//回復してきた敵を伝える
+		if(to.OnHealed != null) to.OnHealed(from, healPoint);
 
 		//回復する
 		if(to.ApplyDamage(-healPoint)) {

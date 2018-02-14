@@ -25,7 +25,7 @@ public class EnemyStructure : Enemy {
 		StartCoroutine(CheckTargetUpdate());
 
 		//攻撃されたら振り向く
-		OnAttacked += (from) => {
+		OnAttacked += (from, point) => {
 			if(!isDetectAttacked) return;
 			if(!from) return;
 			if(target) return;

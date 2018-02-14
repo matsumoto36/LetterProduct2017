@@ -432,12 +432,12 @@ Prefab:
     - target: {fileID: 224373259508385612, guid: fb0d4464e39ba4a46890188e4b2c1add,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 960
       objectReference: {fileID: 0}
     - target: {fileID: 224373259508385612, guid: fb0d4464e39ba4a46890188e4b2c1add,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 540
       objectReference: {fileID: 0}
     - target: {fileID: 224373259508385612, guid: fb0d4464e39ba4a46890188e4b2c1add,
         type: 2}
@@ -521,7 +521,22 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1473642714790684, guid: fb0d4464e39ba4a46890188e4b2c1add, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224367256521919318, guid: fb0d4464e39ba4a46890188e4b2c1add,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 603.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114957885227292720, guid: fb0d4464e39ba4a46890188e4b2c1add,
+        type: 2}
+      propertyPath: m_Text
+      value: Total Damage/Heal
+      objectReference: {fileID: 0}
+    - target: {fileID: 114957885227292720, guid: fb0d4464e39ba4a46890188e4b2c1add,
+        type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 70
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb0d4464e39ba4a46890188e4b2c1add, type: 2}

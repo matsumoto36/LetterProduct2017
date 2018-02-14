@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// タイトル用のエフェクトを指定のタイミングで止めるクラス
+/// </summary>
 public class CameraTimelineControl : MonoBehaviour {
 
 	PKFxRenderingPlugin cameraFx;

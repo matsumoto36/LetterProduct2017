@@ -17,6 +17,9 @@ public class Player : Unit {
 
 	public int playerIndex;
 
+	public bool isInvincible { get; set; }
+
+
 	int combo = 0;
 	float comboDuration = 0;
 
@@ -78,12 +81,17 @@ public class Player : Unit {
 		group = UnitGroup.Player;
 
 		//ヒット通知
-		OnAttackHit += (other) => {
+		OnAttackHit += (other, point) => {
 			//総ダメージ加算
-			GameData.instance.sumDamage[playerIndex] += other.attackedUnitList[other.attackedUnitList.Count - 1].damage;
+			GameData.instance.sumDamage[playerIndex] += point;
 			//コンボ加算
 			AddCombo();
 			};
+
+		//回復通知
+		OnHealHit += (other, point) => {
+			GameData.instance.sumDamage[playerIndex] += point;
+		};
 
 
 		//アニメーションの初期状態をセット
@@ -349,8 +357,10 @@ public class Player : Unit {
 		var healPoint = nowHP / 2;
 
 		//回復してダメージ
-		Heal(this, target, healPoint);
 		ApplyDamage(healPoint);
+		Heal(this, target, healPoint);
+		GameData.instance.sumDamage[playerIndex] += healPoint;
+
 
 		//エフェクトの再生
 		ParticleManager.Spawn("Revaive", target.transform.position, Quaternion.identity);
@@ -635,6 +645,9 @@ public class Player : Unit {
 	}
 
 	protected override bool ApplyDamage(int damage) {
+
+		//無敵状態
+		if(isInvincible) return false;
 
 		//耐久卵の状態で変化
 		if(isInDuraEgg) {

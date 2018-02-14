@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// タイトル用の攻撃エフェクトを指定のタイミングで実行するクラス
+/// </summary>
 public class MeleeAttackControl : MonoBehaviour {
 
 	PKFxFX meleeAttack;

@@ -8,6 +8,10 @@ using GamepadInput;
 public class StartSelect : MonoBehaviour {
 
 	const string NEXT_SCENE_NAME = "Main_Select";
+	const float cameraRotationSpeed = 5;
+
+	public Transform cameraParent;
+	public Image fadeImage;
 	public ControlButton initSelectButton;
 
     // Use this for initialization
@@ -53,22 +57,34 @@ public class StartSelect : MonoBehaviour {
 
 		//BGM再生
 		AudioManager.FadeIn(2, "Title");
+
+		//エフェクト撮影待ち用フェード
+		StartCoroutine(FadeIn());
 	}
 
     // Update is called once per frame
     void Update ()
     {
-       
-            //if (InputManager.GetButtonDown(playerIndex, GamePad.Button.A) )
-            //{
-            //    OnGoSelect();
-            //}
-      
-       
-    }
+		//カメラの回転
+		cameraParent.rotation *= Quaternion.AngleAxis(cameraRotationSpeed * Time.deltaTime, Vector3.up);
+	}
 
     public void OnGoSelect()
     {
         SceneManager.LoadScene("Select");
     }
+
+	IEnumerator FadeIn() {
+
+		//エフェクト撮影用待ち
+		yield return new WaitForSeconds(1.5f);
+
+		float t = 0.0f;
+		while((t += Time.deltaTime) < 1.0f) {
+			fadeImage.color = Color.Lerp(new Color(0, 0, 0, 1), new Color(0, 0, 0, 0), t);
+			yield return null;
+		}
+
+		fadeImage.color = new Color(0, 0, 0, 0);
+	}
 }

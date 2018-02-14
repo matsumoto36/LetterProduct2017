@@ -284,7 +284,7 @@ public class BossAI : MonoBehaviour
     /// 攻撃されたときに実行される
     /// </summary>
     /// <param name="from">攻撃したキャラクター</param>
-    void OnAttacked(Unit from)
+    void OnAttacked(Unit from, int point)
     {
         for (int i = 0; i < playerList.Count; i++)
         {

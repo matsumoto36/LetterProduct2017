@@ -54,6 +54,12 @@ public class GameManager : MonoBehaviour
 			var gaugePre = Resources.Load<Gauge>(SPAWNER_GAUGE);
 			spawnerHP = UIManager.instance.CreateGauge(new Vector3(), gaugePre);
 		}
+
+		//無敵状態解除
+		foreach(var item in GameData.instance.spawnedPlayer) {
+			if(!item) continue;
+			item.isInvincible = false;
+		}
     }
 
     // Update is called once per frame
@@ -191,6 +197,12 @@ public class GameManager : MonoBehaviour
     {
 		//HPゲージがあれば削除
 		if(spawnerHP) Destroy(spawnerHP.gameObject);
+
+		//無敵状態にする
+		foreach(var item in GameData.instance.spawnedPlayer) {
+			if(!item) continue;
+			item.isInvincible = true;
+		}
 
 		isGameClear = true;
         nowPlayingGame = false;

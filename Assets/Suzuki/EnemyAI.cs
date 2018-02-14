@@ -22,7 +22,7 @@ public class EnemyAI : MonoBehaviour
     {
         enemy = GetComponent<Enemy>();
 
-        enemy.OnAttacked += (unit) =>
+        enemy.OnAttacked += (unit, point) =>
         {
             lookRotation = Quaternion.LookRotation
                 (new Vector3(unit.transform.position.x - transform.position.x, 0, unit.transform.position.z - transform.position.z));
